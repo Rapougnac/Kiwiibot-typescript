@@ -1,0 +1,18 @@
+{
+  "name": "i_like_rain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "glob": "^7.2.0"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
