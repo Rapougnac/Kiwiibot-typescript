@@ -79,3 +79,12 @@ export interface KiwiiClientOptions {
     disabledEvents?: string[];
     owners: string | string[];
 }
+
+export interface ProcessEventOptions {
+    /**Logs the error on the console */
+    log_on_console: boolean;
+    /**No error sended both on the channel & the console */
+    nologs: boolean;
+    /**Logs the error on the console & the channel */
+    logsonboth: boolean;
+}

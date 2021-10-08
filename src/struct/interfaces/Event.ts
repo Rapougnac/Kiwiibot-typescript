@@ -1,4 +1,5 @@
 import { ClientEvents } from 'discord.js';
+import Event from '../Event';
 export interface EventOptions {
     /**
      * If the event is triggered `<Event>.once();` instead of `<Event>.on();`
@@ -14,4 +15,7 @@ export interface EventOptions {
 export interface Listener {
     on: () => void;
     once: () => void;
+}
+export interface EventConstructor {
+    new (): Event;
 }

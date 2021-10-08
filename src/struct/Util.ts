@@ -1,8 +1,24 @@
-import { APIMessage, MessageEmbed, PermissionString, AllowedImageFormat, ImageSize, Message } from 'discord.js';
+import {
+    APIMessage,
+    MessageEmbed,
+    PermissionString,
+    AllowedImageFormat,
+    ImageSize,
+    Message,
+    MessageTarget,
+    APIMessageContentResolvable,
+    MessageOptions,
+    MessageAdditions,
+    WebhookMessageOptions,
+    TextChannel,
+    GuildMember,
+    Permissions,
+} from 'discord.js';
 import Client from './Client';
 import Loader from './LoadingBar';
-import { TimeData } from './interfaces/Util';
+import { TimeData, Interaction } from './interfaces/main';
 import Command from './Command';
+import KiwiiClient from './Client';
 
 export default class Util {
     /**
@@ -58,10 +74,16 @@ export default class Util {
         return `\`${ret}\``;
     }
 
-    async createAPIMessage(interaction, content, str) {
+    async createAPIMessage(
+        interaction: Interaction,
+        content: MessageOptions | MessageAdditions | WebhookMessageOptions,
+        str?: string
+    ) {
         const { data, files } = await APIMessage.create(
-            this.client.channels.resolve(interaction.channel_id),
-            str,
+            this.client.channels.resolve(
+                interaction.channel_id
+            ) as MessageTarget,
+            str as APIMessageContentResolvable,
             content
         )
             .resolveData()
@@ -75,13 +97,13 @@ export default class Util {
      * @param content
      */
     async replyEphemeral(interaction: any, content: string): Promise<void> {
-        let data = {
+        let data: object | any = {
             flags: 1 << 6,
             content: content,
         };
         if (typeof content === 'object')
             data = await this.createAPIMessage(interaction, content);
-        this.client.api
+        (this.client as any).api
             .interactions(interaction.id, interaction.token)
             .callback.post({
                 data: {
@@ -97,15 +119,25 @@ export default class Util {
      * @param response
      * @param content
      */
-    async reply(interaction: any, response: string | object, content: string): Promise<void> {
-        let data = {
+    async reply(
+        interaction: any,
+        response: MessageOptions | MessageAdditions | WebhookMessageOptions,
+        content: string
+    ): Promise<void> {
+        let data: {
+            content?: MessageOptions | MessageAdditions | WebhookMessageOptions;
+        } = {
             content: response,
         };
 
         if (typeof response === 'object') {
-            data = await this.createAPIMessage(interaction, response, content);
+            data = (await this.createAPIMessage(
+                interaction,
+                response,
+                content
+            )) as any;
         }
-        await this.client.api
+        await (this.client as any).api
             .interactions(interaction.id, interaction.token)
             .callback.post({
                 data: {
@@ -119,14 +151,20 @@ export default class Util {
      * @param id The command id to put on.
      */
     deleteSlash(id: string) {
-        this.client.api
-            .applications(this.client.user.id)
+        (this.client as any).api
+            .applications(this.client.user!.id)
             .commands(id)
             .delete()
             .then(() => console.log('Command has been successfully deleted!'));
     }
 
-    makeImageUrl(root: string, { format = 'webp', size }: { format: AllowedImageFormat; size: ImageSize; } = {}): string {
+    makeImageUrl(
+        root: string,
+        {
+            format = 'webp',
+            size,
+        }: { format?: AllowedImageFormat; size?: ImageSize } = {}
+    ): string {
         const AllowedImageFormats = ['webp', 'png', 'jpg', 'jpeg', 'gif'];
         const AllowedImageSizes = Array.from(
             { length: 9 },
@@ -140,10 +178,9 @@ export default class Util {
     }
     /**
      * Check if the passed input is a class or not.
-     * @param {*} input The input to check
-     * @returns {boolean}
+     * @param input The input to check
      */
-    isClass(input) {
+    isClass(input: any): boolean {
         return (
             typeof input === 'function' &&
             typeof input.prototype === 'object' &&
@@ -163,51 +200,59 @@ export default class Util {
         if (message.channel.type === 'dm') {
             if (command.config.guildOnly) {
                 reasons.push(
-                    message.guild.i18n.__mf('PERMS_MESSAGE.guild_only')
+                    message.guild!.i18n.__mf('PERMS_MESSAGE.guild_only')
                 );
             }
         }
 
         if (command.config.ownerOnly) {
-            if (!message.client.isOwner(message.author)) {
-                reasons.push(message.guild.i18n.__mf('PERMS_MESSAGE.dev_only'));
+            if (!(message.client as unknown as KiwiiClient).isOwner(message.author)) {
+                reasons.push(
+                    message.guild!.i18n.__mf('PERMS_MESSAGE.dev_only')
+                );
             }
         }
         if (command.config.adminOnly) {
-            if (!message.member.hasPermission('ADMINISTRATOR')) {
+            if (!message.member!.hasPermission('ADMINISTRATOR')) {
                 reasons.push(
-                    message.guild.i18n.__mf('PERMS_MESSAGE.admin_only')
+                    message.guild!.i18n.__mf('PERMS_MESSAGE.admin_only')
                 );
             }
         }
         if (command.config.nsfw) {
-            if (!message.channel.nsfw) {
-                reasons.push(message.guild.i18n.__mf('PERMS_MESSAGE.nsfw'));
+            if (message.channel.type === 'text' && !message.channel.nsfw) {
+                reasons.push(message.guild!.i18n.__mf('PERMS_MESSAGE.nsfw'));
             }
         }
         if (Array.isArray(command.config.permissions)) {
             if (
-                !message.channel
-                    .permissionsFor(message.member)
-                    .has(command.config.permissions)
+                message.channel.type === 'text' &&
+                !(
+                    message.channel.permissionsFor(
+                        message.member as GuildMember
+                    ) as Readonly<Permissions>
+                ).has(command.config.permissions)
             ) {
                 reasons.push(
                     [
-                        message.guild.i18n.__mf(
+                        message.guild!.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions_you'
                         ),
-                        message.guild.i18n.__mf(
+                        message.guild!.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions1_you'
                         ),
                         Object.entries(
-                            message.channel
-                                .permissionsFor(message.member)
-                                .serialize()
+                            (
+                                message.channel.permissionsFor(
+                                    message.member as GuildMember
+                                ) as Readonly<Permissions>
+                            ).serialize()
                         )
                             .filter(
                                 (p) =>
-                                    command.config.permissions.includes(p[0]) &&
-                                    !p[1]
+                                    command.config.permissions.includes(
+                                        p[0] as PermissionString
+                                    ) && !p[1]
                             )
                             .flatMap((c) =>
                                 c[0]
@@ -226,27 +271,32 @@ export default class Util {
         }
         if (Array.isArray(command.config.clientPermissions)) {
             if (
-                !message.channel
-                    .permissionsFor(message.guild.me)
-                    .has(command.config.clientPermissions)
+                message.channel.type === 'text' &&
+                !(
+                    message.channel.permissionsFor(
+                        message.guild!.me as GuildMember
+                    ) as Readonly<Permissions>
+                ).has(command.config.clientPermissions)
             ) {
                 reasons.push(
                     [
-                        message.guild.i18n.__mf(
+                        message.guild!.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions_i'
                         ),
-                        message.guild.i18n.__mf(
+                        message.guild!.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions1_i'
                         ),
                         Object.entries(
-                            message.channel
-                                .permissionsFor(message.guild.me)
-                                .serialize()
+                            (
+                                message.channel.permissionsFor(
+                                    message.guild!.me as GuildMember
+                                ) as Readonly<Permissions>
+                            ).serialize()
                         )
                             .filter(
                                 (p) =>
                                     command.config.clientPermissions.includes(
-                                        p[0]
+                                        p[0] as PermissionString
                                     ) && !p[1]
                             )
                             .flatMap((c) =>

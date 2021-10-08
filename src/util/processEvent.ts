@@ -58,7 +58,7 @@ function uncaughtException(
 // registered functions to use
 const registers = { unhandledRejection, uncaughtException };
 
-export function processEvents(
+export default function processEvents(
     event: Record<string, any>,
     args: any,
     client: Client
