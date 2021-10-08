@@ -16,10 +16,9 @@ import {
 } from 'discord.js';
 import Client from './Client';
 import Loader from './LoadingBar';
-import { TimeData, Interaction } from './interfaces/main';
+import { TimeData, Interaction, Guild } from './interfaces/main';
 import Command from './Command';
 import KiwiiClient from './Client';
-
 export default class Util {
     /**
      * The client passed in

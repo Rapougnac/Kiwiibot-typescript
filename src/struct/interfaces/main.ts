@@ -5,3 +5,4 @@ export * from './Interaction'
 export { SlashCommandOptions, CommandOptions as InteractionOptions } from './SlashCommand'
 export * from './Interaction'
 export * from './Util';
+export * from './Guild';
