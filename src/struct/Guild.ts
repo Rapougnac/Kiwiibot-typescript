@@ -14,6 +14,7 @@ class ExtendedGuild extends Guild {
             objectNotation: true,
         });
         this.i18n = new I18n();
+        this.i18n.setLocale('en');
         this.prefix = client.prefix;
     }
 }
