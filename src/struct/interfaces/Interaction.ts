@@ -2,14 +2,14 @@ import { User, GuildMember } from 'discord.js';
 
 export interface SubOptions {
     name: string;
-    type: number;
+    type: number | string;
     value: string;
 };
 
 export interface Options {
     name: string;
     type: number;
-    options: SubOptions[];
+    options: SubOptions[] | Options[];
 };
 
 export interface Data {
