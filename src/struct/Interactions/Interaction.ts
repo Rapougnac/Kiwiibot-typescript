@@ -6,9 +6,10 @@ import {
     Channel,
     GuildMember,
     Snowflake,
+    Client
 } from 'discord.js';
 import { InteractionTypes, MessageComponentTypes } from '../../util/constants';
-import Client from '../Client';
+import KiwiiClient from '../Client';
 
 export default class Interaction extends Base {
     /**
@@ -48,8 +49,8 @@ export default class Interaction extends Base {
      * The version
      */
     public version: number;
-    constructor(client: Client, data: any) {
-        super(client);
+    constructor(client: KiwiiClient, data: any) {
+        super(client as unknown as Client);
         this.type = InteractionTypes[data.type];
         this.id = data.id;
         Object.defineProperty(this, 'token', { value: data.token });
