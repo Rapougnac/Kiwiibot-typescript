@@ -1,3 +1,4 @@
+export * from './Canvas';
 export * from './Client';
 export * from './Command';
 export * from './Event';
