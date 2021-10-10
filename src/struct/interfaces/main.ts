@@ -8,3 +8,4 @@ export * from './Util';
 export * from './Guild';
 export * from './CommandInteraction';
 export * from './Canvas';
+export { Member as RawMember } from './GuildMember';
