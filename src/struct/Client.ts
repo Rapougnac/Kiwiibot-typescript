@@ -150,7 +150,7 @@ export default class KiwiiClient extends Client {
      * @param token The token used to log
      */
     //@ts-ignore
-    login(token: string | undefined = this.config.discord.token): KiwiiClient {
+    public login(token: string | undefined = this.config.discord.token): KiwiiClient {
         // Log super in with the supplied token
         super.login(token);
 
@@ -159,7 +159,7 @@ export default class KiwiiClient extends Client {
     /**
      * Load all commands in the specified directory
      */
-    loadCommands(): this {
+    public loadCommands(): this {
         let files = glob.sync('./dist/src/commands/**/*.js');
         const exclude = this.config.discord.dev.exclude_cmd;
         const include = this.config.discord.dev.include_cmd;
@@ -232,7 +232,7 @@ export default class KiwiiClient extends Client {
     /**
      * Load all events in the specified directory
      */
-    loadEvents(): this {
+    public loadEvents(): this {
         readdir('./dist/src/events', (err, files) => {
             if (err) throw err;
             if (this.disabledEvents.length) {
@@ -260,7 +260,7 @@ export default class KiwiiClient extends Client {
         });
         return this;
     }
-    mongoInit() {
+    public mongoInit() {
         mongoose
             .connect(this.config.database.URI, this.config.database.config)
             .then(() => {
@@ -273,7 +273,7 @@ export default class KiwiiClient extends Client {
     /**
      * Load all player events in the specified directory
      */
-    playerInit() {
+    public playerInit() {
         const player = readdirSync('src/events/player').filter((file) =>
             file.endsWith('.js')
         );
@@ -295,7 +295,7 @@ export default class KiwiiClient extends Client {
      * @param events The process event name to listen to
      * @param config The configuration for the process events.
      */
-    listentoProcessEvents(events: string[], config: ProcessEventOptions): void {
+    public listentoProcessEvents(events: string[], config: ProcessEventOptions): void {
         if (!Array.isArray(events)) {
             throw new Error('Event must be an array!');
         }
@@ -336,7 +336,7 @@ export default class KiwiiClient extends Client {
     /**
      * Function to start the bot
      */
-    start() {
+    public start() {
         //Load the events, player events and commands
         this.playerInit().loadEvents().loadCommands();
 
@@ -355,7 +355,7 @@ export default class KiwiiClient extends Client {
      * Checks whether a user is an owner of the bot (in {@link KiwiiClientOptions.owners})
      * @param user - User to check for the ownership
      */
-    isOwner(user: UserResolvable): boolean {
+    public isOwner(user: UserResolvable): boolean {
         if (!this.owners) return false;
         user = this.users.resolve(user) as User;
         if (!user) throw new RangeError('Unable to resolve the user.');
@@ -370,7 +370,7 @@ export default class KiwiiClient extends Client {
      * Fetch the user via the api to get their properties.
      * @param user - User to fetch via the api.
      */
-    async fetchUserViaAPI(user: UserResolvable): Promise<object> {
+    public async fetchUserViaAPI(user: UserResolvable): Promise<object> {
         user = this.users.resolve(user) as User;
         if (!user)
             throw new RangeError('Please, give me a valid user to resolve.');
