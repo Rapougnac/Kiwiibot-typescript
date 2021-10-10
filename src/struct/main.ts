@@ -8,3 +8,6 @@ export * from './Util';
 export * from './Interactions/CommandInteraction';
 export * from './Interactions/CommandInteractionOptionResolver';
 export * from './Interactions/Interaction';
+export * from './Message';
+export * from './MessageEmbed';
+export * from './Paginate';
