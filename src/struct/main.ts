@@ -11,3 +11,4 @@ export * from './Interactions/Interaction';
 export * from './Message';
 export * from './MessageEmbed';
 export * from './Paginate';
+export * from './User';
