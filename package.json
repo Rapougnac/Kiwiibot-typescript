@@ -12,13 +12,15 @@
     "glob": "^7.2.0",
     "i18n": "^0.13.3",
     "lodash": "^4.17.21",
-    "mongoose": "^6.0.9"
+    "mongoose": "^6.0.9",
+    "node-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.1",
     "@types/glob": "^7.1.4",
     "@types/i18n": "^0.13.1",
     "@types/lodash": "^4.14.175",
+    "@types/node-fetch": "^3.0.3",
     "ascii-table": "0.0.9"
   },
   "scripts": {
