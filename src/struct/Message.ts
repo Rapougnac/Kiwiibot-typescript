@@ -30,6 +30,7 @@ class ExtAPIMessage extends APIMessage {
 }
 
 class ExtMessage extends Message {
+    //@ts-ignore
     inlineReply(content: string, options: any) {
         return this.channel.send(
             ExtAPIMessage.create(
@@ -54,3 +55,5 @@ class ExtMessage extends Message {
         );
     }
 }
+
+Structures.extend('Message', () => ExtMessage as any);
