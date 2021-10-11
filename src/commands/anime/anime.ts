@@ -63,10 +63,6 @@ export default class AnimeCommand extends Command {
                         },
                     });
 
-                    /**
-                     * @param {Message} m
-                     * @returns {boolean}
-                     */
                     const filter = (m: Message): boolean =>
                         message.author.id === m.author.id &&
                         m.channel.id === message.channel.id;
