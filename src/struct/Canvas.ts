@@ -163,10 +163,10 @@ export default class Canvas {
      * Resolve a stream to get in array
      * @param stream The stream to resolve
      */
-    static streamToArray(stream: Readable): Promise<unknown> {
+    static streamToArray(stream: Readable): Promise<Uint8Array[] | never[]> {
         if (!stream.readable) return Promise.resolve([]);
         return new Promise((resolve, reject) => {
-            const arr: any[] = [];
+            const arr: Uint8Array[] = [];
             const onData = (data: any) => {
                 arr.push(data);
             };
