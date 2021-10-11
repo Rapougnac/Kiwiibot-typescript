@@ -4,6 +4,7 @@ import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
 import { clientMap } from '../../../config';
+import { Guild } from '../../struct/interfaces/Guild';
 
 export default class HelpCommand extends Command {
     constructor(client: KiwiiClient) {
@@ -49,7 +50,7 @@ export default class HelpCommand extends Command {
                                 )
                                 .map((value) => `\`${value.help.name}\``),
                         ],
-                        message.guild?.i18n.getLocale()
+                        (message.guild as unknown as Guild).i18n.getLocale()
                     ),
                     inline: false,
                 });
@@ -84,7 +85,7 @@ export default class HelpCommand extends Command {
                                 )
                                 .map((value) => `\`${value.help.name}\``),
                         ],
-                        message.guild?.i18n.getLocale()
+                        (message.guild as unknown as Guild).i18n.getLocale()
                     ),
                     inline: false,
                 });
@@ -113,7 +114,7 @@ export default class HelpCommand extends Command {
                 .setColor('ORANGE')
                 .setTimestamp()
                 .setFooter(
-                    message.guild?.i18n.__mf(`help.cmd_usage`, {
+                    (message.guild as unknown as Guild).i18n.__mf(`help.cmd_usage`, {
                         prefix: client.prefix,
                     })
                 );
@@ -125,13 +126,13 @@ export default class HelpCommand extends Command {
                 this.client.aliases.get(args.join(' ').toLowerCase());
             if (!command)
                 return message.channel.send(
-                    `\\${client.emotes.error} - ${message.guild?.i18n.__mf(
+                    `\\${client.emotes.error} - ${(message.guild as  unknown as Guild).i18n.__mf(
                         'help.not_found'
                     )}`
                 );
             if (command.config.hidden) {
                 return message.channel.send(
-                    `${client.emotes.error} - ${message.guild?.i18n.__mf(
+                    `${client.emotes.error} - ${(message.guild as unknown as Guild).i18n.__mf(
                         'help.not_found'
                     )}`
                 );
@@ -142,42 +143,42 @@ export default class HelpCommand extends Command {
                 !message.channel.nsfw
             ) {
                 return message.channel.send(
-                    `${client.emotes.error} - ${message.guild?.i18n.__mf(
+                    `${client.emotes.error} - ${(message.guild as unknown as Guild).i18n.__mf(
                         'help.nsfw'
                     )}`
                 );
             }
 
-            const description = message.guild?.i18n.__mf(
+            const description = (message.guild as unknown as Guild).i18n.__mf(
                 `${command.help.name}.description`
             );
             await message.channel.send({
                 embed: {
                     color: 'ORANGE',
-                    author: { name: message.guild?.i18n.__mf('help.title') },
+                    author: { name: (message.guild as unknown as Guild).i18n.__mf('help.title') },
                     fields: [
                         {
-                            name: message.guild?.i18n.__mf('help.name'),
+                            name: (message.guild as unknown as Guild).i18n.__mf('help.name'),
                             value: command.help.name,
                             inline: true,
                         },
                         {
-                            name: message.guild?.i18n.__mf('help.category'),
+                            name: (message.guild as unknown as Guild).i18n.__mf('help.category'),
                             value: _.upperFirst(command.help.category),
                             inline: true,
                         },
                         {
-                            name: message.guild?.i18n.__mf('help.alias'),
+                            name: (message.guild as unknown as Guild).i18n.__mf('help.alias'),
                             value:
                                 command.config.aliases.length < 1
-                                    ? message.guild?.i18n.__mf(
+                                    ? (message.guild as unknown as Guild).i18n.__mf(
                                           'help.none_alias'
                                       )
                                     : command.config.aliases.join('\n'),
                             inline: true,
                         },
                         {
-                            name: message.guild?.i18n.__mf('help.usage'),
+                            name: (message.guild as unknown as Guild).i18n.__mf('help.usage'),
                             value: command.help.utilisation!.replace(
                                 '{prefix}',
                                 client.prefix
@@ -189,40 +190,40 @@ export default class HelpCommand extends Command {
                             value: command.config.cooldown
                                 ? `${
                                       command.config.cooldown
-                                  } ${message.guild?.i18n.__mf('help.seconds')}`
-                                : message.guild!.i18n.__mf(
+                                  } ${(message.guild as unknown as Guild).i18n.__mf('help.seconds')}`
+                                : (message.guild as unknown as Guild).i18n.__mf(
                                       'help.none_cooldown'
                                   ),
                             inline: true,
                         },
                         {
-                            name: message.guild.i18n.__mf('help.guild_only'),
+                            name: (message.guild as unknown as Guild).i18n.__mf('help.guild_only'),
                             value: command.config.guildOnly
-                                ? message.guild.i18n.__mf('common.yes')
-                                : message.guild.i18n.__mf('common.no'),
+                                ? (message.guild as unknown as Guild).i18n.__mf('common.yes')
+                                : (message.guild as unknown as Guild).i18n.__mf('common.no'),
                             inline: true,
                         },
                         {
-                            name: message.guild.i18n.__mf('help.admin_only'),
+                            name: (message.guild as unknown as Guild).i18n.__mf('help.admin_only'),
                             value: command.config.adminOnly
-                                ? message.guild.i18n.__mf('common.yes')
-                                : message.guild.i18n.__mf('common.no'),
+                                ? (message.guild as unknown as Guild).i18n.__mf('common.yes')
+                                : (message.guild as unknown as Guild).i18n.__mf('common.no'),
                             inline: true,
                         },
                         {
-                            name: message.guild.i18n.__mf('help.owner_only'),
+                            name: (message.guild as unknown as Guild).i18n.__mf('help.owner_only'),
                             value: command.config.ownerOnly
-                                ? message.guild.i18n.__mf('common.yes')
-                                : message.guild.i18n.__mf('common.no'),
+                                ? (message.guild as unknown as Guild).i18n.__mf('common.yes')
+                                : (message.guild as unknown as Guild).i18n.__mf('common.no'),
                             inline: true,
                         },
                         {
-                            name: message.guild.i18n.__mf(
+                            name: (message.guild as unknown as Guild).i18n.__mf(
                                 'help.user_permissions'
                             ),
                             value:
                                 command.config.permissions.length === 0
-                                    ? message.guild.i18n.__mf(
+                                    ? (message.guild as unknown as Guild).i18n.__mf(
                                           'help.no_permissions'
                                       )
                                     : command.config.permissions.map((x) =>
@@ -241,12 +242,12 @@ export default class HelpCommand extends Command {
                             inline: true,
                         },
                         {
-                            name: message.guild.i18n.__mf(
+                            name: (message.guild as unknown as Guild).i18n.__mf(
                                 'help.bot_permissions'
                             ),
                             value:
                                 command.config.clientPermissions.length === 0
-                                    ? message.guild.i18n.__mf(
+                                    ? (message.guild as unknown as Guild).i18n.__mf(
                                           'help.no_permissions'
                                       )
                                     : command.config.clientPermissions.map(
@@ -273,7 +274,7 @@ export default class HelpCommand extends Command {
                         },
                     ],
                     timestamp: new Date(),
-                    description: message.guild!.i18n.__mf('help.information'),
+                    description: (message.guild as unknown as Guild).i18n.__mf('help.information'),
                 },
             });
         }
