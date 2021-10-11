@@ -37,11 +37,30 @@ declare module 'discord.js' {
         ): Promise<Message | Message[]>;
     }
     export interface Guild {
+        /**
+         * The i18n obect notation
+         */
         i18n: I18n;
+        /**
+         * The prefix of the guild, if there's one.
+         */
         prefix: string;
     }
     export interface User {
+        /**
+         * The hash of the user's banner
+         */
         banner: string | null;
+        /**
+         * Get the banner of the user
+         * @param userID The user id to pass in.
+         * @param hash The hash of the banner
+         * @param format The format of the image
+         * @param size The size of the banner
+         * @param dynamic If avaliable and if true, the format will be .gif
+         * @param root The root url
+         * @returns The url of the banner
+         */
         Banner(
             userID: string,
             hash: string,
@@ -49,9 +68,16 @@ declare module 'discord.js' {
             size?: ImageSize,
             dynamic?: boolean
         ): string;
+        /**
+         * Display the banner url of the user, if there's one
+         * @returns The url of the banner
+         */
         displayBannerURL(
             ImageURLOptions: ImageURLOptions & { dynamic?: boolean }
         ): string | null;
+        /**
+         * Check if the user has a banner
+         */
         hasBanner(): boolean;
     }
 
