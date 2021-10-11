@@ -56,13 +56,35 @@ declare module 'discord.js' {
     }
 
     interface GuildMember {
+        /**
+         * The hash of the guild member's avatar
+         */
         avatar: string | null;
+        /**
+         * A link to the member's guild avatar.
+         * @param options Options for the image url
+         * @returns {?string}
+         */
         avatarURL(
             options?: ImageURLOptions & { dynamic?: boolean }
         ): string | null;
+        /**
+         * A link to the guild member's avatar
+         * if none found, return the user's avatar
+         * @param options The options of the avatar
+         */
         displayAvatarURL(
             options?: ImageURLOptions & { dynamic?: boolean }
         ): string;
+        /**
+         * Construct a guild member avatar from the given informations
+         * @param guildId The guild id
+         * @param memberId The member id
+         * @param hash The hash of the guild member's avatar
+         * @param format The format of the guild member's avatar
+         * @param size The size of the guild member's avatar
+         * @param dynamic If the image should be dynamic
+         */
         GuildMemberAvatar(
             guildId: string,
             memberId: string,

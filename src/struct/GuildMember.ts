@@ -40,7 +40,7 @@ class ExtendedGuildMember extends GuildMember {
      * @param size The size of the guild member's avatar
      * @param dynamic If the image should be dynamic
      */
-    private GuildMemberAvatar(
+    GuildMemberAvatar(
         guildId: Snowflake,
         memberId: Snowflake,
         hash: string | null,
