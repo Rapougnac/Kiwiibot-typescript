@@ -18,7 +18,7 @@ export default class TrumpCommand extends Command {
       utilisation: '{prefix}trump <verb> [text]',
     });
   }
-  async execute(client: Client, message: Message, [verb, ...args]: string[]) {
+  public async execute(client: Client, message: Message, [verb, ...args]: string[]) {
     let text = args.join(' ');
     if (text.length === 0) text = verb;
     if (text.length > 20)
