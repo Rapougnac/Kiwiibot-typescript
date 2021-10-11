@@ -1,4 +1,4 @@
-import { ClientOptions, PermissionString } from 'discord.js';
+import { ClientOptions, PermissionString, PresenceStatusData } from 'discord.js';
 
 export interface Config {
     domain: string;
@@ -7,7 +7,7 @@ export interface Config {
     clientSecret: boolean;
     discord: {
         token: string;
-        status: string;
+        status: PresenceStatusData;
         defaultPerms: PermissionString[];
         dev: {
             include_cmd: string[];
