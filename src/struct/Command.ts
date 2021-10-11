@@ -137,9 +137,9 @@ export default class Command {
         this.message = message;
     }
 
-    // public execute(): Promise<Message> | Message | void {
-    //     throw new Error(
-    //         `${this.help.name} dosen\'t have an execute() method !`
-    //     );
-    // }
+    public execute(...args: any[]): Promise<Message | void> | Message | void {
+        throw new Error(
+            `${this.help.name} dosen\'t have an execute() method !`
+        );
+    }
 }
