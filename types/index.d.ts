@@ -121,3 +121,12 @@ declare module 'discord.js' {
         ): string | null;
     }
 }
+
+declare module 'mongoose' {
+    interface Connection {
+        /**
+         * Send `true` if the connection is etablished successfully 
+         */
+        _hasOpened: boolean;
+    }
+}
