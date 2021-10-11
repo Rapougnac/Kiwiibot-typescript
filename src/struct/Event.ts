@@ -1,3 +1,4 @@
+import { Message } from 'discord.js';
 import Client from './Client';
 import { EventOptions, Listener, ClientEvents } from './interfaces/Event';
 
@@ -16,7 +17,7 @@ export default class Event {
                 : (options.emitter as Listener);
         this._validate(options);
     }
-    public execute(...args: any[]): Promise<void> | void {
+    public execute(...args: any[]): Promise<void | Message> | void | Message {
         throw new Error(`${this.name} doesn\'t have an execute() method!`);
     }
     private _validate(data: EventOptions): void {
