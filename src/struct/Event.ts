@@ -1,6 +1,5 @@
-import { ClientEvents } from 'discord.js';
 import Client from './Client';
-import { EventOptions, Listener } from './interfaces/Event';
+import { EventOptions, Listener, ClientEvents } from './interfaces/Event';
 
 export default class Event {
     public readonly client: Client;
