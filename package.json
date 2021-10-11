@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "amethyste-api": "^1.1.5",
     "axios": "^0.22.0",
     "canvas": "^2.8.0",
     "common-tags": "^1.8.0",
