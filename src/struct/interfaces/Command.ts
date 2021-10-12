@@ -1,4 +1,5 @@
 import { PermissionString } from 'discord.js';
+import Command from '../Command';
 export interface CommandOptions {
     /**
      * The name of the command
@@ -155,4 +156,8 @@ export interface TraceOptions {
      * <Command>.trace({ dir: true }); // Output: path/to/command
      */
     dir?: boolean;
+}
+
+export interface ConstructorCommand {
+    new (): Command;
 }
