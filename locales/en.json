@@ -1,0 +1,37 @@
+{
+	"ping": {
+		"msg": "ping.msg"
+	},
+	"help": {
+		"cmd_usage": "help.cmd_usage"
+	},
+	"serverinfo": {
+		"owner": "serverinfo.owner",
+		"name": "serverinfo.name",
+		"region": "serverinfo.region",
+		"members": "serverinfo.members",
+		"members2": "serverinfo.members2",
+		"humans": "serverinfo.humans",
+		"bots": "serverinfo.bots",
+		"online_members": "serverinfo.online_members",
+		"channels": "serverinfo.channels",
+		"channels2": "serverinfo.channels2",
+		"text_channels": "serverinfo.text_channels",
+		"voice_channels": "serverinfo.voice_channels",
+		"category": "serverinfo.category",
+		"emotes": "serverinfo.emotes",
+		"static_emotes": "serverinfo.static_emotes",
+		"animated_emotes": "serverinfo.animated_emotes",
+		"nitro": "serverinfo.nitro",
+		"tier": "serverinfo.tier",
+		"afk": "serverinfo.afk",
+		"verification_level": "serverinfo.verification_level",
+		"roles": "serverinfo.roles",
+		"id": "serverinfo.id"
+	},
+	"common": {
+		"creation_date": "common.creation_date",
+		"on": "common.on",
+		"at": "common.at"
+	}
+}
