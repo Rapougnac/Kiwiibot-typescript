@@ -1,7 +1,6 @@
 import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import Command from '../../struct/Command';
-//@ts-ignore
-import Kitsu from 'kitsu.js';
+import { Kitsu } from 'kitsu.js';
 import { dropRight } from 'lodash';
 import KiwiiClient from '../../struct/Client';
 
@@ -26,7 +25,7 @@ export default class AnimeCommand extends Command {
             );
         }
         kitsu
-            .searchAnime(search)
+            .searchAnime(search, 30)
             .then(async (result: any) => {
                 if (result.length === 0) {
                     return message.channel.send(
