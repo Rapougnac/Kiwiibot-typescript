@@ -8,3 +8,4 @@ const client = new KiwiiClient({
 });
 
 client.start();
+client.login();
