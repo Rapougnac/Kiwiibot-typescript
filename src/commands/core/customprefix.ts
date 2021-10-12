@@ -1,0 +1,71 @@
+import PrefixSchema from '../../models/PrefixSchema';
+import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Document } from 'mongoose'
+import Command from '../../struct/Command';
+import Client from '../../struct/Client';
+export default class SetPrefixCommand extends Command {
+    constructor(client: Client) {
+        super(client, {
+            name: 'setprefix',
+            aliases: ['setp'],
+            description:
+                'Change the default prefix to the specified prefix, you can still use the default prefix',
+            category: 'core',
+            cooldown: 5,
+            utilisation: '{prefix}setprefix [prefix]',
+            permissions: ['MANAGE_MESSAGES'],
+        });
+    }
+    async execute(client: Client, message: Message, [prefix]: string[]) {
+        if (!message.guild) return;
+        if (!prefix) {
+            return message.channel.send(
+                message.guild.i18n.__mf('setprefix.missing_prefix')
+            );
+        } else if (prefix.length > 5) {
+            return message.channel.send(
+                message.guild.i18n.__mf('setprefix.prefix_length')
+            );
+        }
+
+        PrefixSchema.findOne(
+            { GuildID: message.guild.id },
+            async (err: Error, data: Document) => {
+                if (err)
+                    return message.channel.send(
+                        message.guild!.i18n.__mf('common.database_error', {
+                            error: err.name,
+                        })
+                    );
+                if (data) {
+                    await PrefixSchema.findOneAndDelete({
+                        GuildID: message.guild!.id,
+                    });
+                    data = new PrefixSchema({
+                        GuildID: message.guild!.id,
+                        Prefix: prefix,
+                    });
+                    data.save();
+                    message.guild!.prefix = prefix;
+                    message.channel.send(
+                        message.guild!.i18n.__mf('setprefix.updated_prefix', {
+                            prefix: prefix,
+                        })
+                    );
+                } else {
+                    data = new PrefixSchema({
+                        GuildID: message.guild!.id,
+                        Prefix: prefix,
+                    });
+                    data.save();
+                    message.guild!.prefix = prefix;
+                    message.channel.send(
+                        message.guild!.i18n.__mf('setprefix.new_prefix', {
+                            prefix: prefix,
+                        })
+                    );
+                }
+            }
+        );
+    }
+}
