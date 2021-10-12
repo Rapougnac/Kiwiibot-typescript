@@ -1,7 +1,7 @@
 import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import Command from '../../../struct/Command';
 import Client from '../../../struct/Client';
-import fetch from 'node-fetch';
+import axios from 'axios';
 export default class PHCommentCommand extends Command {
     constructor(client: Client) {
         super(client, {
@@ -28,20 +28,20 @@ export default class PHCommentCommand extends Command {
             );
         if (User) {
             const query = args.slice(1).join(' ');
-            const data: any = await fetch(
+            const data: any = await axios.get(
                 `https://nekobot.xyz/api/imagegen?type=phcomment&image=${User.user.displayAvatarURL()}&text=${encodeURIComponent(
                     query
                 )}&username=${encodeURIComponent(User.user.username)}`
-            ).then((res) => res.json());
+            );
             const att = new MessageAttachment(data.message);
             message.channel.send(att);
         } else {
             const query = args.join(' ');
-            const data: any = await fetch(
+            const data: any = await axios.get(
                 `https://nekobot.xyz/api/imagegen?type=phcomment&image=${message.author.displayAvatarURL()}&text=${encodeURIComponent(
                     query
                 )}&username=${encodeURIComponent(message.author.username)}`
-            ).then((res) => res.json());
+            );
             const att = new MessageAttachment(data.message);
             message.channel.send(att);
         }
