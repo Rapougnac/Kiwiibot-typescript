@@ -23,7 +23,7 @@ import glob from 'glob';
 import * as path from 'path';
 import { readdir, readdirSync } from 'fs';
 //@ts-ignore: Don't have any typings
-import * as ascii from 'ascii-table';
+import ascii = require('ascii-table');
 import mongoose from 'mongoose';
 import ProcessEvent from '../util/processEvent';
 let table = new ascii('Events');
@@ -338,7 +338,7 @@ export default class KiwiiClient extends Client {
      */
     public start() {
         //Load the events, player events and commands
-        this.playerInit().loadEvents().loadCommands();
+        this.loadEvents().loadCommands();
 
         //Mongodb
         if (this.config.database.enable) {
