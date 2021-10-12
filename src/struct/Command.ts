@@ -39,7 +39,7 @@ export default class Command {
             category: options.category,
         };
         this.config = {
-            permissions: options.pemissions || [
+            permissions: options.permissions || [
                 'SEND_MESSAGES',
                 'VIEW_CHANNEL',
             ],

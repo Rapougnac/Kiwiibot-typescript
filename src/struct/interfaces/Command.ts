@@ -23,7 +23,7 @@ export interface CommandOptions {
     /**
      * The user's permissions, if no permissions was provided, `['SEND_MESSAGES', 'VIEW_CHANNEL']` are the default one.
      */
-    pemissions?: PermissionString[];
+    permissions?: PermissionString[];
 
     /**
      * The client's permissions, if no permissions was provided, `['SEND_MESSAGES', 'VIEW_CHANNEL']` are the default one.
