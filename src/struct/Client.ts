@@ -23,12 +23,8 @@ import { Player } from 'discord-player';
 import glob from 'glob';
 import * as path from 'path';
 import { readdir, readdirSync } from 'fs';
-//@ts-ignore: Don't have any typings
-import ascii = require('ascii-table');
 import mongoose from 'mongoose';
 import ProcessEvent from '../util/processEvent';
-let table = new ascii('Events');
-let table2 = new ascii('Player Events');
 /**
  * Represents a discord client
  * @extends Client
@@ -191,8 +187,7 @@ export default class KiwiiClient extends Client {
                         if (this.commands.has(command!.help.name)) {
                             console.error(
                                 new Error(
-                                    `Command name duplicate: ${
-                                        command!.help.name
+                                    `Command name duplicate: ${command!.help.name
                                     }`
                                 ).stack
                             );
@@ -214,8 +209,7 @@ export default class KiwiiClient extends Client {
                                 if (this.aliases.has(alias)) {
                                     console.error(
                                         new Error(
-                                            `Alias name duplicate: ${
-                                                command!.config.aliases
+                                            `Alias name duplicate: ${command!.config.aliases
                                             }`
                                         ).stack
                                     );
@@ -292,6 +286,7 @@ export default class KiwiiClient extends Client {
      * Load all player events in the specified directory
      */
     public playerInit() {
+        const evts: string[] = [];
         const player = readdirSync('src/events/player').filter((file) =>
             file.endsWith('.js')
         );
@@ -300,12 +295,13 @@ export default class KiwiiClient extends Client {
             const eventName = file.split('.')[0];
             this.player.on(eventName, event.bind(null, this));
             if (eventName) {
-                table2.addRow(eventName, 'Ready');
+                evts.push(eventName);
             } else {
-                table2.addRow(eventName, '\x1b[31mERR!\x1b[0m');
+                evts.push(`${eventName}, \x1b[31mERR!\x1b[0m`)
             }
         }
-        console.log(table2.toString());
+        console.table(evts);
+
         return this;
     }
     /**
