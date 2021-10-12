@@ -12,6 +12,7 @@ import {
     KiwiiClientOptions,
     EventConstructor,
     ProcessEventOptions,
+    ConstructorCommand,
 } from './interfaces/main';
 import SlashCommand from './SlashCommand';
 import Event from './Event';
@@ -150,7 +151,9 @@ export default class KiwiiClient extends Client {
      * @param token The token used to log
      */
     //@ts-ignore
-    public login(token: string | undefined = this.config.discord.token): KiwiiClient {
+    public login(
+        token: string | undefined = this.config.discord.token
+    ): KiwiiClient {
         // Log super in with the supplied token
         super.login(token);
 
@@ -177,41 +180,51 @@ export default class KiwiiClient extends Client {
         }
         files.forEach(async (file) => {
             try {
-                const filePath = `${process.cwd()}${path.sep}${file}`;
-                let command: Command | null = await import(filePath);
+                const filePath = path.resolve(
+                    `${process.cwd()}${path.sep}${file}`
+                );
+                let command: Command | null | any = await import(filePath);
+                command = (command as any).default;
                 if (this.utils.isClass(command)) {
-                    command = new (await import(filePath))(this);
-                    if (this.commands.has(command!.help.name)) {
-                        console.error(
-                            new Error(
-                                `Command name duplicate: ${command!.help.name}`
-                            ).stack
+                    if (command) {
+                        command = new command(this) as Command;
+                        if (this.commands.has(command!.help.name)) {
+                            console.error(
+                                new Error(
+                                    `Command name duplicate: ${
+                                        command!.help.name
+                                    }`
+                                ).stack
+                            );
+                            return process.exit(1);
+                        }
+                        this.commands.set(
+                            command!.help.name,
+                            command as Command
                         );
-                        return process.exit(1);
-                    }
-                    this.commands.set(command!.help.name, command as Command);
-                    if (
-                        command!.help.category === '' ||
-                        !command!.help.category
-                    )
-                        command!.help.category = 'unspecified';
-                    this.categories.add(command!.help.category);
+                        if (
+                            command!.help.category === '' ||
+                            !command!.help.category
+                        )
+                            command!.help.category = 'unspecified';
+                        this.categories.add(command!.help.category);
 
-                    if (command!.config.aliases) {
-                        command!.config.aliases.forEach((alias) => {
-                            if (this.aliases.has(alias)) {
-                                console.error(
-                                    new Error(
-                                        `Alias name duplicate: ${
-                                            command!.config.aliases
-                                        }`
-                                    ).stack
-                                );
-                                return process.exit(1);
-                            } else {
-                                this.aliases.set(alias, command as Command);
-                            }
-                        });
+                        if (command!.config.aliases) {
+                            command!.config.aliases.forEach((alias: string) => {
+                                if (this.aliases.has(alias)) {
+                                    console.error(
+                                        new Error(
+                                            `Alias name duplicate: ${
+                                                command!.config.aliases
+                                            }`
+                                        ).stack
+                                    );
+                                    return process.exit(1);
+                                } else {
+                                    this.aliases.set(alias, command as Command);
+                                }
+                            });
+                        }
                     }
                 } else {
                     command = null;
@@ -242,7 +255,10 @@ export default class KiwiiClient extends Client {
             }
             files = files.filter((file) => file.endsWith('.js'));
             files.forEach(async (file) => {
-                let event = await import(`../events/${file}`);
+                let event = await import(
+                    `${process.cwd()}\\dist\\src\\events\\${file}`
+                );
+                event = event.default;
                 if (this.utils.isClass(event)) {
                     event = new event(this);
                     this.events.set(event.name, event);
@@ -250,13 +266,15 @@ export default class KiwiiClient extends Client {
                         event.execute(...args)
                     );
                     if (event.name) {
-                        table.addRow(event.name, 'Ready');
+                        // table.addRow(event.name, 'Ready');
+                        Console.success('Loaded event', event.name);
                     } else {
-                        table.addRow(event.name, '\x1b[31mERR!\x1b[0m');
+                        // table.addRow(event.name, '\x1b[31mERR!\x1b[0m');
+                        Console.error('Err.');
                     }
                 }
             });
-            console.log(table.toString());
+            // console.log(table.toString());
         });
         return this;
     }
@@ -295,7 +313,10 @@ export default class KiwiiClient extends Client {
      * @param events The process event name to listen to
      * @param config The configuration for the process events.
      */
-    public listentoProcessEvents(events: string[], config: ProcessEventOptions): void {
+    public listentoProcessEvents(
+        events: string[],
+        config: ProcessEventOptions
+    ): void {
         if (!Array.isArray(events)) {
             throw new Error('Event must be an array!');
         }

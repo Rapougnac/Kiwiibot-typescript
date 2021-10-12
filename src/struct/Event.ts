@@ -14,7 +14,7 @@ export default class Event {
         this.emitter =
             typeof options.emitter === 'string'
                 ? this.client[options.emitter]
-                : (options.emitter as Listener);
+                : (options.emitter as Listener) || this.client as unknown as Listener;
         this._validate(options);
     }
     public execute(...args: any[]): Promise<void | Message> | void | Message {
