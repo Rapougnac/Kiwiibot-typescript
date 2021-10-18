@@ -130,3 +130,5 @@ declare module 'mongoose' {
         _hasOpened: boolean;
     }
 }
+
+declare module '*.png'
