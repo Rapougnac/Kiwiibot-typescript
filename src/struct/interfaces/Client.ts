@@ -4,7 +4,7 @@ export interface Config {
     domain: string;
     port: number;
     usingCustomDomain: boolean;
-    clientSecret: boolean;
+    clientSecret: string;
     discord: {
         token: string;
         status: PresenceStatusData;
@@ -54,7 +54,6 @@ export interface Config {
             useUnifiedTopology: boolean;
             useNewUrlParser: boolean;
             autoIndex: boolean;
-            poolSize: number;
             connectTimeoutMS: number;
             family: number;
         };
@@ -75,7 +74,7 @@ export interface Config {
 export interface KiwiiClientOptions {
     prefix: string;
     config: Config;
-    clientOptions: ClientOptions;
+    clientOptions?: ClientOptions;
     disabledEvents?: string[];
     owners: string | string[];
 }
