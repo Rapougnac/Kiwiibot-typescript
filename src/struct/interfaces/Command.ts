@@ -1,4 +1,5 @@
 import { PermissionString } from 'discord.js';
+import KiwiiClient from '../Client';
 import Command from '../Command';
 export interface CommandOptions {
     /**
@@ -159,5 +160,5 @@ export interface TraceOptions {
 }
 
 export interface ConstructorCommand {
-    new (): Command;
+    new (client: KiwiiClient, options?: CommandOptions): Command;
 }
