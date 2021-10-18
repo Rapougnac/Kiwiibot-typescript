@@ -225,7 +225,7 @@ export default class KiwiiClient extends Client {
             }
         });
 
-        Console.success(`Loaded ${this.commands.size} commands`);
+        Console.success(`Loaded ${files.length} commands`);
         return this;
     }
     /**
