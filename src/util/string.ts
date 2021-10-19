@@ -153,6 +153,20 @@ function trimArray(
     }
     return array;
 }
+
+/**
+ * Convert a string to proper case
+ * @param s The string to proper
+ * @returns The proper string
+ * @example 
+ * const myString = 'hello world';
+ * const newString = toProperCase(myString);
+ * console.log(newString); // Hello World
+ */
+function toProperCase(s: string): string {
+    return s.replace(/([^\W_]+[^\s-]*)/g, (str: string) => str.charAt(0).toUpperCase() + str.substr(1).toLowerCase());
+}
+
 export {
     textTruncate,
     ordinalize,
@@ -162,4 +176,5 @@ export {
     clean,
     convertUFB,
     trimArray,
+    toProperCase
 };
