@@ -167,6 +167,20 @@ function toProperCase(s: string): string {
     return s.replace(/([^\W_]+[^\s-]*)/g, (str: string) => str.charAt(0).toUpperCase() + str.substr(1).toLowerCase());
 }
 
+function remove(array: string[], ..._args: any): string[] {
+    let what,
+        a = arguments,
+        L = a.length,
+        ax;
+    while (L && array.length) {
+        what = a[--L];
+        while ((ax = array.indexOf(what)) !== -1) {
+            array.splice(ax, 1);
+        }
+    }
+    return array;
+}
+
 export {
     textTruncate,
     ordinalize,
@@ -176,5 +190,6 @@ export {
     clean,
     convertUFB,
     trimArray,
-    toProperCase
+    toProperCase,
+    remove
 };

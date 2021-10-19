@@ -125,21 +125,6 @@ export default class KiwiiClient extends Client {
         Console.success(
             `Client has been initialized, you're using ${process.version}`
         );
-        //@ts-ignore
-        Array.prototype.remove = function () {
-            let what,
-                a = arguments,
-                L = a.length,
-                ax;
-
-            while (L && this.length) {
-                what = a[--L];
-                while ((ax = this.indexOf(what)) !== -1) {
-                    this.splice(ax, 1);
-                }
-            }
-            return this;
-        };
     }
 
     /**

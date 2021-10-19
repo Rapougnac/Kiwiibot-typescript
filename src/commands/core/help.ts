@@ -3,9 +3,8 @@ import { joinArray } from '../../util/string';
 import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
-import { clientMap } from '../../../config';
 import { Guild } from '../../struct/interfaces/Guild';
-
+import { remove } from '../../util/string';
 export default class HelpCommand extends Command {
     constructor(client: KiwiiClient) {
         super(client, {
@@ -56,8 +55,7 @@ export default class HelpCommand extends Command {
                 });
             }
         } else {
-            //@ts-ignore
-            for (const category of [...client.categories].remove('nsfw')) {
+            for (const category of remove([...this.client.categories], 'nsfw')) {
                 fields.push({
                     name: `${
                         this.client.commands.filter(
