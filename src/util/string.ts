@@ -51,7 +51,6 @@ function separateNumbers(number: number | string, sep: string = "'"): string {
  * @returns the joined array
  */
 function joinArray(array: any[] = [], lang = 'en-US'): string {
-    //@ts-ignore: Dunno why types are not counted
     let list = new Intl.ListFormat(lang);
     return list.format(array.map((x) => String(x)));
 }
