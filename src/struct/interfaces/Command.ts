@@ -161,4 +161,5 @@ export interface TraceOptions {
 
 export interface ConstructorCommand {
     new (client: KiwiiClient, options?: CommandOptions): Command;
+    prototype: Command;
 }
