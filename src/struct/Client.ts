@@ -25,6 +25,7 @@ import * as path from 'path';
 import { readdir, readdirSync } from 'fs';
 import mongoose from 'mongoose';
 import ProcessEvent from '../util/processEvent';
+import '../util/NativeExtended';
 /**
  * Represents a discord client
  * @extends Client

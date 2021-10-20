@@ -1,6 +1,17 @@
 import { APIMessageContentResolvable, Message } from 'discord.js';
 import { I18n } from 'i18n';
 
+declare global {
+    interface Array {
+        /**
+         * Remove a element of the array by it's name
+         * Returns a copy of the array, but without the elements passed in the parameter
+         * @param keys The keys to remove from the array
+         */
+        remove(...keys: string[]): string[];
+    }
+}
+
 declare namespace Intl {
     class ListFormat {
         public format: (items: [string?]) => string;
