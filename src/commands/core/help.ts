@@ -4,7 +4,6 @@ import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
 import { Guild } from '../../struct/interfaces/Guild';
-import { remove } from '../../util/string';
 export default class HelpCommand extends Command {
     constructor(client: KiwiiClient) {
         super(client, {
@@ -55,7 +54,7 @@ export default class HelpCommand extends Command {
                 });
             }
         } else {
-            for (const category of remove([...this.client.categories], 'nsfw')) {
+            for (const category of [...this.client.categories].remove('nsfw')) {
                 fields.push({
                     name: `${
                         this.client.commands.filter(
