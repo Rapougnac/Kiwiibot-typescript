@@ -30,7 +30,7 @@ export interface InteractionDeferOptions {
 }
 
 /**
- * The edit options of {@link CommandInteraction.edit edit}
+ * The edit options of {@link CommandInteraction.edit edit()}
  */
 export interface EditOptions {
     /**
