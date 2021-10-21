@@ -112,7 +112,7 @@ export default class ReadyEvent extends Event {
         files.forEach(async (file) => {
             const filePath = resolve(process.cwd(), file);
             let SlashCommand: SlashCommandConstructor = await import(`${filePath}`);
-
+            SlashCommand = (SlashCommand as any).default;
             if (this.client.utils.isClass(SlashCommand)) {
 
                     const command = new SlashCommand(this.client);
