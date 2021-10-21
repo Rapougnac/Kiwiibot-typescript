@@ -74,7 +74,7 @@
 		"canceled": "Prefix reset has been canceled!"
 	},
 	"setlanguage": {
-		"description": "",
+		"description": "Set the language of the bot. There's currently only 2 languages, `FRench` & `ENglish`",
 		"not_supported_language": "This language is not supported yet!",
 		"set_language": "Language has been setted!"
 	},
