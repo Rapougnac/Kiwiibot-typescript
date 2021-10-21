@@ -20,7 +20,6 @@ client.connect();
 client.start();
 
 client.ws.on('INTERACTION_CREATE' as WSEventType as any, (int: any) => {
-    console.log(int);
     let interaction = new Interaction(client, int);
     if (interaction.isCommand()) {
         const interaction = new CommandInteraction(client, int);
