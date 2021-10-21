@@ -19,6 +19,7 @@ import Loader from './LoadingBar';
 import { TimeData, Interaction, Guild } from './interfaces/main';
 import Command from './Command';
 import KiwiiClient from './Client';
+import NekoClient from 'nekos.life';
 export default class Util {
     /**
      * The client passed in
@@ -28,9 +29,14 @@ export default class Util {
      * The loader class
      */
     public loader: Loader;
+    /**
+     * The neko client
+     */
+    public readonly neko: NekoClient;
     constructor(client: Client) {
         this.client = client;
         this.loader = new Loader();
+        this.neko = new NekoClient();
     }
 
     formatPerms(perms: PermissionString) {
