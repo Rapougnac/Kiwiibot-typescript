@@ -16,7 +16,11 @@ export default class ServerInfoCommand extends Command {
             guildOnly: true,
         });
     }
-    public async execute(client: KiwiiClient, message: Message, args: string[]) {
+    public async execute(
+        client: KiwiiClient,
+        message: Message,
+        args: string[]
+    ) {
         const { guild } = message;
         if (!guild) return;
         const { afkTimeout } = guild;
