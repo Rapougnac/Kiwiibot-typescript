@@ -152,7 +152,6 @@ export interface Config {
             useNewUrlParser: boolean;
             autoIndex: boolean;
             connectTimeoutMS: number;
-            family: number;
         };
     };
     /**

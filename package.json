@@ -17,7 +17,7 @@
     "i18n": "^0.13.3",
     "kitsu.js": "^2.0.0",
     "lodash": "^4.17.21",
-    "mongoose": "^6.0.9",
+    "mongoose": "5.13.11",
     "node-fetch": "^3.0.0"
   },
   "devDependencies": {

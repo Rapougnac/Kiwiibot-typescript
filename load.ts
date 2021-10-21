@@ -33,7 +33,7 @@ const loadPrefix = async (client: KiwiiClient): Promise<void> => {
             );
         }
     } catch (error: any) {
-        console.error(
+        return Promise.reject(
             `⚠️[DATABASE ERROR] The database responded with the following error: ${error.name}\n${error}`
         );
     }
