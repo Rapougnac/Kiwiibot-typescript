@@ -32,13 +32,14 @@ export default class PingSlashCommand extends SlashCommand {
             if (!message) return;
             const ping =
                 message.createdTimestamp - interaction.createdTimestamp;
-            const str = interaction.send(
+            const str = await interaction.send(
                 `🏓 P${'o'.repeat(
                     Math.min(Math.round(ping / 100), 1500)
                 )}ng! The ping is: \`${ping}ms\`\n\`Hearthbeat${
                     this.client.ws.ping
                 }ms`
             );
+            interaction.edit(str);
         }
     }
 }
