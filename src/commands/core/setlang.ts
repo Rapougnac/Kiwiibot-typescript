@@ -19,7 +19,9 @@ export default class SetLangCommand extends Command {
 
     public async execute(client: Client, message: Message, [language]: string[]) {
         if (message.guild) {
-            const targetedlanguage = language.toLowerCase();
+            let targetedlanguage = language.toLowerCase();
+            if(targetedlanguage.includes('french')) targetedlanguage = 'fr';
+            else if(targetedlanguage.includes('english')) targetedlanguage = 'en';
             if (!message.guild.i18n.getLocales().includes(targetedlanguage)) {
                 return await message.channel.send(
                     message.guild.i18n.__mf(
