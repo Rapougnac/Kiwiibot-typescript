@@ -200,7 +200,7 @@
 		"mentionnable": "roleinfo.mentionnable"
 	},
 	"serverinfo": {
-		"description": "",
+		"description": "Get informations about the server",
 		"name": "Name",
 		"region": "Region",
 		"members": "Members",
