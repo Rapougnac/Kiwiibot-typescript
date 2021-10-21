@@ -16,7 +16,9 @@
 		"wait": "**Veuillez patientez...**"
 	},
 	"setlanguage": {
-		"set_language": "La langue a bien été définie !"
+        "description": "Change la langue du bot.\nActuellement, il y a les langues `FRançais` & `(E)ANglais`",
+		"set_language": "La langue a bien été définie !",
+        "not_supported_language": "Cette langue n'est pas encore supportée !"
 	},
 	"roleinfo": {
 		"description": "Montre des informations sur le rôle spécifié",
