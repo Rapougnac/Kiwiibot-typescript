@@ -2,6 +2,7 @@ import Interaction from './Interaction';
 import { ApplicationCommandOptionTypes } from '../../util/constants';
 import {
     APIMessage,
+    APIMessageContentResolvable,
     Message,
     MessageReaction,
     User,
@@ -65,7 +66,7 @@ export default class CommandInteraction extends Interaction {
      * @param options If the interaction should be ephemeral
      */
     async send(
-        content: string,
+        content: APIMessageContentResolvable,
         options: SendOptions = { ephemeral: false }
     ): Promise<string> {
         let data;
@@ -175,7 +176,11 @@ export default class CommandInteraction extends Interaction {
         return message.react(emoji);
     }
 
-    async fetchReply() {
+    /**
+     * Fetch the reply sended to convert to a {@link Message Message object}
+     * @returns The message that was sent
+     */
+    async fetchReply(): Promise<Message> {
         if (this.ephemeral) throw new Error('This interaction is ephemeral.');
         const msg = await (this.client as any).api
             .webhooks(this.client.user!.id, this.token)
@@ -271,15 +276,15 @@ export default class CommandInteraction extends Interaction {
  * @param response The response if there're embeds options
  */
 async function createAPIMessage(
-    content: undefined,
+    content: APIMessageContentResolvable,
     channel: MessageTarget | Channel,
-    response: string,
+    response: APIMessageContentResolvable,
     options?: MessageOptions | WebhookMessageOptions
 ): Promise<{ files: object[] | null }> {
     const { data, files } = await APIMessage.create(
         channel as MessageTarget,
         response,
-        content,
+        content as any,
         options
     )
         .resolveData()
