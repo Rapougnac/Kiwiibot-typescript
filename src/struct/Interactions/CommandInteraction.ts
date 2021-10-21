@@ -66,7 +66,7 @@ export default class CommandInteraction extends Interaction {
     async send(
         content: string,
         options: SendOptions = { ephemeral: false }
-    ): Promise<any> {
+    ): Promise<string> {
         let data;
         if (options.ephemeral)
             data = {
