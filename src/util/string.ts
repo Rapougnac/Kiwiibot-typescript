@@ -39,7 +39,8 @@ function ordinalize(n: number = 0): string {
  * separateNumbers(1234.567); // will return `1'234.567`;
  * @returns The numbers with quotation marks
  */
-function separateNumbers(number: number | string, sep: string = "'"): string {
+function separateNumbers(number: number | string, locale: string = 'en', sep: string = ','): string {
+    if (locale === 'fr') sep = "'";
     return Number(number)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, sep);
@@ -158,13 +159,17 @@ function trimArray(
  * Convert a string to proper case
  * @param s The string to proper
  * @returns The proper string
- * @example 
+ * @example
  * const myString = 'hello world';
  * const newString = toProperCase(myString);
  * console.log(newString); // Hello World
  */
 function toProperCase(s: string): string {
-    return s.replace(/([^\W_]+[^\s-]*)/g, (str: string) => str.charAt(0).toUpperCase() + str.substr(1).toLowerCase());
+    return s.replace(
+        /([^\W_]+[^\s-]*)/g,
+        (str: string) =>
+            str.charAt(0).toUpperCase() + str.substr(1).toLowerCase()
+    );
 }
 
 function remove(array: string[], ..._args: any): string[] {
@@ -191,5 +196,5 @@ export {
     convertUFB,
     trimArray,
     toProperCase,
-    remove
+    remove,
 };
