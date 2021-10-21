@@ -21,7 +21,7 @@ export default class PingSlashCommand extends SlashCommand {
             if (!message) return;
             const ping =
                 message.createdTimestamp - interaction.createdTimestamp;
-            const str = message.guild.i18n.__mf('ping.msg', {
+            const str = message.guild!.i18n.__mf('ping.msg', {
                 pong: 'o'.repeat(Math.min(Math.round(ping / 100), 1500)),
                 ping: ping,
                 heartbeat: this.client.ws.ping,
