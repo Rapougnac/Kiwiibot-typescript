@@ -26,7 +26,7 @@ export default class PingCommand extends Command {
         const string = message.guild!.i18n.__mf('ping.msg', {
             pong: 'o'.repeat(Math.min(Math.round(ping / 100), 1500)),
             ping: ping,
-            heartbeat: separateNumbers(client.ws.ping),
+            heartbeat: separateNumbers(client.ws.ping, message.guild?.i18n.getLocale()),
         });
         msg.edit(string, {
             allowedMentions: {
