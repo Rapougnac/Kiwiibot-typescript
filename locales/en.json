@@ -257,8 +257,8 @@
     },
     "baka": {
         "description": "Say baka to somebody",
-        "title_alone": "{author} said baka to themselves",
-        "title_smbdy": "{author} said baka to {member}"
+        "title_alone": "{author} said baka to themselves <:Baka:900843311387017297>",
+        "title_smbdy": "{author} said baka to {member} <:Baka:900843311387017297>"
     },
     "blush": {
         "description": ""
