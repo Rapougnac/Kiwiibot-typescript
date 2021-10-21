@@ -58,18 +58,16 @@ export interface CommandOptions {
     /**
      * The choices to add, if provided
      */
-    choices?: [
-        {
-            /**
-             * The name of the choice
-             */
-            name: string;
-            /**
-             * The value of the choice
-             */
-            value: string;
-        }
-    ];
+    choices?: {
+        /**
+         * The name of the choice
+         */
+        name: string;
+        /**
+         * The value of the choice
+         */
+        value: string;
+    }[];
     /**
      * The command options
      */
