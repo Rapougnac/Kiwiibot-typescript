@@ -1,3 +1,4 @@
+import KiwiiClient from '../Client';
 import Event from '../Event';
 export interface EventOptions {
     /**
@@ -19,7 +20,8 @@ export interface Listener {
     once: () => void;
 }
 export interface EventConstructor {
-    new (): Event;
+    new (client: KiwiiClient, options?: EventOptions): Event;
+    readonly prototype: Event;
 }
 export type ClientEvents =
     | 'applicationCommandCreate'
