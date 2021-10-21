@@ -17,7 +17,7 @@ export default class SetLangCommand extends Command {
         });
     }
 
-    async execute(client: Client, message: Message, [language]: string[]) {
+    public async execute(client: Client, message: Message, [language]: string[]) {
         if (message.guild) {
             const targetedlanguage = language.toLowerCase();
             if (!message.guild.i18n.getLocales().includes(targetedlanguage)) {
