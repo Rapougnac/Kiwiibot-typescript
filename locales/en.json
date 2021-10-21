@@ -196,8 +196,7 @@
 		"on": "On",
 		"at": "at",
 		"hoisted": "Hoisted",
-		"mentionable": "Mentionable",
-		"mentionnable": "roleinfo.mentionnable"
+		"mentionable": "Mentionable"
 	},
 	"serverinfo": {
 		"description": "Get informations about the server",

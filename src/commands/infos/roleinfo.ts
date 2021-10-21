@@ -86,7 +86,7 @@ export default class RoleInfoCommand extends Command {
                     true
                 )
                 .addField(
-                    message.guild.i18n.__mf('roleinfo.mentionnable'),
+                    message.guild.i18n.__mf('roleinfo.mentionable'),
                     role.mentionable
                         ? message.guild.i18n.__mf('common.yes')
                         : message.guild.i18n.__mf('common.no'),
