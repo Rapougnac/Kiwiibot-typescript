@@ -51,7 +51,7 @@ declare module 'discord.js' {
         /**
          * The i18n obect notation
          */
-        i18n: I18n;
+        readonly i18n: I18n;
         /**
          * The prefix of the guild, if there's one.
          */
