@@ -20,6 +20,8 @@ export interface SlashCommandOptions {
     commandOptions?: CommandOptions[];
 }
 
+type TypeNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
 export interface CommandOptions {
     /**
      * The name of the command
@@ -50,7 +52,7 @@ export interface CommandOptions {
      *
      * `9` = MENTIONABLE
      */
-    type: number;
+    type: TypeNumber;
     /**
      * If the option is required
      */
