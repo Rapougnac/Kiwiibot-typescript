@@ -1,5 +1,5 @@
 import { Structures, Guild, Client } from 'discord.js';
-import i18n, { I18n } from 'i18n';
+import { I18n } from 'i18n';
 import KiwiiClient from './Client';
 import * as path from 'path';
 
