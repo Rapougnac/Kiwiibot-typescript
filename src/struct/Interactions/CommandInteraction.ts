@@ -15,7 +15,7 @@ import {
     TextChannel,
     DMChannel,
     NewsChannel,
-    Guild
+    Guild,
 } from 'discord.js';
 import CommandInteractionOptionResolver from './CommandInteractionOptionResolver';
 import KiwiiClient from '../Client';
@@ -25,7 +25,8 @@ import {
     InteractionDeferOptions,
     EditOptions,
     SubOptions,
-    ResolvedData
+    ResolvedData,
+    CommandInteractionType,
 } from '../interfaces/main';
 export default class CommandInteraction extends Interaction {
     /**
@@ -44,7 +45,7 @@ export default class CommandInteraction extends Interaction {
      * If the Interaction is ephemeral
      */
     public ephemeral: boolean | null;
-    constructor(client: KiwiiClient, data: any) {
+    constructor(client: KiwiiClient, data: CommandInteractionType) {
         super(client, data);
         this.commandId = data.data.id;
 
@@ -210,7 +211,7 @@ export default class CommandInteraction extends Interaction {
             type: ApplicationCommandOptionTypes[option.type],
         };
 
-        if ('value' in option) result.value = option.value;
+        if ('value' in option) result.value = option.value as string;
         if ('options' in option)
             //@ts-ignore
             result.options = option.options.map((opt) =>
@@ -218,13 +219,13 @@ export default class CommandInteraction extends Interaction {
             );
 
         if (resolved) {
-            const user = resolved.users?.[option.value];
+            const user = resolved.users?.[option.value ?? 0];
             if (user) {
                 result.user = this.client.users.add(user);
                 if (!(result.user instanceof User))
                     result.user = this.client.users.resolve(user);
             }
-            const member = resolved.members?.[option.value];
+            const member = resolved.members?.[option.value ?? 0];
             if (member) {
                 result.member =
                     this.guild?.members.add({ user, ...member }) ?? member;
@@ -232,16 +233,21 @@ export default class CommandInteraction extends Interaction {
                     result.member =
                         this.guild?.members.add({ user, ...member }) ?? member;
             }
-            const channel = resolved.channels?.[option.value];
+            const channel = resolved.channels?.[option.value ?? 0];
             if (channel) {
                 result.channel =
-                    this.client.channels.add(channel, this.guild as unknown as boolean) ?? channel;
+                    this.client.channels.add(
+                        channel,
+                        this.guild as unknown as boolean
+                    ) ?? channel;
                 if (!(result.channel instanceof Channel))
                     result.channel =
-                        this.client.channels.add(channel, this.guild as unknown as boolean) ??
-                        channel;
+                        this.client.channels.add(
+                            channel,
+                            this.guild as unknown as boolean
+                        ) ?? channel;
             }
-            const role = resolved.roles?.[option.value];
+            const role = resolved.roles?.[option.value ?? 0];
             if (role) {
                 result.role =
                     this.guild?.roles.resolve(role.id) ??

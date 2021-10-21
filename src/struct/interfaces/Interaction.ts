@@ -34,11 +34,11 @@ export interface Options {
     /**
      * If there's reccursive options
      */
-    options: SubOptions[] | Options[];
+    options?: SubOptions[] | Options[];
     /**
      * The value of the option
      */
-    value: string;
+    value?: string;
 }
 
 export interface Data {
