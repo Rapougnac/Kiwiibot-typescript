@@ -13,6 +13,9 @@ export interface SubOptions {
      * The type of the option, `string` is caused by {@link CommandInteraction.transformOption}
      */
     type: number | string;
+    /**
+     * The value of the option
+     */
     value: string;
 }
 

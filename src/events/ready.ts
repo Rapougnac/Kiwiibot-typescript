@@ -10,6 +10,7 @@ import express from 'express';
 import { getCommands } from '../util/getCmds';
 import SlashCommand from '../struct/SlashCommand';
 import { resolve, sep } from 'path';
+import { SlashCommandConstructor } from '../struct/interfaces/main';
 
 export default class ReadyEvent extends Event {
     constructor(client: KiwiiClient) {
@@ -46,8 +47,8 @@ export default class ReadyEvent extends Event {
         ];
         setInterval(async () => {
             const i = statuses[Math.floor(Math.random() * statuses.length)];
-            await this.client.user!
-                .setPresence({
+            await this.client
+                .user!.setPresence({
                     activity: {
                         name: `${this.client.prefix}help | ${i}`,
                         type: 'PLAYING',
@@ -57,32 +58,32 @@ export default class ReadyEvent extends Event {
                 .catch(console.error);
         }, 1e4);
         Console.success(
-            `Ready on ${this.client.guilds.cache.size
+            `Ready on ${
+                this.client.guilds.cache.size
             } servers, for a total of ${this.client.guilds.cache.reduce(
                 (a, b) => a + b.memberCount,
                 0
             )} users`
         );
         const d = new Date(),
-            timedate = [
-                (d.getMonth() + 1),
-                d.getDate(),
-                d.getFullYear(),
-            ].join('/'),
-            timehrs = [
-                d.getHours(),
-                d.getMinutes(),
-                d.getSeconds(),
-            ].join(':');
+            timedate = [d.getMonth() + 1, d.getDate(), d.getFullYear()].join(
+                '/'
+            ),
+            timehrs = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
         Console.success(
-            `${this.client.user!.username} is now Online! (Loaded in ${bootTime} ms)\n`,
+            `${
+                this.client.user!.username
+            } is now Online! (Loaded in ${bootTime} ms)\n`,
             `${timedate} ${timehrs}`
         );
         //express
         const app = express();
         const x = {
             guilds: this.client.guilds.cache.size,
-            users: this.client.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
+            users: this.client.guilds.cache.reduce(
+                (a, b) => a + b.memberCount,
+                0
+            ),
             channels: this.client.channels.cache.size,
         };
         app.set('view engine', 'ejs');
@@ -97,9 +98,10 @@ export default class ReadyEvent extends Event {
         const { client } = this;
         app.get('/commands', (req, res) => {
             const commands = getCommands(client);
-            res
-                .status(200)
-                .render(`${process.cwd()}/src/dash/ejs/main.ejs`, { commands, client });
+            res.status(200).render(`${process.cwd()}/src/dash/ejs/main.ejs`, {
+                commands,
+                client,
+            });
         });
         app.listen(this.client.config.port);
     }
@@ -108,13 +110,12 @@ export default class ReadyEvent extends Event {
         const files = glob.sync('./dist/src/slash_commands/**/*.js');
 
         files.forEach(async (file) => {
-            const filePath = resolve(process.cwd(), '\\', file);
-            let command: SlashCommand | null = await import(`${filePath}`);
+            const filePath = resolve(process.cwd(), file);
+            let SlashCommand: SlashCommandConstructor = await import(`${filePath}`);
 
-            if (this.client.utils.isClass(command)) {
-                if (command) {
-                    //@ts-ignore
-                    command = await new (import(`${filePath}`)(this.client));
+            if (this.client.utils.isClass(SlashCommand)) {
+
+                    const command = new SlashCommand(this.client);
                     if (command!.global) {
                         (this.client as any).api
                             .applications(this.client.user!.id)
@@ -147,7 +148,6 @@ export default class ReadyEvent extends Event {
                         )} [${command!.global ? 'global' : 'guild'}]`
                     );
                 }
-            } else command = null;
         });
         const globalCommands = await (this.client as any).api
             .applications(this.client.user!.id)

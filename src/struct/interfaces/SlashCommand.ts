@@ -1,3 +1,6 @@
+import KiwiiClient from '../Client';
+import SlashCommand from '../SlashCommand';
+
 export interface SlashCommandOptions {
     /**
      * The name of the command
@@ -56,7 +59,7 @@ export interface CommandOptions {
      * The choices to add, if provided
      */
     choices?: [
-        {   
+        {
             /**
              * The name of the choice
              */
@@ -71,4 +74,12 @@ export interface CommandOptions {
      * The command options
      */
     options?: CommandOptions[];
+}
+
+/**
+ * The constructor of the slash command
+ */
+export interface SlashCommandConstructor {
+    new (client: KiwiiClient, options?: CommandOptions): SlashCommand;
+    readonly prototype: SlashCommand;
 }
