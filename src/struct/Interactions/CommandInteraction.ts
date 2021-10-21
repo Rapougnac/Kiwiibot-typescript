@@ -66,7 +66,7 @@ export default class CommandInteraction extends Interaction {
      * @param options If the interaction should be ephemeral
      */
     async send(
-        content: APIMessageContentResolvable,
+        content: APIMessageContentResolvable | any,
         options: SendOptions = { ephemeral: false }
     ): Promise<string> {
         let data;
@@ -276,9 +276,9 @@ export default class CommandInteraction extends Interaction {
  * @param response The response if there're embeds options
  */
 async function createAPIMessage(
-    content: APIMessageContentResolvable,
+    content: APIMessageContentResolvable | any,
     channel: MessageTarget | Channel,
-    response: APIMessageContentResolvable,
+    response: APIMessageContentResolvable | any,
     options?: MessageOptions | WebhookMessageOptions
 ): Promise<{ files: object[] | null }> {
     const { data, files } = await APIMessage.create(

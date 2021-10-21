@@ -6,7 +6,6 @@ import {
     ImageSize,
     Message,
     MessageTarget,
-    APIMessageContentResolvable,
     MessageOptions,
     MessageAdditions,
     WebhookMessageOptions,
@@ -88,7 +87,7 @@ export default class Util {
             this.client.channels.resolve(
                 interaction.channel_id
             ) as MessageTarget,
-            str as APIMessageContentResolvable,
+            str,
             content
         )
             .resolveData()
