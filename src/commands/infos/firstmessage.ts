@@ -1,64 +1,65 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import {
+    Message,
+    MessageEmbed,
+    MessageAttachment,
+    Snowflake,
+    Collection,
+} from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
-export default class InRoleCommand extends Command {
+export default class FirstMessageCommand extends Command {
     constructor(client: Client) {
         super(client, {
-            name: 'inrole',
-            aliases: ['ir'],
-            description: 'Get all members with the specified role',
+            name: 'firstmessage',
+            aliases: ['fm', 'first-message'],
+            description: 'Get the first message of the current channel',
             category: 'infos',
             cooldown: 5,
-            utilisation: '{prefix}inrole [role id, mention or name]',
+            utilisation: '{prefix}firstmessage',
             clientPermissions: ['EMBED_LINKS'],
         });
     }
-
-    public async execute(
-        client: Client,
-        message: Message,
-        args: string[]
-    ): Promise<any> {
+    async execute(client: Client, message: Message, args: string[]) {
         if (!message.guild) return;
-        let role =
-            message.mentions.roles.first() ||
-            message.guild.roles.cache.get(args[0]) ||
-            message.guild.roles.cache.find(
-                (r) =>
-                    r.name
-                        .toLowerCase()
-                        .startsWith(args.join(' ').toLowerCase()) ||
-                    r.name.toLowerCase().endsWith(args.join(' ').toLowerCase())
-            ) ||
-            message.guild.roles.cache.find((r) =>
-                r.name.includes(args.join(' '))
-            );
-        if (args.length <= 0) role = undefined;
-        if (!role)
+        const fetchMessages = (await message.channel.messages.fetch({
+            after: 1,
+            limit: 1,
+        } as any)) as unknown as Collection<Snowflake, Message>;
+        const msg = fetchMessages.first();
+        if (!msg)
             return message.inlineReply(
-                message.guild.i18n.__mf('inrole.missing_role'),
-                { allowedMentions: { repliedUser: false } }
+                message.guild.i18n.__mf('firstmessage.not_found')
             );
-        const memRole = message.guild.roles.cache
-            .get(role.id)!
-            .members.map((m) => `${m.user.tag}${m.user.bot ? '[BOT]' : ''}`)
-            .join('\n');
+
         const embed = new MessageEmbed()
-            .setAuthor(
-                message.author.tag,
-                message.author.displayAvatarURL({
-                    dynamic: true,
-                    size: 512,
-                    format: 'png',
-                })
-            )
             .setTitle(
-                message.guild.i18n.__mf('inrole.dislay_role', {
-                    role_name: role.name,
+                message.guild.i18n.__mf('firstmessage.first_message', {
+                    channel_name:
+                        message.channel.type === 'text'
+                            ? message.channel.name
+                            : '',
                 })
             )
-            .setColor(role.color)
-            .setDescription(`\`\`\`css\n${memRole}\`\`\``);
+            .setURL(msg.url)
+            .setThumbnail(msg.author.displayAvatarURL({ dynamic: true }))
+            .setDescription(
+                message.guild.i18n.__mf('firstmessage.content') + msg.content
+            )
+            .addField(
+                message.guild.i18n.__mf('firstmessage.author'),
+                msg.author,
+                true
+            )
+            .addField(
+                message.guild.i18n.__mf('firstmessage.msg_id'),
+                msg.id,
+                true
+            )
+            .addField(
+                message.guild.i18n.__mf('firstmessage.created'),
+                msg.createdAt.toLocaleDateString(),
+                true
+            );
         message.channel.send(embed);
     }
 }
