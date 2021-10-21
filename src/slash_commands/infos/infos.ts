@@ -19,6 +19,7 @@ export default class InfoSlash extends SlashCommand {
         super(client, {
             name: 'info',
             description: 'Get infos about a user, a role, or the server',
+            global: false,
             commandOptions: [
                 {
                     name: 'user',

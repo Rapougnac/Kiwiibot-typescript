@@ -129,7 +129,7 @@ export default class ReadyEvent extends Event {
                     } else {
                         (this.client as any).api
                             .applications(this.client.user!.id)
-                            .guilds('692311924448297011')
+                            .guilds('895600122510069801')
                             .commands.post({
                                 data: {
                                     name: command!.name,
@@ -154,7 +154,7 @@ export default class ReadyEvent extends Event {
             .commands.get();
         const guildCommands = await (this.client as any).api
             .applications(this.client.user!.id)
-            .guilds('692311924448297011')
+            .guilds('895600122510069801')
             .commands.get();
         globalCommands.forEach((globCmd: any) => {
             console.log(
