@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { joinArray } from '../../util/string';
+import { joinArray, translatePermissions } from '../../util/string';
 import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
@@ -133,9 +133,9 @@ export default class HelpCommand extends Command {
                 this.client.aliases.get(args.join(' ').toLowerCase());
             if (!command)
                 return message.channel.send(
-                    `\\${client.emotes.error} - ${(
-                        message.guild as unknown as Guild
-                    ).i18n.__mf('help.not_found')}`
+                    `\\${client.emotes.error} - ${message.guild.i18n.__mf(
+                        'help.not_found'
+                    )}`
                 );
             if (command.config.hidden) {
                 return message.channel.send(
@@ -159,8 +159,13 @@ export default class HelpCommand extends Command {
             let description = message.guild.i18n.__mf(
                 `${command.help.name}.description`
             );
-            if(description === `${command.help.name}.description` || !(description)) {
-                description = command.help.description ?? message.guild.i18n.__mf('help.no_desc');
+            if (
+                description === `${command.help.name}.description` ||
+                !description
+            ) {
+                description =
+                    command.help.description ??
+                    message.guild.i18n.__mf('help.no_desc');
             }
             await message.channel.send({
                 embed: {
@@ -232,19 +237,24 @@ export default class HelpCommand extends Command {
                                     ? message.guild.i18n.__mf(
                                           'help.no_permissions'
                                       )
-                                    : command.config.permissions.map((x) =>
-                                          x
-                                              .toLowerCase()
+                                    : translatePermissions(
+                                          command.config.permissions,
+                                          message.guild.i18n.getLocale()
+                                      ).map((x) => {
+                                          x = x.toLowerCase()
                                               .replace(/(^|"|_)(\S)/g, (z) =>
                                                   z.toUpperCase()
                                               )
-                                              .replace(/_/g, ' ')
-                                              .replace(
+                                              .replace(/_/g, ' ');
+                                          if (x.match(/Use Vad/g))
+                                              x.replace(
                                                   /Use Vad/g,
                                                   'Use Voice Activity'
-                                              )
-                                              .replace(/Guild/g, 'Server')
-                                      ),
+                                              );
+                                          if (x.match(/Guild/g))
+                                              x.replace(/Guild/g, 'Server');
+                                          return x;
+                                      }),
                             inline: true,
                         },
                         {
