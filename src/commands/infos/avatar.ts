@@ -16,6 +16,7 @@ export default class AvatarCommand extends Command {
             cooldown: 5,
             utilisation: '{prefix}avatar <member>',
             clientPermissions: ['EMBED_LINKS'],
+            img: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
         });
     }
     public async execute(client: Client, message: Message, args: string[]) {

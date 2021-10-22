@@ -13,6 +13,7 @@ export default class AnimeCommand extends Command {
             category: 'anime',
             cooldown: 10,
             utilisation: '{prefix}anime [anime]',
+            img: 'https://cdn-icons-png.flaticon.com/512/949/949549.png',
         });
     }
 

@@ -14,14 +14,20 @@ export default class SetLangCommand extends Command {
             permissions: ['MANAGE_MESSAGES'],
             guildOnly: true,
             ownerOnly: true,
+            img: 'https://image.flaticon.com/icons/png/512/1940/1940634.png',
         });
     }
 
-    public async execute(client: Client, message: Message, [language]: string[]) {
+    public async execute(
+        client: Client,
+        message: Message,
+        [language]: string[]
+    ) {
         if (message.guild) {
             let targetedlanguage = language.toLowerCase();
-            if(targetedlanguage.includes('french')) targetedlanguage = 'fr';
-            else if(targetedlanguage.includes('english')) targetedlanguage = 'en';
+            if (targetedlanguage.includes('french')) targetedlanguage = 'fr';
+            else if (targetedlanguage.includes('english'))
+                targetedlanguage = 'en';
             if (!message.guild.i18n.getLocales().includes(targetedlanguage)) {
                 return await message.channel.send(
                     message.guild.i18n.__mf(

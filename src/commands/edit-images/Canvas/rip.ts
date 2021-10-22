@@ -13,6 +13,7 @@ export default class RipCommand extends Command {
             category: 'edit-images',
             utilisation: '{prefix}rip <member>',
             clientPermissions: ['ATTACH_FILES'],
+            img: 'https://cdn-icons-png.flaticon.com/512/1301/1301675.png',
         });
     }
 

@@ -11,6 +11,7 @@ export default class RoleInfoCommand extends Command {
             description: 'Shows informations about the mentionned role',
             category: 'infos',
             utilisation: '{prefix}roleinfo [role]',
+            img: 'https://cdn-icons-png.flaticon.com/512/4406/4406353.png',
         });
     }
     public execute(

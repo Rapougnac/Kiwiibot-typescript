@@ -14,6 +14,7 @@ export default class EvalCommand extends Command {
             cooldown: 5,
             utilisation: '{prefix}eval [code]',
             ownerOnly: true,
+            img: 'https://cdn-icons-png.flaticon.com/512/993/993855.png',
         });
     }
     async execute(client: Client, message: Message, args: string[]) {

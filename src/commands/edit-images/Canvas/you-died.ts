@@ -13,6 +13,7 @@ export default class YouDiedCommand extends Command {
       category: 'edit-images',
       cooldown: 5,
       utilisation: '{prefix}youdied',
+      img: 'https://cdn-icons-png.flaticon.com/512/3782/3782105.png',
     });
   }
   async execute(client: Client, message: Message, args: string[]) {

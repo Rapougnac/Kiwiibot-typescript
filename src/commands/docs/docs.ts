@@ -12,6 +12,7 @@ export default class DocsCommand extends Command {
                 'Get the djs docs in an embed, you can specify the source by doing `--src {source}` (without the brackets) The sources are listed here: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`',
             category: 'docs',
             utilisation: '{prefix}docs [query] <--src> <[source]>',
+            img: 'https://image.flaticon.com/icons/png/512/2015/2015058.png',
         });
     }
 

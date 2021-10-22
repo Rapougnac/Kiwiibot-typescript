@@ -10,6 +10,7 @@ export default class SendPinsCommand extends Command {
             description: 'Send all pinned messages',
             category: 'docs',
             utilisation: '{prefix}sendpins',
+            img: 'https://image.flaticon.com/icons/png/512/2377/2377874.png',
         });
     }
 

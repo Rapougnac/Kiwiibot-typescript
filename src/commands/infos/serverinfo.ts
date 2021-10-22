@@ -14,6 +14,7 @@ export default class ServerInfoCommand extends Command {
             cooldown: 5,
             utilisation: '{prefix}serverinfo',
             guildOnly: true,
+            img: 'https://cdn-icons-png.flaticon.com/512/3208/3208727.png',
         });
     }
     public async execute(

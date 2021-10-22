@@ -12,6 +12,7 @@ export default class PollCommand extends Command {
             nsfw: false,
             adminOnly: true,
             clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS'],
+            img: 'https://image.flaticon.com/icons/png/512/3189/3189478.png',
         });
     }
     public async execute(

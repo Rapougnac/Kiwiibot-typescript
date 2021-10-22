@@ -16,6 +16,7 @@ export default class TrumpCommand extends Command {
       category: 'edit-images',
       cooldown: 5,
       utilisation: '{prefix}trump <verb> [text]',
+      img: 'https://image.flaticon.com/icons/png/512/3085/3085916.png',
     });
   }
   public async execute(client: Client, message: Message, [verb, ...args]: string[]) {

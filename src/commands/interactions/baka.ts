@@ -9,6 +9,7 @@ export default class BakaCommand extends Command {
             description: 'Say baka to somebody',
             category: 'interactions',
             utilisation: '{prefix}baka <user>',
+            img: 'https://i.pinimg.com/originals/9e/d5/9c/9ed59cfddb8386ad37683eebc2619f50.png',
         });
     }
 

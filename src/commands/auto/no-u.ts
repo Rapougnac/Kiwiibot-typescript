@@ -8,6 +8,7 @@ export default class AutoNOU extends Command {
             aliases: ['no-you'],
             description: 'no u',
             category: 'auto',
+            hidden: true,
         });
     }
     public execute() {

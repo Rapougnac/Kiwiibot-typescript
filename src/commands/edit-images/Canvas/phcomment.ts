@@ -12,6 +12,7 @@ export default class PHCommentCommand extends Command {
             cooldown: 5,
             utilisation: '{prefix}phcomment <user> [text]',
             clientPermissions: ['EMBED_LINKS'],
+            img: 'https://image.flaticon.com/icons/png/512/2593/2593482.png',
         });
     }
     async execute(client: Client, message: Message, args: string[]) {

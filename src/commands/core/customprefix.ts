@@ -14,6 +14,7 @@ export default class SetPrefixCommand extends Command {
             cooldown: 5,
             utilisation: '{prefix}setprefix [prefix]',
             permissions: ['MANAGE_MESSAGES'],
+            img: 'https://image.flaticon.com/icons/png/512/1799/1799807.png',
         });
     }
     async execute(client: Client, message: Message, [prefix]: string[]) {

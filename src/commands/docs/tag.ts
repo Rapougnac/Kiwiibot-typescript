@@ -11,6 +11,7 @@ export default class TagCommand extends Command {
             category: 'docs',
             cooldown: 5,
             utilisation: '{prefix}tag [tag] or {prefix}tag [category] <tag>',
+            img: 'https://cdn-icons-png.flaticon.com/512/1374/1374863.png',
         });
     }
 

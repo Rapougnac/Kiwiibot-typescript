@@ -11,6 +11,7 @@ export default class InRoleCommand extends Command {
             cooldown: 5,
             utilisation: '{prefix}inrole [role id, mention or name]',
             clientPermissions: ['EMBED_LINKS'],
+            img: 'https://image.flaticon.com/icons/png/512/3887/3887427.png',
         });
     }
     async execute(client: Client, message: Message, args: string[]) {

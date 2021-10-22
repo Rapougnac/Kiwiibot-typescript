@@ -17,6 +17,7 @@ export default class FirstMessageCommand extends Command {
             cooldown: 5,
             utilisation: '{prefix}firstmessage',
             clientPermissions: ['EMBED_LINKS'],
+            img: 'https://cdn-icons-png.flaticon.com/512/1021/1021080.png',
         });
     }
     async execute(client: Client, message: Message, args: string[]) {

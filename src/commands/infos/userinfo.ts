@@ -24,6 +24,7 @@ export default class UserInfoCommand extends Command {
             utilisation: '{prefix}userinfo <user>',
             guildOnly: true,
             clientPermissions: ['EMBED_LINKS'],
+            img: 'https://image.flaticon.com/icons/png/512/5674/5674839.png',
         });
     }
     public async execute(client: Client, message: Message, args: string[]) {

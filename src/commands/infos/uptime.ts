@@ -10,6 +10,7 @@ export default class UptimeCommand extends Command {
             category: 'infos',
             cooldown: 5,
             utilisation: '{prefix}uptime',
+            img: 'https://image.flaticon.com/icons/png/512/4400/4400331.png',
         });
     }
     /**
