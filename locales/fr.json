@@ -85,5 +85,11 @@
 		"description": "Dites \"baka\" à quelqu'un",
 		"title_alone": "{author} s'est dit baka à lui·elle même <:Baka:900843311387017297>",
 		"title_smbdy": "{author} a dit baka à {member} <:Baka:900843311387017297>"
+	},
+	"anime": {
+		"description": "anime.description"
+	},
+	"trump": {
+		"description": "trump.description"
 	}
 }

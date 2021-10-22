@@ -55,7 +55,7 @@
         "usage": "Usage",
         "not_found": "I didn't find this command!",
         "guild_only": "Command can only be used in servers",
-        "admin_only": "If the command require the `ADMINISTRATOR` permission",
+        "admin_only": "If the command require the administrator permission",
         "owner_only": "If the command can be used only by the owner",
         "description": "Get the help command",
         "user_permissions": "User's permissions",
