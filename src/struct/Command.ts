@@ -37,6 +37,7 @@ export default class Command {
             description: options.description,
             utilisation: options.utilisation,
             category: options.category,
+            img: options.img,
         };
         this.config = {
             permissions: options.permissions || [
@@ -137,7 +138,7 @@ export default class Command {
         this.message = message;
     }
 
-    public execute(...args: any[]): Promise<Message | void> | Message | void {
+    public execute(...args: any[]): Promise<Message | void | string> | Message | void | string {
         throw new Error(
             `${this.help.name} dosen\'t have an execute() method !`
         );

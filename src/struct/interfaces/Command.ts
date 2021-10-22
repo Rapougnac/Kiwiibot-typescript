@@ -66,6 +66,10 @@ export interface CommandOptions {
      * Whether the command should be hidden from the help menu
      */
     hidden?: boolean;
+    /**
+     * The image to place in the setFooter
+     */
+    img?: string;
 }
 
 export interface HelpOptions {
@@ -88,6 +92,11 @@ export interface HelpOptions {
      * The category of the command
      */
     category: string | undefined;
+
+    /**
+     * The image to set to the setFooter 
+     */
+    img: string | undefined;
 }
 
 export interface ConfigOptions {
