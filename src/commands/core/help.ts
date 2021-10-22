@@ -156,9 +156,12 @@ export default class HelpCommand extends Command {
                 );
             }
 
-            const description = message.guild.i18n.__mf(
+            let description = message.guild.i18n.__mf(
                 `${command.help.name}.description`
-            ) ?? command.help.description;
+            );
+            if(description === `${command.help.name}.description` || !(description)) {
+                description = command.help.description ?? message.guild.i18n.__mf('help.no_desc');
+            }
             await message.channel.send({
                 embed: {
                     color: 'ORANGE',

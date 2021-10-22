@@ -72,7 +72,8 @@
         "cmd_usage": "Faites {prefix}help [commande] pour avoir plus d'informations sur celle-ci.",
         "none_alias": "Aucun alias",
         "nsfw": "Vous ne pouvez pas afficher le panneau d'aide sur une commande nsfw si le channel n'est pas marqué en tant que nsfw.",
-        "nsfw_message": "\nPour afficher les commandes nsfw, faites {prefix}help dans un channel nsfw."
+        "nsfw_message": "\nPour afficher les commandes nsfw, faites {prefix}help dans un channel nsfw.",
+        "no_desc": "Aucune description fournie pour cette commande."
     },
     "PERMS_MESSAGE": {
         "admin_only": "PERMS_MESSAGE.admin_only",
@@ -80,7 +81,7 @@
         "reason": "PERMS_MESSAGE.reason"
     },
     "baka": {
-        "description": "Dites \"baka\" à quelqu'un",
+
         "title_alone": "{author} s'est dit baka à lui·elle même <:Baka:900843311387017297>",
         "title_smbdy": "{author} a dit baka à {member} <:Baka:900843311387017297>"
     }
