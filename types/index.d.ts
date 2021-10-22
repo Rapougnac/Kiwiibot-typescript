@@ -49,7 +49,7 @@ declare module 'discord.js' {
     }
     export interface Guild {
         /**
-         * The i18n obect notation
+         * The i18n object notation
          */
         readonly i18n: I18n;
         /**
