@@ -64,7 +64,7 @@
         "usage": "Utilisation",
         "seconds": "secondes",
         "guild_only": "Si la commande ne peut être utilisée que dans les serveurs",
-        "admin_only": "Si la commande nécessite la permissin admin",
+        "admin_only": "Si la commande nécessite la permission administrateur",
         "owner_only": "Si la commande ne peut être utilisée que par le propriétaire du bot",
         "user_permissions": "Permissions requises pour l'utilisateur",
         "bot_permissions": "Permissions requises par le bot",
