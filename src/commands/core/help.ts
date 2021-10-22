@@ -158,7 +158,7 @@ export default class HelpCommand extends Command {
 
             const description = message.guild.i18n.__mf(
                 `${command.help.name}.description`
-            );
+            ) ?? command.help.description;
             await message.channel.send({
                 embed: {
                     color: 'ORANGE',
