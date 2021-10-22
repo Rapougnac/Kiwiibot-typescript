@@ -110,10 +110,20 @@ export default class HelpCommand extends Command {
                 .addFields(fields.sort((a, b) => a.name.localeCompare(b.name)))
                 .setColor('ORANGE')
                 .setTimestamp()
+                // If the channel is not nsfw, set a message on the footer
                 .setFooter(
-                    message.guild.i18n.__mf(`help.cmd_usage`, {
-                        prefix: client.prefix,
-                    })
+                    message.channel.type === 'text'
+                        ? !message.channel.nsfw
+                            ? message.guild.i18n.__mf(`help.cmd_usage`, {
+                                  prefix: client.prefix,
+                              }) +
+                              message.guild.i18n.__mf('help.nsfw_message', {
+                                  prefix: client.prefix,
+                              })
+                            : message.guild.i18n.__mf('help.cmd_usage', {
+                                  prefix: client.prefix,
+                              })
+                        : null
                 );
 
             message.channel.send(embed);
@@ -123,9 +133,9 @@ export default class HelpCommand extends Command {
                 this.client.aliases.get(args.join(' ').toLowerCase());
             if (!command)
                 return message.channel.send(
-                    `\\${client.emotes.error} - ${(message.guild as  unknown as Guild).i18n.__mf(
-                        'help.not_found'
-                    )}`
+                    `\\${client.emotes.error} - ${(
+                        message.guild as unknown as Guild
+                    ).i18n.__mf('help.not_found')}`
                 );
             if (command.config.hidden) {
                 return message.channel.send(
@@ -168,9 +178,7 @@ export default class HelpCommand extends Command {
                             name: message.guild.i18n.__mf('help.alias'),
                             value:
                                 command.config.aliases.length < 1
-                                    ? message.guild.i18n.__mf(
-                                          'help.none_alias'
-                                      )
+                                    ? message.guild.i18n.__mf('help.none_alias')
                                     : command.config.aliases.join('\n'),
                             inline: true,
                         },
@@ -188,9 +196,7 @@ export default class HelpCommand extends Command {
                                 ? `${
                                       command.config.cooldown
                                   } ${message.guild.i18n.__mf('help.seconds')}`
-                                : message.guild.i18n.__mf(
-                                      'help.none_cooldown'
-                                  ),
+                                : message.guild.i18n.__mf('help.none_cooldown'),
                             inline: true,
                         },
                         {

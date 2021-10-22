@@ -65,7 +65,8 @@
         "no": "No",
         "no_permissions": "No permission required",
         "cmd_usage": "Do {prefix}help [command] to get more information about it.",
-        "nsfw": "You can't show the help pannel if the command to display is nsfw and the channel is not."
+        "nsfw": "You can't show the help pannel if the command to display is nsfw and the channel is not.",
+        "nsfw_message": "\nTo display the nsfw commands, do help in a nsfw channel."
     },
     "prefix-reset": {
         "description": "Change the default prefix to the specified prefix, you can still use the default prefix",
