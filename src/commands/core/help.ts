@@ -143,26 +143,23 @@ export default class HelpCommand extends Command {
                         ct = '⛔ owner';
                         break;
                     }
-                    case 'nsfw': {
-                        ct = '🔞 nsfw';
-                        break;
-                    }
                 }
                 fields.push({
                     name: `${
                         this.client.commands.filter(
                             (c) =>
-                                c.help.category === category && !c.config.hidden
+                                c.help.category === category &&
+                                !c.config.hidden &&
+                                !c.config.nsfw
                         ).size
-                            ? upperFirstButAcceptEmojis(
-                                  ct.replace(/-/g, ' ')
-                              ) +
+                            ? upperFirstButAcceptEmojis(ct.replace(/-/g, ' ')) +
                               ' ' +
                               '[' +
                               this.client.commands.filter(
                                   (c) =>
                                       c.help.category === category &&
-                                      !c.config.hidden
+                                      !c.config.hidden &&
+                                      !c.config.nsfw
                               ).size +
                               ']'
                             : ''
@@ -173,7 +170,8 @@ export default class HelpCommand extends Command {
                                 .filter(
                                     (cmd) =>
                                         cmd.help.category === category &&
-                                        !cmd.config.hidden
+                                        !cmd.config.hidden &&
+                                        !cmd.config.nsfw
                                 )
                                 .map((value) => `\`${value.help.name}\``),
                         ],
