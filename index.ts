@@ -13,7 +13,7 @@ type WSEventType = 'INTERACTION_CREATE' | WSEventTypeOld;
 const client = new KiwiiClient({
     config: config,
     owners: '253554702858452992',
-    prefix: '!',
+    prefix: 'm?',
 });
 
 client.connect();
