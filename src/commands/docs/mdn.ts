@@ -56,9 +56,10 @@ export default class MDNCommand extends Command {
         let description = $('p')
             .first()
             .html()
-            ?.replace(/<[^>]*code>/gm, '`')
-            .replace(/<[^>]*strong>/gm, '**')
-            .replace(/&nbsp;/g, ' ');
+            ?.replace(/<[^>]*code>/g, '`')
+            .replace(/<[^>]*strong>/g, '**')
+            .replace(/&nbsp;/g, ' ')
+            .replace(/<[^>]*em>/g, '_');
         const title = $('h1').first().text();
         const element = cheerio.load(description as string);
         let contentLinks: string[] = [];
@@ -66,7 +67,6 @@ export default class MDNCommand extends Command {
         element('a').each(function () {
             const text = element(this).text();
             const l = element(this).attr('href') ?? '';
-            console.log(l, text);
             contentLinks.push(text);
             _links.push(l);
         });
