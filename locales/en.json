@@ -86,9 +86,6 @@
         "docs_fetch_error": "I couldn't fetch the docs!",
         "valid_sources": "This doesn't seem to be a valid source, sources are listed here: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`"
     },
-    "mdn": {
-        "description": ""
-    },
     "sendpins": {
         "description": "Sends all pinned message(s)"
     },
@@ -734,5 +731,13 @@
         "creation_date": "Creation date",
         "on": "On",
         "at": "at"
+    },
+    "mdn": {
+        "not_found": "Your query was not found!",
+        "experimental": "Experimental",
+        "experimental_desc": "Value that indicates this functionality is intended to be an addition to the Web platform. Some features are added to conduct tests.\n\n`{value}`",
+        "deprecated": "Deprecated",
+        "deprecated_desc": "Value that indicates if the feature is no longer recommended. It might be removed in the future or might only be kept for compatibility purposes. Avoid using this functionality.\n\n`{value}`",
+        "description": "Search in the mdn docs"
     }
 }

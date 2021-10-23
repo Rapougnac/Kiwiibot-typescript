@@ -79,7 +79,9 @@
 	"PERMS_MESSAGE": {
 		"admin_only": "PERMS_MESSAGE.admin_only",
 		"blocked_cmd": "PERMS_MESSAGE.blocked_cmd",
-		"reason": "PERMS_MESSAGE.reason"
+		"reason": "PERMS_MESSAGE.reason",
+		"missing_permissions_you": "PERMS_MESSAGE.missing_permissions_you",
+		"missing_permissions1_you": "PERMS_MESSAGE.missing_permissions1_you"
 	},
 	"baka": {
 		"description": "Dites \"baka\" à quelqu'un",
@@ -91,5 +93,16 @@
 	},
 	"trump": {
 		"description": "trump.description"
+	},
+	"ERROR_MESSAGE": {
+		"msg": "ERROR_MESSAGE.msg"
+	},
+	"mdn": {
+		"description": "Cherchez dans la documentation de MDN",
+		"experimental": "Experimental",
+		"experimental_desc": "Valeur qui indique que cette fonctionnalité est destinée à être un ajout à la plateforme Web. Certaines fonctionnalités sont ajoutées pour effectuer des tests.\n\n`{value}`",
+		"deprecated": "Obsolète",
+		"deprecated_desc": "Valeur qui indique si la fonctionnalité n'est plus recommandée. Elle pourrait être supprimée à l'avenir ou être conservée uniquement à des fins de compatibilité. Évitez d'utiliser cette fonctionnalité.\n\n`{value}`",
+		"not_found": "mdn.not_found"
 	}
 }
