@@ -66,7 +66,7 @@ export default class MessageEvent extends Event {
             } catch (error: any) {
                 console.error(error);
                 message.reply(
-                    message.guild!.i18n.__mf('ERROR_MESSAGE') + error.name
+                    message.guild!.i18n.__mf('ERROR_MESSAGE.msg') + error.name
                 );
             }
         } else {
