@@ -104,7 +104,50 @@ export default class HelpCommand extends Command {
                 });
             }
         } else {
+            let ct: string = '';
             for (const category of [...this.client.categories].remove('nsfw')) {
+                switch (category) {
+                    case 'auto': {
+                        ct = '🤖 auto';
+                        break;
+                    }
+                    case 'anime': {
+                        ct = '🎥 anime';
+                        break;
+                    }
+                    case 'core': {
+                        ct = '⚙ Core';
+                        break;
+                    }
+                    case 'docs': {
+                        ct = '📖 docs';
+                        break;
+                    }
+                    case 'image-manipulation': {
+                        ct = '🖼 image-manipulation';
+                        break;
+                    }
+                    case 'edit-images': {
+                        ct = '✏ edit-images';
+                        break;
+                    }
+                    case 'infos': {
+                        ct = 'ℹ infos';
+                        break;
+                    }
+                    case 'interactions': {
+                        ct = '👋 interactions';
+                        break;
+                    }
+                    case 'owner': {
+                        ct = '⛔ owner';
+                        break;
+                    }
+                    case 'nsfw': {
+                        ct = '🔞 nsfw';
+                        break;
+                    }
+                }
                 fields.push({
                     name: `${
                         this.client.commands.filter(
@@ -112,7 +155,7 @@ export default class HelpCommand extends Command {
                                 c.help.category === category && !c.config.hidden
                         ).size
                             ? upperFirstButAcceptEmojis(
-                                  category.replace(/-/g, ' ')
+                                  ct.replace(/-/g, ' ')
                               ) +
                               ' ' +
                               '[' +
