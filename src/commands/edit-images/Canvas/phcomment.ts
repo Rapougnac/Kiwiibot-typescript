@@ -13,11 +13,12 @@ export default class PHCommentCommand extends Command {
             utilisation: '{prefix}phcomment <user> [text]',
             clientPermissions: ['EMBED_LINKS'],
             img: 'https://image.flaticon.com/icons/png/512/2593/2593482.png',
+            nsfw: true,
         });
     }
     async execute(client: Client, message: Message, args: string[]) {
-        if(!message.mentions.members) return;
-        if(!message.guild) return;
+        if (!message.mentions.members) return;
+        if (!message.guild) return;
         const User =
             message.mentions.members.first() ||
             message.guild.members.cache.get(args[0]) ||
@@ -47,4 +48,4 @@ export default class PHCommentCommand extends Command {
             message.channel.send(att);
         }
     }
-};
+}
