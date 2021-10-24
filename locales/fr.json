@@ -89,7 +89,23 @@
         "title_smbdy": "{author} a dit baka à {member} <:Baka:900843311387017297>"
     },
     "anime": {
-        "description": "anime.description"
+        "description": "Obtenez des informations sur l'animé spécifé",
+        "specify": "S'il vous plaît, veuillez spécifier un animé à chercher",
+        "not_found": "Aucun animé n'a été trouvé pour la recherche: **{search}**",
+        "japanese_name": "Nom japonais",
+        "age": "Âge du public",
+        "yes": "Oui",
+        "no": "Non",
+        "note": "Note globale",
+        "rank": "Classement:",
+        "popularity": "Popularité:",
+        "stop_collect_msg": "Le message va s'arrêter de collecter les réponses après un délai de 60 secondes.",
+        "stats": "Statistiques",
+        "beginning": "Début",
+        "end": "Fin",
+        "in_progress": "En cours...",
+        "choose": "Choisissez entre les nombres affichés.",
+        "number_range": "Veuillez, s'il vous plaît, mettre un nombre entre 1 et {number}"
     },
     "trump": {
         "description": "trump.description"
@@ -110,10 +126,23 @@
         "description": "Haaa tu rougis !",
         "msg": "{author} est en train de rougir !"
     },
-	"prefix-reset": {
-		"description": "Réinitialise le préfixe à celui par défaut.",
-		"confirmation": "Êtes-vous sûr·e de vouloir réinitialiser le préfixe ?",
-		"reset_prefix": "Le préfixe a été réinitialisé sur `{prefix}`",
-		"canceled": "La réinitialisation du préfixe a été annulée !"
-	}
+    "prefix-reset": {
+        "description": "Réinitialise le préfixe à celui par défaut.",
+        "confirmation": "Êtes-vous sûr·e de vouloir réinitialiser le préfixe ?",
+        "reset_prefix": "Le préfixe a été réinitialisé sur `{prefix}`",
+        "canceled": "La réinitialisation du préfixe a été annulée !"
+    },
+    "setprefix": {
+        "description": "Changez le préfixe du bot sur celui spécifé, vous pouvez toujours utiliser celui par défaut",
+        "new_prefix": "Le préfixe dans le serveur a maintenant été établi sur **{prefix}**",
+        "prefix_length": "Erreur, mon préfixe ne peut pas être plus long que cinq caractères.",
+        "updated_prefix": "Mon préfixe a été mis à jour sur **{prefix}**",
+        "missing_prefix": "Veuillez spécifier un préfixe !"
+    },
+    "docs": {
+		"description": "Obtenez la documentation de discord.js en un embed, vous pouvez spécifier la source en faisant `--src {source}` (sans les accolades). Les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`",
+        "missing_query": "Veuillez spécifier une recherche !",
+		"docs_fetch_error": "Hmm, il semble que je n'aie pas pu récupérer les données dont vous avez besoin, merci de bien vouloir réessayer plus tard",
+		"valid_sources": "Cela ne me semble pas être une source valide, les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`"
+    }
 }
