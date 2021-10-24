@@ -258,7 +258,7 @@ export default class HelpCommand extends Command {
                 !description
             ) {
                 description =
-                    command.help.description ??
+                    command.help.description ||
                     message.guild.i18n.__mf('help.no_desc');
             }
             const embed = new MessageEmbed({
