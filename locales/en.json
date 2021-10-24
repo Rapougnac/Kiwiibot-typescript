@@ -733,7 +733,7 @@
         "at": "at"
     },
     "mdn": {
-        "not_found": "Your query was not found!",
+        "not_found": "Your query was not found!\nTry another search.",
         "experimental": "Experimental",
         "experimental_desc": "Value that indicates this functionality is intended to be an addition to the Web platform. Some features are added to conduct tests.\n\n`{value}`",
         "deprecated": "Deprecated",
