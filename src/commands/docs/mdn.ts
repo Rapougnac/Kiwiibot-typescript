@@ -3,11 +3,7 @@ import KiwiiClient from '../../struct/Client';
 import mdn from '@xelzs/mdn-browser-compat-api';
 import { IdentifierMeta } from '@mdn/browser-compat-data/types';
 import { Message, MessageEmbed } from 'discord.js';
-import {
-    cleanQuery,
-    toProperCase,
-    upperFirstButAcceptEmojis,
-} from '../../util/string';
+import { upperFirstButAcceptEmojis } from '../../util/string';
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
 
@@ -26,11 +22,11 @@ export default class MDNCommand extends Command {
         message: Message,
         args: string[]
     ) {
+        const word = args.join('.');
         const arrayOfProperties =
-            mdn.find(upperFirstButAcceptEmojis(args.join('.')), 'javascript')
-                .length === 0
-                ? mdn.find(args.join('.'), 'javascript')
-                : null ?? mdn.find(args.join('.'), 'javascript');
+            mdn.find(upperFirstButAcceptEmojis(word), 'javascript').length === 0
+                ? mdn.find(word, 'javascript')
+                : null ?? mdn.find(word, 'javascript');
         const notFound =
             message.guild?.i18n.__mf('mdn.not_found') ??
             'Your query was not found!';
