@@ -70,9 +70,9 @@
         "no_desc": "No description was found for this command."
     },
     "prefix-reset": {
-        "description": "Change the default prefix to the specified prefix, you can still use the default prefix",
-        "reset_prefix": "Are you sure you want to reset the prefix?",
-        "confirmation": "The prefix has been resetted to `{prefix}`",
+        "description": "Reset the prefix to the default one.",
+        "confirmation": "Are you sure you want to reset the prefix?",
+        "reset_prefix": "The prefix has been resetted to `{prefix}`",
         "canceled": "Prefix reset has been canceled!"
     },
     "setlanguage": {

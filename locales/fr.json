@@ -109,5 +109,11 @@
     "blush": {
         "description": "Haaa tu rougis !",
         "msg": "{author} est en train de rougir !"
-    }
+    },
+	"prefix-reset": {
+		"description": "Réinitialise le préfixe à celui par défaut.",
+		"confirmation": "Êtes-vous sûr·e de vouloir réinitialiser le préfixe ?",
+		"reset_prefix": "Le préfixe a été réinitialisé sur `{prefix}`",
+		"canceled": "La réinitialisation du préfixe a été annulée !"
+	}
 }
