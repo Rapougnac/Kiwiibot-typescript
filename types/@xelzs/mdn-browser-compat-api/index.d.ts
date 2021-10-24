@@ -1,5 +1,6 @@
 declare module '@xelzs/mdn-browser-compat-api' {
-    import { Browsers } from '@mdn/browser-compat-data/types';
+    import type { Browsers } from '@mdn/browser-compat-data/types';
+
     export type Folders =
         | 'api'
         | 'browsers'
