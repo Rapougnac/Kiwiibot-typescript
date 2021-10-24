@@ -43,7 +43,7 @@ export default class DocsCommand extends Command {
                 return message.channel.send(
                     message.guild.i18n.__mf('docs.valid_sources')
                 );
-            const url = `https://djsdocs.sorta.moe/v2/embed?src=${source}&q${encodeURIComponent(
+            const url = `https://djsdocs.sorta.moe/v2/embed?src=${source}&q=${encodeURIComponent(
                 query
             )}`;
             axios.get(url).then(({ data }) => {
