@@ -350,6 +350,22 @@ function upperFirstButAcceptEmojis(str: string): string {
     return str;
 }
 
+function testCombinaisonsOfWord(input: string): string[] {
+    const letters: string[] = input.split('');
+    const permCount: number = 1 << input.length;
+    const results: string[] = [];
+
+    for (let perm: number = 0; perm < permCount; perm++) {
+        letters.reduce((perm, letter, i) => {
+            letters[i] = perm & 1 ? letter.toUpperCase() : letter.toLowerCase();
+            return perm >> 1;
+        }, perm);
+        const result = letters.join('');
+        results.push(result);
+    }
+    return results;
+}
+
 export {
     textTruncate,
     ordinalize,
@@ -363,4 +379,5 @@ export {
     remove,
     translatePermissions,
     upperFirstButAcceptEmojis,
+    testCombinaisonsOfWord,
 };
