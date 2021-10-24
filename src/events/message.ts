@@ -14,15 +14,16 @@ export default class MessageEvent extends Event {
     public execute(message: Message): Promise<Message> | void {
         const { author, guild } = message;
         const { bot } = author;
-        let prefix = [this.client.prefix];
-        if (bot || message.webhookID) return;
         if (!guild) return;
+        let prefix = [this.client.prefix, message.guild!.prefix];
+        if (bot || message.webhookID) return;
+
         if (message.content.match(/n+o+ +u+/gi))
             return message.channel.send('no u');
         if (message.content.match(/\(╯°□°）╯︵ ┻━┻/g))
             return message.channel.send('┻━┻       (゜-゜)');
         // Check prefix
-        let index;
+        let index: number = 0;
         // Find which prefix are used
         for (let i = 0; i < prefix.length; i++) {
             if (message.content.toLowerCase().startsWith(prefix[i])) {
@@ -49,7 +50,7 @@ export default class MessageEvent extends Event {
         if (
             !this.client.commands.has(command) &&
             !this.client.aliases.has(command)
-        )
+        ) 
             return;
         const command_to_execute =
             this.client.commands.get(command) ||
