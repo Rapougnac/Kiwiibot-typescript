@@ -350,23 +350,6 @@ function upperFirstButAcceptEmojis(str: string): string {
     return str;
 }
 
-function cleanQuery(args: string[] | string, match: string = '_'): string[] {
-    let joinedArr, rest;
-    if (Array.isArray(args)) {
-        joinedArr = args.join(match);
-    }
-    if (joinedArr) {
-        const i = joinedArr.indexOf(match);
-        rest = [joinedArr.slice(i + 1), joinedArr.slice(0, i)];
-        cleanQuery(rest);
-    } else {
-        const i = args.indexOf(match);
-        rest = [args.slice(i + 1), args.slice(0, i)];
-        cleanQuery(rest as any);
-    }
-    return rest as any;
-}
-
 export {
     textTruncate,
     ordinalize,
@@ -380,5 +363,4 @@ export {
     remove,
     translatePermissions,
     upperFirstButAcceptEmojis,
-    cleanQuery,
 };
