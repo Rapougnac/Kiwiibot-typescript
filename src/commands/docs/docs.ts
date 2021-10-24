@@ -33,7 +33,7 @@ export default class DocsCommand extends Command {
         ];
         const query = args.join(' ').split(/ +--src/g)[0];
         if (!query)
-            return message.inlineReply(
+            return message.channel.send(
                 message.guild.i18n.__mf('docs.missing_query')
             );
         let source;
