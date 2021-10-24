@@ -260,7 +260,8 @@
         "title_smbdy": "{author} said baka to {member} <:Baka:900843311387017297>"
     },
     "blush": {
-        "description": ""
+        "description": "Haaa you're blushing",
+        "msg": "{author} is blushing!"
     },
     "cry": {
         "description": ""
