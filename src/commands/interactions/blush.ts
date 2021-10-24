@@ -8,7 +8,7 @@ export default class BlushCommand extends Command {
         super(client, {
             name: 'blush',
             description: "Haaa you're blushing!",
-            category: 'interaction',
+            category: 'interactions',
             utilisation: '{prefix}blush',
         });
     }
