@@ -103,6 +103,7 @@
 		"experimental_desc": "Valeur qui indique que cette fonctionnalité est destinée à être un ajout à la plateforme Web. Certaines fonctionnalités sont ajoutées pour effectuer des tests.\n\n`{value}`",
 		"deprecated": "Obsolète",
 		"deprecated_desc": "Valeur qui indique si la fonctionnalité n'est plus recommandée. Elle pourrait être supprimée à l'avenir ou être conservée uniquement à des fins de compatibilité. Évitez d'utiliser cette fonctionnalité.\n\n`{value}`",
-		"not_found": "Votre recherche n'a rien donné !\nEssayez une autre recherche."
+		"not_found": "Votre recherche n'a rien donné !\nEssayez une autre recherche.",
+		"doc": "Documentation pour: {val}"
 	}
 }
