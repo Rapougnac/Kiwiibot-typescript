@@ -17,7 +17,7 @@ export default class AnimeCommand extends Command {
         });
     }
 
-    public async execute(client: KiwiiClient, message: Message, args: string[]) {
+    public async execute(client: KiwiiClient, message: Message, args: string[]): Promise<Message | undefined> {
         const kitsu = new Kitsu();
         const search = args.join(' ').toLowerCase();
         if (!search) {

@@ -11,7 +11,7 @@ export default class MessageEvent extends Event {
         });
     }
 
-    public execute(message: Message) {
+    public execute(message: Message): Promise<Message> | void {
         const { author, guild } = message;
         const { bot } = author;
         let prefix = [this.client.prefix];

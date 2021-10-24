@@ -1,5 +1,5 @@
-import KiwiiClient from "../../struct/Client";
-import Command from "../../struct/Command";
+import KiwiiClient from '../../struct/Client';
+import Command from '../../struct/Command';
 
 export default class AutoNOU extends Command {
     constructor(client: KiwiiClient) {
@@ -11,7 +11,7 @@ export default class AutoNOU extends Command {
             hidden: true,
         });
     }
-    public execute() {
+    public execute(): void {
         this.message!.channel.send('no u');
     }
 }

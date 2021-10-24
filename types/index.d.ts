@@ -72,7 +72,7 @@ declare module 'discord.js' {
          * @param root The root url
          * @returns The url of the banner
          */
-        Banner(
+        private Banner(
             userID: string,
             hash: string,
             format?: AllowedImageFormat,
@@ -121,8 +121,9 @@ declare module 'discord.js' {
          * @param format The format of the guild member's avatar
          * @param size The size of the guild member's avatar
          * @param dynamic If the image should be dynamic
+         * @private
          */
-        GuildMemberAvatar(
+        private GuildMemberAvatar(
             guildId: string,
             memberId: string,
             hash: string | null,
