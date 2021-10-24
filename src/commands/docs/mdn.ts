@@ -66,15 +66,16 @@ export default class MDNCommand extends Command {
             contentLinks.push(text);
             _links.push(l);
         });
-        let links = _links.map((li) => domain + li);
+        let links = _links.map((li) => domain.slice(0, -1) + li);
         links = links.map((li, i) => `[${contentLinks[i]}](${li})`);
         links.forEach((link) => {
             description = description?.replace(reg, link);
         });
         if (!description) description = foo.__compat?.description;
-
+        const yes = message.guild?.i18n.__mf('common.yes'),
+            no = message.guild?.i18n.__mf('common.no');
         const embed = new MessageEmbed()
-            .setTitle(`Documentation for ${title}`)
+            .setTitle(message.guild!.i18n.__mf('mdn.doc', { val: title }))
             .setDescription(description)
             .setURL(url)
             .setImage(
@@ -84,20 +85,20 @@ export default class MDNCommand extends Command {
                 message.guild!.i18n.__mf('mdn.experimental'),
                 foo.__compat?.status?.experimental
                     ? message.guild?.i18n.__mf('mdn.experimental_desc', {
-                          value: message.guild?.i18n.__mf('common.yes'),
+                          value: yes,
                       })
                     : message.guild!.i18n.__mf('mdn.experimental_desc', {
-                          value: message.guild!.i18n.__mf('common.no'),
+                          value: no,
                       })
             )
             .addField(
                 message.guild!.i18n.__mf('mdn.deprecated'),
                 foo.__compat?.status?.deprecated
                     ? message.guild!.i18n.__mf('mdn.deprecated_desc', {
-                          value: message.guild?.i18n.__mf('common.yes'),
+                          value: yes,
                       })
                     : message.guild!.i18n.__mf('mdn.deprecated_desc', {
-                          value: message.guild?.i18n.__mf('common.no'),
+                          value: no,
                       })
             );
         message.channel.send(embed);
