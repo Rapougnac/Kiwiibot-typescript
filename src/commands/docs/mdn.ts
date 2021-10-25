@@ -26,24 +26,32 @@ export default class MDNCommand extends Command {
         const arrayOfProperties =
             mdn.find(upperFirstButAcceptEmojis(word), 'javascript').length === 0
                 ? mdn.find(word, 'javascript')
-                : null ?? mdn.find(word, 'javascript');
+                : mdn.find(upperFirstButAcceptEmojis(word), 'javascript');
         const notFound =
             message.guild?.i18n.__mf('mdn.not_found') ??
             'Your query was not found!';
         if (!arrayOfProperties) return message.channel.send(notFound);
-        const foo = mdn.get(arrayOfProperties[0])[0][
-            arrayOfProperties[0] as any
-        ] as IdentifierMeta;
+        let foo: IdentifierMeta | null = null;
+        if (
+            Object.prototype.hasOwnProperty.call(
+                mdn.get(arrayOfProperties[0])[0],
+                arrayOfProperties[0]
+            )
+        ) {
+            foo = mdn.get(arrayOfProperties[0])[0][
+                arrayOfProperties[0] as any
+            ] as IdentifierMeta;
+        }
         if (!foo) return message.channel.send(notFound);
         const _url = foo.__compat?.mdn_url ?? '';
         const domain = _url.substring(0, 30);
-        const path = _url.split(domain ?? 'https://developer.mozilla.org/');
+        const path = _url.split(domain ?? 'https://developer.mozilla.org/')[1];
         const locale = message.guild!.i18n.getLocale();
         let url = _url;
         if (locale === 'en') {
-            url = domain + `${locale}-US/` + path[1];
+            url = domain + `${locale}-US/` + path;
         } else if (locale === 'fr') {
-            url = domain + `${locale}/` + path[1];
+            url = domain + `${locale}/` + path;
         }
         const html = await fetch(url).then((res) => res.text());
         if (!html) return;
