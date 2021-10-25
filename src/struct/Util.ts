@@ -19,6 +19,7 @@ import { TimeData, Interaction, Guild } from './interfaces/main';
 import Command from './Command';
 import KiwiiClient from './Client';
 import NekoClient from 'nekos.life';
+import AmeClient from 'amethyste-api';
 export default class Util {
     /**
      * The client passed in
@@ -32,10 +33,19 @@ export default class Util {
      * The neko client
      */
     public readonly neko: NekoClient;
+    /**
+     * The améthyste client
+     */
+    public readonly AmeAPI: AmeClient;
+    /**
+     * This is a class where the client can acces easily
+     * @param client The client that instancied this manager
+     */
     constructor(client: Client) {
         this.client = client;
         this.loader = new Loader();
         this.neko = new NekoClient();
+        this.AmeAPI = new AmeClient(this.client.config.amethyste.client);
     }
 
     formatPerms(perms: PermissionString) {
