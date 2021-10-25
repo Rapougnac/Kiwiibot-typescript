@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@mdn/browser-compat-data": "^4.0.7",
-    "@xelzs/mdn-browser-compat-api": "^1.0.1",
+    "@xelzs/mdn-browser-compat-api": "^1.1.0",
     "amethyste-api": "^1.1.5",
     "axios": "^0.22.0",
     "canvas": "^2.8.0",
