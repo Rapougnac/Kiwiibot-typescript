@@ -105,8 +105,8 @@ export default class KiwiiClient extends Client {
         this.categories = new Set();
         this.slashs = new Collection();
         this.events = new Collection();
-        this.utils = new Util(this);
         this.config = options.config;
+        this.utils = new Util(this);
         this.owners = options.owners;
         this.prefix = options.prefix;
         this.disabledEvents = options.disabledEvents || [];
