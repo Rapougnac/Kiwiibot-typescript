@@ -8,6 +8,7 @@
     "@xelzs/mdn-browser-compat-api": "^1.1.0",
     "amethyste-api": "^1.1.5",
     "axios": "^0.22.0",
+    "booru": "^2.4.2",
     "canvas": "^2.8.0",
     "cheerio": "*",
     "common-tags": "^1.8.0",
