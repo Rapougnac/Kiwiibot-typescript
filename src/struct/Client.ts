@@ -26,6 +26,7 @@ import { readdir, readdirSync } from 'fs';
 import mongoose from 'mongoose';
 import ProcessEvent from '../util/processEvent';
 import '../util/NativeExtended';
+import { sep } from 'path';
 /**
  * Represents a discord client
  * @extends Client
@@ -221,7 +222,7 @@ export default class KiwiiClient extends Client {
         files = files.filter((file) => file.endsWith('.js'));
         files.forEach(async (file) => {
             let Event: EventConstructor = await import(
-                `${process.cwd()}\\dist\\src\\events\\${file}`
+                `${process.cwd()}${sep}dist${sep}src${sep}events${sep}${file}`
             );
             Event = (Event as any).default;
             if (this.utils.isClass(Event)) {
