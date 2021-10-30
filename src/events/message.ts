@@ -23,13 +23,16 @@ export default class MessageEvent extends Event {
         if (message.content.match(/\(╯°□°）╯︵ ┻━┻/g))
             return message.channel.send('┻━┻       (゜-゜)');
         // Check prefix
-        let index: number = 0;
+        let index;
         // Find which prefix are used
         for (let i = 0; i < prefix.length; i++) {
             if (message.content.toLowerCase().startsWith(prefix[i])) {
                 index = i;
                 break;
-            } else continue;
+            } else {
+                index = null;
+                continue;
+            };
         }
         if (
             message.content.startsWith(`<@!${this.client.user!.id}>`) &&
