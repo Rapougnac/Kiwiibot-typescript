@@ -13,7 +13,7 @@ export default class BlushCommand extends Command {
         });
     }
 
-    public async execute(): Promise<void> {
+    public execute(): void {
         const result = gifu('blush');
 
         const blushEmbed = new MessageEmbed()
