@@ -661,8 +661,14 @@
     "pussywank": {
         "description": ""
     },
-    "r34": {
-        "description": "Scrap images from the r34 site"
+    "rule34": {
+        "description": "Scrap images from the r34 site",
+        "no_tags_proided": "Please specify at least one tag.",
+        "no_results": "No results found for **{query}**!",
+        "pedo": "Mommy, I see a pedo.",
+        "rating_score": "Rating: `{rating}` (s: 'Safe', q: 'Questionable', e: 'Explicit', u: 'Unrated') | Score: {score}",
+        "tags": "Tags",
+        "no_results_err": "No results found for **{query}**!"
     },
     "sauce": {
         "description": ""

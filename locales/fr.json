@@ -148,5 +148,14 @@
 	"avatar": {
 		"avatar_of": "Avatar de {avatar}",
 		"msg": "Si l'avatar ne charge pas, [cliquez ici]"
+	},
+	"rule34": {
+		"description": "Récupérez des images provenant du site rule34",
+		"no_tags_provided": "S'il vous plaît, veuilleuz spécifier au moins un mot-clé.",
+		"no_results": "Aucun résultat trouvé pour la recherche **{query}** !",
+		"pedo": "Maman, je vois un pédo.",
+		"rating_scrore": "Classement: `{rating}` (s: 'Sûr', q: 'Questionnable', e: 'Explicite', u: 'Non évalué') | Score: {score}",
+		"tags": "Mots-clés",
+		"no_results_err": "Aucun résultat trouvé pour la recherche **{query}** !"
 	}
 }
