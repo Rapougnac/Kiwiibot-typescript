@@ -667,7 +667,7 @@
         "no_results": "No results found for **{query}**!",
         "pedo": "Mommy, I see a pedo.",
         "rating_score": "Rating: `{rating}` (s: 'Safe', q: 'Questionable', e: 'Explicit', u: 'Unrated') | Score: {score}",
-        "tags": "Tags",
+        "tags": "Tags: ",
         "no_results_err": "No results found for **{query}**!"
     },
     "sauce": {
