@@ -34,7 +34,8 @@
     "@types/gifencoder": "^2.0.1",
     "@types/glob": "^7.1.4",
     "@types/i18n": "^0.13.1",
-    "@types/lodash": "^4.14.175"
+    "@types/lodash": "^4.14.175",
+    "corde": "^4.4.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
