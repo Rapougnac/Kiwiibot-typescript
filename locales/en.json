@@ -264,7 +264,8 @@
         "msg": "{author} is blushing!"
     },
     "cry": {
-        "description": ""
+        "description": "Cry",
+        "msg": "{author} is crying"
     },
     "cuddle": {
         "description": ""

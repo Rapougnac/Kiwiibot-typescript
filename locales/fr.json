@@ -77,7 +77,7 @@
         "description": "Affichez l'aide sur la commande d'aide"
     },
     "PERMS_MESSAGE": {
-		"guild_only": "**Commande indisponible en MP** - Cette commande ne peut être éxecutée que dans des serveurs.",
+        "guild_only": "**Commande indisponible en MP** - Cette commande ne peut être éxecutée que dans des serveurs.",
         "dev_only": "**Limité aux Développeurs** - Cette commande ne peut être utilisée que par mes développeurs.",
         "admin_only": "**Limité aux Admins** - Cette commande ne peut être utilisée que par les administrateurs du serveur.",
         "nsfw": "**Commande NSFW** - Vous ne pouvez éxecuter cette commande que dans un salon nsfw.",
@@ -162,5 +162,9 @@
         "rating_scrore": "Classement: `{rating}` (s: 'Sûr', q: 'Questionnable', e: 'Explicite', u: 'Non évalué') | Score: {score}",
         "tags": "Mots-clés: ",
         "no_results_err": "Aucun résultat trouvé pour la recherche **{query}** !"
+    },
+    "cry": {
+        "description": "Pleurez",
+        "msg": "{author} pleure"
     }
 }
