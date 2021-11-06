@@ -214,28 +214,42 @@ export default class Util {
         if (message.channel.type === 'dm') {
             if (command.config.guildOnly) {
                 reasons.push(
-                    (message.guild as unknown as Guild).i18n.__mf('PERMS_MESSAGE.guild_only')
+                    (message.guild as unknown as Guild).i18n.__mf(
+                        'PERMS_MESSAGE.guild_only'
+                    )
                 );
             }
         }
 
         if (command.config.ownerOnly) {
-            if (!(message.client as unknown as KiwiiClient).isOwner(message.author)) {
+            if (
+                !(message.client as unknown as KiwiiClient).isOwner(
+                    message.author
+                )
+            ) {
                 reasons.push(
-                    (message.guild as unknown as Guild).i18n.__mf('PERMS_MESSAGE.dev_only')
+                    (message.guild as unknown as Guild).i18n.__mf(
+                        'PERMS_MESSAGE.dev_only'
+                    )
                 );
             }
         }
         if (command.config.adminOnly) {
             if (!message.member!.hasPermission('ADMINISTRATOR')) {
                 reasons.push(
-                    (message.guild as unknown as Guild).i18n.__mf('PERMS_MESSAGE.admin_only')
+                    (message.guild as unknown as Guild).i18n.__mf(
+                        'PERMS_MESSAGE.admin_only'
+                    )
                 );
             }
         }
         if (command.config.nsfw) {
             if (message.channel.type === 'text' && !message.channel.nsfw) {
-                reasons.push((message.guild as unknown as Guild).i18n.__mf('PERMS_MESSAGE.nsfw'));
+                reasons.push(
+                    (message.guild as unknown as Guild).i18n.__mf(
+                        'PERMS_MESSAGE.nsfw'
+                    )
+                );
             }
         }
         if (Array.isArray(command.config.permissions)) {
