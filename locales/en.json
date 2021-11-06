@@ -567,7 +567,8 @@
         "filters_list": "List of all filters enabled or disabled.\nUse `{prefix}filter [filter]` to add a filter to a song."
     },
     "anal": {
-        "description": "Returns an anal image/gif"
+        "description": "Returns an anal image/gif.",
+        "msg": "Requested by {author}"
     },
     "ass": {
         "description": "Returns an ass image"

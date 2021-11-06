@@ -166,5 +166,9 @@
     "cry": {
         "description": "Pleurez",
         "msg": "{author} pleure"
+    },
+    "anal": {
+        "description": "Envoie un gif ou une image aléaoire d'anal.",
+        "msg": "Demandé par {author}"
     }
 }
