@@ -9,7 +9,7 @@
         "guild_only": "**Command is unavailable on DM** - This command can only be used inside servers.",
         "dev_only": "**Limited to Devs** - This command can only be used by my developers.",
         "admin_only": "**Limited to Admins** - This command can only be used by server administrators.",
-        "nsfw": "**NSFW Command** - You can only use this command on a nsfw channel",
+        "nsfw": "**NSFW Command** - You can only use this command on a nsfw channel.",
         "missing_permissions_you": "**⚠️[Error] You don't have enough permissions** -",
         "missing_permissions1_you": "You need the following permission(s):\n  -",
         "missing_permissions_i": "**⚠️[Error] I don't have enough permissions** -",
