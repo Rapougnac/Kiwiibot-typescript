@@ -67,7 +67,7 @@ export default class Rule34Command extends Command {
                             image.previewUrl ??
                             ''
                     )
-                    .setColor('#FF00000')
+                    .setColor('#FF0000')
                     .setFooter(
                         message.guild?.i18n.__mf('rule34.tags') +
                             trimArray(image.tags, { maxLength: 2000 }).join(
