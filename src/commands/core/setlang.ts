@@ -1,4 +1,4 @@
-import PrefixSchema from '../../models/languageSchema';
+import LanguageSchema from '../../models/languageSchema';
 import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
@@ -38,7 +38,7 @@ export default class SetLangCommand extends Command {
 
             message.guild.i18n.setLocale(targetedlanguage);
 
-            await PrefixSchema.findOneAndUpdate(
+            await LanguageSchema.findOneAndUpdate(
                 {
                     _id: message.guild.id,
                 },
