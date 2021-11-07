@@ -51,6 +51,10 @@ export interface Config {
              * Whether or not active these options
              */
             active: boolean;
+            /**
+             * Whether or not the bot is in debug mode
+             */
+            debug: boolean;
         };
     };
     /**

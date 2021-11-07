@@ -16,7 +16,7 @@ export default class MessageEvent extends Event {
         const { bot } = author;
         if (!guild) return;
         let prefix = [this.client.prefix, message.guild!.prefix];
-        if (bot || message.webhookID) return;
+        if ((bot || message.webhookID ) && !this.client.config.discord.dev.debug) return;
 
         if (message.content.match(/n+o+ +u+/gi))
             return message.channel.send('no u');
