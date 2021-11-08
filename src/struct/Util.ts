@@ -1,21 +1,18 @@
 import {
-    APIMessage,
-    MessageEmbed,
     PermissionString,
     AllowedImageFormat,
-    ImageSize,
+    AllowedImageSize,
     Message,
     MessageTarget,
     MessageOptions,
-    MessageAdditions,
     WebhookMessageOptions,
-    TextChannel,
     GuildMember,
     Permissions,
+    Guild,
 } from 'discord.js';
 import Client from './Client';
 import Loader from './LoadingBar';
-import { TimeData, Interaction, Guild } from './interfaces/main';
+import { TimeData } from './interfaces/main';
 import Command from './Command';
 import KiwiiClient from './Client';
 import NekoClient from 'nekos.life';
@@ -88,96 +85,12 @@ export default class Util {
         return `\`${ret}\``;
     }
 
-    async createAPIMessage(
-        interaction: Interaction,
-        content: MessageOptions | MessageAdditions | WebhookMessageOptions,
-        str?: string
-    ) {
-        const { data, files } = await APIMessage.create(
-            this.client.channels.resolve(
-                interaction.channel_id
-            ) as MessageTarget,
-            str,
-            content
-        )
-            .resolveData()
-            .resolveFiles();
-
-        return { ...data, files };
-    }
-    /**
-     * Reply to the interaction, but with ephemeral message
-     * @param interaction
-     * @param content
-     */
-    async replyEphemeral(interaction: any, content: string): Promise<void> {
-        let data: object | any = {
-            flags: 1 << 6,
-            content: content,
-        };
-        if (typeof content === 'object')
-            data = await this.createAPIMessage(interaction, content);
-        (this.client as any).api
-            .interactions(interaction.id, interaction.token)
-            .callback.post({
-                data: {
-                    type: 4,
-                    flags: 1 << 6,
-                    data,
-                },
-            });
-    }
-    /**
-     *
-     * @param interaction
-     * @param response
-     * @param content
-     */
-    async reply(
-        interaction: any,
-        response: MessageOptions | MessageAdditions | WebhookMessageOptions,
-        content: string
-    ): Promise<void> {
-        let data: {
-            content?: MessageOptions | MessageAdditions | WebhookMessageOptions;
-        } = {
-            content: response,
-        };
-
-        if (typeof response === 'object') {
-            data = (await this.createAPIMessage(
-                interaction,
-                response,
-                content
-            )) as any;
-        }
-        await (this.client as any).api
-            .interactions(interaction.id, interaction.token)
-            .callback.post({
-                data: {
-                    type: 4,
-                    data,
-                },
-            });
-    }
-    /**
-     * Delete a slash command
-     * @param id The command id to put on.
-     */
-    deleteSlash(id: string) {
-        (this.client as any).api
-            .applications(this.client.user!.id)
-            .commands(id)
-            .delete()
-            .then(() => console.log('Command has been successfully deleted!'));
-    }
-
     makeImageUrl(
         root: string,
         {
             format = 'webp',
             size,
-        }: { format?: AllowedImageFormat; size?: ImageSize } = {}
+        }: { format?: AllowedImageFormat; size?: AllowedImageSize } = {}
     ): string {
         const AllowedImageFormats = ['webp', 'png', 'jpg', 'jpeg', 'gif'];
         const AllowedImageSizes = Array.from(
@@ -211,7 +124,7 @@ export default class Util {
 
     checkPermissions(message: Message, command: Command) {
         const reasons = [];
-        if (message.channel.type === 'dm') {
+        if (message.channel.type === 'GUILD_TEXT') {
             if (command.config.guildOnly) {
                 reasons.push(
                     (message.guild as unknown as Guild).i18n.__mf(
@@ -235,7 +148,7 @@ export default class Util {
             }
         }
         if (command.config.adminOnly) {
-            if (!message.member!.hasPermission('ADMINISTRATOR')) {
+            if (!message.member!.permissions.has('ADMINISTRATOR')) {
                 reasons.push(
                     (message.guild as unknown as Guild).i18n.__mf(
                         'PERMS_MESSAGE.admin_only'
@@ -244,7 +157,10 @@ export default class Util {
             }
         }
         if (command.config.nsfw) {
-            if (message.channel.type === 'text' && !message.channel.nsfw) {
+            if (
+                message.channel.type === 'GUILD_TEXT' &&
+                !message.channel.nsfw
+            ) {
                 reasons.push(
                     (message.guild as unknown as Guild).i18n.__mf(
                         'PERMS_MESSAGE.nsfw'
@@ -254,7 +170,7 @@ export default class Util {
         }
         if (Array.isArray(command.config.permissions)) {
             if (
-                message.channel.type === 'text' &&
+                message.channel.type === 'GUILD_TEXT' &&
                 !(
                     message.channel.permissionsFor(
                         message.member as GuildMember
@@ -299,7 +215,7 @@ export default class Util {
         }
         if (Array.isArray(command.config.clientPermissions)) {
             if (
-                message.channel.type === 'text' &&
+                message.channel.type === 'GUILD_TEXT' &&
                 !(
                     message.channel.permissionsFor(
                         message.guild!.me as GuildMember
