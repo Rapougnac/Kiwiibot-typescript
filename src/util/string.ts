@@ -1,4 +1,4 @@
-import { UserFlags, PermissionString } from 'discord.js';
+import { UserFlags, Permissions, PermissionString } from 'discord.js';
 /**
  * TextTruncate -> Shortens the string to desired length
  * @param str the string to test with
@@ -195,10 +195,10 @@ function remove(array: string[], ..._args: any): string[] {
  * @param locale The locale to translate to
  */
 function translatePermissions(
-    permissions: PermissionString[],
-    locale: 'en' | 'fr' | string
+    permissions: Permissions | PermissionString[],
+    locale: 'en' | 'fr' | string = 'en'
 ): PermissionString[] | string[] {
-    if (locale === 'en') return permissions;
+    if (locale === 'en') return Array.isArray(permissions) ? permissions : permissions.toArray();
     else {
         let _: string[] = [];
         for (const permission of permissions) {
@@ -247,8 +247,8 @@ function translatePermissions(
                     _.push('GÉRER_LES_SALONS');
                     break;
                 }
-                case 'MANAGE_EMOJIS': {
-                    _.push('GÉRER_LES_ÉMOJIS');
+                case 'MANAGE_EMOJIS_AND_STICKERS': {
+                    _.push('GÉRER_LES_ÉMOJIS_ET_LES_STICKERS');
                     break;
                 }
                 case 'MANAGE_GUILD': {
