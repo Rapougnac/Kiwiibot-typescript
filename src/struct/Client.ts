@@ -1,11 +1,4 @@
-import {
-    Client,
-    ClientApplication,
-    ClientOptions,
-    Collection,
-    User,
-    UserResolvable,
-} from 'discord.js';
+import { Client, Collection, Guild, User, UserResolvable } from 'discord.js';
 import Command from './Command';
 import {
     Config,
@@ -77,10 +70,6 @@ export default class KiwiiClient extends Client {
      */
     public disabledEvents: string[];
     /**
-     * The player manager of the client
-     */
-    public readonly player: Player;
-    /**
      * Get the emojis in config
      */
     public emotes: {
@@ -94,10 +83,6 @@ export default class KiwiiClient extends Client {
      * Get the filters in config
      */
     public filters: string[];
-    /**
-     * Client application
-     */
-    public application: ClientApplication | null;
     constructor(options: KiwiiClientOptions) {
         super(options.clientOptions);
         this.commands = new Collection();
@@ -111,22 +96,12 @@ export default class KiwiiClient extends Client {
         this.owners = options.owners;
         this.prefix = options.prefix;
         this.disabledEvents = options.disabledEvents || [];
-        // I hate this thing of dumb ideas
-        this.player = new Player(this as unknown as Client, {
-            autoSelfDeaf: true,
-            enableLive: true,
-            leaveOnEnd: true,
-            leaveOnEndCooldown: 45000,
-            leaveOnEmpty: true,
-            leaveOnEmptyCooldown: 5000,
-        });
         this.emotes = this.config.emojis;
         this.filters = this.config.filters;
-        this.application = null;
-        this.fetchApplication().then((app) => (this.application = app));
         Console.success(
             `Client has been initialized, you're using ${process.version}`
         );
+        Guild.prototype.prefix = this.prefix;
     }
 
     /**
@@ -256,28 +231,6 @@ export default class KiwiiClient extends Client {
             .catch((e) => {
                 Console.error('Failed to connect to MongoDB', e);
             });
-    }
-    /**
-     * Load all player events in the specified directory
-     */
-    public playerInit() {
-        const evts: string[] = [];
-        const player = readdirSync('src/events/player').filter((file) =>
-            file.endsWith('.js')
-        );
-        for (const file of player) {
-            const event = require(`../../src/events/player/${file}`);
-            const eventName = file.split('.')[0];
-            this.player.on(eventName, event.bind(null, this));
-            if (eventName) {
-                evts.push(eventName);
-            } else {
-                evts.push(`${eventName}, \x1b[31mERR!\x1b[0m`);
-            }
-        }
-        console.table(evts);
-
-        return this;
     }
     /**
      * Listener for process events.
