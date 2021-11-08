@@ -22,18 +22,13 @@ export default class UptimeCommand extends Command {
         const { days, hours, minutes, seconds } = this.client.utils.parseMs(
             client.uptime ?? 0
         );
-        message.inlineReply(
+        message.reply(
             message.guild!.i18n.__mf('uptime.msg', {
-                days: days,
-                hours: hours,
-                minutes: minutes,
-                seconds: seconds,
-            }),
-            {
-                allowedMentions: {
-                    repliedUser: false,
-                },
-            }
+                days,
+                hours,
+                minutes,
+                seconds,
+            })
         );
     }
 }

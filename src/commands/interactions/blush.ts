@@ -20,11 +20,11 @@ export default class BlushCommand extends Command {
             .setTitle(
                 this.message!.guild?.i18n.__mf('blush.msg', {
                     author: this.message?.author.tag,
-                })
+                }) as string
             )
             .setColor('#202225')
             .setImage(result)
             .setURL(result);
-        this.message?.channel.send(blushEmbed);
+        this.message?.channel.send({ embeds: [blushEmbed] });
     }
 }

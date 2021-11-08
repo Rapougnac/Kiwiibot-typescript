@@ -36,7 +36,7 @@ export default class PHCommentCommand extends Command {
                 )}&username=${encodeURIComponent(User.user.username)}`
             );
             const att = new MessageAttachment(data.message);
-            message.channel.send(att);
+            message.channel.send({ files: [att] });
         } else {
             const query = args.join(' ');
             const data: any = await axios.get(
@@ -45,7 +45,7 @@ export default class PHCommentCommand extends Command {
                 )}&username=${encodeURIComponent(message.author.username)}`
             );
             const att = new MessageAttachment(data.message);
-            message.channel.send(att);
+            message.channel.send({ files: [att] });
         }
     }
 }

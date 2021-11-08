@@ -20,7 +20,7 @@ export default class ThreeTousandYearsCommand extends Command {
     }
     async execute(client: Client, message: Message, args: string[]) {
         if (message.guild) {
-            message.channel.startTyping();
+            message.channel.sendTyping();
             let member =
                 message.mentions.members!.first() ||
                 message.guild.members.cache.get(args[0]) ||
@@ -54,9 +54,8 @@ export default class ThreeTousandYearsCommand extends Command {
                 }),
             });
             const attachment = new MessageAttachment(buffer, '3000years.png');
-            m.delete({ timeout: 3000 });
-            message.channel.send(attachment);
-            message.channel.stopTyping();
+            setTimeout(() => m.delete(), 3000);
+            message.channel.send({ files: [attachment] });
         } else {
             let member = message.author;
             let m = await message.channel.send(
@@ -66,9 +65,8 @@ export default class ThreeTousandYearsCommand extends Command {
                 url: member.displayAvatarURL({ format: 'png', size: 2048 }),
             });
             const attachment = new MessageAttachment(buffer, '3000years.png');
-            m.delete({ timeout: 3000 });
-            message.channel.send(attachment);
-            message.channel.stopTyping();
+            setTimeout(() => m.delete(), 3000);
+            message.channel.send({ files: [attachment] });
         }
     }
 }

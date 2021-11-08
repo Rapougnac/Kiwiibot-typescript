@@ -84,20 +84,22 @@ export default class MDNCommand extends Command {
             no = message.guild?.i18n.__mf('common.no');
         const embed = new MessageEmbed()
             .setTitle(message.guild!.i18n.__mf('mdn.doc', { val: title }))
-            .setDescription(description)
+            .setDescription(description ?? '')
             .setURL(url)
             .setImage(
                 'https://developer.mozilla.org/mdn-social-share.0ca9dbda.png'
             )
             .addField(
                 message.guild!.i18n.__mf('mdn.experimental'),
-                foo.__compat?.status?.experimental
-                    ? message.guild?.i18n.__mf('mdn.experimental_desc', {
-                          value: yes,
-                      })
-                    : message.guild!.i18n.__mf('mdn.experimental_desc', {
-                          value: no,
-                      })
+                String(
+                    foo.__compat?.status?.experimental
+                        ? message.guild?.i18n.__mf('mdn.experimental_desc', {
+                              value: yes,
+                          })
+                        : message.guild!.i18n.__mf('mdn.experimental_desc', {
+                              value: no,
+                          })
+                )
             )
             .addField(
                 message.guild!.i18n.__mf('mdn.deprecated'),
@@ -109,6 +111,6 @@ export default class MDNCommand extends Command {
                           value: no,
                       })
             );
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }

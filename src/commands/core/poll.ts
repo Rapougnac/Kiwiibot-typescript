@@ -57,15 +57,17 @@ export default class PollCommand extends Command {
         if (choices.length)
             return message.channel.send('It can be more than 20 choices!');
         message.delete();
-        const sent = await message.channel.send(
-            new MessageEmbed()
-                .setTitle(question)
-                .setDescription(
-                    choices
-                        .map((choice, i) => `${reactions[i]} ${choice}`)
-                        .join('\n\n')
-                )
-        );
+        const sent = await message.channel.send({
+            embeds: [
+                new MessageEmbed()
+                    .setTitle(question)
+                    .setDescription(
+                        choices
+                            .map((choice, i) => `${reactions[i]} ${choice}`)
+                            .join('\n\n')
+                    ),
+            ],
+        });
 
         for (const reaction of reactions) sent.react(reaction);
     }

@@ -19,7 +19,7 @@ export default class AfusionCommand extends Command {
         message: Message,
         args: string[]
     ): Promise<void> {
-        message.channel.startTyping();
+        message.channel.sendTyping();
         let member =
             message.mentions.members!.first() ||
             message.guild!.members.cache.get(args[0]) ||
@@ -56,8 +56,7 @@ export default class AfusionCommand extends Command {
             }),
         });
         const attachment = new MessageAttachment(buffer, 'fusion.png');
-        m.delete({ timeout: 3000 });
-        message.channel.send(attachment);
-        message.channel.stopTyping();
+        setTimeout(() => m.delete(), 3000);
+        message.channel.send({ files: [attachment] });
     }
 }

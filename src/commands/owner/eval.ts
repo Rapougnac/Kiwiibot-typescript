@@ -1,6 +1,12 @@
 import { clean } from '../../util/string';
 import { inspect } from 'util';
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import {
+    Message,
+    MessageEmbed,
+    MessageAttachment,
+    Formatters,
+    Util,
+} from 'discord.js';
 
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
@@ -17,14 +23,25 @@ export default class EvalCommand extends Command {
             img: 'https://cdn-icons-png.flaticon.com/512/993/993855.png',
         });
     }
-    async execute(client: Client, message: Message, args: string[]) {
+    async execute(
+        client: Client,
+        message: Message,
+        args: string[]
+    ): Promise<Message<boolean> | undefined> {
         try {
             const code = args.join(' ');
-            let result = eval(code);
+            let result: string | string[] = eval(code);
             if (typeof result !== 'string') result = inspect(result);
-            message.channel.send(clean(result), { code: 'js', split: true });
+            result = clean(result);
+            if (result.length >= 2000) result = Util.splitMessage(result);
+            if (Array.isArray(result)) {
+                for (let res of result) {
+                    res = Formatters.codeBlock('js', res + '\n');
+                    return message.channel.send(res);
+                }
+            } else return message.channel.send(result);
         } catch (e: any) {
             message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(e)}\n\`\`\``);
         }
     }
-};
+}

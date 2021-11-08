@@ -45,7 +45,7 @@ export default class RipCommand extends Command {
                     message,
                     deleteMessage: true,
                 });
-                message.channel.startTyping();
+                message.channel.sendTyping();
                 const avatarURL = User.displayAvatarURL({
                     format: 'png',
                     size: 512,
@@ -77,8 +77,7 @@ export default class RipCommand extends Command {
                 ctx.fillText(cause, 438, 330, 500);
                 ctx.fillText('In memory of', 438, 292);
                 const att = new MessageAttachment(canvas.toBuffer(), 'rip.png');
-                message.channel.stopTyping();
-                return message.channel.send(att);
+                return message.channel.send({ files: [att] });
             } catch (e) {
                 console.error(e);
             }
@@ -91,7 +90,7 @@ export default class RipCommand extends Command {
                     message,
                     deleteMessage: true,
                 });
-                message.channel.startTyping();
+                message.channel.sendTyping();
                 const avatarURL = message.author.displayAvatarURL({
                     size: 512,
                     format: 'png',
@@ -123,8 +122,7 @@ export default class RipCommand extends Command {
                 ctx.fillStyle = 'black';
                 if (cause) ctx.fillText(cause, 438, 910, 500);
                 const att = new MessageAttachment(canvas.toBuffer(), 'rip.png');
-                message.channel.stopTyping();
-                return message.channel.send(att);
+                return message.channel.send({ files: [att] });
             } catch (error) {
                 console.error(error);
             }

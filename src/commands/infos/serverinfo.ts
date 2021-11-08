@@ -31,13 +31,12 @@ export default class ServerInfoCommand extends Command {
         const humancount = guild.members.cache.filter(
             (member) => !member.user.bot
         ).size;
+        const owner = await message.guild!.fetchOwner();
         const embedserv = new MessageEmbed()
             .setAuthor(guild.name, guild.iconURL({ dynamic: true }) ?? '')
             .addField(
                 message.guild!.i18n.__mf('serverinfo.owner'),
-                `<@!${message.guild!.ownerID}>\n(\`${
-                    message.guild!.owner!.user.tag
-                }\`)`,
+                `<@!${message.guild!.ownerId}>\n(\`${owner.user.tag}\`)`,
                 true
             )
             .addField(
@@ -47,7 +46,7 @@ export default class ServerInfoCommand extends Command {
             )
             .addField(
                 message.guild!.i18n.__mf('serverinfo.region'),
-                guild.region,
+                guild.available ? guild.preferredLocale : 'N/A',
                 true
             )
             .addField(
@@ -61,9 +60,11 @@ export default class ServerInfoCommand extends Command {
             )
             .addField(
                 message.guild!.i18n.__mf('serverinfo.online_members'),
-                message.guild!.members.cache.filter(
-                    ({ presence }) => presence.status !== 'offline'
-                ).size,
+                String(
+                    message.guild!.members.cache.filter(
+                        ({ presence }) => presence?.status !== 'offline'
+                    ).size
+                ),
                 true
             )
             .addField(
@@ -72,15 +73,15 @@ export default class ServerInfoCommand extends Command {
                     message.guild!.channels.cache.size
                 } ${message.guild!.i18n.__mf('serverinfo.channels2')}\n${
                     message.guild!.channels.cache.filter(
-                        (channel) => channel.type === 'text'
+                        (channel) => channel.type === 'GUILD_TEXT'
                     ).size
                 } ${message.guild!.i18n.__mf('serverinfo.text_channels')}\n${
                     message.guild!.channels.cache.filter(
-                        (channel) => channel.type === 'voice'
+                        (channel) => channel.type === 'GUILD_VOICE'
                     ).size
                 } ${message.guild!.i18n.__mf('serverinfo.voice_channels')}\n${
                     message.guild!.channels.cache.filter(
-                        (channel) => channel.type === 'category'
+                        (channel) => channel.type === 'GUILD_CATEGORY'
                     ).size
                 } ${message.guild!.i18n.__mf('serverinfo.category')}`,
                 true
@@ -89,11 +90,11 @@ export default class ServerInfoCommand extends Command {
                 message.guild!.i18n.__mf('serverinfo.emotes'),
                 `${message.guild!.emojis.cache.size} emojis\n${
                     message.guild!.emojis.cache.filter(
-                        (emoji) => !emoji.animated
+                        (emoji) => !emoji.animated ?? false
                     ).size
                 } ${message.guild!.i18n.__mf('serverinfo.static_emotes')}\n${
                     message.guild!.emojis.cache.filter(
-                        (emoji) => emoji.animated
+                        (emoji) => emoji.animated ?? false
                     ).size
                 } ${message.guild!.i18n.__mf('serverinfo.animated_emotes')}`,
                 true
@@ -148,7 +149,7 @@ export default class ServerInfoCommand extends Command {
                 })
             )
             .setThumbnail(message.guild!.iconURL({ dynamic: true }) ?? '');
-        message.channel.send(embedserv);
+        message.channel.send({ embeds: [embedserv] });
     }
 }
 

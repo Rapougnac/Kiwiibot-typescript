@@ -17,7 +17,11 @@ export default class AnimeCommand extends Command {
         });
     }
 
-    public async execute(client: KiwiiClient, message: Message, args: string[]): Promise<Message | undefined> {
+    public async execute(
+        client: KiwiiClient,
+        message: Message,
+        args: string[]
+    ): Promise<Message | undefined> {
         const kitsu = new Kitsu();
         const search = args.join(' ').toLowerCase();
         if (!search) {
@@ -46,33 +50,32 @@ export default class AnimeCommand extends Command {
                         }\n`;
                     });
                     await message.channel.send({
-                        embed: {
-                            author: {
-                                name: message.guild!.i18n.__mf(
-                                    'anime.stop_collect_msg'
-                                ),
+                        embeds: [
+                            {
+                                author: {
+                                    name: message.guild!.i18n.__mf(
+                                        'anime.stop_collect_msg'
+                                    ),
+                                },
+                                title: message.guild!.i18n.__mf('anime.choose'),
+                                description: string,
+                                footer: {
+                                    text: `Requested by ${message.author.username}`,
+                                    icon_url: message.author.displayAvatarURL({
+                                        dynamic: true,
+                                    }),
+                                },
                             },
-                            title: message.guild!.i18n.__mf('anime.choose'),
-                            description: string,
-                            footer: {
-                                text: `Requested by ${message.author.username}`,
-                                icon_url: message.author.displayAvatarURL({
-                                    dynamic: true,
-                                }),
-                            },
-                        },
+                        ],
                     });
 
                     const filter = (m: Message): boolean =>
                         message.author.id === m.author.id &&
                         m.channel.id === message.channel.id;
-                    const collector = message.channel.createMessageCollector(
+                    const collector = message.channel.createMessageCollector({
                         filter,
-                        {
-                            max: 1,
-                            time: 60000,
-                        }
-                    );
+                        max: 1,
+                    });
                     let number;
                     const continued = await new Promise((resolve) => {
                         let count: number;
@@ -185,7 +188,7 @@ export default class AnimeCommand extends Command {
                                 )
                                 .setThumbnail(anime.posterImage.original);
 
-                        return message.channel.send(embed);
+                        return message.channel.send({ embeds: [embed] });
                     }
                 } else {
                     const anime = result[0];
@@ -266,7 +269,7 @@ export default class AnimeCommand extends Command {
                             )
                             .setThumbnail(anime.posterImage.original);
 
-                    return message.channel.send(embed);
+                    return message.channel.send({ embeds: [embed] });
                 }
             })
             .catch((err: any) => {

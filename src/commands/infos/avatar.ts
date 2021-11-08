@@ -47,7 +47,7 @@ export default class AvatarCommand extends Command {
             );
         if (args.length <= 0) member = message.member as GuildMember;
         if (!member) return;
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setAuthor(
                 `${message.guild.i18n.__mf('avatar.avatar_of', {
                     avatar: member.user.username,
@@ -89,6 +89,6 @@ export default class AvatarCommand extends Command {
                 })
             )
             .setColor(member.displayHexColor || 'GREY');
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }

@@ -39,7 +39,7 @@ export default class Rule34Command extends Command {
                             query: query.join(' '),
                         }) as string
                     );
-                    msg.delete({ timeout: 3000 });
+                    setTimeout(() => msg.delete(), 3000);
                 }
                 if (
                     (query.includes('loli') || query.includes('shota')) &&
@@ -74,7 +74,7 @@ export default class Rule34Command extends Command {
                                 ' | '
                             )
                     );
-                message.channel.send(embed);
+                message.channel.send({ embeds: [embed] });
             })
             .catch((err) => {
                 if (err instanceof BooruError)

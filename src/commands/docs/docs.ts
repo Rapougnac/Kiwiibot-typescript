@@ -47,7 +47,7 @@ export default class DocsCommand extends Command {
                 query
             )}`;
             axios.get(url).then(({ data }) => {
-                if (data) message.channel.send({ embed: data });
+                if (data) message.channel.send({ embeds: [data] });
                 else
                     return message.channel.send(
                         message.guild?.i18n.__mf('docs.docs_fetch_error') as any
@@ -60,7 +60,7 @@ export default class DocsCommand extends Command {
             )}`;
             axios.get(url).then(({ data }) => {
                 if (data) {
-                    message.channel.send({ embed: data });
+                    message.channel.send({ embeds: [data] });
                 } else {
                     return message.channel.send(
                         message.guild?.i18n.__mf('docs.docs_fetch_error') as any

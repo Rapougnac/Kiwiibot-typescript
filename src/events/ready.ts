@@ -47,15 +47,15 @@ export default class ReadyEvent extends Event {
         ];
         setInterval(async () => {
             const i = statuses[Math.floor(Math.random() * statuses.length)];
-            await this.client
-                .user!.setPresence({
-                    activity: {
+            this.client.user!.setPresence({
+                activities: [
+                    {
                         name: `${this.client.prefix}help | ${i}`,
                         type: 'PLAYING',
                     },
-                    status: this.client.config.discord.status,
-                })
-                .catch(console.error);
+                ],
+                status: this.client.config.discord.status,
+            });
         }, 1e4);
         Console.success(
             `Ready on ${
@@ -111,43 +111,41 @@ export default class ReadyEvent extends Event {
 
         files.forEach(async (file) => {
             const filePath = resolve(process.cwd(), file);
-            let SlashCommand: SlashCommandConstructor = await import(`${filePath}`);
+            let SlashCommand: SlashCommandConstructor = await import(
+                `${filePath}`
+            );
             SlashCommand = (SlashCommand as any).default;
             if (this.client.utils.isClass(SlashCommand)) {
-
-                    const command = new SlashCommand(this.client);
-                    if (command!.global) {
-                        (this.client as any).api
-                            .applications(this.client.user!.id)
-                            .post({
-                                data: {
-                                    name: command!.name,
-                                    description: command!.description,
-                                    options: command!.commandOptions,
-                                },
-                            });
-                    } else {
-                        (this.client as any).api
-                            .applications(this.client.user!.id)
-                            .guilds('895600122510069801')
-                            .commands.post({
-                                data: {
-                                    name: command!.name,
-                                    description: command!.description,
-                                    options: command!.commandOptions,
-                                },
-                            });
-                    }
-                    this.client.slashs.set(
-                        command!.name,
-                        command as SlashCommand
-                    );
-                    console.log(
-                        `Command posted: ${command!.name} from ${resolve(
-                            process.cwd() + sep + file
-                        )} [${command!.global ? 'global' : 'guild'}]`
-                    );
+                const command = new SlashCommand(this.client);
+                if (command!.global) {
+                    (this.client as any).api
+                        .applications(this.client.user!.id)
+                        .post({
+                            data: {
+                                name: command!.name,
+                                description: command!.description,
+                                options: command!.commandOptions,
+                            },
+                        });
+                } else {
+                    (this.client as any).api
+                        .applications(this.client.user!.id)
+                        .guilds('895600122510069801')
+                        .commands.post({
+                            data: {
+                                name: command!.name,
+                                description: command!.description,
+                                options: command!.commandOptions,
+                            },
+                        });
                 }
+                this.client.slashs.set(command!.name, command as SlashCommand);
+                console.log(
+                    `Command posted: ${command!.name} from ${resolve(
+                        process.cwd() + sep + file
+                    )} [${command!.global ? 'global' : 'guild'}]`
+                );
+            }
         });
         const globalCommands = await (this.client as any).api
             .applications(this.client.user!.id)

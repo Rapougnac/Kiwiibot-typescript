@@ -6,7 +6,7 @@ import { Message, MessageEmbed } from 'discord.js';
 export default class MessageEvent extends Event {
     constructor(client: KiwiiClient) {
         super(client, {
-            name: 'message',
+            name: 'messageCreate',
             once: false,
         });
     }
@@ -16,11 +16,12 @@ export default class MessageEvent extends Event {
         const { bot } = author;
         if (!guild) return;
         let prefix = [this.client.prefix, message.guild!.prefix];
-        if ((bot || message.webhookID ) && !this.client.config.discord.dev.debug) return;
+        if ((bot || message.webhookId) && !this.client.config.discord.dev.debug)
+            return;
 
-        if (message.content.match(/n+o+ +u+/gi))
+        if (message.content.match(/n+o+\s+u+/gi))
             return message.channel.send('no u');
-        if (message.content.match(/\(╯°□°）╯︵ ┻━┻/g))
+        if (message.content.match(/\(╯°□°\）╯︵ ┻━┻/g))
             return message.channel.send('┻━┻       (゜-゜)');
         // Check prefix
         let index;
@@ -32,14 +33,14 @@ export default class MessageEvent extends Event {
             } else {
                 index = null;
                 continue;
-            };
+            }
         }
         if (
             message.content.startsWith(`<@!${this.client.user!.id}>`) &&
             message.content.endsWith(`<@!${this.client.user!.id}>`) &&
             guild
         )
-            return message.inlineReply(
+            return message.reply(
                 message.guild!.i18n.__mf('MESSAGE_PREFIX.msg', {
                     prefix: message.guild!.prefix,
                 })
@@ -53,7 +54,7 @@ export default class MessageEvent extends Event {
         if (
             !this.client.commands.has(command) &&
             !this.client.aliases.has(command)
-        ) 
+        )
             return;
         const command_to_execute =
             this.client.commands.get(command) ||
@@ -102,7 +103,7 @@ export default class MessageEvent extends Event {
                                 .map((reason) => '• ' + reason)
                                 .join('\n')}`
                     );
-                return message.channel.send(embed);
+                return message.channel.send({ embeds: [embed] });
             } else {
                 try {
                     command_to_execute.execute(this.client, message, args);
