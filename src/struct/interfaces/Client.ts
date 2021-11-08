@@ -191,7 +191,7 @@ export interface KiwiiClientOptions {
     /**
      * The base options of the client
      */
-    clientOptions?: ClientOptions;
+    clientOptions: ClientOptions;
     /**
      * If there should be events that not triggers
      */
