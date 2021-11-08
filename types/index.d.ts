@@ -22,31 +22,6 @@ declare module 'discord.js' {
     export interface MessageMentionOptions {
         repliedUser?: boolean;
     }
-
-    export interface Message {
-        inlineReply(
-            content:
-                | APIMessageContentResolvable
-                | (MessageOptions & { split?: boolean })
-                | MessageAdditions
-        ): Promise<Message>;
-        inlineReply(
-            options: MessageOptions & { split: true | SplitOptions }
-        ): Promise<Message[]>;
-        inlineReply(options: MessageOptions): Promise<Message | Message[]>;
-        inlineReply(
-            content: StringResolvable,
-            options: (MessageOptions & { split?: false }) | MessageAdditions
-        ): Promise<Message>;
-        inlineReply(
-            content: StringResolvable,
-            options: MessageOptions & { split: true | SplitOptions }
-        ): Promise<Message[]>;
-        inlineReply(
-            content: StringResolvable,
-            options: MessageOptions
-        ): Promise<Message | Message[]>;
-    }
     export interface Guild {
         /**
          * The i18n object notation
