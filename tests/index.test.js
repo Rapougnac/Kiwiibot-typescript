@@ -7,9 +7,11 @@ const client = new Client({
     owners: '253554702858452992',
     prefix: 'm?',
 });
+console.log(client);
 
 beforeStart(() => {
     client.connect();
+    client.start();
 });
 
 group('main commands', () => {
