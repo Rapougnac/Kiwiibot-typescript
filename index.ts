@@ -16,7 +16,7 @@ const client = new KiwiiClient({
     prefix: 'm?',
 });
 
-client.connect();
+(async () => await client.connect())();
 client.start();
 
 client.ws.on('INTERACTION_CREATE' as WSEventType as any, (int: any) => {
