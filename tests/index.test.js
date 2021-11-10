@@ -9,8 +9,8 @@ const client = new Client({
 });
 console.log(client);
 
-beforeStart(() => {
-    client.connect();
+beforeStart(async () => {
+    await client.connect();
     client.start();
 });
 
