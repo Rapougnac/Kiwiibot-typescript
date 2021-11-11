@@ -20,6 +20,7 @@ import Command from './Command';
 import KiwiiClient from './Client';
 import NekoClient from 'nekos.life';
 import AmeClient from 'amethyste-api';
+import { officialApi } from 'mal-scraper';
 export default class Util {
     /**
      * The client passed in
@@ -37,6 +38,12 @@ export default class Util {
      * The améthyste client
      */
     public readonly AmeAPI: AmeClient;
+
+    /**
+     * The MyAnimeList API
+     */
+    public readonly MALApi: officialApi;
+
     /**
      * This is a class where the client can acces easily
      * @param client The client that instancied this manager
@@ -46,6 +53,7 @@ export default class Util {
         this.loader = new Loader();
         this.neko = new NekoClient();
         this.AmeAPI = new AmeClient(this.client.config.amethyste.client);
+        this.MALApi = new officialApi(this.client.config.MAL);
     }
 
     formatPerms(perms: PermissionString) {
