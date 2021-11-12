@@ -44,10 +44,13 @@ export default class MDNCommand extends Command {
         }
         if (!foo) return message.channel.send(notFound);
         const _url = foo.__compat?.mdn_url ?? '';
+        // Get the domain of mdn (https://developer.mozilla.org/)
         const domain = _url.substring(0, 30);
-        const path = _url.split(domain ?? 'https://developer.mozilla.org/')[1];
+        // Here we get the url of the page
+        const [, path] = _url.split(domain ?? 'https://developer.mozilla.org/');
         const locale = message.guild!.i18n.getLocale();
         let url = _url;
+        // Set the url to the locale if it exists
         if (locale === 'en') {
             url = domain + `${locale}-US/` + path;
         } else if (locale === 'fr') {
@@ -57,6 +60,7 @@ export default class MDNCommand extends Command {
         if (!html) return;
         const $ = cheerio.load(html);
         const reg = /`?<a\shref=\"([^"]*)">([^<]*)<\/a>`?/im;
+        // Look for the first `p` tag (the description)
         let description = $('p')
             .first()
             .html()
@@ -66,18 +70,20 @@ export default class MDNCommand extends Command {
             .replace(/<[^>]*em>/g, '_');
         const title = $('h1').first().text();
         const element = cheerio.load(description as string);
+        // Set the arrays that will contains the contentLinks and the links
         let contentLinks: string[] = [];
         let _links: string[] = [];
+        // Get all the links in the description
         element('a').each(function () {
             const text = element(this).text();
             const l = element(this).attr('href') ?? '';
             contentLinks.push(text);
             _links.push(l);
         });
+        // 
         let links = _links.map((li) => domain.slice(0, -1) + li);
         links = links.map((li, i) => {
-            const regMatch = reg.exec(description ?? '') ?? [];
-            const _l = regMatch[regMatch.length - 1];
+            // If the <a> tag contains "`" AND the content link contains "`", replace it by nothing
             if (
                 contentLinks[i][0] === '`' &&
                 contentLinks[i][contentLinks[i].length - 1] === '`' &&
@@ -88,6 +94,7 @@ export default class MDNCommand extends Command {
             return `[${contentLinks[i]}](${li})`;
         });
         links.forEach((link) => {
+            // Replace HTML hyperlinks by markdown hyperlinks
             description = description?.replace(reg, link);
         });
         if (!description) description = foo.__compat?.description;
