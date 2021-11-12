@@ -75,7 +75,18 @@ export default class MDNCommand extends Command {
             _links.push(l);
         });
         let links = _links.map((li) => domain.slice(0, -1) + li);
-        links = links.map((li, i) => `[${contentLinks[i]}](${li})`);
+        links = links.map((li, i) => {
+            const regMatch = reg.exec(description ?? '') ?? [];
+            const _l = regMatch[regMatch.length - 1];
+            if (
+                contentLinks[i][0] === '`' &&
+                contentLinks[i][contentLinks[i].length - 1] === '`' &&
+                description?.[description?.indexOf('<a') - 1] === '`' &&
+                description?.[description?.indexOf('</a>') + 1] === '`'
+            )
+                contentLinks[i] = contentLinks[i].replace(/`/g, '');
+            return `[${contentLinks[i]}](${li})`;
+        });
         links.forEach((link) => {
             description = description?.replace(reg, link);
         });
