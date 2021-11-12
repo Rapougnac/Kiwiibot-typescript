@@ -5,7 +5,7 @@ import { IdentifierMeta } from '@mdn/browser-compat-data/types';
 import { Message, MessageEmbed } from 'discord.js';
 import { upperFirstButAcceptEmojis } from '../../util/string';
 import cheerio from 'cheerio';
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 export default class MDNCommand extends Command {
     constructor(client: KiwiiClient) {
@@ -53,10 +53,10 @@ export default class MDNCommand extends Command {
         } else if (locale === 'fr') {
             url = domain + `${locale}/` + path;
         }
-        const html = await fetch(url).then((res) => res.text());
+        const html = await axios.get(url).then((res) => res.data);
         if (!html) return;
         const $ = cheerio.load(html);
-        const reg = /<a\shref=\"([^"]*)">([^<]*)<\/a>/im;
+        const reg = /`?<a\shref=\"([^"]*)">([^<]*)<\/a>`?/im;
         let description = $('p')
             .first()
             .html()
