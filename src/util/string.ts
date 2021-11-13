@@ -198,7 +198,8 @@ function translatePermissions(
     permissions: Permissions | PermissionString[],
     locale: 'en' | 'fr' | string = 'en'
 ): PermissionString[] | string[] {
-    if (locale === 'en') return Array.isArray(permissions) ? permissions : permissions.toArray();
+    if (locale === 'en')
+        return Array.isArray(permissions) ? permissions : permissions.toArray();
     else {
         let _: string[] = [];
         for (const permission of permissions) {
@@ -366,6 +367,48 @@ function testCombinaisonsOfWord(input: string): string[] {
     return results;
 }
 
+function parseDate(date: string, reverse?: boolean): string {
+    if (date.length === 0) throw 'Not a valid datelike';
+    const [month, day, year] = date.replace(/,/g, '').split(' ').slice(0, 3);
+
+    type Months =
+        | 'Jan'
+        | 'Feb'
+        | 'Mar'
+        | 'Apr'
+        | 'May'
+        | 'Jun'
+        | 'Jul'
+        | 'Aug'
+        | 'Sep'
+        | 'Oct'
+        | 'Nov'
+        | 'Dec';
+
+    const months = {
+        Jan: 1,
+        Feb: 2,
+        Mar: 3,
+        Apr: 4,
+        May: 5,
+        Jun: 6,
+        Jul: 7,
+        Aug: 8,
+        Sep: 9,
+        Oct: 10,
+        Nov: 11,
+        Dec: 12,
+    };
+
+    const fullDate = `${year}-${months[month as Months]}-${day}`;
+
+    const toSplit = fullDate.split('-');
+    const reversed = toSplit.reverse();
+    const joined = reversed.join('-');
+
+    return reverse ? joined : fullDate;
+}
+
 export {
     textTruncate,
     ordinalize,
@@ -380,4 +423,5 @@ export {
     translatePermissions,
     upperFirstButAcceptEmojis,
     testCombinaisonsOfWord,
+    parseDate,
 };
