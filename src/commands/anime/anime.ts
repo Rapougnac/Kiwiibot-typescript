@@ -235,7 +235,3 @@ export default class AnimeCommand extends Command {
         }
     }
 }
-
-malScraper.getSeason(2000, 'fall').then((res) => {
-    res.Movies;
-});
