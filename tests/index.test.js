@@ -11,9 +11,11 @@ const client = new Client({
         intents: Intents.ALL,
     },
 });
+console.log(client);
 
-beforeStart(() => {
-    client.connect();
+beforeStart(async () => {
+    await client.connect();
+    client.start();
 });
 
 group('main commands', () => {

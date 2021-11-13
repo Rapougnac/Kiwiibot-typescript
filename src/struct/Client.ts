@@ -108,11 +108,11 @@ export default class KiwiiClient extends Client {
      * Log the client in
      * @param token The token used to log
      */
-    public connect(
+    public async connect(
         token: string | undefined = this.config.discord.token
-    ): this {
+    ): Promise<this> {
         // Log super in with the supplied token
-        super.login(token).catch(console.error);
+        await super.login(token).catch(console.error);
 
         return this;
     }

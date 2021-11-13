@@ -202,7 +202,7 @@ export default class UserInfoCommand extends Command {
                         )}] HH:mm:ss`
                     ) +
                         `\n\`${moment(member.user.createdAt, 'DD/MM/YYYY')
-                            .locale(lang as string)
+                            .locale(lang ?? 'en')
                             .fromNow()}\``,
                     true
                 )
@@ -216,7 +216,7 @@ export default class UserInfoCommand extends Command {
                         )}] HH:mm:ss`
                     ) +
                         `\n\`${moment(member.joinedAt, 'DD/MM/YYYY')
-                            .locale(lang as string)
+                            .locale(lang ?? 'en')
                             .fromNow()}\``,
                     true
                 )
@@ -231,7 +231,7 @@ export default class UserInfoCommand extends Command {
                               )}] HH:mm:ss`
                           ) +
                               `\n\`${moment(member.premiumSince, 'DD/MM/YYYY')
-                                  .locale(lang as string)
+                                  .locale(lang ?? 'en')
                                   .fromNow()}\``
                         : message.guild.i18n.__mf('userinfo.not_boosting'),
                     true

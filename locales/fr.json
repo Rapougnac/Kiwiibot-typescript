@@ -30,8 +30,7 @@
 		"on": "Le",
 		"at": "à",
 		"hoisted": "Séparé des autres",
-		"mentionnable": "Mentionnable",
-		"mentionable": "roleinfo.mentionable"
+		"mentionnable": "Mentionnable"
 	},
 	"userinfo": {
 		"description": "Montre des informations sur vous ou l'utilisateur spécifié",
@@ -111,7 +110,8 @@
 		"end": "Fin",
 		"in_progress": "En cours...",
 		"choose": "Choisissez entre les nombres affichés.",
-		"number_range": "Veuillez, s'il vous plaît, mettre un nombre entre 1 et {number}"
+		"number_range": "Veuillez, s'il vous plaît, mettre un nombre entre 1 et {number}",
+		"poularity": "Popularité"
 	},
 	"trump": {
 		"description": "trump.description"

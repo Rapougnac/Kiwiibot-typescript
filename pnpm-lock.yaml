@@ -8,6 +8,7 @@ specifiers:
   '@types/glob': ^7.1.4
   '@types/i18n': ^0.13.1
   '@types/lodash': ^4.14.175
+  '@types/node-fetch': ^3.0.3
   '@xelzs/mdn-browser-compat-api': ^1.1.0
   amethyste-api: ^1.1.5
   axios: ^0.22.0
@@ -15,8 +16,9 @@ specifiers:
   canvas: ^2.8.0
   cheerio: '*'
   common-tags: ^1.8.0
-  corde: ^4.4.4
-  discord.js: ^13.3.1
+  corde: ^4.4.5
+  discord-player: ^4.0.0
+  discord.js: ^12.5.3
   express: ^4.17.1
   ffmpeg-static: ^4.4.0
   gifencoder: ^2.0.1
@@ -24,6 +26,7 @@ specifiers:
   glob: ^7.2.0
   i18n: ^0.13.3
   lodash: ^4.17.21
+  mal-scraper: ^2.11.3
   moment: ^2.29.1
   moment-duration-format: ^2.3.2
   mongoose: 5.13.11
@@ -47,6 +50,7 @@ dependencies:
   glob: 7.2.0
   i18n: 0.13.3
   lodash: 4.17.21
+  mal-scraper: 2.11.3
   moment: 2.29.1
   moment-duration-format: 2.3.2
   mongoose: 5.13.11
@@ -60,9 +64,31 @@ devDependencies:
   '@types/glob': 7.2.0
   '@types/i18n': 0.13.1
   '@types/lodash': 4.14.176
+  '@types/node-fetch': 3.0.3
   corde: 4.4.5_ffmpeg-static@4.4.0
+  ts-node: 10.4.0
+  tslog: 3.2.2
 
 packages:
+
+  /@babel/runtime/7.16.3:
+    resolution: {integrity: sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.9
+    dev: false
+
+  /@cspotcode/source-map-consumer/0.8.0:
+    resolution: {integrity: sha512-41qniHzTU8yAGbCp04ohlmSrZf8bkf/iJsl3V0dRGsQN/5GFfx+LbCSsCpp2gqrqjTVg/K6O8ycoV35JIwAzAg==}
+    engines: {node: '>= 12'}
+    dev: true
+
+  /@cspotcode/source-map-support/0.7.0:
+    resolution: {integrity: sha512-X4xqRHqN8ACt2aHVe51OxeA2HjbcL4MqFqXkrmQszJ1NOUuUu5u6Vqx/0lZSVNku7velL5FC/s5uEAj1lsBMhA==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@cspotcode/source-map-consumer': 0.8.0
+    dev: true
 
   /@derhuerst/http-basic/8.2.1:
     resolution: {integrity: sha512-Rmn7qQQulw2sxJ8qGfZ7OuqMWuhz8V+L5xnYKMF5cXVcYqmgWqlVEAme90pF7Ya8OVhxVxLmhh0rI2k6t7ITWw==}

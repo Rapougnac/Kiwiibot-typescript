@@ -1,4 +1,8 @@
-import { ClientOptions, PermissionString, PresenceStatusData } from 'discord.js';
+import {
+    ClientOptions,
+    PermissionString,
+    PresenceStatusData,
+} from 'discord.js';
 import ServerInfoCommand from '../../commands/infos/serverinfo';
 
 export interface Config {
@@ -127,7 +131,7 @@ export interface Config {
         desktop: string;
     };
     /**
-     * This is just hex colors 
+     * This is just hex colors
      * @note Not using
      */
     colors: {
@@ -176,16 +180,21 @@ export interface Config {
         id: string;
         key: string;
     };
+
+    MAL: {
+        username: string;
+        password: string;
+    };
 }
 
 export interface KiwiiClientOptions {
     /**
-     * The prefix of the bot 
+     * The prefix of the bot
      */
     prefix: string;
     /**
-     * The config file 
-     * 
+     * The config file
+     *
      */
     config: Config;
     /**
@@ -204,15 +213,15 @@ export interface KiwiiClientOptions {
 
 export interface ProcessEventOptions {
     /**
-     * Logs the error on the console 
+     * Logs the error on the console
      */
     log_on_console: boolean;
     /**
-     * No error sended both on the channel & the console 
+     * No error sended both on the channel & the console
      */
     nologs: boolean;
     /**
-     * Logs the error on the console & the channel 
+     * Logs the error on the console & the channel
      */
     logsonboth: boolean;
 }

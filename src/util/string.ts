@@ -367,8 +367,9 @@ function testCombinaisonsOfWord(input: string): string[] {
     return results;
 }
 
+// Function that parse a datelike "Oct 6, 2021" into a valid date format like "2021-10-06"
 function parseDate(date: string, reverse?: boolean): string {
-    if (date.length === 0) throw 'Not a valid datelike';
+    if (date.length === 0) throw 'Not A valid datelike';
     const [month, day, year] = date.replace(/,/g, '').split(' ').slice(0, 3);
 
     type Months =
