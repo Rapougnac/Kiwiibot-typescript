@@ -1,4 +1,8 @@
-import { CanvasRenderingContext2D, Image, NodeCanvasRenderingContext2D } from 'canvas';
+import {
+    CanvasRenderingContext2D,
+    Image,
+    NodeCanvasRenderingContext2D,
+} from 'canvas';
 import { Readable } from 'stream';
 import { centerImageOutput } from './interfaces/main';
 
@@ -85,7 +89,15 @@ export default class Canvas {
      * @param width The width parameter
      * @param height The height parameter
      */
-    static drawImageWithTint(ctx: NodeCanvasRenderingContext2D, image: Image, color: string, x: number, y: number, width: number, height: number) {
+    static drawImageWithTint(
+        ctx: NodeCanvasRenderingContext2D,
+        image: Image,
+        color: string,
+        x: number,
+        y: number,
+        width: number,
+        height: number
+    ): CanvasRenderingContext2D {
         const { fillStyle, globalAlpha } = ctx;
         ctx.fillStyle = color;
         ctx.drawImage(image, x, y, width, height);
@@ -129,12 +141,12 @@ export default class Canvas {
         ctx: CanvasRenderingContext2D,
         text: string,
         maxWidth: number
-    ): Promise<unknown> {
+    ): Promise<string[] | null> {
         return new Promise((resolve) => {
             if (ctx.measureText(text).width < maxWidth) return resolve([text]);
             if (ctx.measureText('W').width > maxWidth) return resolve(null);
             const words = text.split(' ');
-            const lines = [];
+            const lines: string[] = [];
             let line = '';
             while (words.length > 0) {
                 let split = false;
