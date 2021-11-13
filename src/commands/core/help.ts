@@ -7,7 +7,6 @@ import {
 import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
-import { Guild } from '../../struct/interfaces/Guild';
 export default class HelpCommand extends Command {
     constructor(client: KiwiiClient) {
         super(client, {
@@ -29,7 +28,7 @@ export default class HelpCommand extends Command {
         if (!message.guild) return;
         if (args.length > 2) return;
         const fields = [];
-        if (message.channel.type === 'text' && message.channel.nsfw) {
+        if (message.channel.type === 'GUILD_TEXT' && message.channel.nsfw) {
             let ct: string = '';
             for (const category of [...this.client.categories]) {
                 switch (category) {
@@ -206,8 +205,8 @@ export default class HelpCommand extends Command {
                 .setTimestamp()
                 // If the channel is not nsfw, set a message on the footer
                 .setFooter(
-                    message.channel.type === 'text'
-                        ? !message.channel.nsfw
+                    message.channel.type === 'GUILD_TEXT'
+                        ? message.channel.nsfw
                             ? message.guild.i18n.__mf(`help.cmd_usage`, {
                                   prefix: client.prefix,
                               }) +
@@ -217,10 +216,10 @@ export default class HelpCommand extends Command {
                             : message.guild.i18n.__mf('help.cmd_usage', {
                                   prefix: client.prefix,
                               })
-                        : null
+                        : ''
                 );
             if (this.help.img) embed.setThumbnail(this.help.img);
-            message.channel.send(embed);
+            message.channel.send({ embeds: [embed] });
         } else {
             const command =
                 this.client.commands.get(args.join(' ').toLowerCase()) ||
@@ -240,7 +239,7 @@ export default class HelpCommand extends Command {
             }
             if (
                 command.config.nsfw &&
-                message.channel.type === 'text' &&
+                message.channel.type === 'GUILD_TEXT' &&
                 !message.channel.nsfw
             ) {
                 return message.channel.send(
@@ -261,10 +260,10 @@ export default class HelpCommand extends Command {
                     command.help.description ||
                     message.guild.i18n.__mf('help.no_desc');
             }
-            const embed = new MessageEmbed({
-                color: 'ORANGE',
-                author: { name: message.guild.i18n.__mf('help.title') },
-                fields: [
+            const embed = new MessageEmbed()
+                .setColor('ORANGE')
+                .setAuthor(message.guild.i18n.__mf('help.title'))
+                .addFields(
                     {
                         name: message.guild.i18n.__mf('help.name'),
                         value: command.help.name,
@@ -329,22 +328,24 @@ export default class HelpCommand extends Command {
                                 : translatePermissions(
                                       command.config.permissions,
                                       message.guild.i18n.getLocale()
-                                  ).map((x) => {
-                                      x = x
-                                          .toLowerCase()
-                                          .replace(/(^|"|_)(\S)/g, (z) =>
-                                              z.toUpperCase()
-                                          )
-                                          .replace(/_/g, ' ');
-                                      if (x.match(/Use Vad/g))
-                                          x.replace(
-                                              /Use Vad/g,
-                                              'Use Voice Activity'
-                                          );
-                                      if (x.match(/Guild/g))
-                                          x.replace(/Guild/g, 'Server');
-                                      return x;
-                                  }),
+                                  )
+                                      .map((x) => {
+                                          x = x
+                                              .toLowerCase()
+                                              .replace(/(^|"|_)(\S)/g, (z) =>
+                                                  z.toUpperCase()
+                                              )
+                                              .replace(/_/g, ' ');
+                                          if (x.match(/Use Vad/g))
+                                              x.replace(
+                                                  /Use Vad/g,
+                                                  'Use Voice Activity'
+                                              );
+                                          if (x.match(/Guild/g))
+                                              x.replace(/Guild/g, 'Server');
+                                          return x;
+                                      })
+                                      .join('\n'),
                         inline: true,
                     },
                     {
@@ -355,35 +356,36 @@ export default class HelpCommand extends Command {
                                 : translatePermissions(
                                       command.config.clientPermissions,
                                       message.guild.i18n.getLocale()
-                                  ).map((x) => {
-                                      x = x
-                                          .toLowerCase()
-                                          .replace(/(^|"|_)(\S)/g, (z) =>
-                                              z.toUpperCase()
-                                          )
-                                          .replace(/_/g, ' ');
-                                      if (x.match(/Use Vad/g))
-                                          x.replace(
-                                              /Use Vad/g,
-                                              'Use Voice Activity'
-                                          );
-                                      if (x.match(/Guild/g))
-                                          x.replace(/Guild/g, 'Server');
-                                      return x;
-                                  }),
+                                  )
+                                      .map((x) => {
+                                          x = x
+                                              .toLowerCase()
+                                              .replace(/(^|"|_)(\S)/g, (z) =>
+                                                  z.toUpperCase()
+                                              )
+                                              .replace(/_/g, ' ');
+                                          if (x.match(/Use Vad/g))
+                                              x.replace(
+                                                  /Use Vad/g,
+                                                  'Use Voice Activity'
+                                              );
+                                          if (x.match(/Guild/g))
+                                              x.replace(/Guild/g, 'Server');
+                                          return x;
+                                      })
+                                      .join('\n'),
                         inline: true,
                     },
                     {
                         name: 'Description',
                         value: description,
                         inline: false,
-                    },
-                ],
-                timestamp: new Date(),
-                description: message.guild.i18n.__mf('help.information'),
-            });
+                    }
+                )
+                .setTimestamp()
+                .setDescription(message.guild.i18n.__mf('help.information'));
             if (command.help.img) embed.setThumbnail(command.help.img);
-            await message.channel.send(embed);
+            await message.channel.send({ embeds: [embed] });
         }
     }
 }

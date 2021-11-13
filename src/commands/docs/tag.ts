@@ -19,17 +19,19 @@ export default class TagCommand extends Command {
         // This command is supposed to be for a specifical guild, unless you want to have fun with this command (•_•)
         if (!args[0])
             return message.channel.send({
-                embed: {
-                    color: 'BLUE',
-                    author: {
-                        name: message.author.username,
-                        icon_url: message.author.displayAvatarURL({
-                            dynamic: true,
-                        }),
+                embeds: [
+                    {
+                        color: 'BLUE',
+                        author: {
+                            name: message.author.username,
+                            icon_url: message.author.displayAvatarURL({
+                                dynamic: true,
+                            }),
+                        },
+                        description:
+                            'Liste de toutes les catégories \n\n`fix`, `unexpected`, `==` alias `===`, `destructure`, `websocket` alias `ws`, `hyperlien` alias `hyperlink`, `purge`, `ping-command`, `intents`, `of-undefined` alias `of-null`, `collector`, `ask`, `swearwords`, `heroku`, `find`, `dashboard`, `avatar`, `bot`, `client`, `template-literal`, `embed`, `does-not-work` alias `dnw`, `embed-limits`',
                     },
-                    description:
-                        'Liste de toutes les catégories \n\n`fix`, `unexpected`, `==` alias `===`, `destructure`, `websocket` alias `ws`, `hyperlien` alias `hyperlink`, `purge`, `ping-command`, `intents`, `of-undefined` alias `of-null`, `collector`, `ask`, `swearwords`, `heroku`, `find`, `dashboard`, `avatar`, `bot`, `client`, `template-literal`, `embed`, `does-not-work` alias `dnw`, `embed-limits`',
-                },
+                ],
             });
         switch (args[0]) {
             case 'fix': {
@@ -50,17 +52,19 @@ export default class TagCommand extends Command {
                     }
                 }
                 return message.channel.send({
-                    embed: {
-                        color: 'BLUE',
-                        author: {
-                            name: message.author.username,
-                            icon_url: message.author.displayAvatarURL({
-                                dynamic: true,
-                            }),
+                    embeds: [
+                        {
+                            color: 'BLUE',
+                            author: {
+                                name: message.author.username,
+                                icon_url: message.author.displayAvatarURL({
+                                    dynamic: true,
+                                }),
+                            },
+                            description:
+                                'Liste de tout les tags liés aux erreurs à fix\n\n`syntax`, `identifier`',
                         },
-                        description:
-                            'Liste de tout les tags liés aux erreurs à fix\n\n`syntax`, `identifier`',
-                    },
+                    ],
                 });
             }
             case 'unexpected': {
@@ -77,17 +81,19 @@ export default class TagCommand extends Command {
                     }
                 }
                 return message.channel.send({
-                    embed: {
-                        color: 'BLUE',
-                        author: {
-                            name: message.author.username,
-                            icon_url: message.author.displayAvatarURL({
-                                dynamic: true,
-                            }),
+                    embeds: [
+                        {
+                            color: 'BLUE',
+                            author: {
+                                name: message.author.username,
+                                icon_url: message.author.displayAvatarURL({
+                                    dynamic: true,
+                                }),
+                            },
+                            description:
+                                'Liste de tout les tags liés aux erreurs unexpected\n\n`token`, `end-of-input`',
                         },
-                        description:
-                            'Liste de tout les tags liés aux erreurs unexpected\n\n`token`, `end-of-input`',
-                    },
+                    ],
                 });
             }
             case '===':
@@ -116,17 +122,19 @@ export default class TagCommand extends Command {
                     }
                 }
                 return message.channel.send({
-                    embed: {
-                        color: 'BLUE',
-                        author: {
-                            name: message.author.username,
-                            icon_url: message.author.displayAvatarURL({
-                                dynamic: true,
-                            }),
+                    embeds: [
+                        {
+                            color: 'BLUE',
+                            author: {
+                                name: message.author.username,
+                                icon_url: message.author.displayAvatarURL({
+                                    dynamic: true,
+                                }),
+                            },
+                            description:
+                                'Liste de tout les tags liés au websocket\n\n`intents`, `master-intents`',
                         },
-                        description:
-                            'Liste de tout les tags liés au websocket\n\n`intents`, `master-intents`',
-                    },
+                    ],
                 });
             }
             case 'hyperlien':

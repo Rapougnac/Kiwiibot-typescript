@@ -50,13 +50,8 @@ export default class SetLangCommand extends Command {
                     upsert: true,
                 }
             ).then(async () => {
-                return await message.inlineReply(
-                    message.guild!.i18n.__mf('setlanguage.set_language'),
-                    {
-                        allowedMentions: {
-                            repliedUser: false,
-                        },
-                    }
+                return await message.reply(
+                    message.guild!.i18n.__mf('setlanguage.set_language')
                 );
             });
         } else {

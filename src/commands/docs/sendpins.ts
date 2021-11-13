@@ -19,13 +19,21 @@ export default class SendPinsCommand extends Command {
         message: Message,
         args: string[]
     ) {
-        const pinned = (await message.channel.messages.fetchPinned()).array();
+        const pinned = [
+            ...(await message.channel.messages.fetchPinned()),
+        ].flat();
         pinned.reverse();
         message.channel.send(
-            pinned.map(
-                (pin, i) =>
-                    `**${i + 1}** - ${pin.url} - Auteur: ${pin.author.username}`
-            )
+            pinned
+                .map(
+                    (pin, i) =>
+                        `**${i + 1}** - ${
+                            typeof pin === 'string' ? null : pin.url
+                        } - Auteur: ${
+                            typeof pin === 'string' ? null : pin.author.tag
+                        }`
+                )
+                .join('\n')
         );
     }
 }

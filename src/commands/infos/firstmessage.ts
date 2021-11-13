@@ -28,7 +28,7 @@ export default class FirstMessageCommand extends Command {
         } as any)) as unknown as Collection<Snowflake, Message>;
         const msg = fetchMessages.first();
         if (!msg)
-            return message.inlineReply(
+            return message.reply(
                 message.guild.i18n.__mf('firstmessage.not_found')
             );
 
@@ -36,7 +36,7 @@ export default class FirstMessageCommand extends Command {
             .setTitle(
                 message.guild.i18n.__mf('firstmessage.first_message', {
                     channel_name:
-                        message.channel.type === 'text'
+                        message.channel.type === 'GUILD_TEXT'
                             ? message.channel.name
                             : '',
                 })
@@ -48,7 +48,7 @@ export default class FirstMessageCommand extends Command {
             )
             .addField(
                 message.guild.i18n.__mf('firstmessage.author'),
-                msg.author,
+                `<@${msg.author.id}>`,
                 true
             )
             .addField(
@@ -61,6 +61,6 @@ export default class FirstMessageCommand extends Command {
                 msg.createdAt.toLocaleDateString(),
                 true
             );
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }

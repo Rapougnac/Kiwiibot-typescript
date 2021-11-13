@@ -3,6 +3,7 @@ import moment from 'moment';
 import 'moment-duration-format';
 import Client from '../../struct/Client';
 import Command from '../../struct/Command';
+import { translatePermissions } from '../../util/string';
 export default class RoleInfoCommand extends Command {
     constructor(client: Client) {
         super(client, {
@@ -39,7 +40,7 @@ export default class RoleInfoCommand extends Command {
                 message.guild.i18n.__mf('roleinfo.specify_role')
             );
         let string = String();
-        const permsArr = role.permissions.toArray();
+        const permsArr = translatePermissions(role.permissions.toArray(), message.guild.i18n.getLocale());
         permsArr.forEach((perm) => {
             string += `\`${perm
                 .toLowerCase()
@@ -49,52 +50,58 @@ export default class RoleInfoCommand extends Command {
                 .replace(/Guild/g, 'Server')}\`, `;
         });
 
-        message.channel.send(
-            new MessageEmbed()
-                .setDescription('Permissions\n' + string)
-                .addField(message.guild.i18n.__mf('roleinfo.role'), role, true)
-                .addField(
-                    message.guild.i18n.__mf('roleinfo.role_name'),
-                    role.name,
-                    true
-                )
-                .addField(
-                    message.guild.i18n.__mf('roleinfo.who_own_it'),
-                    role.members.size,
-                    true
-                )
-                .addField(
-                    message.guild.i18n.__mf('roleinfo.color'),
-                    role.hexColor,
-                    true
-                )
-                .addField(
-                    message.guild.i18n.__mf('common.creation_date'),
-                    moment(role.createdAt).format(
-                        `[${message.guild.i18n.__mf(
-                            'common.on'
-                        )}] DD/MM/YYYY [${message.guild.i18n.__mf(
-                            'common.at'
-                        )}] HH:mm:ss`
-                    ),
-                    true
-                )
-                .addField(
-                    message.guild.i18n.__mf('roleinfo.hoisted'),
-                    role.hoist
-                        ? message.guild.i18n.__mf('common.yes')
-                        : message.guild.i18n.__mf('common.no'),
-                    true
-                )
-                .addField(
-                    message.guild.i18n.__mf('roleinfo.mentionable'),
-                    role.mentionable
-                        ? message.guild.i18n.__mf('common.yes')
-                        : message.guild.i18n.__mf('common.no'),
-                    true
-                )
-                .setFooter(`ID : ${role.id}`)
-                .setColor(role.hexColor)
-        );
+        message.channel.send({
+            embeds: [
+                new MessageEmbed()
+                    .setDescription('Permissions\n' + string)
+                    .addField(
+                        message.guild.i18n.__mf('roleinfo.role'),
+                        `<@${role.id}>`,
+                        true
+                    )
+                    .addField(
+                        message.guild.i18n.__mf('roleinfo.role_name'),
+                        role.name,
+                        true
+                    )
+                    .addField(
+                        message.guild.i18n.__mf('roleinfo.who_own_it'),
+                        role.members.size.toString(),
+                        true
+                    )
+                    .addField(
+                        message.guild.i18n.__mf('roleinfo.color'),
+                        role.hexColor,
+                        true
+                    )
+                    .addField(
+                        message.guild.i18n.__mf('common.creation_date'),
+                        moment(role.createdAt).format(
+                            `[${message.guild.i18n.__mf(
+                                'common.on'
+                            )}] DD/MM/YYYY [${message.guild.i18n.__mf(
+                                'common.at'
+                            )}] HH:mm:ss`
+                        ),
+                        true
+                    )
+                    .addField(
+                        message.guild.i18n.__mf('roleinfo.hoisted'),
+                        role.hoist
+                            ? message.guild.i18n.__mf('common.yes')
+                            : message.guild.i18n.__mf('common.no'),
+                        true
+                    )
+                    .addField(
+                        message.guild.i18n.__mf('roleinfo.mentionable'),
+                        role.mentionable
+                            ? message.guild.i18n.__mf('common.yes')
+                            : message.guild.i18n.__mf('common.no'),
+                        true
+                    )
+                    .setFooter(`ID : ${role.id}`)
+                    .setColor(role.hexColor),
+            ],
+        });
     }
 }

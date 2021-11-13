@@ -52,27 +52,30 @@ export default class AnimeCommand extends Command {
                 (ani, count) => (s += `**${count + 1}** - ${ani.name}\n`)
             );
             await message.channel.send({
-                embed: {
-                    author: {
-                        name: message.guild!.i18n.__mf(
-                            'anime.stop_collect_msg'
-                        ),
+                embeds: [
+                    {
+                        author: {
+                            name: message.guild!.i18n.__mf(
+                                'anime.stop_collect_msg'
+                            ),
+                        },
+                        title: message.guild!.i18n.__mf('anime.choose'),
+                        description: s,
+                        footer: {
+                            text: `Requested by ${message.author.username}`,
+                            icon_url: message.author.displayAvatarURL({
+                                dynamic: true,
+                            }),
+                        },
                     },
-                    title: message.guild!.i18n.__mf('anime.choose'),
-                    description: s,
-                    footer: {
-                        text: `Requested by ${message.author.username}`,
-                        icon_url: message.author.displayAvatarURL({
-                            dynamic: true,
-                        }),
-                    },
-                },
+                ],
             });
 
             const filter = (m: Message): boolean =>
                 message.author.id === m.author.id &&
                 m.channel.id === message.channel.id;
-            const collector = message.channel.createMessageCollector(filter, {
+            const collector = message.channel.createMessageCollector({
+                filter,
                 max: 1,
                 time: 60000,
             });
@@ -169,7 +172,7 @@ export default class AnimeCommand extends Command {
                     )
                     .setThumbnail(anime.picture ?? _anime.thumbnail_url ?? '');
 
-                return message.channel.send(embed);
+                return message.channel.send({ embeds: [embed] });
             }
         } else {
             const _anime = result[0];
@@ -231,7 +234,7 @@ export default class AnimeCommand extends Command {
                 )
                 .setThumbnail(anime.picture ?? _anime.thumbnail_url ?? '');
 
-            return message.channel.send(embed);
+            return message.channel.send({ embeds: [embed] });
         }
     }
 }

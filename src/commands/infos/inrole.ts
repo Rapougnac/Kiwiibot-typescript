@@ -31,11 +31,8 @@ export default class InRoleCommand extends Command {
             );
         if (args.length <= 0) role = undefined;
         if (!role)
-            return message.inlineReply(
-                message.guild.i18n.__mf('inrole.missing_role'),
-                {
-                    allowedMentions: { repliedUser: false },
-                }
+            return message.reply(
+                message.guild.i18n.__mf('inrole.missing_role')
             );
         const memRole = message.guild.roles.cache
             .get(role.id)!
@@ -57,6 +54,6 @@ export default class InRoleCommand extends Command {
             )
             .setColor(role.color)
             .setDescription(`\`\`\`css\n${memRole}\`\`\``);
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }

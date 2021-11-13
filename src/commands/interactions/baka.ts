@@ -44,7 +44,7 @@ export default class BakaCommand extends Command {
                 )
                 .setImage(GIF.url)
                 .setURL(GIF.url);
-            message.channel.send(embed);
+            message.channel.send({ embeds: [embed] });
         } else {
             const GIF = await client.utils.neko.sfw.baka();
             const embed = new MessageEmbed()
@@ -57,7 +57,7 @@ export default class BakaCommand extends Command {
                 )
                 .setURL(GIF.url)
                 .setImage(GIF.url);
-            message.channel.send(embed);
+            message.channel.send({ embeds: [embed] });
         }
     }
 }

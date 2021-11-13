@@ -23,6 +23,6 @@ export default class CryCommand extends Command {
                     author: message.author.tag,
                 })
             );
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }

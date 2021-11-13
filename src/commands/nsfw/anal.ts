@@ -30,6 +30,6 @@ export default class AnalCommand extends Command {
                 }),
                 message.author.displayAvatarURL()
             );
-        return message.channel.send(embed);
+        return message.channel.send({ embeds: [embed] });
     }
 }

@@ -52,16 +52,12 @@ export default class UserInfoCommand extends Command {
             );
         if (args.length <= 0) member = message.member as GuildMember;
         if (member) {
-            //   for (const [id, mem] of message.guild.members.cache) {
-            //     // if (!(mem.id === message.member.id)) {
-            //     //   console.log('Hello');
-            //     // }
-            //     if(mem.nickname === member.nickname) {
-            //       return message.inlineReply('Multiples users has been found!')
-            //     }
-            //   }
-            const user = member.user;
-            let status = user.presence.status as PresenceStatus | string;
+            let { user: _user } = member;
+            const user = await client.users.fetch(_user, {
+                force: true,
+            });
+            let status =
+                (member.presence?.status as PresenceStatus | string) ?? 'N/A';
             const userFlags = (await user
                 .fetchFlags()
                 .then((flags) => convertUFB(flags.bitfield))
@@ -74,7 +70,7 @@ export default class UserInfoCommand extends Command {
                     )
                 )
                 .catch(() => [])) as string[];
-            const Device = user.presence.clientStatus;
+            const Device = member.presence?.clientStatus ?? 'N/A';
             let device = '';
             if (!isEmpty(Device)) {
                 const platform = Object.keys(Device ?? {});
@@ -111,10 +107,10 @@ export default class UserInfoCommand extends Command {
                     device = 'N/A';
                 }
             }
-            if (message.guild.ownerID === user.id) {
+            if (message.guild.ownerId === user.id) {
                 userFlags.push('<:GUILD_OWNER:812992729797230592>');
             }
-            if (member.hasPermission('ADMINISTRATOR')) {
+            if (member.permissions.has('ADMINISTRATOR')) {
                 userFlags.push('<:ADMINISTRATOR:827241621270560788>');
             }
             if (member.premiumSinceTimestamp ?? 0 > 0) {
@@ -123,7 +119,7 @@ export default class UserInfoCommand extends Command {
             if (
                 (user.avatar && user.avatar.startsWith('a_')) ||
                 member.premiumSince ||
-                user.hasBanner()
+                user.banner
             ) {
                 userFlags.push('<:Discord_Nitro:859137224187707402>');
             }
@@ -181,7 +177,7 @@ export default class UserInfoCommand extends Command {
                 .setDescription(userFlags.join(' '))
                 .addField(
                     message.guild.i18n.__mf('userinfo.member'),
-                    member,
+                    `<@${member.id}>`,
                     true
                 )
                 .addField(
@@ -275,25 +271,18 @@ export default class UserInfoCommand extends Command {
                 )
                 .setFooter(`ID : ${member.id}`)
                 .setColor(member.displayHexColor || 'GREY');
-            if (user.hasBanner()) {
+            if (user.banner) {
                 embeduser.setImage(
-                    user.displayBannerURL({
+                    user.bannerURL({
                         format: 'png',
                         size: 4096,
                         dynamic: true,
                     }) ?? ''
                 );
             }
-            message.channel.send(embeduser);
+            message.channel.send({ embeds: [embeduser] });
         } else {
-            message.inlineReply(
-                message.guild.i18n.__mf('userinfo.cant_find_member'),
-                {
-                    allowedMentions: {
-                        repliedUser: false,
-                    },
-                }
-            );
+            message.reply(message.guild.i18n.__mf('userinfo.cant_find_member'));
         }
     }
 }
