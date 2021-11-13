@@ -69,18 +69,24 @@ export default class MDNCommand extends Command {
             .replace(/&nbsp;/g, ' ')
             .replace(/<[^>]*em>/g, '_');
         const title = $('h1').first().text();
-        const element = cheerio.load(description as string);
+        const element = cheerio.load(description ?? '');
         // Set the arrays that will contains the contentLinks and the links
         let contentLinks: string[] = [];
         let _links: string[] = [];
         // Get all the links in the description
         element('a').each(function () {
+            const fallRegex =
+                /<a\s(?:href=\"([^"]*)")?(?:\s)?class=\"([^"]*)"\stitle="([^"]*)">([^<]*)<\/a>/im;
             const text = element(this).text();
             const l = element(this).attr('href') ?? '';
+            const f = element(this).attr('class') ?? '';
+
+            if (f === 'page-not-created')
+                description = description?.replace(fallRegex, '$4');
+
             contentLinks.push(text);
             _links.push(l);
         });
-        // 
         let links = _links.map((li) => domain.slice(0, -1) + li);
         links = links.map((li, i) => {
             // If the <a> tag contains "`" AND the content link contains "`", replace it by nothing
