@@ -12,7 +12,6 @@ import Event from './Event';
 import Util from './Util';
 import axios from 'axios';
 import * as Console from '../util/console';
-import { Player } from 'discord-player';
 import glob from 'glob';
 import * as path from 'path';
 import { readdir, readdirSync } from 'fs';
