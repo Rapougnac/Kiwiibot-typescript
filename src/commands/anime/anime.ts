@@ -1,12 +1,9 @@
 import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import Command from '../../struct/Command';
 import malScraper from 'mal-scraper';
-import { dropRight } from 'lodash';
 import KiwiiClient from '../../struct/Client';
-import moment from 'moment'; 
+import moment from 'moment';
 import { parseDate } from '../../util/string';
-
-// BUG : Fix range of numbers from the collector.
 export default class AnimeCommand extends Command {
     constructor(client: KiwiiClient) {
         super(client, {
@@ -50,9 +47,8 @@ export default class AnimeCommand extends Command {
             );
         }
         if (result.length > 2) {
-            const restOfAnimes = dropRight(result, result.length - 20);
             let s = '';
-            restOfAnimes.forEach(
+            result.forEach(
                 (ani, count) => (s += `**${count + 1}** - ${ani.name}\n`)
             );
             await message.channel.send({
@@ -82,26 +78,28 @@ export default class AnimeCommand extends Command {
             });
             let number;
             const continued = await new Promise((resolve) => {
+                let count: number;
                 collector
                     .on('collect', async (m) => {
                         const arg = m.content.toLowerCase().trim().split(/ +/g);
                         number = Number(arg[0]);
                         if (Number.isNaN(number) || !number) resolve(false);
-                        if (number >= 1 && number < restOfAnimes.length)
-                            resolve(true);
+                        result.forEach((_, index) => (count = index + 1));
+                        if (number >= 1 && number < count) resolve(true);
                         else return resolve(false);
                     })
                     .on('end', () => resolve(false));
             });
-            let c = restOfAnimes.length;
-            if (continued)
+            let c;
+            result.forEach((_, index) => (c = index + 1));
+            if (!continued)
                 return message.channel.send(
                     message.guild!.i18n.__mf('anime.number_range', {
                         number: c,
                     })
                 );
             else {
-                const _anime = restOfAnimes[(number ?? 1) - 1];
+                const _anime = result[(number ?? 1) - 1];
                 const anime = await malScraper.getInfoFromName(_anime.name);
                 const [startDate, endDate] = anime.aired?.split('to') ?? [
                     'N/A',
