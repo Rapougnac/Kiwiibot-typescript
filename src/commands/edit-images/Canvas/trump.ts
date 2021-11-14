@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message } from 'discord.js';
 import Command from '../../../struct/Command';
 import Client from '../../../struct/Client';
 import GifEncoder from 'gifencoder';
@@ -25,18 +25,18 @@ export default class TrumpCommand extends Command {
         [verb, ...args]: string[]
     ) {
         let text = args.join(' ');
-        if (text.length === 0) text = verb;
+        if (text.length === 0) text = verb!;
         if (text.length > 20)
             return message.reply(
                 'Please, insert a sentence that contains 20 characters or less.'
             );
 
         const arrVerbs = ['IS', 'ARE', 'AM'];
-        if (!arrVerbs.includes(verb.toUpperCase())) {
+        if (!arrVerbs.includes(verb!.toUpperCase())) {
             args.length === 0 ? text : (text = verb + ' ' + text);
             verb = 'IS';
         }
-        if (verb.length > 3) verb = 'IS';
+        if (verb!.length > 3) verb = 'IS';
         const encoder = new GifEncoder(262, 264);
         const stream = encoder.createReadStream();
         encoder.start();
@@ -63,11 +63,11 @@ export default class TrumpCommand extends Command {
             }
             ctx.textBaseline = 'top';
             ctx.font = '20px Open Sans';
-            const maxLength = frame.corners[1][0] - frame.corners[0][0];
+            const maxLength = frame.corners?.[1]?.[0]! - frame.corners[0]?.[0]!;
             ctx.fillText(
-                `${text}\n${verb.toUpperCase()} NOW\nILLEGAL`,
-                frame.corners[0][0],
-                frame.corners[0][1],
+                `${text}\n${verb!.toUpperCase()} NOW\nILLEGAL`,
+                frame.corners[0]?.[0]!,
+                frame.corners[0]?.[1]!,
                 maxLength
             );
             encoder.addFrame(ctx);
@@ -78,7 +78,7 @@ export default class TrumpCommand extends Command {
             length: 4,
             time: 1250,
             allowMessage: true,
-            message: message,
+            message,
             deleteMessage: true,
         });
         return message.channel.send({

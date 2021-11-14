@@ -1,8 +1,7 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js';
 import Command from '../../struct/Command';
 import malScraper from 'mal-scraper';
 import KiwiiClient from '../../struct/Client';
-import moment from 'moment';
 import { parseDate } from '../../util/string';
 export default class AnimeCommand extends Command {
     constructor(client: KiwiiClient) {
@@ -18,7 +17,7 @@ export default class AnimeCommand extends Command {
     }
 
     public async execute(
-        client: KiwiiClient,
+        _client: KiwiiClient,
         message: Message,
         args: string[]
     ): Promise<Message | undefined> {
@@ -103,8 +102,14 @@ export default class AnimeCommand extends Command {
                 );
             else {
                 const _anime = result[(number ?? 1) - 1];
+                if (!_anime)
+                    return message.channel.send(
+                        message.guild!.i18n.__mf('anime.not_found', {
+                            search: search,
+                        })
+                    );
                 const anime = await malScraper.getInfoFromName(_anime.name);
-                const [startDate, endDate] = anime.aired?.split('to') ?? [
+                const [startDate, endDate] = anime.aired!.split('to') ?? [
                     'N/A',
                     'N/A',
                 ];
@@ -155,15 +160,15 @@ export default class AnimeCommand extends Command {
                             anime.episodes ? anime.episodes : 'N/A'
                         }\n•\u2000 **${message.guild!.i18n.__mf(
                             'anime.beginning'
-                        )}:** ${parseDate(startDate.trim(), true).replace(
+                        )}:** ${parseDate(startDate!.trim(), true).replace(
                             /-/g,
                             '/'
                         )}\n•\u2000 **${message.guild!.i18n.__mf(
                             'anime.end'
                         )}:** ${
-                            endDate.trim() === '?'
+                            endDate!.trim() === '?'
                                 ? message.guild!.i18n.__mf('anime.in_progress')
-                                : parseDate(endDate.trim(), true).replace(
+                                : parseDate(endDate!.trim(), true).replace(
                                       /-/g,
                                       '/'
                                   )
@@ -176,6 +181,12 @@ export default class AnimeCommand extends Command {
             }
         } else {
             const _anime = result[0];
+            if (!_anime)
+                return message.channel.send(
+                    message.guild!.i18n.__mf('anime.not_found', {
+                        search: search,
+                    })
+                );
             const anime = await malScraper.getInfoFromName(_anime.name);
             const [startDate, endDate] = anime.aired?.split('to') ?? [
                 'N/A',
@@ -222,13 +233,16 @@ export default class AnimeCommand extends Command {
                         anime.episodes ? anime.episodes : 'N/A'
                     }\n•\u2000 **${message.guild!.i18n.__mf(
                         'anime.beginning'
-                    )}:** ${parseDate(startDate.trim(), true).replace(
+                    )}:** ${parseDate(startDate!.trim(), true).replace(
                         /-/g,
                         '/'
                     )}\n•\u2000 **${message.guild!.i18n.__mf('anime.end')}:** ${
-                        endDate.trim() === '?'
+                        endDate!.trim() === '?'
                             ? message.guild!.i18n.__mf('anime.in_progress')
-                            : parseDate(endDate.trim(), true).replace(/-/g, '/')
+                            : parseDate(endDate!.trim(), true).replace(
+                                  /-/g,
+                                  '/'
+                              )
                     }`,
                     true
                 )

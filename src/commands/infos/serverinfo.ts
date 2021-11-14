@@ -17,11 +17,7 @@ export default class ServerInfoCommand extends Command {
             img: 'https://cdn-icons-png.flaticon.com/512/3208/3208727.png',
         });
     }
-    public async execute(
-        client: KiwiiClient,
-        message: Message,
-        args: string[]
-    ) {
+    public async execute(client: KiwiiClient, message: Message) {
         const { guild } = message;
         if (!guild) return;
         const { afkTimeout } = guild;

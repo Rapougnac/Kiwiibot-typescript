@@ -16,7 +16,7 @@ export default class PollCommand extends Command {
         });
     }
     public async execute(
-        client: KiwiiClient,
+        _client: KiwiiClient,
         message: Message,
         args: string[]
     ): Promise<Message | void> {

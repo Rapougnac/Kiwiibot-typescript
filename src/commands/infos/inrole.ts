@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
 export default class InRoleCommand extends Command {
@@ -14,11 +14,11 @@ export default class InRoleCommand extends Command {
             img: 'https://image.flaticon.com/icons/png/512/3887/3887427.png',
         });
     }
-    async execute(client: Client, message: Message, args: string[]) {
+    async execute(_client: Client, message: Message, args: string[]) {
         if (!message.guild) return;
         let role =
             message.mentions.roles.first() ||
-            message.guild.roles.cache.get(args[0]) ||
+            message.guild.roles.cache.get(args[0]!) ||
             message.guild.roles.cache.find(
                 (r) =>
                     r.name

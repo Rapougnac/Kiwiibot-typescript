@@ -16,14 +16,14 @@ export default class RoleInfoCommand extends Command {
         });
     }
     public execute(
-        client: Client,
+        _client: Client,
         message: Message,
         args: string[]
     ): void | Promise<Message> {
         if (!message.guild) return;
         let role =
             message.mentions.roles.first() ||
-            message.guild.roles.cache.get(args[0]) ||
+            message.guild.roles.cache.get(args[0]!) ||
             message.guild.roles.cache.find(
                 (r) =>
                     r.name

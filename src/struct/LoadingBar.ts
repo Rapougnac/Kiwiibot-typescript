@@ -1,4 +1,3 @@
-import { Message } from 'discord.js';
 import { StartOptions } from './interfaces/LoadingBar';
 
 export default class LoadingBar {

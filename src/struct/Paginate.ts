@@ -50,9 +50,9 @@ export default class Paginate {
      * Circular - will revert to 0 if the index exceeds array length
      * @returns The element from the array
      */
-    next(): MessageEmbed | null {
+    next(): MessageEmbed | undefined {
         if (!this._array.length) {
-            return null;
+            return undefined;
         }
         if (this._index === this.tail) this._index = -1;
         this._index++;
@@ -64,9 +64,9 @@ export default class Paginate {
      * Circular - will revert to the max index if the index is less than 0
      * @returns The element from the array
      */
-    previous(): MessageEmbed | null {
+    previous(): MessageEmbed | undefined {
         if (!this._array.length) {
-            return null;
+            return undefined;
         }
         if (this._index === 0) this._index = this.tail as number + 1;
         this._index--;
@@ -76,14 +76,14 @@ export default class Paginate {
     /**
      * The current embed using the current index
      */
-    get currentPage(): MessageEmbed | null {
+    get currentPage(): MessageEmbed | undefined {
         return this._array[this._index];
     }
 
     /**
      * The first embed from the array
      */
-    get firstPage(): MessageEmbed | null {
+    get firstPage(): MessageEmbed | undefined {
         return this._array[0];
     }
 
@@ -91,7 +91,7 @@ export default class Paginate {
      * The last embed from the array
      * @readonly
      */
-    get lastPage(): MessageEmbed | null {
+    get lastPage(): MessageEmbed | undefined {
         return this._array[this.tail as number];
     }
 

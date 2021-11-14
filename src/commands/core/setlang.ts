@@ -1,5 +1,5 @@
 import LanguageSchema from '../../models/languageSchema';
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
 export default class SetLangCommand extends Command {
@@ -19,12 +19,12 @@ export default class SetLangCommand extends Command {
     }
 
     public async execute(
-        client: Client,
+        _client: Client,
         message: Message,
         [language]: string[]
     ) {
         if (message.guild) {
-            let targetedlanguage = language.toLowerCase();
+            let targetedlanguage = language!.toLowerCase();
             if (targetedlanguage.includes('french')) targetedlanguage = 'fr';
             else if (targetedlanguage.includes('english'))
                 targetedlanguage = 'en';

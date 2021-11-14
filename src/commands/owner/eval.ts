@@ -1,12 +1,6 @@
 import { clean } from '../../util/string';
 import { inspect } from 'util';
-import {
-    Message,
-    MessageEmbed,
-    MessageAttachment,
-    Formatters,
-    Util,
-} from 'discord.js';
+import { Message, Formatters, Util } from 'discord.js';
 
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
@@ -23,11 +17,11 @@ export default class EvalCommand extends Command {
             img: 'https://cdn-icons-png.flaticon.com/512/993/993855.png',
         });
     }
-    async execute(
-        client: Client,
+    public override async execute(
+        _client: Client,
         message: Message,
         args: string[]
-    ): Promise<Message<boolean> | undefined> {
+    ) {
         try {
             const code = args.join(' ');
             let result: string | string[] = eval(code);

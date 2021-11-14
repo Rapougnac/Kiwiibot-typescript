@@ -1,11 +1,4 @@
-import {
-    Message,
-    MessageEmbed,
-    MessageAttachment,
-    User,
-    GuildMember,
-    PresenceStatus,
-} from 'discord.js';
+import { Message, MessageEmbed, GuildMember, PresenceStatus } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
 import moment from 'moment';
@@ -31,7 +24,7 @@ export default class UserInfoCommand extends Command {
         if (!message.guild) return;
         let member =
             message.mentions.members!.first() ||
-            message.guild.members.cache.get(args[0]) ||
+            message.guild.members.cache.get(args[0]!) ||
             message.guild.members.cache.find(
                 (r) =>
                     r.user.username

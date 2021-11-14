@@ -3,8 +3,9 @@ import {
     joinArray,
     translatePermissions,
     upperFirstButAcceptEmojis,
+    beautifyCategories,
 } from '../../util/string';
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js';
 import KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
 export default class HelpCommand extends Command {
@@ -27,52 +28,14 @@ export default class HelpCommand extends Command {
     ): Promise<void | Message | string> {
         if (!message.guild) return;
         if (args.length > 2) return;
-        const fields = [];
+        const fields: {
+            name: string;
+            value: string;
+            inline?: boolean;
+        }[] = [];
         if (message.channel.type === 'GUILD_TEXT' && message.channel.nsfw) {
-            let ct: string = '';
             for (const category of [...this.client.categories]) {
-                switch (category) {
-                    case 'auto': {
-                        ct = '🤖 auto';
-                        break;
-                    }
-                    case 'anime': {
-                        ct = '🎥 anime';
-                        break;
-                    }
-                    case 'core': {
-                        ct = '⚙ Core';
-                        break;
-                    }
-                    case 'docs': {
-                        ct = '📖 docs';
-                        break;
-                    }
-                    case 'image-manipulation': {
-                        ct = '🖼 image-manipulation';
-                        break;
-                    }
-                    case 'edit-images': {
-                        ct = '✏ edit-images';
-                        break;
-                    }
-                    case 'infos': {
-                        ct = 'ℹ infos';
-                        break;
-                    }
-                    case 'interactions': {
-                        ct = '👋 interactions';
-                        break;
-                    }
-                    case 'owner': {
-                        ct = '⛔ owner';
-                        break;
-                    }
-                    case 'nsfw': {
-                        ct = '🔞 nsfw';
-                        break;
-                    }
-                }
+                const ct = beautifyCategories(category);
                 fields.push({
                     name: this.client.commands.filter(
                         (c) => c.help.category === category && !c.config.hidden
@@ -103,46 +66,9 @@ export default class HelpCommand extends Command {
                 });
             }
         } else {
-            let ct: string = '';
             for (const category of [...this.client.categories].remove('nsfw')) {
-                switch (category) {
-                    case 'auto': {
-                        ct = '🤖 auto';
-                        break;
-                    }
-                    case 'anime': {
-                        ct = '🎥 anime';
-                        break;
-                    }
-                    case 'core': {
-                        ct = '⚙ Core';
-                        break;
-                    }
-                    case 'docs': {
-                        ct = '📖 docs';
-                        break;
-                    }
-                    case 'image-manipulation': {
-                        ct = '🖼 image-manipulation';
-                        break;
-                    }
-                    case 'edit-images': {
-                        ct = '✏ edit-images';
-                        break;
-                    }
-                    case 'infos': {
-                        ct = 'ℹ infos';
-                        break;
-                    }
-                    case 'interactions': {
-                        ct = '👋 interactions';
-                        break;
-                    }
-                    case 'owner': {
-                        ct = '⛔ owner';
-                        break;
-                    }
-                }
+                const ct = beautifyCategories(category, true);
+
                 fields.push({
                     name: `${
                         this.client.commands.filter(
@@ -189,9 +115,9 @@ export default class HelpCommand extends Command {
             for (let i = 0; i < fields.length; i++) {
                 if (
                     !(
-                        (fields[i].name && fields[i].value) ||
-                        fields[i].name ||
-                        fields[i].value
+                        (fields[i]?.name && fields[i]?.value) ||
+                        fields[i]?.name ||
+                        fields[i]?.value
                     )
                 ) {
                     delete fields[i];
@@ -203,7 +129,6 @@ export default class HelpCommand extends Command {
                 .addFields(fields.sort((a, b) => a.name.localeCompare(b.name)))
                 .setColor('ORANGE')
                 .setTimestamp()
-                // If the channel is not nsfw, set a message on the footer
                 .setFooter(
                     message.channel.type === 'GUILD_TEXT'
                         ? message.channel.nsfw
@@ -226,7 +151,7 @@ export default class HelpCommand extends Command {
                 this.client.aliases.get(args.join(' ').toLowerCase());
             if (!command)
                 return message.channel.send(
-                    `\\${client.emotes.error} - ${message.guild.i18n.__mf(
+                    `${client.emotes.error} - ${message.guild.i18n.__mf(
                         'help.not_found'
                     )}`
                 );

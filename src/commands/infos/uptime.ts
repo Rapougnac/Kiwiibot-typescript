@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
 export default class UptimeCommand extends Command {
@@ -18,7 +18,7 @@ export default class UptimeCommand extends Command {
      * @param {Message} message
      * @param {String[]} args
      */
-    async execute(client: Client, message: Message, args: string[]) {
+    async execute(client: Client, message: Message) {
         const { days, hours, minutes, seconds } = this.client.utils.parseMs(
             client.uptime ?? 0
         );

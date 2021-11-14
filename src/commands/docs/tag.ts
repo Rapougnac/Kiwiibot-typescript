@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
 import { stripIndents } from 'common-tags';
@@ -15,7 +15,7 @@ export default class TagCommand extends Command {
         });
     }
 
-    public async execute(client: Client, message: Message, args: string[]) {
+    public async execute(_client: Client, message: Message, args: string[]) {
         // This command is supposed to be for a specifical guild, unless you want to have fun with this command (•_•)
         if (!args[0])
             return message.channel.send({

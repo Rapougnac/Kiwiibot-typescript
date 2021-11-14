@@ -17,7 +17,7 @@ export default class Event {
                 : (options.emitter as Listener) || this.client as unknown as Listener;
         this._validate(options);
     }
-    public execute(...args: any[]): Promise<void | Message> | void | Message {
+    public execute(..._args: any[]): Promise<void | Message> | void | Message {
         throw new Error(`${this.name} doesn\'t have an execute() method!`);
     }
     private _validate(data: EventOptions): void {

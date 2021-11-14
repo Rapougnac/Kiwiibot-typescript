@@ -1,6 +1,6 @@
 import Command from '../../struct/Command';
 import KiwiiClient from '../../struct/Client';
-import { MessageEmbed, Message, MessageAttachment } from 'discord.js';
+import { Message } from 'discord.js';
 
 export default class SendPinsCommand extends Command {
     constructor(client: KiwiiClient) {
@@ -15,10 +15,9 @@ export default class SendPinsCommand extends Command {
     }
 
     public async execute(
-        client: KiwiiClient,
-        message: Message,
-        args: string[]
-    ) {
+        _client: KiwiiClient,
+        message: Message
+    ): Promise<void> {
         const pinned = [
             ...(await message.channel.messages.fetchPinned()),
         ].flat();

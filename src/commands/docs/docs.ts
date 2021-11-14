@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message } from 'discord.js';
 import Command from '../../struct/Command';
 import KiwiiClient from '../../struct/Client';
 import axios from 'axios';
@@ -17,7 +17,7 @@ export default class DocsCommand extends Command {
     }
 
     public async execute(
-        client: KiwiiClient,
+        _client: KiwiiClient,
         message: Message,
         args: string[]
     ): Promise<Message | void> {
@@ -39,7 +39,7 @@ export default class DocsCommand extends Command {
         let source;
         if (message.content.includes('--src')) {
             source = args[args.length - 1];
-            if (sources.indexOf(source) === -1)
+            if (sources.indexOf(source!) === -1)
                 return message.channel.send(
                     message.guild.i18n.__mf('docs.valid_sources')
                 );

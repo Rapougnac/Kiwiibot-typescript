@@ -1,4 +1,4 @@
-import booru, { BooruError, search } from 'booru';
+import { BooruError, search } from 'booru';
 import Command from '../../struct/Command';
 import KiwiiClient from '../../struct/Client';
 import { trimArray } from '../../util/string';
@@ -49,6 +49,7 @@ export default class Rule34Command extends Command {
                         message.guild?.i18n.__mf('rule34.pedo') as string
                     );
                 const [image] = images;
+                if (!image) return;
                 const embed = new MessageEmbed()
                     .setAuthor(
                         'Rule34',

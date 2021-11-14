@@ -13,7 +13,7 @@ export default class CryCommand extends Command {
         });
     }
 
-    public execute(client: Client, message: Message, args: string[]) {
+    public execute(_client: Client, message: Message) {
         const gif = gifu('cry');
         const embed = new MessageEmbed()
             .setColor('#202225')

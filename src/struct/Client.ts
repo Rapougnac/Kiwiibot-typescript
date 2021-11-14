@@ -14,7 +14,7 @@ import axios from 'axios';
 import * as Console from '../util/console';
 import glob from 'glob';
 import * as path from 'path';
-import { readdir, readdirSync } from 'fs';
+import { readdirSync } from 'fs';
 import mongoose from 'mongoose';
 import ProcessEvent from '../util/processEvent';
 import '../util/NativeExtended';

@@ -15,11 +15,10 @@ export default class PingCommand extends Command {
         });
     }
 
-    public async execute(
+    public override async execute(
         client: KiwiiClient,
-        message: Message,
-        args: string[]
-    ) {
+        message: Message
+    ): Promise<void> {
         message.channel.sendTyping();
         const msg = await message.reply(`🏓 Pinging....`);
         const ping = msg.createdTimestamp - message.createdTimestamp;

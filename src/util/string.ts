@@ -26,7 +26,7 @@ function textTruncate(
  */
 function ordinalize(n: number = 0): string {
     return (
-        Number(n) + ['st', 'nd', 'rd'][(n / 10) % 10 ^ 1 && n % 10] ||
+        Number(n) + ['st', 'nd', 'rd'][(n / 10) % 10 ^ 1 && n % 10]! ||
         Number(n) + 'th'
     );
 }
@@ -337,15 +337,16 @@ function translatePermissions(
  * @param str The string to apply the function
  */
 function upperFirstButAcceptEmojis(str: string): string {
+    if (str.length === 0) throw new Error('String is empty');
     const reg =
         /[\u{1f300}-\u{1f5ff}\u{1f900}-\u{1f9ff}\u{1f600}-\u{1f64f}\u{1f680}-\u{1f6ff}\u{2600}-\u{26ff}\u{2700}-\u{27bf}\u{1f1e6}-\u{1f1ff}\u{1f191}-\u{1f251}\u{1f004}\u{1f0cf}\u{1f170}-\u{1f171}\u{1f17e}-\u{1f17f}\u{1f18e}\u{3030}\u{2b50}\u{2b55}\u{2934}-\u{2935}\u{2b05}-\u{2b07}\u{2b1b}-\u{2b1c}\u{3297}\u{3299}\u{303d}\u{00a9}\u{00ae}\u{2122}\u{23f3}\u{24c2}\u{23e9}-\u{23ef}\u{25b6}\u{23f8}-\u{23fa}\u{200d}\u{2139}] /gu;
 
     const emoji = reg.exec(str);
     if (!emoji) {
-        str = str[0].toUpperCase() + str.slice(1);
+        str = str[0]!.toUpperCase() + str.slice(1);
     } else {
-        str = str.slice(emoji[0].length);
-        str = str[0].toUpperCase() + str.slice(1);
+        str = str.slice(emoji[0]!.length);
+        str = str[0]!.toUpperCase() + str.slice(1);
         str = emoji[0] + str;
     }
     return str;
@@ -410,6 +411,56 @@ function parseDate(date: string, reverse?: boolean): string {
     return reverse ? joined : fullDate;
 }
 
+function beautifyCategories(categories: string, nsfw: boolean = true): string {
+    let categoriesString: string = '';
+
+    for (const category of categories) {
+        switch (category) {
+            case 'auto': {
+                categoriesString = '🤖 auto';
+                break;
+            }
+            case 'anime': {
+                categoriesString = '🎥 anime';
+                break;
+            }
+            case 'core': {
+                categoriesString = '⚙ Core';
+                break;
+            }
+            case 'docs': {
+                categoriesString = '📖 docs';
+                break;
+            }
+            case 'image-manipulation': {
+                categoriesString = '🖼 image-manipulation';
+                break;
+            }
+            case 'edit-images': {
+                categoriesString = '✏ edit-images';
+                break;
+            }
+            case 'infos': {
+                categoriesString = 'ℹ infos';
+                break;
+            }
+            case 'interactions': {
+                categoriesString = '👋 interactions';
+                break;
+            }
+            case 'owner': {
+                categoriesString = '⛔ owner';
+                break;
+            }
+            case 'nsfw': {
+                if (nsfw) categoriesString = '🔞 nsfw';
+                break;
+            }
+        }
+    }
+    return categoriesString;
+}
+
 export {
     textTruncate,
     ordinalize,
@@ -425,4 +476,5 @@ export {
     upperFirstButAcceptEmojis,
     testCombinaisonsOfWord,
     parseDate,
+    beautifyCategories,
 };

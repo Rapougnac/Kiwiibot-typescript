@@ -1,4 +1,4 @@
-import { Collection, Message, PresenceManager } from 'discord.js';
+import { Collection, Message } from 'discord.js';
 import Client from './Client';
 import {
     CommandOptions,
@@ -138,7 +138,7 @@ export default class Command {
         this.message = message;
     }
 
-    public execute(...args: any[]): Promise<Message | void | string> | Message | void | string {
+    public execute(..._args: any[]): Promise<Message | void | string> | Message | void | string {
         throw new Error(
             `${this.help.name} dosen\'t have an execute() method !`
         );

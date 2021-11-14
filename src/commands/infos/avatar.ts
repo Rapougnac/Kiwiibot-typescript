@@ -1,9 +1,4 @@
-import {
-    Message,
-    MessageEmbed,
-    MessageAttachment,
-    GuildMember,
-} from 'discord.js';
+import { Message, MessageEmbed, GuildMember } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
 export default class AvatarCommand extends Command {
@@ -19,11 +14,11 @@ export default class AvatarCommand extends Command {
             img: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
         });
     }
-    public async execute(client: Client, message: Message, args: string[]) {
+    public async execute(_client: Client, message: Message, args: string[]) {
         if (!message.guild) return;
         let member =
             message.mentions.members!.first() ||
-            message.guild.members.cache.get(args[0]) ||
+            message.guild.members.cache.get(args[0]!) ||
             message.guild.members.cache.find(
                 (r) =>
                     r.user.username

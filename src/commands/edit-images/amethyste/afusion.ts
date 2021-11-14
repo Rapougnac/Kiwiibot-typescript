@@ -22,7 +22,7 @@ export default class AfusionCommand extends Command {
         message.channel.sendTyping();
         let member =
             message.mentions.members!.first() ||
-            message.guild!.members.cache.get(args[0]) ||
+            message.guild!.members.cache.get(args[0]!) ||
             message.guild!.members.cache.find(
                 (r) =>
                     r.user.username

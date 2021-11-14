@@ -10,7 +10,7 @@ import * as consoleUtil from './console';
  * @returns {Promise<Message|undefined>}
  */
 function unhandledRejection(
-    [error, ...args]: [any, ...any],
+    [error, ..._args]: [any, ...any],
     client: Client
 ): Promise<Message | undefined> | Promise<void> {
     const channel = client.channels.cache.get(client.config.channels.debug);
@@ -35,7 +35,7 @@ function unhandledRejection(
  * @returns {Promise<Message|undefined>}
  */
 function uncaughtException(
-    [error, ...args]: [any, ...any],
+    [error, ..._args]: [any, ...any],
     client: Client
 ): Promise<Message | undefined> | Promise<void> {
     const channel = client.channels.cache.get(client.config.channels.debug);
@@ -74,6 +74,3 @@ export default function processEvents(
         );
     }
 }
-type Evt = {
-    [key: string]: any;
-};

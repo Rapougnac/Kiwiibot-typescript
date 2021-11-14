@@ -1,5 +1,4 @@
 import glob from 'glob';
-import Command from '../struct/Command';
 import Client from '../struct/Client';
 import * as path from 'path';
 import { ConstructorCommand } from '../struct/interfaces/Command';

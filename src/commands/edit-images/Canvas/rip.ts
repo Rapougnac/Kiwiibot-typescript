@@ -3,7 +3,7 @@ import { join } from 'path';
 import Canvas from '../../../struct/Canvas';
 import Command from '../../../struct/Command';
 import KiwiiClient from '../../../struct/Client';
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message, MessageAttachment } from 'discord.js';
 
 export default class RipCommand extends Command {
     constructor(client: KiwiiClient) {
@@ -24,7 +24,7 @@ export default class RipCommand extends Command {
     ) {
         const User =
             message.mentions.members?.first() ||
-            message.guild?.members.cache.get(args[0]) ||
+            message.guild?.members.cache.get(args[0]!) ||
             message.guild?.members.cache.find((r) =>
                 r.user.username
                     .toLowerCase()

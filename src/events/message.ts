@@ -1,6 +1,5 @@
 import KiwiiClient from '../struct/Client';
 import Event from '../struct/Event';
-import Command from '../struct/Command';
 import { Message, MessageEmbed } from 'discord.js';
 
 export default class MessageEvent extends Event {
@@ -11,11 +10,12 @@ export default class MessageEvent extends Event {
         });
     }
 
-    public execute(message: Message): Promise<Message> | void {
+    public override execute(message: Message): Promise<Message> | void {
         const { author, guild } = message;
         const { bot } = author;
         if (!guild) return;
-        let prefix = [this.client.prefix, message.guild!.prefix];
+        let prefix = [this.client.prefix];
+        if (guild.prefix) prefix.push(guild.prefix);
         if ((bot || message.webhookId) && !this.client.config.discord.dev.debug)
             return;
 
@@ -27,7 +27,7 @@ export default class MessageEvent extends Event {
         let index;
         // Find which prefix are used
         for (let i = 0; i < prefix.length; i++) {
-            if (message.content.toLowerCase().startsWith(prefix[i])) {
+            if (message.content.toLowerCase().startsWith(prefix[i]!)) {
                 index = i;
                 break;
             } else {
@@ -47,7 +47,7 @@ export default class MessageEvent extends Event {
             );
         if (!prefix[index as number]) return;
         const args = message.content
-            .slice(prefix[index as number].length)
+            .slice(prefix[index as number]!.length)
             .trim()
             .split(/\s+/g);
         const command = args.shift()!.toLowerCase();
@@ -65,6 +65,7 @@ export default class MessageEvent extends Event {
             message,
             command_to_execute
         );
+        if (index === null || index === undefined) return;
         if (this.client.isOwner(author)) {
             try {
                 command_to_execute.execute(this.client, message, args);
@@ -75,11 +76,7 @@ export default class MessageEvent extends Event {
                 );
             }
         } else {
-            if (
-                !message.content
-                    .toLowerCase()
-                    .startsWith(prefix[index as number])
-            )
+            if (!message.content.toLowerCase().startsWith(prefix[index]!))
                 return;
 
             if (reasons.length > 0) {

@@ -15,11 +15,7 @@ export default class AnalCommand extends Command {
         });
     }
 
-    public async execute(
-        client: Client,
-        message: Message,
-        args: string[]
-    ): Promise<Message> {
+    public async execute(_client: Client, message: Message): Promise<Message> {
         const anal = await this.client.utils.neko.nsfw.anal();
         const embed = new MessageEmbed()
             .setColor('#202225')

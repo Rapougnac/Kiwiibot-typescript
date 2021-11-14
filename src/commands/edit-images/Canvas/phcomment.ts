@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message, MessageAttachment } from 'discord.js';
 import Command from '../../../struct/Command';
 import Client from '../../../struct/Client';
 import axios from 'axios';
@@ -16,17 +16,17 @@ export default class PHCommentCommand extends Command {
             nsfw: true,
         });
     }
-    async execute(client: Client, message: Message, args: string[]) {
+    async execute(_client: Client, message: Message, args: string[]) {
         if (!message.mentions.members) return;
         if (!message.guild) return;
         const User =
             message.mentions.members.first() ||
-            message.guild.members.cache.get(args[0]) ||
+            message.guild.members.cache.get(args[0]!) ||
             message.guild.members.cache.find((r) =>
-                r.user.username.toLowerCase().startsWith(args[0].toLowerCase())
+                r.user.username.toLowerCase().startsWith(args[0]!.toLowerCase())
             ) ||
             message.guild.members.cache.find((r) =>
-                r.displayName.toLowerCase().startsWith(args[0].toLowerCase())
+                r.displayName.toLowerCase().startsWith(args[0]!.toLowerCase())
             );
         if (User) {
             const query = args.slice(1).join(' ');

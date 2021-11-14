@@ -4,11 +4,9 @@ import * as Console from '../util/console';
 import { performance } from 'perf_hooks';
 const bootTime = Math.round(performance.now());
 import { loadLanguages, loadPrefix } from '../../load';
-import mongoose from 'mongoose';
 import glob from 'glob';
 import express from 'express';
 import { getCommands } from '../util/getCmds';
-import SlashCommand from '../struct/SlashCommand';
 import { resolve, sep } from 'path';
 import { SlashCommandConstructor } from '../struct/interfaces/main';
 
@@ -20,7 +18,7 @@ export default class ReadyEvent extends Event {
         });
     }
 
-    public async execute(): Promise<void> {
+    public override async execute(): Promise<void> {
         loadLanguages(this.client)
             .then(() => Console.success('Loaded languages', 'LoadLangs'))
             .catch(console.error);
@@ -88,17 +86,17 @@ export default class ReadyEvent extends Event {
         };
         app.set('view engine', 'ejs');
 
-        app.get('/', (req, res) => {
+        app.get('/', (_req, res) => {
             res.status(200).sendFile(
                 `${process.cwd()}/src/dashboard/Main.html`
             );
         });
         app.use(express.static(`${process.cwd()}/src/dashboard/`));
-        app.get('/about', (req, res) => {
+        app.get('/about', (_req, res) => {
             res.status(200).send(x);
         });
         const { client } = this;
-        app.get('/commands', async (req, res) => {
+        app.get('/commands', async (_req, res) => {
             const commands = await getCommands(client);
             res.status(200).render(`${process.cwd()}/src/dashboard/ejs/main.ejs`, {
                 commands,

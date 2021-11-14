@@ -1,10 +1,4 @@
-import {
-    Message,
-    MessageEmbed,
-    MessageAttachment,
-    Snowflake,
-    Collection,
-} from 'discord.js';
+import { Message, MessageEmbed, Snowflake, Collection } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
 export default class FirstMessageCommand extends Command {
@@ -20,7 +14,7 @@ export default class FirstMessageCommand extends Command {
             img: 'https://cdn-icons-png.flaticon.com/512/1021/1021080.png',
         });
     }
-    async execute(client: Client, message: Message, args: string[]) {
+    async execute(_client: Client, message: Message) {
         if (!message.guild) return;
         const fetchMessages = (await message.channel.messages.fetch({
             after: 1,

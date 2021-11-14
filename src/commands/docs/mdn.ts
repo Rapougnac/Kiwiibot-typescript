@@ -18,10 +18,10 @@ export default class MDNCommand extends Command {
         });
     }
     public async execute(
-        client: KiwiiClient,
+        _client: KiwiiClient,
         message: Message,
         args: string[]
-    ) {
+    ): Promise<Message<boolean> | undefined> {
         const word = args.join('.');
         const arrayOfProperties =
             mdn.find(upperFirstButAcceptEmojis(word), 'javascript').length === 0
@@ -34,11 +34,11 @@ export default class MDNCommand extends Command {
         let foo: IdentifierMeta | null = null;
         if (
             Object.prototype.hasOwnProperty.call(
-                mdn.get(arrayOfProperties[0])[0],
-                arrayOfProperties[0]
+                mdn.get(arrayOfProperties[0]!)[0],
+                arrayOfProperties[0]!
             )
         ) {
-            foo = mdn.get(arrayOfProperties[0])[0][
+            foo = mdn.get(arrayOfProperties[0]!)[0]![
                 arrayOfProperties[0] as any
             ] as IdentifierMeta;
         }
@@ -91,12 +91,12 @@ export default class MDNCommand extends Command {
         links = links.map((li, i) => {
             // If the <a> tag contains "`" AND the content link contains "`", replace it by nothing
             if (
-                contentLinks[i][0] === '`' &&
-                contentLinks[i][contentLinks[i].length - 1] === '`' &&
+                contentLinks[i]?.[0] === '`' &&
+                contentLinks[i]?.[contentLinks[i]!.length - 1] === '`' &&
                 description?.[description?.indexOf('<a') - 1] === '`' &&
                 description?.[description?.indexOf('</a>') + 1] === '`'
             )
-                contentLinks[i] = contentLinks[i].replace(/`/g, '');
+                contentLinks[i] = contentLinks[i]!.replace(/`/g, '');
             return `[${contentLinks[i]}](${li})`;
         });
         links.forEach((link) => {

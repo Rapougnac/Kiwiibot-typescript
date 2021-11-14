@@ -3,7 +3,7 @@ import {
     PermissionString,
     PresenceStatusData,
 } from 'discord.js';
-import ServerInfoCommand from '../../commands/infos/serverinfo';
+import _ServerInfoCommand from '../../commands/infos/serverinfo';
 
 export interface Config {
     /**
@@ -163,7 +163,7 @@ export interface Config {
         };
     };
     /**
-     * This is just for the {@link ServerInfoCommand}
+     * This is just for the {@link _ServerInfoCommand ServerInfoCommand}
      */
     verificationLVL: {
         NONE: string;

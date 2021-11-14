@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message, MessageAttachment } from 'discord.js';
 import Command from '../../../struct/Command';
 import Client from '../../../struct/Client';
 import Canvas from '../../../struct/Canvas';
@@ -16,7 +16,7 @@ export default class YouDiedCommand extends Command {
             img: 'https://cdn-icons-png.flaticon.com/512/3782/3782105.png',
         });
     }
-    async execute(client: Client, message: Message, args: string[]) {
+    async execute(_client: Client, message: Message, args: string[]) {
         const base = await loadImage(
             join(
                 __dirname,
@@ -30,7 +30,7 @@ export default class YouDiedCommand extends Command {
         );
         let member =
             message.mentions.members?.first() ||
-            message.guild?.members.cache.get(args[0]) ||
+            message.guild?.members.cache.get(args[0]!) ||
             message.guild?.members.cache.find((r) =>
                 r.user.username
                     .toLowerCase()

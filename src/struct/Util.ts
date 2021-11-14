@@ -1,11 +1,6 @@
 import {
     PermissionString,
-    AllowedImageFormat,
-    AllowedImageSize,
     Message,
-    MessageTarget,
-    MessageOptions,
-    WebhookMessageOptions,
     GuildMember,
     Permissions,
     Guild,
@@ -91,25 +86,6 @@ export default class Util {
         ret += '' + mins + ':' + (secs < 10 ? '0' : '');
         ret += '' + secs;
         return `\`${ret}\``;
-    }
-
-    makeImageUrl(
-        root: string,
-        {
-            format = 'webp',
-            size,
-        }: { format?: AllowedImageFormat; size?: AllowedImageSize } = {}
-    ): string {
-        const AllowedImageFormats = ['webp', 'png', 'jpg', 'jpeg', 'gif'];
-        const AllowedImageSizes = Array.from(
-            { length: 9 },
-            (e, i) => 2 ** (i + 4)
-        );
-        if (format && !AllowedImageFormats.includes(format))
-            throw new Error('IMAGE_FORMAT' + format);
-        if (size && !AllowedImageSizes.includes(size))
-            throw new RangeError('IMAGE_SIZE' + size);
-        return `${root}.${format}${size ? `?size=${size}` : ''}`;
     }
     /**
      * Check if the passed input is a class or not.

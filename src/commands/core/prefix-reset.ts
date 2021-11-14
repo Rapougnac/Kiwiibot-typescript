@@ -1,6 +1,6 @@
 import PrefixSchema from '../../models/PrefixSchema';
 import { confirmation } from '../../util/confirmation';
-import { MessageEmbed, Message } from 'discord.js';
+import { Message } from 'discord.js';
 import Command from '../../struct/Command';
 import KiwiiClient from '../../struct/Client';
 
@@ -18,8 +18,7 @@ export default class PrefixResetCommand extends Command {
 
     public async execute(
         client: KiwiiClient,
-        message: Message,
-        args: string[]
+        message: Message
     ): Promise<Message | void> {
         const msg = await message.channel.send(
             message.guild!.i18n.__mf('prefix-reset.confirmation')
