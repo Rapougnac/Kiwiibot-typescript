@@ -2,8 +2,9 @@ import glob from 'glob';
 import Command from '../struct/Command';
 import Client from '../struct/Client';
 import * as path from 'path';
+import { ConstructorCommand } from '../struct/interfaces/Command';
 
-const getCommands = (client: Client): any[] => {
+const getCommands = async (client: Client): Promise<any[]> => {
     let categs: any[] = [];
     const value: any[] = [];
     let files = glob.sync('./dist/src/commands/**/*.js');
@@ -21,38 +22,40 @@ const getCommands = (client: Client): any[] => {
             );
         }
     }
-    files.forEach((file) => {
+    files.forEach(async (file) => {
         try {
-            const command: Command = new (require(`${process.cwd()}/${file}`))(
-                client
-            );
-            if (!isConstructor(command)) {
-                if (command instanceof Command) {
-                    value.push({
-                        name: command.help.name,
-                        description: command.help.description
-                            ? command.help.description
-                            : 'Not setted',
-                        aliases: command.config.aliases
-                            ? command.config.aliases
-                            : "There's no aliases setted!",
-                        utilisation: command.help.utilisation
-                            ? command.help.utilisation
-                            : "There's no avaliable usage!",
-                    });
+            const filePath = `${process.cwd()}${path.sep}${file}`;
+            let Command: ConstructorCommand = await import(`${filePath}`);
+            Command = (Command as any).default;
 
-                    let data = {
-                        name: command.help.category
-                            ? command.help.category
-                            : 'Unspecified',
-                        value,
-                    };
-                    categs.push(data);
-                }
+            const command = new Command(client);
+
+            if (!isConstructor(command)) {
+                value.push({
+                    name: command.help.name,
+                    description: command.help.description
+                        ? command.help.description
+                        : 'Not setted',
+                    aliases: command.config.aliases
+                        ? command.config.aliases
+                        : "There's no aliases setted!",
+                    utilisation: command.help.utilisation
+                        ? command.help.utilisation
+                        : "There's no avaliable usage!",
+                });
+
+                let data = {
+                    name: command.help.category
+                        ? command.help.category
+                        : 'Unspecified',
+                    value,
+                };
+                categs.push(data);
             }
         } catch (e) {}
     });
-    return categs;
+    // I need to await this, even if that make non sense 🤷
+    return await categs;
 };
 
 const isConstructor = (f: object | any) => {
