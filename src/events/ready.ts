@@ -29,7 +29,7 @@ export default class ReadyEvent extends Event {
             .then(() => Console.success('Loaded prefix(es)', 'LoadPrefix'))
             .catch(console.error);
 
-        await this.loadSlashs().catch(console.error);
+        // await this.loadSlashs().catch(console.error);
 
         const statuses = [
             `Currently on ${this.client.guilds.cache.size} servers`,
@@ -89,16 +89,18 @@ export default class ReadyEvent extends Event {
         app.set('view engine', 'ejs');
 
         app.get('/', (req, res) => {
-            res.status(200).sendFile(`${process.cwd()}/src/dash/Main.html`);
+            res.status(200).sendFile(
+                `${process.cwd()}/src/dashboard/Main.html`
+            );
         });
-        app.use(express.static(`${process.cwd()}/src/dash/`));
+        app.use(express.static(`${process.cwd()}/src/dashboard/`));
         app.get('/about', (req, res) => {
             res.status(200).send(x);
         });
         const { client } = this;
-        app.get('/commands', (req, res) => {
-            const commands = getCommands(client);
-            res.status(200).render(`${process.cwd()}/src/dash/ejs/main.ejs`, {
+        app.get('/commands', async (req, res) => {
+            const commands = await getCommands(client);
+            res.status(200).render(`${process.cwd()}/src/dashboard/ejs/main.ejs`, {
                 commands,
                 client,
             });
@@ -117,29 +119,26 @@ export default class ReadyEvent extends Event {
             SlashCommand = (SlashCommand as any).default;
             if (this.client.utils.isClass(SlashCommand)) {
                 const command = new SlashCommand(this.client);
-                if (command!.global) {
-                    (this.client as any).api
-                        .applications(this.client.user!.id)
-                        .post({
-                            data: {
-                                name: command!.name,
-                                description: command!.description,
-                                options: command!.commandOptions,
-                            },
-                        });
+                if (command.global) {
+                    this.client.application?.commands.set([
+                        {
+                            name: command.name,
+                            description: command.description,
+                            options: command.commandOptions,
+                        },
+                    ]);
                 } else {
-                    (this.client as any).api
-                        .applications(this.client.user!.id)
-                        .guilds('895600122510069801')
-                        .commands.post({
-                            data: {
-                                name: command!.name,
-                                description: command!.description,
-                                options: command!.commandOptions,
+                    this.client.guilds.cache
+                        .get('895600122510069801')
+                        ?.commands.set([
+                            {
+                                name: command.name,
+                                description: command.description,
+                                options: command.commandOptions,
                             },
-                        });
+                        ]);
                 }
-                this.client.slashs.set(command!.name, command as SlashCommand);
+                this.client.slashs.set(command.name, command);
                 console.log(
                     `Command posted: ${command!.name} from ${resolve(
                         process.cwd() + sep + file
@@ -147,22 +146,21 @@ export default class ReadyEvent extends Event {
                 );
             }
         });
-        const globalCommands = await (this.client as any).api
-            .applications(this.client.user!.id)
-            .commands.get();
-        const guildCommands = await (this.client as any).api
-            .applications(this.client.user!.id)
-            .guilds('895600122510069801')
-            .commands.get();
-        globalCommands.forEach((globCmd: any) => {
-            console.log(
-                `Global command has been loaded: ${globCmd.name} | [${globCmd.id}]`
-            );
+        const globalCommands = await this.client.application?.commands.fetch();
+        const guildCommands = await this.client.guilds.cache
+            .get('895600122510069801')
+            ?.commands.fetch();
+        globalCommands?.toJSON().forEach((globCmd: any) => {
+            // console.log(
+            //     `Global command has been loaded: ${globCmd.name} | [${globCmd.id}]`
+            // );
+            console.log(globCmd);
         });
-        guildCommands.forEach((guildCmd: any) => {
-            console.log(
-                `Guild command has been loaded: ${guildCmd.name} | [${guildCmd.id}]`
-            );
+        guildCommands?.toJSON().forEach((guildCmd: any) => {
+            // console.log(
+            //     `Guild command has been loaded: ${guildCmd.name} | [${guildCmd.id}]`
+            // );
+            console.log(guildCmd);
         });
     }
 }
