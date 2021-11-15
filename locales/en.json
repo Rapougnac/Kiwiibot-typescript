@@ -38,6 +38,7 @@
     },
     "setprefix": {
         "description": "Change the default prefix to the specified prefix, you can still use the default prefix",
+        "no_conn": "My connection to the database isn't etablished, please retry later.",
         "missing_prefix": "Please specify a prefix!",
         "prefix_length": "Error, my prefix cannot be longer than 5 characters!",
         "updated_prefix": "My prefix has been updated to **{prefix}**",
@@ -71,12 +72,14 @@
     },
     "prefix-reset": {
         "description": "Reset the prefix to the default one.",
+        "no_conn": "My connection to the database isn't etablished, please retry later.",
         "confirmation": "Are you sure you want to reset the prefix?",
         "reset_prefix": "The prefix has been resetted to `{prefix}`",
         "canceled": "Prefix reset has been canceled!"
     },
     "setlanguage": {
         "description": "Set the language of the bot. There's currently only 2 languages, `FRench` & `ENglish`",
+        "no_conn": "My connection to the database isn't etablished, please retry later.",
         "not_supported_language": "This language is not supported yet!",
         "set_language": "Language has been setted!"
     },

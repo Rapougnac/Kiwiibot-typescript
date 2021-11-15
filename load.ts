@@ -6,7 +6,8 @@ import mongoose from 'mongoose';
 const loadLanguages = async (client: KiwiiClient): Promise<void> => {
     try {
         for (const [id, guild] of client.guilds.cache) {
-            if (!mongoose.connection._hasOpened) guild.i18n.setLocale('en');
+            if (!mongoose.connection._hasOpened)
+                return guild.i18n.setLocale('en');
             const result = await languageSchema.findOne({
                 _id: id,
             });
@@ -22,6 +23,7 @@ const loadLanguages = async (client: KiwiiClient): Promise<void> => {
 const loadPrefix = async (client: KiwiiClient): Promise<void> => {
     try {
         for (const [id, guild] of client.guilds.cache) {
+            if (!mongoose.connection._hasOpened) return;
             await PrefixSchema.findOne(
                 { GuildID: id },
                 (err: Error, data: any) => {

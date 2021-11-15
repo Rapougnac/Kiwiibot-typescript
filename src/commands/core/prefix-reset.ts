@@ -3,6 +3,7 @@ import { confirmation } from '../../util/confirmation';
 import { Message } from 'discord.js';
 import Command from '../../struct/Command';
 import KiwiiClient from '../../struct/Client';
+import mongoose from 'mongoose';
 
 export default class PrefixResetCommand extends Command {
     constructor(client: KiwiiClient) {
@@ -20,6 +21,7 @@ export default class PrefixResetCommand extends Command {
         client: KiwiiClient,
         message: Message
     ): Promise<Message | void> {
+        if(!mongoose.connection._hasOpened) return await message.channel.send(message.guild!.i18n.__mf('prefix-reset.no_conn'));
         const msg = await message.channel.send(
             message.guild!.i18n.__mf('prefix-reset.confirmation')
         );

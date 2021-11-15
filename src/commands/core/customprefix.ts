@@ -3,6 +3,7 @@ import { Message } from 'discord.js';
 import { Document } from 'mongoose';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
+import mongoose from 'mongoose';
 export default class SetPrefixCommand extends Command {
     constructor(client: Client) {
         super(client, {
@@ -17,12 +18,16 @@ export default class SetPrefixCommand extends Command {
             img: 'https://image.flaticon.com/icons/png/512/1799/1799807.png',
         });
     }
-    async execute(
+    public async execute(
         _client: Client,
         message: Message,
         [prefix]: string[]
     ): Promise<Message | void> {
         if (!message.guild) return;
+        if (!mongoose.connection._hasOpened)
+            return await message.channel.send(
+                message.guild.i18n.__mf('setprefix.no_conn')
+            );
         if (!prefix) {
             return message.channel.send(
                 message.guild.i18n.__mf('setprefix.missing_prefix')

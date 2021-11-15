@@ -2,6 +2,8 @@ import LanguageSchema from '../../models/languageSchema';
 import { Message } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
+import mongoose from 'mongoose';
+
 export default class SetLangCommand extends Command {
     constructor(client: Client) {
         super(client, {
@@ -23,6 +25,8 @@ export default class SetLangCommand extends Command {
         message: Message,
         [language]: string[]
     ) {
+        if(!mongoose.connection._hasOpened) return await message.channel.send(message.guild!.i18n.__mf('setlanguage.no_conn'));
+
         if (message.guild) {
             let targetedlanguage = language!.toLowerCase();
             if (targetedlanguage.includes('french')) targetedlanguage = 'fr';
