@@ -8,6 +8,7 @@ import {
 import { Message, MessageEmbed } from 'discord.js';
 import KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
+import didYouMean from 'didyoumean2';
 export default class HelpCommand extends Command {
     constructor(client: KiwiiClient) {
         super(client, {
@@ -149,12 +150,32 @@ export default class HelpCommand extends Command {
             const command =
                 this.client.commands.get(args.join(' ').toLowerCase()) ||
                 this.client.aliases.get(args.join(' ').toLowerCase());
-            if (!command)
-                return message.channel.send(
-                    `${client.emotes.error} - ${message.guild.i18n.__mf(
-                        'help.not_found'
-                    )}`
+            const possibleCommand = didYouMean(args.join(' '), [
+                ...this.client.commands.keys(),
+            ]);
+            let possibleCommandAlias: string | null = null;
+            if (!possibleCommand)
+                possibleCommandAlias = didYouMean(args.join(' '), [
+                    ...this.client.aliases.keys(),
+                ]);
+            if (
+                !command && possibleCommand
+                    ? possibleCommand
+                    : possibleCommandAlias
+            ) {
+                const notFoudDym = message!.guild.i18n.__mf(
+                    'help.not_found_dym',
+                    {
+                        command: possibleCommand
+                            ? possibleCommand
+                            : possibleCommandAlias,
+                    }
                 );
+                return message.channel.send(notFoudDym);
+            } else if (!command && !possibleCommand && !possibleCommandAlias)
+                return message!.guild.i18n.__mf('help.not_found');
+            else if (!command)
+                return message!.guild.i18n.__mf('help.not_found');
             if (command.config.hidden) {
                 return message.channel.send(
                     `${client.emotes.error} - ${message.guild.i18n.__mf(

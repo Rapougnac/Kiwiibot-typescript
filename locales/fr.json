@@ -74,7 +74,9 @@
 		"nsfw": "Vous ne pouvez pas afficher le panneau d'aide sur une commande nsfw si le channel n'est pas marqué en tant que nsfw.",
 		"nsfw_message": "\nPour afficher les commandes nsfw, faites {prefix}help dans un channel nsfw.",
 		"no_desc": "Aucune description fournie pour cette commande.",
-		"description": "Affichez l'aide sur la commande d'aide"
+		"description": "Affichez l'aide sur la commande d'aide",
+		"not_found_dym": "Je n'ai pas trouvé cette commande ! Est-ce que vous vouliez écrire `{command}` ?",
+		"not_found": "Je n'ai pas trouvé cette commande !"
 	},
 	"PERMS_MESSAGE": {
 		"guild_only": "**Commande indisponible en MP** - Cette commande ne peut être éxecutée que dans des serveurs.",
