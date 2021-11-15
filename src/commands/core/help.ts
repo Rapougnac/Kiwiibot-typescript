@@ -171,11 +171,15 @@ export default class HelpCommand extends Command {
                             : possibleCommandAlias,
                     }
                 );
-                return message.channel.send(notFoudDym);
-            } else if (!command && !possibleCommand && !possibleCommandAlias)
-                return message!.guild.i18n.__mf('help.not_found');
-            else if (!command)
-                return message!.guild.i18n.__mf('help.not_found');
+                return message.channel.send(
+                    `${client.emotes.error} - ${notFoudDym}`
+                );
+            } else if (!command)
+                return message.channel.send(
+                    `${client.emotes.error} - ${message!.guild.i18n.__mf(
+                        'help.not_found'
+                    )}`
+                );
             if (command.config.hidden) {
                 return message.channel.send(
                     `${client.emotes.error} - ${message.guild.i18n.__mf(
