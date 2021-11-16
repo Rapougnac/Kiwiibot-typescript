@@ -29,7 +29,11 @@ export default class ServerInfoCommand extends Command {
         ).size;
         const owner = await message.guild!.fetchOwner();
         const embedserv = new MessageEmbed()
-            .setAuthor(guild.name, guild.iconURL({ dynamic: true }) ?? '')
+            .setAuthor(
+                guild.name,
+                guild.iconURL({ dynamic: true, size: 4096, format: 'png' }) ??
+                    ''
+            )
             .addField(
                 message.guild!.i18n.__mf('serverinfo.owner'),
                 `<@!${message.guild!.ownerId}>\n(\`${owner.user.tag}\`)`,
@@ -144,7 +148,13 @@ export default class ServerInfoCommand extends Command {
                     id: message.guild!.id,
                 })
             )
-            .setThumbnail(message.guild!.iconURL({ dynamic: true }) ?? '');
+            .setThumbnail(
+                message.guild!.iconURL({
+                    dynamic: true,
+                    size: 4096,
+                    format: 'png',
+                }) ?? ''
+            );
         message.channel.send({ embeds: [embedserv] });
     }
 }
