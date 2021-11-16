@@ -9,6 +9,7 @@ import express from 'express';
 import { getCommands } from '../util/getCmds';
 import { resolve, sep } from 'path';
 import { SlashCommandConstructor } from '../struct/interfaces/main';
+import { beautifyCategories, upperFirstButAcceptEmojis } from '../util/string';
 
 export default class ReadyEvent extends Event {
     constructor(client: KiwiiClient) {
@@ -98,10 +99,15 @@ export default class ReadyEvent extends Event {
         const { client } = this;
         app.get('/commands', async (_req, res) => {
             const commands = await getCommands(client);
-            res.status(200).render(`${process.cwd()}/src/dashboard/ejs/main.ejs`, {
-                commands,
-                client,
-            });
+            res.status(200).render(
+                `${process.cwd()}/src/dashboard/ejs/main.ejs`,
+                {
+                    commands,
+                    client,
+                    beautifyCategories,
+                    upperFirstButAcceptEmojis,
+                }
+            );
         });
         app.listen(this.client.config.port);
     }
