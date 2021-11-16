@@ -159,9 +159,10 @@ export default class HelpCommand extends Command {
                     ...this.client.aliases.keys(),
                 ]);
             if (
-                !command && possibleCommand
-                    ? possibleCommand
-                    : possibleCommandAlias
+                !command &&
+                Boolean(
+                    possibleCommand ? possibleCommand : possibleCommandAlias
+                )
             ) {
                 const notFoudDym = message!.guild.i18n.__mf(
                     'help.not_found_dym',
