@@ -78,6 +78,12 @@ export default class KiwiiClient extends Client {
         music: string;
         success: string;
     };
+
+    public mappedCategories: Collection<
+        string,
+        Array<Collection<string, Command>>
+    >;
+
     /**
      * Get the filters in config
      */
@@ -91,6 +97,7 @@ export default class KiwiiClient extends Client {
         this.slashs = new Collection();
         this.events = new Collection();
         this.config = options.config;
+        this.mappedCategories = new Collection();
         this.utils = new Util(this);
         this.owners = options.owners;
         this.prefix = options.prefix;
@@ -155,6 +162,12 @@ export default class KiwiiClient extends Client {
                     if (command.help.category === '' || !command.help.category)
                         command!.help.category = 'unspecified';
                     this.categories.add(command.help.category);
+
+                    Array.from(this.categories).forEach((category) => {
+                        this.mappedCategories.set(category, [this.commands.filter(c => c.help.category === category)]);
+                        // @ts-ignore
+                        this.mappedCategories.set(category, [category,...this.mappedCategories.get(category)])
+                    });
 
                     if (command.config.aliases) {
                         command.config.aliases.forEach((alias) => {
