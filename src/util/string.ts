@@ -1,4 +1,29 @@
-import { UserFlags, Permissions, PermissionString } from 'discord.js';
+import { UserFlags, PermissionString } from 'discord.js';
+
+/* Thanks to maisans-maid on the [Mai Repo](https://github.com/maisans-maid/Mai) for theses functions */
+
+// MIT License
+//
+// Copyright (c) 2020-2021 Sakurajimai#6742
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 /**
  * TextTruncate -> Shortens the string to desired length
  * @param str the string to test with
@@ -32,6 +57,29 @@ function ordinalize(n: number = 0): string {
 }
 
 /**
+ * Joins array via oxford comma and append 'and' on last 2 items
+ * @param array the array to join
+ * @returns the joined array
+ */
+function joinArray(array: any[] = [], lang = 'en-US'): string {
+    let list = new Intl.ListFormat(lang);
+    return list.format(array.map((x) => String(x)));
+}
+
+/**
+ * cleans text from unnecessary character
+ * @param text The string to clean
+ * @returns the cleaned string
+ */
+function clean(text: string): string {
+    return String(text)
+        .replace(/`/g, `\`${String.fromCharCode(8203)}`)
+        .replace(/@/g, `@${String.fromCharCode(8203)}`);
+}
+
+/* ------------------------------------------------------------------------------------------------------------- */
+
+/**
  *
  * @param number The number to separte
  * @param sep The separator of the numbers
@@ -51,15 +99,6 @@ function separateNumbers(
 }
 
 /**
- * Joins array via oxford comma and append 'and' on last 2 items
- * @param array the array to join
- * @returns the joined array
- */
-function joinArray(array: any[] = [], lang = 'en-US'): string {
-    let list = new Intl.ListFormat(lang);
-    return list.format(array.map((x) => String(x)));
-}
-/**
  * Join array and add a limiter.
  * @param array the array to join
  * @param limit the maximum length of the string output
@@ -78,7 +117,7 @@ function joinArrayAndLimit(
             `An array was exepcted, recevied "${typeof array}"`
         );
     limit = Number(limit);
-    if (isNaN(limit)) throw new Error(`${limit} is not a number.`);
+    if (Number.isNaN(limit)) throw new Error(`${limit} is not a number.`);
     if (array.length > limit) {
         const excess = array.length - limit;
         array = array.splice(0, limit);
@@ -91,23 +130,16 @@ function joinArrayAndLimit(
 }
 
 /**
- * cleans text from unnecessary character
- * @param text The string to clean
- * @returns the cleaned string
- */
-function clean(text: string): string {
-    return String(text)
-        .replace(/`/g, `\`${String.fromCharCode(8203)}`)
-        .replace(/@/g, `@${String.fromCharCode(8203)}`);
-}
-/**
  * Convert flags bitfield to string in array
  * @param bitfield The bitfield to pass in
  * @returns  The array of the user flags
+ *
+ * Thanks to [Tsumiki](https://github.com/TsumikiVR) for this function :D
  */
 function convertUFB(bitfield: number): string[] {
     if (!bitfield) throw 'Missing Bitfield';
-    if (isNaN(bitfield)) throw new TypeError(`${bitfield} is not a number`);
+    if (Number.isNaN(bitfield))
+        throw new TypeError(`${bitfield} is not a number`);
     let processConvert = bitfield;
     let UFConvertResult: string[] = [];
     const ACFlags = Object.entries(UserFlags.FLAGS).sort(function (a, b) {
@@ -151,7 +183,7 @@ function trimArray(
         const length = array.length - maxLength;
         array = array.splice(0, maxLength);
         array.push(
-            end.match(/{length}/g)
+            /{length}/g.test(end)
                 ? end.replace(/{length}/g, length.toString())
                 : end
         );
@@ -195,12 +227,11 @@ function remove(array: string[], ..._args: any): string[] {
  * @param locale The locale to translate to
  */
 function translatePermissions(
-    permissions: Permissions | PermissionString[],
+    permissions: PermissionString[],
     locale: 'en' | 'fr' | string = 'en'
 ): PermissionString[] | string[] {
-    if (locale === 'en')
-        return Array.isArray(permissions) ? permissions : permissions.toArray();
-    else {
+    if (locale === 'en') return permissions;
+    else if (locale === 'fr') {
         let _: string[] = [];
         for (const permission of permissions) {
             switch (permission) {
@@ -330,7 +361,7 @@ function translatePermissions(
             }
         }
         return _;
-    }
+    } else return [''];
 }
 /**
  * Set an upper case on the first letter
@@ -411,51 +442,49 @@ function parseDate(date: string, reverse?: boolean): string {
     return reverse ? joined : fullDate;
 }
 
-function beautifyCategories(categories: string, nsfw: boolean = true): string {
+function beautifyCategories(category: string, nsfw: boolean = true): string {
     let categoriesString: string = '';
 
-    for (const category of categories) {
-        switch (category) {
-            case 'auto': {
-                categoriesString = '🤖 auto';
-                break;
-            }
-            case 'anime': {
-                categoriesString = '🎥 anime';
-                break;
-            }
-            case 'core': {
-                categoriesString = '⚙ Core';
-                break;
-            }
-            case 'docs': {
-                categoriesString = '📖 docs';
-                break;
-            }
-            case 'image-manipulation': {
-                categoriesString = '🖼 image-manipulation';
-                break;
-            }
-            case 'edit-images': {
-                categoriesString = '✏ edit-images';
-                break;
-            }
-            case 'infos': {
-                categoriesString = 'ℹ infos';
-                break;
-            }
-            case 'interactions': {
-                categoriesString = '👋 interactions';
-                break;
-            }
-            case 'owner': {
-                categoriesString = '⛔ owner';
-                break;
-            }
-            case 'nsfw': {
-                if (nsfw) categoriesString = '🔞 nsfw';
-                break;
-            }
+    switch (category) {
+        case 'auto': {
+            categoriesString = '🤖 auto';
+            break;
+        }
+        case 'anime': {
+            categoriesString = '🎥 anime';
+            break;
+        }
+        case 'core': {
+            categoriesString = '⚙ Core';
+            break;
+        }
+        case 'docs': {
+            categoriesString = '📖 docs';
+            break;
+        }
+        case 'image-manipulation': {
+            categoriesString = '🖼 image-manipulation';
+            break;
+        }
+        case 'edit-images': {
+            categoriesString = '✏ edit-images';
+            break;
+        }
+        case 'infos': {
+            categoriesString = 'ℹ infos';
+            break;
+        }
+        case 'interactions': {
+            categoriesString = '👋 interactions';
+            break;
+        }
+        case 'owner': {
+            categoriesString = '⛔ owner';
+            break;
+        }
+        case 'nsfw': {
+            if (nsfw) categoriesString = '🔞 nsfw';
+            break;
         }
     }
     return categoriesString;
