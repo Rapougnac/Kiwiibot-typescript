@@ -22,6 +22,7 @@ const getCommands = async (client: Client): Promise<any[]> => {
         }
     }
     files.forEach(async (file) => {
+        
         try {
             const filePath = `${process.cwd()}${path.sep}${file}`;
             let Command: ConstructorCommand = await import(`${filePath}`);
@@ -41,6 +42,9 @@ const getCommands = async (client: Client): Promise<any[]> => {
                     utilisation: command.help.utilisation
                         ? command.help.utilisation
                         : "There's no avaliable usage!",
+                    category: command.help.category
+                        ? command.help.category
+                        : 'Unspecified',
                 });
 
                 let data = {
