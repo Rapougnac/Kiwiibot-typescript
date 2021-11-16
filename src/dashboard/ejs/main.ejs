@@ -1,34 +1,37 @@
 <head>
   <title>Kiwii</title>
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet" />
 </head>
+
 <body>
   <section class="main-content">
-    <p>Commands of <%= client.user.tag %> </p>
+    <p>Commands of <%= client.user.tag %></p>
     <% commands.forEach(({ name, value }) => { %>
     <table style="width: 100%">
-      <h1 style="text-align: center"><% name %></h1>
+
+      <h1><%= upperFirstButAcceptEmojis(beautifyCategories(name)) %></h1>
       <tr>
         <th>Commands</th>
         <th>Description</th>
         <th>Usage</th>
         <th>Aliases</th>
       </tr>
-      <% value.forEach(({ name, description, aliases, utilisation }) => { %>
+      <%# debugger; %>
+      <% value = value.filter((c) => c.category === name) %>
+      <% for(const command of value) { %>
+      <% const { name: commandName, description, aliases, utilisation, category } = command; %>
       <tr>
-        <td><%= name %></td>
-        <td><% for( let index = 0; description.includes('`'); index++ ) { %>
-          <%= ( index & 1) ? description = description.replace('`', '</code>') : description = description.replace('`', '<code>'); %>
-        <% } %></td>
+        <td><%= commandName %></td>
         <td>
-          <%= typeof aliases === 'string' ? aliases : aliases.join(', ');%>
+          <%- description.replace(/`(.+?)`/g, '<code class="code-style">$1</code>') %>
         </td>
-        <td><%= utilisation.replace('{prefix}', client.prefix)%></td>
+        <td><%= utilisation.replace('{prefix}', client.prefix)%>
+
+        </td>
+        <td><%= typeof aliases === 'string' ? aliases :
+                        aliases.join(', ');%></td>
       </tr>
-      <% }); %>
+      <% } %>
     </table>
     <% }); %>
   </section>
@@ -38,10 +41,12 @@
     font-family: 'Open Sans';
     font-size: 16px;
   }
+
   table {
     border-collapse: collapse;
     border-spacing: 0cm;
   }
+
   * {
     box-sizing: border-box;
   }
@@ -56,6 +61,7 @@
   .main-content {
     word-wrap: break-word;
   }
+
   @media only screen and (max-width: 600px) {
     .main-content {
       max-width: 64rem;
@@ -71,7 +77,8 @@
       font-size: 1rem;
     }
   }
-  .main-content h1, 
+
+  .main-content h1,
   .main-content h2,
   .main-content h3,
   .main-content h4,
@@ -82,10 +89,28 @@
     font-weight: normal;
     color: #159957;
   }
+
   .main-content table th,
   .main-content table td {
     padding: 0.5rem 1rem;
-    border: 1px solid #ffffff;
-    
+    border: 1px solid #00000000;
+  }
+
+  .code-style {
+    background-color: #2f3136;
+    font-family: "Consolas", "Courier New", Courier, monospace;
+    margin-top: 0.25em;
+    padding: 0.1em;
+    border: 2px solid #282b30;
+    border-radius: 5px;
+    color: #b9bbbe;
+  }
+
+  body {
+    background-color: #36393e;
+    color: #dcddde;
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
   }
 </style>
