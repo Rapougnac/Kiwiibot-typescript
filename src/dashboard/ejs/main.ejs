@@ -6,7 +6,8 @@
 <body>
   <section class="main-content">
     <p>Commands of <%= client.user.tag %></p>
-    <% commands.forEach(({ name, value }) => { %>
+    <% for(const c of commands) { %>
+    <% let { name, value } = c; %>
     <table style="width: 100%">
 
       <h1><%= upperFirstButAcceptEmojis(beautifyCategories(name)) %></h1>
@@ -16,7 +17,6 @@
         <th>Usage</th>
         <th>Aliases</th>
       </tr>
-      <%# debugger; %>
       <% value = value.filter((c) => c.category === name) %>
       <% for(const command of value) { %>
       <% const { name: commandName, description, aliases, utilisation, category } = command; %>
@@ -33,7 +33,8 @@
       </tr>
       <% } %>
     </table>
-    <% }); %>
+    <% } %>
+    <% cache = [] %>
   </section>
 </body>
 <style>
