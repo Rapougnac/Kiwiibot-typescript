@@ -490,6 +490,20 @@ function beautifyCategories(category: string, nsfw: boolean = true): string {
     return categoriesString;
 }
 
+/**
+ * Function that count words
+ * @param str The string to count the words to.
+ * @returns An object with the key as the word and the value as the number of times it appears.
+ */
+function countWords(str: string): { [key: string]: number } {
+    const words = str.split(/\s+/);
+    const counts: { [key: string]: number } = {};
+    words.forEach((word) => {
+        counts[word] = (counts[word] || 0) + 1;
+    });
+    return counts;
+}
+
 export {
     textTruncate,
     ordinalize,
@@ -506,4 +520,5 @@ export {
     testCombinaisonsOfWord,
     parseDate,
     beautifyCategories,
+    countWords,
 };
