@@ -1,5 +1,5 @@
 import glob from 'glob';
-import Client from '../struct/Client';
+import type Client from '../struct/Client';
 import * as path from 'path';
 import { ConstructorCommand } from '../struct/interfaces/Command';
 
@@ -22,7 +22,7 @@ const getCommands = async (client: Client): Promise<any[]> => {
         }
     }
     files.forEach(async (file) => {
-        
+
         try {
             const filePath = `${process.cwd()}${path.sep}${file}`;
             let Command: ConstructorCommand = await import(`${filePath}`);
