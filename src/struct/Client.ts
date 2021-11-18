@@ -164,9 +164,16 @@ export default class KiwiiClient extends Client {
                     this.categories.add(command.help.category);
 
                     Array.from(this.categories).forEach((category) => {
-                        this.mappedCategories.set(category, [this.commands.filter(c => c.help.category === category)]);
-                        // @ts-ignore
-                        this.mappedCategories.set(category, [category,...this.mappedCategories.get(category)])
+                        this.mappedCategories.set(category, [
+                            this.commands.filter(
+                                (c) => c.help.category === category
+                            ),
+                        ]);
+
+                        this.mappedCategories.set(category, [
+                            category,
+                            ...(this.mappedCategories.get(category) as any),
+                        ]);
                     });
 
                     if (command.config.aliases) {
@@ -231,7 +238,7 @@ export default class KiwiiClient extends Client {
                 }
             }
         });
-        setTimeout(() => console.table(evts), 500);
+        setTimeout(() => Console.table(evts), 500);
         return this;
     }
     public mongoInit() {
