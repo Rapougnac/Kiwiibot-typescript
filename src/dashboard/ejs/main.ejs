@@ -1,10 +1,33 @@
 <head>
   <title>Kiwii</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
 </head>
 
 <body>
+  
+  <label class="switch">
+    <input type="checkbox" id="aaa">
+    <div class="slider">osdjs</div>
+  </label>
+
   <section class="main-content">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const checkbox = document.getElementById('aaa');
+
+          checkbox.addEventListener('change', () => {
+            console.log(checkbox);
+            if (checkbox.checked) {
+              // document.body.classList.add('dark');
+              console.log('checked');
+            } else {
+              // document.body.classList.remove('dark');
+              console.log('unchecked')
+            }
+          });
+        });
+    </script>
     <p>Commands of <%= client.user.tag %></p>
     <% for(const c of commands) { %>
     <% let { name, value } = c; %>
@@ -28,8 +51,7 @@
         <td><%= utilisation.replace('{prefix}', client.prefix)%>
 
         </td>
-        <td><%= typeof aliases === 'string' ? aliases :
-                        aliases.join(', ');%></td>
+        <td><%= typeof aliases === 'string' ? aliases : aliases.join(', ');%></td>
       </tr>
       <% } %>
     </table>
@@ -37,81 +59,3 @@
     <% cache = [] %>
   </section>
 </body>
-<style>
-  :root {
-    font-family: 'Open Sans';
-    font-size: 16px;
-  }
-
-  table {
-    border-collapse: collapse;
-    border-spacing: 0cm;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    padding: 0cm;
-    margin: 0cm;
-    line-height: 1.5;
-    color: #606c71;
-  }
-
-  .main-content {
-    word-wrap: break-word;
-  }
-
-  @media only screen and (max-width: 600px) {
-    .main-content {
-      max-width: 64rem;
-      padding: 2rem 6rem;
-      margin: 0 auto;
-      font-size: 1.1rem;
-    }
-  }
-
-  @media only screen and (min-width: 600px) {
-    .main-content {
-      padding: 2rem 1rem;
-      font-size: 1rem;
-    }
-  }
-
-  .main-content h1,
-  .main-content h2,
-  .main-content h3,
-  .main-content h4,
-  .main-content h5,
-  .main-content h6 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-weight: normal;
-    color: #159957;
-  }
-
-  .main-content table th,
-  .main-content table td {
-    padding: 0.5rem 1rem;
-    border: 1px solid #00000000;
-  }
-
-  .code-style {
-    background-color: #2f3136;
-    font-family: "Consolas", "Courier New", Courier, monospace;
-    margin-top: 0.25em;
-    padding: 0.1em;
-    border: 2px solid #282b30;
-    border-radius: 5px;
-    color: #b9bbbe;
-  }
-
-  body {
-    background-color: #36393e;
-    color: #dcddde;
-    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 17px;
-    font-weight: 400;
-  }
-</style>
