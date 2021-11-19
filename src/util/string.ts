@@ -230,138 +230,278 @@ function translatePermissions(
     permissions: PermissionString[],
     locale: 'en' | 'fr' | string = 'en'
 ): PermissionString[] | string[] {
-    if (locale === 'en') return permissions;
-    else if (locale === 'fr') {
-        let _: string[] = [];
-        for (const permission of permissions) {
-            switch (permission) {
-                case 'ADD_REACTIONS': {
-                    _.push('AJOUTER_DES_RÉACTONS');
-                    break;
-                }
-                case 'ADMINISTRATOR': {
-                    _.push('ADMINISTRATEUR');
-                    break;
-                }
-                case 'ATTACH_FILES': {
-                    _.push('JOINDRE_DES_FICHIERS');
-                    break;
-                }
-                case 'BAN_MEMBERS': {
-                    _.push('BANNIR_DES_MEMBRES');
-                    break;
-                }
-                case 'CHANGE_NICKNAME': {
-                    _.push('CHANGER_DE_PSEUDO');
-                    break;
-                }
-                case 'CONNECT': {
-                    _.push('SE_CONNECTER');
-                    break;
-                }
-                case 'CREATE_INSTANT_INVITE': {
-                    _.push('CRÉER_DES_INVITATIONS');
-                    break;
-                }
-                case 'DEAFEN_MEMBERS': {
-                    _.push('METTRE_EN_SOURDINE_DES_MEMBRES');
-                    break;
-                }
-                case 'EMBED_LINKS': {
-                    _.push('INTÉGRER_DES_LIENS');
-                    break;
-                }
-                case 'KICK_MEMBERS': {
-                    _.push('EXPULSER_DES_MEMBRES');
-                    break;
-                }
-                case 'MANAGE_CHANNELS': {
-                    _.push('GÉRER_LES_SALONS');
-                    break;
-                }
-                case 'MANAGE_EMOJIS_AND_STICKERS': {
-                    _.push('GÉRER_LES_ÉMOJIS_ET_LES_STICKERS');
-                    break;
-                }
-                case 'MANAGE_GUILD': {
-                    _.push('GÉRER_LE_SERVEUR');
-                    break;
-                }
-                case 'MANAGE_MESSAGES': {
-                    _.push('GÉRER_LES_MESSAGES');
-                    break;
-                }
-                case 'MANAGE_NICKNAMES': {
-                    _.push('GÉRER_LES_PSEUDOS');
-                    break;
-                }
-                case 'MANAGE_ROLES': {
-                    _.push('GÉRER_LES_RÔLES');
-                    break;
-                }
-                case 'MANAGE_WEBHOOKS': {
-                    _.push('GÉRER_LES_WEBHOOKS');
-                    break;
-                }
-                case 'MENTION_EVERYONE': {
-                    _.push('MENTIONNER_EVERYONE');
-                    break;
-                }
-                case 'MOVE_MEMBERS': {
-                    _.push('DÉPLACER_DES_MEMBRES');
-                    break;
-                }
-                case 'MUTE_MEMBERS': {
-                    _.push('RENDRE_LES_MEMBRES_MUETS');
-                    break;
-                }
-                case 'PRIORITY_SPEAKER': {
-                    _.push('INTERLOCUTEUR_PRIORITAIRE');
-                    break;
-                }
-                case 'READ_MESSAGE_HISTORY': {
-                    _.push("LIRE_L'HISTORIQUE_DES_MESSAGES");
-                    break;
-                }
-                case 'SEND_MESSAGES': {
-                    _.push('ENVOYER_DES_MESSAGES');
-                    break;
-                }
-                case 'SEND_TTS_MESSAGES': {
-                    _.push('ENVOYER_DES_MESSAGES_DE_SYTHÈSE_VOCALE');
-                    break;
-                }
-                case 'SPEAK': {
-                    _.push('PARLER');
-                    break;
-                }
-                case 'STREAM': {
-                    _.push('VIDÉO');
-                    break;
-                }
-                case 'USE_EXTERNAL_EMOJIS': {
-                    _.push('UTILISER_DES_ÉMOJIS_EXTERNES');
-                    break;
-                }
-                case 'USE_VAD': {
-                    _.push('UTILISER_LA_DÉTECTION_DE_VOIX');
-                    break;
-                }
-                case 'VIEW_AUDIT_LOG': {
-                    _.push('ACCÉDER_AUX_LOGS');
-                    break;
-                }
-                case 'VIEW_CHANNEL': {
-                    _.push('VOIR_LE_SALON');
-                    break;
-                }
-                case 'VIEW_GUILD_INSIGHTS': {
-                    _.push('VOIR_UN_APERÇU_DU_SERVEUR');
+    switch (locale) {
+        case 'en': {
+            return permissions;
+        }
+        case 'fr': {
+            let _: string[] = [];
+            for (const permission of permissions) {
+                switch (permission) {
+                    case 'ADD_REACTIONS': {
+                        _.push('AJOUTER_DES_RÉACTONS');
+                        break;
+                    }
+                    case 'ADMINISTRATOR': {
+                        _.push('ADMINISTRATEUR');
+                        break;
+                    }
+                    case 'ATTACH_FILES': {
+                        _.push('JOINDRE_DES_FICHIERS');
+                        break;
+                    }
+                    case 'BAN_MEMBERS': {
+                        _.push('BANNIR_DES_MEMBRES');
+                        break;
+                    }
+                    case 'CHANGE_NICKNAME': {
+                        _.push('CHANGER_DE_PSEUDO');
+                        break;
+                    }
+                    case 'CONNECT': {
+                        _.push('SE_CONNECTER');
+                        break;
+                    }
+                    case 'CREATE_INSTANT_INVITE': {
+                        _.push('CRÉER_DES_INVITATIONS');
+                        break;
+                    }
+                    case 'DEAFEN_MEMBERS': {
+                        _.push('METTRE_EN_SOURDINE_DES_MEMBRES');
+                        break;
+                    }
+                    case 'EMBED_LINKS': {
+                        _.push('INTÉGRER_DES_LIENS');
+                        break;
+                    }
+                    case 'KICK_MEMBERS': {
+                        _.push('EXPULSER_DES_MEMBRES');
+                        break;
+                    }
+                    case 'MANAGE_CHANNELS': {
+                        _.push('GÉRER_LES_SALONS');
+                        break;
+                    }
+                    case 'MANAGE_EMOJIS_AND_STICKERS': {
+                        _.push('GÉRER_LES_ÉMOJIS_ET_LES_STICKERS');
+                        break;
+                    }
+                    case 'MANAGE_GUILD': {
+                        _.push('GÉRER_LE_SERVEUR');
+                        break;
+                    }
+                    case 'MANAGE_MESSAGES': {
+                        _.push('GÉRER_LES_MESSAGES');
+                        break;
+                    }
+                    case 'MANAGE_NICKNAMES': {
+                        _.push('GÉRER_LES_PSEUDOS');
+                        break;
+                    }
+                    case 'MANAGE_ROLES': {
+                        _.push('GÉRER_LES_RÔLES');
+                        break;
+                    }
+                    case 'MANAGE_WEBHOOKS': {
+                        _.push('GÉRER_LES_WEBHOOKS');
+                        break;
+                    }
+                    case 'MENTION_EVERYONE': {
+                        _.push('MENTIONNER_EVERYONE');
+                        break;
+                    }
+                    case 'MOVE_MEMBERS': {
+                        _.push('DÉPLACER_DES_MEMBRES');
+                        break;
+                    }
+                    case 'MUTE_MEMBERS': {
+                        _.push('RENDRE_LES_MEMBRES_MUETS');
+                        break;
+                    }
+                    case 'PRIORITY_SPEAKER': {
+                        _.push('INTERLOCUTEUR_PRIORITAIRE');
+                        break;
+                    }
+                    case 'READ_MESSAGE_HISTORY': {
+                        _.push("LIRE_L'HISTORIQUE_DES_MESSAGES");
+                        break;
+                    }
+                    case 'SEND_MESSAGES': {
+                        _.push('ENVOYER_DES_MESSAGES');
+                        break;
+                    }
+                    case 'SEND_TTS_MESSAGES': {
+                        _.push('ENVOYER_DES_MESSAGES_DE_SYTHÈSE_VOCALE');
+                        break;
+                    }
+                    case 'SPEAK': {
+                        _.push('PARLER');
+                        break;
+                    }
+                    case 'STREAM': {
+                        _.push('VIDÉO');
+                        break;
+                    }
+                    case 'USE_EXTERNAL_EMOJIS': {
+                        _.push('UTILISER_DES_ÉMOJIS_EXTERNES');
+                        break;
+                    }
+                    case 'USE_VAD': {
+                        _.push('UTILISER_LA_DÉTECTION_DE_VOIX');
+                        break;
+                    }
+                    case 'VIEW_AUDIT_LOG': {
+                        _.push('ACCÉDER_AUX_LOGS');
+                        break;
+                    }
+                    case 'VIEW_CHANNEL': {
+                        _.push('VOIR_LE_SALON');
+                        break;
+                    }
+                    case 'VIEW_GUILD_INSIGHTS': {
+                        _.push('VOIR_UN_APERÇU_DU_SERVEUR');
+                    }
                 }
             }
+            return _;
         }
-        return _;
-    } else return [''];
+        case 'de': {
+            let _: string[] = [];
+            for (const permission of permissions) {
+                switch (permission) {
+                    case 'ADD_REACTIONS': {
+                        _.push('REAKTIONEN_HINZUFÜGEN');
+                        break;
+                    }
+                    case 'ADMINISTRATOR': {
+                        _.push('VERWALTER');
+                        break;
+                    }
+                    case 'ATTACH_FILES': {
+                        _.push('DATEIEN_ANFÜGEN');
+                        break;
+                    }
+                    case 'BAN_MEMBERS': {
+                        _.push('MITGLIEDER_VERBIETEN');
+                        break;
+                    }
+                    case 'CHANGE_NICKNAME': {
+                        _.push('SPITZNAMEN_ÄNDERN');
+                        break;
+                    }
+                    case 'CONNECT': {
+                        _.push('VERBINDEN');
+                        break;
+                    }
+                    case 'CREATE_INSTANT_INVITE': {
+                        _.push('INSTANTANÜTIGE_INVITATION_ERSTELLEN');
+                        break;
+                    }
+                    case 'DEAFEN_MEMBERS': {
+                        _.push('MITGLEIDER_BETÄUBEN');
+                        break;
+                    }
+                    case 'EMBED_LINKS': {
+                        _.push('LINKS_EINBINDEN');
+                        break;
+                    }
+                    case 'KICK_MEMBERS': {
+                        _.push('MITGLEIDER_KICKEN');
+                        break;
+                    }
+                    case 'MANAGE_CHANNELS': {
+                        _.push('KANÄLE_VERWALTEN');
+                        break;
+                    }
+                    case 'MANAGE_EMOJIS_AND_STICKERS': {
+                        _.push('EMOJIS_UND_STICKERS_VERWALTEN');
+                        break;
+                    }
+                    case 'MANAGE_GUILD': {
+                        _.push('SERVER_VERWALTEN');
+                        break;
+                    }
+                    case 'MANAGE_MESSAGES': {
+                        _.push('NACHRICHTEN_VERWALTEN');
+                        break;
+                    }
+                    case 'MANAGE_NICKNAMES': {
+                        _.push('NICKNAMEN_VERWALTEN');
+                        break;
+                    }
+                    case 'MANAGE_ROLES': {
+                        _.push('ROLLE_VERWALTEN');
+                        break;
+                    }
+                    case 'MANAGE_WEBHOOKS': {
+                        _.push('WEBHOOKS_VERWALTEN');
+                        break;
+                    }
+                    case 'MENTION_EVERYONE': {
+                        _.push('JEDEINEN_ERMÄNLEN');
+                        break;
+                    }
+                    case 'MOVE_MEMBERS': {
+                        _.push('MITGLEIDER_BEWEGEN');
+                        break;
+                    }
+                    case 'MUTE_MEMBERS': {
+                        _.push('MITGLEIDER_STUMMSCHALTEN');
+                        break;
+                    }
+                    case 'PRIORITY_SPEAKER': {
+                        _.push('PRIORITÄTSPEAKER');
+                        break;
+                    }
+                    case 'READ_MESSAGE_HISTORY': {
+                        _.push('NACHRICHTENVERLAUF_LESEN');
+                        break;
+                    }
+                    case 'SEND_MESSAGES': {
+                        _.push('NACHRICHTEN_SENDEN');
+                        break;
+                    }
+                    case 'SEND_TTS_MESSAGES': {
+                        _.push('NACHRICHTEN_SENDEN_(TTS)');
+                        break;
+                    }
+                    case 'SPEAK': {
+                        _.push('SPRECHEN');
+                        break;
+                    }
+                    case 'STREAM': {
+                        _.push('STREAM');
+                        break;
+                    }
+                    case 'USE_EXTERNAL_EMOJIS': {
+                        _.push('EXTERNAL_EMOJIS_VERWENDEN');
+                        break;
+                    }
+                    case 'USE_VAD': {
+                        _.push('SPRACHAKTIVITÄTSERKENNUNG_VERWENDEN');
+                        break;
+                    }
+                    case 'VIEW_AUDIT_LOG': {
+                        _.push('AUDIT_LOG_ANZEIGEN');
+                        break;
+                    }
+                    case 'VIEW_CHANNEL': {
+                        _.push('KANAL_ANZEIGEN');
+                        break;
+                    }
+                    case 'VIEW_GUILD_INSIGHTS': {
+                        _.push('SERVER_ANZEIGEN');
+                        break;
+                    }
+                }
+            }
+            return _;
+        }
+        default: {
+            return permissions;
+        }
+    }
+    return permissions;
 }
 /**
  * Set an upper case on the first letter
