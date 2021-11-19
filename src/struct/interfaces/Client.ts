@@ -185,6 +185,10 @@ export interface Config {
         username: string;
         password: string;
     };
+
+    kiwii: {
+        apiKey: string;
+    }
 }
 
 export interface KiwiiClientOptions {

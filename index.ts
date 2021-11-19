@@ -11,7 +11,7 @@ const client = new KiwiiClient({
         intents: Intents.ALL,
         allowedMentions: {
             repliedUser: false,
-        }
+        },
     },
 });
 

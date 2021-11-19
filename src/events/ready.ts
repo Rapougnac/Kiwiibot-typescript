@@ -5,15 +5,18 @@ import { performance } from 'perf_hooks';
 const bootTime = Math.round(performance.now());
 import { loadLanguages, loadPrefix } from '../../load';
 import glob from 'glob';
-import express from 'express';
+import express, { json } from 'express';
 import { getCommands } from '../util/getCmds';
 import { resolve, sep } from 'path';
 import { SlashCommandConstructor } from '../struct/interfaces/main';
+import * as path from 'path';
+import axios from 'axios';
 import {
     beautifyCategories,
     upperFirstButAcceptEmojis,
     countWords,
 } from '../util/string';
+import fetch from 'node-fetch';
 
 export default class ReadyEvent extends Event {
     constructor(client: KiwiiClient) {
@@ -81,6 +84,10 @@ export default class ReadyEvent extends Event {
         );
         //express
         const app = express();
+        let commands = await getCommands(this.client);
+        commands = commands.filter(
+            (v, i, a) => a.findIndex((t) => t.name === v.name) === i
+        );
         const x = {
             guilds: this.client.guilds.cache.size,
             users: this.client.guilds.cache.reduce(
@@ -88,24 +95,33 @@ export default class ReadyEvent extends Event {
                 0
             ),
             channels: this.client.channels.cache.size,
+            commands,
         };
         app.set('view engine', 'ejs');
 
         app.get('/', (_req, res) => {
             res.status(200).sendFile(
-                `${process.cwd()}/src/dashboard/Main.html`
+                path.resolve(`${process.cwd()}/src/dashboard/Main.html`)
             );
         });
-        app.use(express.static(`${process.cwd()}/src/dashboard/`));
-        app.get('/about', (_req, res) => {
-            res.status(200).send(x);
+        app.get('/api', async (req, res) => {
+            if (req.query['token'] === this.client.config.kiwii.apiKey)
+                res.status(200).json(x);
+            else
+                res.status(403).json({
+                    error: 403,
+                    message: 'Invalid API Key',
+                });
         });
+        app.use(
+            express.static(path.resolve(`${process.cwd()}/src/dashboard/`))
+        );
         const { client } = this;
         app.get('/commands', async (_req, res) => {
-            let commands = await getCommands(client);
-            commands = commands.filter(
-                (v, i, a) => a.findIndex((t) => t.name === v.name) === i
-            );
+            const { commands } = await fetch(
+                `http://localhost:${client.config.port}/api?token=${client.config.kiwii.apiKey}`
+            ).then((r) => r.json());
+            console.log(commands);
             res.status(200).render(
                 `${process.cwd()}/src/dashboard/ejs/main.ejs`,
                 {

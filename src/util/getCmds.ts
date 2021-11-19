@@ -22,7 +22,6 @@ const getCommands = async (client: Client): Promise<any[]> => {
         }
     }
     files.forEach(async (file) => {
-
         try {
             const filePath = `${process.cwd()}${path.sep}${file}`;
             let Command: ConstructorCommand = await import(`${filePath}`);
@@ -53,12 +52,15 @@ const getCommands = async (client: Client): Promise<any[]> => {
                         : 'Unspecified',
                     value,
                 };
+                data.value = data.value.filter((c) => c.category === data.name);
                 categs.push(data);
             }
         } catch (e) {}
     });
     // I need to await this, even if that make non sense 🤷
-    return await categs;
+    return await categs.map(
+        (c) => (c.value = c.value.filter((v: any) => v.category === c.name))
+    );
 };
 
 const isConstructor = (f: object | any) => {

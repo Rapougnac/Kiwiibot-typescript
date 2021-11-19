@@ -232,7 +232,6 @@ main {
 
 .avatar {
     display: block;
-    position: absolute;
     top: 15px;
     right: 750px;
     margin-left: auto;
@@ -240,4 +239,28 @@ main {
     border-radius: 100%;
     width: 200px;
     height: 200px;
+}
+
+.baa ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.baa li {
+    height: 40vh;
+    flex-grow: 1;
+}
+.baa img {
+    object-fit: cover;
+    vertical-align: bottom;
+    margin-top: -75px;
+}
+
+.link-text {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
