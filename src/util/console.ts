@@ -26,14 +26,47 @@ const warn = (message: string, title: string = 'WARN!'): void =>
 const error = (message: string, title: string = ''): void =>
     console.log(title, '\x1b[31mERR!\x1b[0m', message);
 
-const table = (input: any[]): void => {
+/**
+ * Logs on console table without the index of the array/object
+ * Try to construct a table with the columns of the properties of `tabularData`(or use `properties`) and rows of `tabularData` and log it. Falls back to just
+ * logging the argument if it can’t be parsed as tabular.
+ * @param tabularData The data to log on console
+ *
+ * ```js
+ * // These can't be parsed as tabular data
+ * console.table(Symbol());
+ * // Symbol()
+ *
+ * console.table(undefined);
+ * // undefined
+ *
+ * console.table([{ a: 1, b: 'Y' }, { a: 'Z', b: 2 }]);
+ * // ┌─────┬─────┐
+ * // │  a  │  b  │
+ * // ├─────┼─────┤
+ * // │  1  │  Y  │
+ * // │  Z  │  2  │
+ * // └─────┴─────┘
+ * 
+ * 
+ * console.table([{ a: 1, b: 'Y' }, { a: 'Z', b: 2 }], ['a']);
+ * // ┌─────┐
+ * // │  a  │
+ * // ├─────┤
+ * // │  1  │
+ * // │  Z  │
+ * // └─────┘
+ * ```
+ * @param properties Alternate properties for constructing the table.
+ */
+const table = (tabularData: any[], properties?: ReadonlyArray<string>): void => {
     const ts = new Transform({
         transform(chunk, _, cb) {
             cb(null, chunk);
         },
     });
     const logger = new Console({ stdout: ts, stderr: ts });
-    logger.table(input);
+    logger.table(tabularData, properties);
     const _table = ts.read().toString();
     let result = '';
     for (const row of _table.split(/[\r\n]+/)) {
