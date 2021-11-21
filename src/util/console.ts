@@ -27,7 +27,7 @@ const error = (message: string, title: string = ''): void =>
     console.log(title, '\x1b[31mERR!\x1b[0m', message);
 
 /**
- * Logs on console table without the index of the array/object
+ * Logs on console table without the index of the array/object\
  * Try to construct a table with the columns of the properties of `tabularData`(or use `properties`) and rows of `tabularData` and log it. Falls back to just
  * logging the argument if it can’t be parsed as tabular.
  * @param tabularData The data to log on console
