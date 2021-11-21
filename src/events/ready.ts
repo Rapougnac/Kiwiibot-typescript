@@ -5,18 +5,13 @@ import { performance } from 'perf_hooks';
 const bootTime = Math.round(performance.now());
 import { loadLanguages, loadPrefix } from '../../load';
 import glob from 'glob';
-import express, { json } from 'express';
+import express from 'express';
 import { getCommands } from '../util/getCmds';
 import { resolve, sep } from 'path';
 import { SlashCommandConstructor } from '../struct/interfaces/main';
 import * as path from 'path';
-import axios from 'axios';
-import {
-    beautifyCategories,
-    upperFirstButAcceptEmojis,
-    countWords,
-} from '../util/string';
-import fetch from 'node-fetch';
+import { beautifyCategories, upperFirstButAcceptEmojis } from '../util/string';
+// import fetch from 'node-fetch';
 
 export default class ReadyEvent extends Event {
     constructor(client: KiwiiClient) {
@@ -88,6 +83,12 @@ export default class ReadyEvent extends Event {
         commands = commands.filter(
             (v, i, a) => a.findIndex((t) => t.name === v.name) === i
         );
+        commands.forEach(
+            (cmd) =>
+                (cmd.value = cmd.value.filter(
+                    (c: any) => c.category === cmd.name
+                ))
+        );
         const x = {
             guilds: this.client.guilds.cache.size,
             users: this.client.guilds.cache.reduce(
@@ -96,6 +97,8 @@ export default class ReadyEvent extends Event {
             ),
             channels: this.client.channels.cache.size,
             commands,
+            beautifyCategories,
+            upperFirstButAcceptEmojis,
         };
         app.set('view engine', 'ejs');
 
@@ -103,6 +106,14 @@ export default class ReadyEvent extends Event {
             res.status(200).sendFile(
                 path.resolve(`${process.cwd()}/src/dashboard/Main.html`)
             );
+        });
+        app.use(
+            express.static(path.resolve(`${process.cwd()}/src/dashboard/`))
+        );
+        app.use((_req, res, next) => {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', '*');
+            next();
         });
         app.get('/api', async (req, res) => {
             if (req.query['token'] === this.client.config.kiwii.apiKey)
@@ -113,23 +124,19 @@ export default class ReadyEvent extends Event {
                     message: 'Invalid API Key',
                 });
         });
-        app.use(
-            express.static(path.resolve(`${process.cwd()}/src/dashboard/`))
-        );
         const { client } = this;
         app.get('/commands', async (_req, res) => {
-            const { commands } = await fetch(
-                `http://localhost:${client.config.port}/api?token=${client.config.kiwii.apiKey}`
-            ).then((r) => r.json());
-            console.log(commands);
+            // const { commands } = await fetch(
+            //     `http://localhost:${client.config.port}/api?token=${client.config.kiwii.apiKey}`
+            // ).then((r) => r.json());
+            // console.log(commands);
             res.status(200).render(
                 `${process.cwd()}/src/dashboard/ejs/main.ejs`,
                 {
-                    commands,
                     client,
-                    beautifyCategories,
+                    commands,
                     upperFirstButAcceptEmojis,
-                    countWords,
+                    beautifyCategories,
                 }
             );
         });
