@@ -77,7 +77,7 @@ export default class LoadingBar {
      * Method to wait
      * @param milliseconds The time in ms to wait
      */
-    static wait(milliseconds: number = 250): Promise<any> {
+    static wait(milliseconds: number = 250): Promise<unknown> {
         return new Promise((res) => setTimeout(res, milliseconds));
     }
 }
