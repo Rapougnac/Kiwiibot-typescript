@@ -3,7 +3,7 @@ import { I18n } from 'i18n';
 import * as path from 'path';
 const i18n = new I18n();
 i18n.configure({
-    locales: ['en', 'fr'],
+    locales: ['en', 'fr', 'de'],
     directory: path.join(process.cwd(), 'locales'),
     defaultLocale: 'en',
     objectNotation: true,
