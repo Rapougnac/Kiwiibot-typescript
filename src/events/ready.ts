@@ -126,10 +126,6 @@ export default class ReadyEvent extends Event {
         });
         const { client } = this;
         app.get('/commands', async (_req, res) => {
-            // const { commands } = await fetch(
-            //     `http://localhost:${client.config.port}/api?token=${client.config.kiwii.apiKey}`
-            // ).then((r) => r.json());
-            // console.log(commands);
             res.status(200).render(
                 `${process.cwd()}/src/dashboard/ejs/main.ejs`,
                 {
