@@ -9,7 +9,6 @@ import Client from './Client';
 import Loader from './LoadingBar';
 import { TimeData } from './interfaces/main';
 import Command from './Command';
-import KiwiiClient from './Client';
 import NekoClient from 'nekos.life';
 import AmeClient from 'amethyste-api';
 import { officialApi } from 'mal-scraper';
@@ -119,24 +118,16 @@ export default class Util {
         }
 
         if (command.config.ownerOnly) {
-            if (
-                !(message.client as unknown as KiwiiClient).isOwner(
-                    message.author
-                )
-            ) {
+            if (!this.client.isOwner(message.author)) {
                 reasons.push(
-                    (message.guild as unknown as Guild).i18n.__mf(
-                        'PERMS_MESSAGE.dev_only'
-                    )
+                    message.guild!.i18n.__mf('PERMS_MESSAGE.dev_only')
                 );
             }
         }
         if (command.config.adminOnly) {
             if (!message.member!.permissions.has('ADMINISTRATOR')) {
                 reasons.push(
-                    (message.guild as unknown as Guild).i18n.__mf(
-                        'PERMS_MESSAGE.admin_only'
-                    )
+                    message.guild!.i18n.__mf('PERMS_MESSAGE.admin_only')
                 );
             }
         }
@@ -145,11 +136,7 @@ export default class Util {
                 message.channel.type === 'GUILD_TEXT' &&
                 !message.channel.nsfw
             ) {
-                reasons.push(
-                    (message.guild as unknown as Guild).i18n.__mf(
-                        'PERMS_MESSAGE.nsfw'
-                    )
-                );
+                reasons.push(message.guild!.i18n.__mf('PERMS_MESSAGE.nsfw'));
             }
         }
         if (Array.isArray(command.config.permissions)) {
@@ -163,10 +150,10 @@ export default class Util {
             ) {
                 reasons.push(
                     [
-                        (message.guild as unknown as Guild).i18n.__mf(
+                        message.guild!.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions_you'
                         ),
-                        (message.guild as unknown as Guild).i18n.__mf(
+                        message.guild!.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions1_you'
                         ),
                         Object.entries(
