@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= _client.user.username %></title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="../public/css/commands.css" />
+  <link rel="icon" href="<%= _client.user.displayAvatarURL({ format: 'png' }) %>" />
+</head>
+
+<body>
+  <%- include('header') %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  <div class="d-flex justify-content-center command_head">
+    <h1 class="text-center">Commands</h1>
+  </div>
+
+  <div class="container px-lg-5" id="command_head">
+    <div class="row">
+      <div class="col-sm-3" id="category">
+        <div class="list-group" id="myList" role="tablist">
+          <% for(const [i, category] of [..._client.categories].entries()) { %>
+          <a class="list-group-item list-group-item-action <%= i === 0 ? 'active' : ''%>" data-bs-toggle="list" href="#<%= category %>" role="tab" aria-controls="<%= category %>"><%= upperFirstButAcceptEmojis(beautifyCategories(category)) %></a>
+          <% }%>
+        </div>
+      </div>
+      <div class="col-sm-9">
+        <div class="tab-content" id="nav-tabContent">
+          <% for(const [i, category] of [..._client.categories].entries()) { %>
+          <div class="tab-pane fade <%= i === 0 ? 'show active' : ''%>" id="<%= category %>" role="tabpanel" aria-labelledby="<%= category %>">
+            <div class="row">
+              <% for(const [i, command] of [..._client.commands.filter(c => c.category === category)].entries()) { %>
+              <div class="col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= command.name %></h5>
+                    <p class="card-text"><%= command.description %></p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div>
+              </div>
+              <% }%>
+            </div>
+          </div>
+          <% }%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <label class="toggle-nsfw">
+    <span class="ON-OFF">Show NSFW commands (OFF)</span>
+    <input type="checkbox" />
+    <span class="slider round"></span>
+  </label>
+
+    <section class="main-content">
+      <p>Commands of <%# _client.user.tag %></p>
+          <%# for(const c of commands) { %>
+          <%# let { name, value } = c; %>
+          <table>
+            <%# `<h1${name === 'nsfw' ? ' id="nsfw"' :  ''}>${upperFirstButAcceptEmojis(beautifyCategories(name))}</h1>` %>
+            <tr <%# name === 'nsfw' ? 'id=nsfwHeader' : '' %>>
+              <th>Commands</th>
+              <th>Description</th>
+              <th>Usage</th>
+              <th>Aliases</th>
+            </tr>
+            <%# value = value.filter((c) => c.category === name) %>
+            <%# for(const command of value) { %>
+            <%# const { name: commandName, description, aliases, utilisation, category } = command; %>
+            <tr <%# category === 'nsfw' ? 'id=nsfwCmds' : '' %>>
+              <td><%# commandName %></td>
+              <td>
+                <%# description.replace(/`(.+?)`/g, '<code class="code-style">$1</code>') %>
+              </td>
+              <td><%# utilisation.replace('{prefix}', _client.prefix)%>
+
+              </td>
+              <td><%# typeof aliases === 'string' ? aliases : aliases.join(', ');%></td>
+            </tr>
+            <%# } %>
+          </table>
+          <%# } %>
+          </section>
+          <script type="text/javascript">
+            let n = null;
+            const checkbox = document.querySelector('.toggle-nsfw input');
+            if (checkbox.checked) {
+              localStorage.setItem('nsfw', 'true');
+            } else {
+              localStorage.setItem('nsfw', 'false');
+            }
+            const onOff = checkbox.parentNode.querySelector('.ON-OFF');
+            let nsfw = localStorage.getItem('nsfw');
+            const nsfwH1 = document.getElementById('nsfw');
+            const nsfwHeader = document.getElementById('nsfwHeader');
+            const nsfwHeaders = nsfwHeader.parentNode.querySelectorAll('tr');
+            const nsfwCmds = document.getElementById('nsfwCmds');
+            const nsfwCmdsList = nsfwCmds.parentNode.querySelectorAll('tr');
+            if (nsfw === 'true') {
+              n = true;
+              checkbox.checked = true;
+              onOff.textContent = onOff.textContent.replace('OFF', 'ON');
+            } else {
+              n = false;
+              checkbox.checked = false;
+              onOff.textContent = onOff.textContent.replace('ON', 'OFF');
+            }
+
+            if (checkbox.checked) {
+              nsfwH1.style.display = 'block';
+              for (const header of nsfwHeaders) {
+                header.style.display = 'table-row';
+              }
+              for (const cmd of nsfwCmdsList) {
+                cmd.style.display = 'table-row';
+              }
+            } else {
+              nsfwH1.style.display = 'none';
+              for (const header of nsfwHeaders) {
+                header.style.display = 'none';
+              }
+              for (const cmd of nsfwCmdsList) {
+                cmd.style.display = 'none';
+              }
+            }
+
+            checkbox.addEventListener('click', () => {
+              onOff.textContent = checkbox.checked ? onOff.textContent.replace('OFF', 'ON') : onOff.textContent.replace('ON', 'OFF');
+              if (checkbox.checked) {
+                localStorage.setItem('nsfw', 'true');
+                nsfw = 'true';
+              } else {
+                localStorage.setItem('nsfw', 'false');
+                nsfw = 'false';
+              }
+              if (checkbox.checked) {
+                nsfwH1.style.display = 'block';
+                for (const header of nsfwHeaders) {
+                  header.style.display = 'table-row';
+                }
+                for (const cmd of nsfwCmdsList) {
+                  cmd.style.display = 'table-row';
+                }
+              } else {
+                nsfwH1.style.display = 'none';
+                for (const header of nsfwHeaders) {
+                  header.style.display = 'none';
+                }
+                for (const cmd of nsfwCmdsList) {
+                  cmd.style.display = 'none';
+                }
+              }
+            });
+          </script> -->
+</body>
+
+</html>
