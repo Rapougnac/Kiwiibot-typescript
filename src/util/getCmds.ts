@@ -4,7 +4,7 @@ import * as path from 'path';
 import { ConstructorCommand } from '../struct/interfaces/Command';
 
 const getCommands = async (client: Client): Promise<any[]> => {
-    let categs: any[] = [];
+    // let categs: any[] = [];
     const value: any[] = [];
     let files = glob.sync('./dist/src/commands/**/*.js');
     const exclude = client.config.discord.dev.exclude_cmd;
@@ -21,25 +21,25 @@ const getCommands = async (client: Client): Promise<any[]> => {
             );
         }
     }
-    let data: {
-        name?: string;
-        value?: Array<{
-            name: string;
-            description: string;
-            aliases: Array<string>;
-            utilisation: string;
-            category: string;
-        }>;
-    } = {};
+    // let data: {
+    //     name?: string;
+    //     value?: Array<{
+    //         name: string;
+    //         description: string;
+    //         aliases: Array<string>;
+    //         utilisation: string;
+    //         category: string;
+    //     }>;
+    // } = {};
     files.forEach(async (file) => {
         try {
-            const filePath = `${process.cwd()}${path.sep}${file}`;
+            const filePath = path.resolve(`${process.cwd()}${path.sep}${file}`);
             let Command: ConstructorCommand = await import(`${filePath}`);
             Command = (Command as any).default;
 
             const command = new Command(client);
 
-            if (!isConstructor(command)) {
+            if (!isConstructor(command) && !command.config.hidden) {
                 value.push({
                     name: command.help.name,
                     description: command.help.description
@@ -54,20 +54,20 @@ const getCommands = async (client: Client): Promise<any[]> => {
                     category: command.help.category
                         ? command.help.category
                         : 'Unspecified',
+                    clientPermissions:
+                        command.config.clientPermissions.length !== 0
+                            ? command.config.clientPermissions
+                            : 'None',
+                    permissions:
+                        command.config.permissions.length !== 0
+                            ? command.config.permissions
+                            : 'None',
                 });
-
-                data = {
-                    name: command.help.category
-                        ? command.help.category
-                        : 'Unspecified',
-                    value,
-                };
-                categs.push(data);
             }
         } catch (e) {}
     });
     // I need to await this, even if that make non sense 🤷
-    return await categs;
+    return await value;
 };
 
 const isConstructor = (f: object | any) => {
