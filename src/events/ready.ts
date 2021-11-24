@@ -80,15 +80,15 @@ export default class ReadyEvent extends Event {
         //express
         const app = express();
         let commands = await getCommands(this.client);
-        commands = commands.filter(
-            (v, i, a) => a.findIndex((t) => t.name === v.name) === i
-        );
-        commands.forEach(
-            (cmd) =>
-                (cmd.value = cmd.value.filter(
-                    (c: any) => c.category === cmd.name
-                ))
-        );
+        // commands = commands.filter(
+        //     (v, i, a) => a.findIndex((t) => t.name === v.name) === i
+        // );
+        // commands.forEach(
+        //     (cmd) =>
+        //         (cmd.value = cmd.value.filter(
+        //             (c: any) => c.category === cmd.name
+        //         ))
+        // );
         const x = {
             guilds: this.client.guilds.cache.size,
             users: this.client.guilds.cache.reduce(
@@ -103,8 +103,11 @@ export default class ReadyEvent extends Event {
         app.set('view engine', 'ejs');
 
         app.get('/', (_req, res) => {
-            res.status(200).sendFile(
-                path.resolve(`${process.cwd()}/src/dashboard/Main.html`)
+            res.status(200).render(
+                path.resolve(`${process.cwd()}/src/dashboard/Main.ejs`),
+                {
+                    _client: this.client,
+                }
             );
         });
         app.use(
@@ -127,9 +130,9 @@ export default class ReadyEvent extends Event {
         const { client } = this;
         app.get('/commands', async (_req, res) => {
             res.status(200).render(
-                `${process.cwd()}/src/dashboard/ejs/main.ejs`,
+                `${process.cwd()}/src/dashboard/ejs/commands.ejs`,
                 {
-                    client,
+                    _client: client,
                     commands,
                     upperFirstButAcceptEmojis,
                     beautifyCategories,
