@@ -17,6 +17,7 @@ export default class TrumpCommand extends Command {
             cooldown: 5,
             utilisation: '{prefix}trump <verb> [text]',
             img: 'https://image.flaticon.com/icons/png/512/3085/3085916.png',
+            clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'ATTACH_FILES']
         });
     }
     public async execute(
