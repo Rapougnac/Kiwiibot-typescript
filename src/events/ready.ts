@@ -10,8 +10,21 @@ import { getCommands } from '../util/getCmds';
 import { resolve, sep } from 'path';
 import { SlashCommandConstructor } from '../struct/interfaces/main';
 import * as path from 'path';
-import { beautifyCategories, upperFirstButAcceptEmojis } from '../util/string';
-// import fetch from 'node-fetch';
+import {
+    beautifyCategories,
+    upperFirstButAcceptEmojis,
+    translatePermissions,
+    remove,
+} from '../util/string';
+import i18n from 'i18n';
+i18n.configure({
+    locales: ['en', 'fr'],
+    directory: resolve(__dirname, '../../locales'),
+    defaultLocale: 'en',
+    updateFiles: false,
+    objectNotation: true,
+    cookie: 'lang',
+});
 
 export default class ReadyEvent extends Event {
     constructor(client: KiwiiClient) {
@@ -80,15 +93,6 @@ export default class ReadyEvent extends Event {
         //express
         const app = express();
         let commands = await getCommands(this.client);
-        // commands = commands.filter(
-        //     (v, i, a) => a.findIndex((t) => t.name === v.name) === i
-        // );
-        // commands.forEach(
-        //     (cmd) =>
-        //         (cmd.value = cmd.value.filter(
-        //             (c: any) => c.category === cmd.name
-        //         ))
-        // );
         const x = {
             guilds: this.client.guilds.cache.size,
             users: this.client.guilds.cache.reduce(
@@ -114,6 +118,7 @@ export default class ReadyEvent extends Event {
             express.static(path.resolve(`${process.cwd()}/src/dashboard/`))
         );
         app.use((_req, res, next) => {
+            i18n.init(_req, res);
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Headers', '*');
             next();
@@ -136,6 +141,8 @@ export default class ReadyEvent extends Event {
                     commands,
                     upperFirstButAcceptEmojis,
                     beautifyCategories,
+                    translatePermissions,
+                    remove,
                 }
             );
         });
