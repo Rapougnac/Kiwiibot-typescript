@@ -627,7 +627,7 @@ function beautifyCategories(category: string, nsfw: boolean = true): string {
             break;
         }
     }
-    return categoriesString;
+    return categoriesString.replace(/-/g, ' ');
 }
 
 /**

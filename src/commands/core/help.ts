@@ -41,9 +41,7 @@ export default class HelpCommand extends Command {
                     name: this.client.commands.filter(
                         (c) => c.help.category === category && !c.config.hidden
                     ).size
-                        ? `${upperFirstButAcceptEmojis(
-                              ct.replace(/-/g, ' ')
-                          )} [${
+                        ? `${upperFirstButAcceptEmojis(ct)} [${
                               this.client.commands.filter(
                                   (c) =>
                                       c.help.category === category &&
@@ -78,7 +76,7 @@ export default class HelpCommand extends Command {
                                 !c.config.hidden &&
                                 !c.config.nsfw
                         ).size
-                            ? upperFirstButAcceptEmojis(ct.replace(/-/g, ' ')) +
+                            ? upperFirstButAcceptEmojis(ct) +
                               ' ' +
                               '[' +
                               this.client.commands.filter(
@@ -314,14 +312,12 @@ export default class HelpCommand extends Command {
                                               .replace(/(^|"|_)(\S)/g, (z) =>
                                                   z.toUpperCase()
                                               )
-                                              .replace(/_/g, ' ');
-                                          if (x.match(/Use Vad/g))
-                                              x.replace(
+                                              .replace(/_/g, ' ')
+                                              .replace(
                                                   /Use Vad/g,
                                                   'Use Voice Activity'
-                                              );
-                                          if (x.match(/Guild/g))
-                                              x.replace(/Guild/g, 'Server');
+                                              )
+                                              .replace(/Guild/g, 'Server');
                                           return x;
                                       })
                                       .join('\n'),
