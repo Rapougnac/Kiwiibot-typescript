@@ -107,7 +107,7 @@ export default class Util {
 
     checkPermissions(message: Message, command: Command) {
         const reasons = [];
-        if (message.channel.type === 'GUILD_TEXT') {
+        if (message.channel.type === 'DM') {
             if (command.config.guildOnly) {
                 reasons.push(
                     (message.guild as unknown as Guild).i18n.__mf(
@@ -144,8 +144,8 @@ export default class Util {
                 message.channel.type === 'GUILD_TEXT' &&
                 !(
                     message.channel.permissionsFor(
-                        message.member as GuildMember
-                    ) as Readonly<Permissions>
+                        message.member!
+                    )
                 ).has(command.config.permissions)
             ) {
                 reasons.push(
@@ -159,8 +159,8 @@ export default class Util {
                         Object.entries(
                             (
                                 message.channel.permissionsFor(
-                                    message.member as GuildMember
-                                ) as Readonly<Permissions>
+                                    message.member!
+                                )
                             ).serialize()
                         )
                             .filter(
@@ -189,16 +189,16 @@ export default class Util {
                 message.channel.type === 'GUILD_TEXT' &&
                 !(
                     message.channel.permissionsFor(
-                        message.guild!.me as GuildMember
-                    ) as Readonly<Permissions>
+                        message.guild!.me!
+                    )
                 ).has(command.config.clientPermissions)
             ) {
                 reasons.push(
                     [
-                        (message.guild as unknown as Guild).i18n.__mf(
+                        message.guild?.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions_i'
                         ),
-                        (message.guild as unknown as Guild).i18n.__mf(
+                        message.guild?.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions1_i'
                         ),
                         Object.entries(
