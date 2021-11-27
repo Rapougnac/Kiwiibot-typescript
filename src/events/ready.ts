@@ -5,26 +5,9 @@ import { performance } from 'perf_hooks';
 const bootTime = Math.round(performance.now());
 import { loadLanguages, loadPrefix } from '../../load';
 import glob from 'glob';
-import express from 'express';
-import { getCommands } from '../util/getCmds';
+import { SlashCommandConstructor } from '../struct/interfaces/SlashCommand';
 import { resolve, sep } from 'path';
-import { SlashCommandConstructor } from '../struct/interfaces/main';
-import * as path from 'path';
-import {
-    beautifyCategories,
-    upperFirstButAcceptEmojis,
-    translatePermissions,
-    remove,
-} from '../util/string';
-import i18n from 'i18n';
-i18n.configure({
-    locales: ['en', 'fr'],
-    directory: resolve(__dirname, '../../locales'),
-    defaultLocale: 'en',
-    updateFiles: false,
-    objectNotation: true,
-    cookie: 'lang',
-});
+import dashboard from '../dashboard/dashboard';
 
 export default class ReadyEvent extends Event {
     constructor(client: KiwiiClient) {
@@ -90,63 +73,9 @@ export default class ReadyEvent extends Event {
             } is now Online! (Loaded in ${bootTime} ms)\n`,
             `${timedate} ${timehrs}`
         );
-        //express
-        const app = express();
-        let commands = await getCommands(this.client);
-        const x = {
-            guilds: this.client.guilds.cache.size,
-            users: this.client.guilds.cache.reduce(
-                (a, b) => a + b.memberCount,
-                0
-            ),
-            channels: this.client.channels.cache.size,
-            commands,
-            beautifyCategories,
-            upperFirstButAcceptEmojis,
-        };
-        app.set('view engine', 'ejs');
 
-        app.get('/', (_req, res) => {
-            res.status(200).render(
-                path.resolve(`${process.cwd()}/src/dashboard/Main.ejs`),
-                {
-                    _client: this.client,
-                }
-            );
-        });
-        app.use(
-            express.static(path.resolve(`${process.cwd()}/src/dashboard/`))
-        );
-        app.use((_req, res, next) => {
-            i18n.init(_req, res);
-            res.header('Access-Control-Allow-Origin', '*');
-            res.header('Access-Control-Allow-Headers', '*');
-            next();
-        });
-        app.get('/api', async (req, res) => {
-            if (req.query['token'] === this.client.config.kiwii.apiKey)
-                res.status(200).json(x);
-            else
-                res.status(403).json({
-                    error: 403,
-                    message: 'Invalid API Key',
-                });
-        });
-        const { client } = this;
-        app.get('/commands', async (_req, res) => {
-            res.status(200).render(
-                `${process.cwd()}/src/dashboard/ejs/commands.ejs`,
-                {
-                    _client: client,
-                    commands,
-                    upperFirstButAcceptEmojis,
-                    beautifyCategories,
-                    translatePermissions,
-                    remove,
-                }
-            );
-        });
-        app.listen(this.client.config.port);
+        // Dashboard
+        await dashboard(this.client);
     }
 
     public async loadSlashs(): Promise<void> {
