@@ -45,15 +45,16 @@ export default async function (client: KiwiiClient) {
         );
     });
 
-    app.get('/api/v1/commands/:command', (req, res) => {
-        const cmd = client.commands.find(
-            (c) =>
-                c.help.name.toLowerCase() === req.params.command.toLowerCase()
-        );
-        if (!cmd) return res.status(404).json({ error: 'Command not found' });
-        res.status(200).json(cmd);
-    });
-    app.get('*', (req, res) => {
+    /** Disablig this, not secure */
+    // app.get('/api/v1/commands/:command', (req, res) => {
+    //     const cmd = client.commands.find(
+    //         (c) =>
+    //             c.help.name.toLowerCase() === req.params.command.toLowerCase()
+    //     );
+    //     if (!cmd) return res.status(404).json({ error: 'Command not found' });
+    //     res.status(200).json(cmd);
+    // });
+    app.get('*', (_req, res) => {
         res.status(404).render(
             path.join(process.cwd(), 'src', 'dashboard', 'ejs', '404.ejs')
         );
