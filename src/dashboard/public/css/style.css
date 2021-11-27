@@ -41,14 +41,14 @@ main {
     padding: 1rem;
 }
 
-.navbar {
+.navigationbar {
     position: fixed;
     background-color: var(--bg-primary);
     transition: width 600ms ease;
     overflow: scroll;
 }
 
-.navbar-nav {
+.navigationbar-nav {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -58,15 +58,15 @@ main {
     height: 100%;
 }
 
-.nav-item {
+.navigationbar-item {
     width: 100%;
 }
 
-.nav-item:last-child {
+.navigationbar-item:last-child {
     margin-top: auto;
 }
 
-.nav-link {
+.navigationbar-link {
     display: flex;
     align-items: center;
     height: 5rem;
@@ -76,7 +76,7 @@ main {
     transition: var(--transition-speed);
 }
 
-.nav-link:hover {
+.navigationbar-link:hover {
     filter: grayscale(0%) opacity(1);
     background: var(--bg-secondary);
     color: var(--text-secondary);
@@ -87,7 +87,7 @@ main {
     margin-left: 1rem;
 }
 
-.nav-link svg {
+.navigationbar-link svg {
     width: 2rem;
     min-width: 2rem;
     margin: 0 1.5rem;
@@ -130,12 +130,12 @@ main {
     transition: var(--transition-speed);
 }
 
-.navbar:hover .logo svg {
+.navigationbar:hover .logo svg {
     transform: rotate(-180deg);
 }
 
 @media only screen and (max-width: 600px) {
-    .navbar {
+    .navigationbar {
         bottom: 0;
         width: 100vw;
         height: 5rem;
@@ -143,7 +143,7 @@ main {
         scrollbar-width: none;
         overflow: hidden;
     }
-    .navbar::-webkit-scrollbar {
+    .navigationbar::-webkit-scrollbar {
         display: flex;
     }
 
@@ -151,11 +151,11 @@ main {
         display: none;
     }
 
-    .navbar-nav {
+    .navigationbar-nav {
         flex-direction: row;
     }
 
-    .nav-link {
+    .navigationbar-link {
         justify-content: center;
     }
 
@@ -165,30 +165,30 @@ main {
 }
 
 @media only screen and (min-width: 600px) {
-    .navbar {
+    .navigationbar {
         top: 0;
         width: 5rem;
         height: 100vh;
         overflow: hidden;
         scrollbar-width: none;
     }
-    .navbar::-webkit-scrollbar {
+    .navigationbar::-webkit-scrollbar {
         display: none;
     }
 
-    .navbar:hover {
+    .navigationbar:hover {
         width: 16rem;
     }
 
-    .navbar:hover .link-text {
+    .navigationbar:hover .link-text {
         display: inline;
     }
 
-    .navbar:hover .logo svg {
+    .navigationbar:hover .logo svg {
         margin-left: 11rem;
     }
 
-    .navbar:hover .logo-text {
+    .navigationbar:hover .logo-text {
         left: 0px;
     }
 }
@@ -263,4 +263,12 @@ main {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.hide {
+    list-style: none;
+}
+
+.hidden-items {
+    cursor: pointer;
 }
