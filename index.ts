@@ -12,6 +12,7 @@ const client = new KiwiiClient({
         allowedMentions: {
             repliedUser: false,
         },
+        partials: ['CHANNEL', 'MESSAGE', 'REACTION', 'USER'],
     },
 });
 
