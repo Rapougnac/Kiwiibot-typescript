@@ -224,7 +224,7 @@ export default class HelpCommand extends Command {
                         inline: true,
                     },
                     {
-                        name: message.guild.i18n.__mf('help.alias'),
+                        name: message.guild.i18n.__n('help.alias', command.config.aliases.length),
                         value:
                             command.config.aliases.length < 1
                                 ? message.guild.i18n.__mf('help.none_alias')

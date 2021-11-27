@@ -60,7 +60,10 @@
         "title": "Commande d'aide",
         "name": "Nom",
         "category": "Catégorie",
-        "alias": "Alias",
+        "alias": {
+            "one": "Alias",
+            "other": "Alias"
+        },
         "usage": "Utilisation",
         "seconds": "secondes",
         "guild_only": "Si la commande ne peut être utilisée que dans les serveurs",
@@ -155,7 +158,8 @@
     },
     "avatar": {
         "avatar_of": "Avatar de {avatar}",
-        "msg": "Si l'avatar ne charge pas, [cliquez ici]"
+        "msg": "Si l'avatar ne charge pas, [cliquez ici]",
+        "description": "avatar.description"
     },
     "rule34": {
         "description": "Récupérez des images provenant du site rule34",
@@ -176,5 +180,54 @@
     },
     "tag": {
         "description": "Faites `{prefix}`tag pour voir les tags affichés."
+    },
+    "transcript": {
+        "description": "transcript.description"
+    },
+    "sendpins": {
+        "description": "sendpins.description"
+    },
+    "3000y": {
+        "description": "3000y.description"
+    },
+    "fusion": {
+        "description": "fusion.description"
+    },
+    "phcomment": {
+        "description": "phcomment.description"
+    },
+    "rip": {
+        "description": "rip.description"
+    },
+    "youdied": {
+        "description": "youdied.description"
+    },
+    "firstmessage": {
+        "description": "firstmessage.description"
+    },
+    "inrole": {
+        "description": "inrole.description"
+    },
+    "serverinfo": {
+        "description": "serverinfo.description"
+    },
+    "uptime": {
+        "description": "uptime.description"
+    },
+    "eval": {
+        "description": "eval.description"
+    },
+    "website": {
+        "login": "Connexion",
+        "logout": "Se déconnecter",
+        "invite": "Invitez moi",
+        "commands": "Commandes",
+        "language": {
+            "language": "Changez la langue",
+            "fr": "Français",
+            "en": "Anglais",
+            "french": "website.language.french",
+            "english": "website.language.english"
+        }
     }
 }
