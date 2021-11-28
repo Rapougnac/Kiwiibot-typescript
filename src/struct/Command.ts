@@ -138,9 +138,11 @@ export default class Command {
         this.message = message;
     }
 
-    public execute(..._args: any[]): Promise<Message | void | string> | Message | void | string {
+    public execute(
+        ..._args: any[]
+    ): Promise<Message | void | string> | Message | void | string {
         throw new Error(
-            `${this.help.name} dosen\'t have an execute() method !`
+            `${this.help.name} doesn\'t have an execute() method !`
         );
     }
 }
