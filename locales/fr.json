@@ -151,7 +151,7 @@
 		"missing_prefix": "Veuillez spécifier un préfixe !"
 	},
 	"docs": {
-		"description": "Obtenez la documentation de discord.js en un embed, vous pouvez spécifier la source en faisant `--src {source}` (sans les accolades). Les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`",
+		"description": "Obtenez la documentation de discord.js en un embed, vous pouvez spécifier la source en faisant `--src '{'source'}'` (sans les accolades). Les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`",
 		"missing_query": "Veuillez spécifier une recherche !",
 		"docs_fetch_error": "Hmm, il semble que je n'aie pas pu récupérer les données dont vous avez besoin, merci de bien vouloir réessayer plus tard",
 		"valid_sources": "Cela ne me semble pas être une source valide, les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`"
