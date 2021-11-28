@@ -644,6 +644,20 @@ function countWords(str: string): { [key: string]: number } {
     return counts;
 }
 
+/**
+ * Check if object is empty or not. An object is considered empty if it doesn't have any enumerable properties.\
+ * This is the same as `Object.keys(obj).length === 0`.
+ * @param o The object to check
+ * @returns True if the object is empty, false otherwise
+ */
+function isEmpty(o: object): boolean {
+    return (
+        o &&
+        Object.keys(o).length === 0 &&
+        Object.getPrototypeOf(o) === Object.prototype
+    );
+}
+
 export {
     textTruncate,
     ordinalize,
@@ -661,4 +675,5 @@ export {
     parseDate,
     beautifyCategories,
     countWords,
+    isEmpty,
 };
