@@ -125,6 +125,7 @@ export default class HelpCommand extends Command {
         }
         if (!args[0]) {
             const embed = new MessageEmbed()
+                .setTitle(message.guild.i18n.__mf('help.title'))
                 .addFields(fields.sort((a, b) => a.name.localeCompare(b.name)))
                 .setColor('ORANGE')
                 .setTimestamp()
