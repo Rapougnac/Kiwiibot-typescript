@@ -13,17 +13,13 @@ export default class UptimeCommand extends Command {
             img: 'https://image.flaticon.com/icons/png/512/4400/4400331.png',
         });
     }
-    /**
-     * @param {Client} client
-     * @param {Message} message
-     * @param {String[]} args
-     */
-    async execute(client: Client, message: Message) {
+    public override async execute(client: Client, message: Message) {
         const { days, hours, minutes, seconds } = this.client.utils.parseMs(
             client.uptime ?? 0
         );
         message.reply(
             message.guild!.i18n.__mf('uptime.msg', {
+                client: client.user!.tag,
                 days,
                 hours,
                 minutes,

@@ -234,7 +234,7 @@
     },
     "uptime": {
         "description": "Get the uptime of the bot",
-        "msg": "**{emote}** is since `{days} days` `{hours} hours` `{minutes} minutes` and `{seconds} seconds` online"
+        "msg": "**{client}** is since `{days} days` `{hours} hours` `{minutes} minutes` and `{seconds} seconds` online"
     },
     "userinfo": {
         "description": "Shows informations about you or a user",
