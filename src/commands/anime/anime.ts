@@ -4,6 +4,7 @@ import malScraper from 'mal-scraper';
 import KiwiiClient from '../../struct/Client';
 import { parseDate } from '../../util/string';
 import translate from 'translate-google';
+import child from 'child_process';
 export default class AnimeCommand extends Command {
     constructor(client: KiwiiClient) {
         super(client, {
@@ -118,20 +119,18 @@ export default class AnimeCommand extends Command {
                 let synopsis = anime.synopsis?.replace(
                     '[Written by MAL Rewrite]',
                     ''
+                )!;
+                const python = child.execSync(
+                    `python ./src/util/index.py en ${message.guild!.i18n.getLocale()} "${synopsis}"`
                 );
                 if (message.guild!.i18n.getLocale() === 'en') {
                     synopsis = anime.synopsis?.replace(
                         '[Written by MAL Rewrite]',
                         ''
-                    );
+                    )!;
+                } else {
+                    synopsis = python.toString('binary');
                 }
-                synopsis = await translate(
-                    anime.synopsis!.replace('[Written by MAL Rewrite]', ''),
-                    {
-                        from: 'en',
-                        to: message.guild!.i18n.getLocale(),
-                    }
-                );
                 const embed = new MessageEmbed()
                     .setColor('#FF2050')
                     .setAuthor(
@@ -214,20 +213,18 @@ export default class AnimeCommand extends Command {
             let synopsis = anime.synopsis?.replace(
                 '[Written by MAL Rewrite]',
                 ''
+            )!;
+            const python = child.execSync(
+                `python ./src/util/index.py en ${message.guild!.i18n.getLocale()} "${synopsis}"`
             );
             if (message.guild!.i18n.getLocale() === 'en') {
                 synopsis = anime.synopsis?.replace(
                     '[Written by MAL Rewrite]',
                     ''
-                );
+                )!;
+            } else {
+                synopsis = python.toString('binary');
             }
-            synopsis = await translate(
-                anime.synopsis!.replace('[Written by MAL Rewrite]', ''),
-                {
-                    from: 'en',
-                    to: message.guild!.i18n.getLocale(),
-                }
-            );
             const embed = new MessageEmbed()
                 .setColor('#FF2050')
                 .setAuthor(
