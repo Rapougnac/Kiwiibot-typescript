@@ -1,4 +1,4 @@
-import { UserFlags, PermissionString } from 'discord.js';
+import { UserFlags, PermissionString, GuildMember, User, ImageURLOptions } from 'discord.js';
 
 /* Thanks to maisans-maid on the [Mai Repo](https://github.com/maisans-maid/Mai) for theses functions */
 
@@ -658,6 +658,13 @@ function isEmpty(o: object): boolean {
     );
 }
 
+function displayAvatarURL(user: GuildMember | User, options: ImageURLOptions): string {
+    if (user instanceof GuildMember) {
+        return user.user.displayAvatarURL(options);
+    }
+    return user.displayAvatarURL(options);
+}
+
 export {
     textTruncate,
     ordinalize,
@@ -676,4 +683,5 @@ export {
     beautifyCategories,
     countWords,
     isEmpty,
+    displayAvatarURL,
 };

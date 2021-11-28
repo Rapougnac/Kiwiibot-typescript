@@ -19,10 +19,10 @@ export default class ThreeTousandYearsCommand extends Command {
         });
     }
     async execute(client: Client, message: Message, args: string[]) {
-        if (message.guild) {
+        if (message.guild && message.guild.available) {
             message.channel.sendTyping();
             let member =
-                message.mentions.members!.first() ||
+                message.mentions.members?.first() ||
                 message.guild.members.cache.get(args[0]!) ||
                 message.guild.members.cache.find(
                     (r) =>

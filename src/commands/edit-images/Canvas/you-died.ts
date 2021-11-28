@@ -1,9 +1,10 @@
-import { Message, MessageAttachment } from 'discord.js';
+import { Message, MessageAttachment, GuildMember } from 'discord.js';
 import Command from '../../../struct/Command';
 import Client from '../../../struct/Client';
 import Canvas from '../../../struct/Canvas';
 import { loadImage, createCanvas } from 'canvas';
 import { join } from 'path';
+import { displayAvatarURL } from '../../../util/string';
 export default class YouDiedCommand extends Command {
     constructor(client: Client) {
         super(client, {
@@ -18,15 +19,7 @@ export default class YouDiedCommand extends Command {
     }
     async execute(_client: Client, message: Message, args: string[]) {
         const base = await loadImage(
-            join(
-                __dirname,
-                '..',
-                '..',
-                '..',
-                'assets',
-                'images',
-                'you-died.png'
-            )
+            join(process.cwd(), 'src', 'assets', 'images', 'you-died.png')
         );
         let member =
             message.mentions.members?.first() ||
@@ -45,10 +38,11 @@ export default class YouDiedCommand extends Command {
                 m.user.username.includes(args.join(' '))
             ) ||
             message.member;
-        if (args.length <= 0) member = message.member;
-        const avatar = member!.user.displayAvatarURL({
-            size: 2048,
+        if (args.length <= 0 && member instanceof GuildMember)
+            member = message.member;
+        const avatar = displayAvatarURL(member || message.author, {
             format: 'png',
+            size: 2048,
         });
         const data = await loadImage(avatar);
         const canvas = createCanvas(data.width, data.height);

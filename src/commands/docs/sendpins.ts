@@ -11,6 +11,7 @@ export default class SendPinsCommand extends Command {
             category: 'docs',
             utilisation: '{prefix}sendpins',
             img: 'https://image.flaticon.com/icons/png/512/2377/2377874.png',
+            guildOnly: true,
         });
     }
 
