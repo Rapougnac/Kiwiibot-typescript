@@ -109,7 +109,9 @@ export default class Command {
         delete require.cache[require.resolve(cmdPath as string)];
         this.client.commands.delete(commandName);
         // Cannot use import :<
-        const command: Command = new (require(cmdPath as string))(this.client);
+        const command: Command = new (require(cmdPath as string).default)(
+            this.client
+        );
         if (this.client.commands.has(command.help.name)) {
             console.error(
                 new Error(`Command name duplicate: ${command.help.name}`).stack
@@ -122,15 +124,31 @@ export default class Command {
      * Unload a command
      * @param commandName The command to unload
      */
-    public unload(commandName: string = this.help.name): void {
+    public unload(
+        commandName: string = this.help.name
+    ): Promise<Message<boolean>> | void {
+        if (
+            !(
+                this.client.aliases.has(commandName) ||
+                this.client.commands.has(commandName)
+            )
+        )
+            return this.message?.channel.send("This command doesn't exist.");
         const cmdPath = this.trace({ command: commandName });
         delete require.cache[require.resolve(cmdPath as string)];
         this.client.commands.delete(commandName);
     }
 
-    public load(commandName: string): void {
+    public load(commandName: string): Promise<Message<boolean>> | void {
+        if (
+            !(
+                this.client.aliases.has(commandName) ||
+                this.client.commands.has(commandName)
+            )
+        )
+            return this.message?.channel.send("This command doesn't exist.");
         const cmdPath = this.trace({ command: commandName }) as string;
-        const command: Command = new (require(cmdPath))(this.client);
+        const command: Command = new (require(cmdPath).default)(this.client);
         this.client.commands.set(commandName, command);
     }
 
