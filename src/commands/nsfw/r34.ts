@@ -57,7 +57,7 @@ export default class Rule34Command extends Command {
                         image.fileUrl as string
                     )
                     .setDescription(
-                        `・ ${message.guild?.i18n.__mf('rule34.rating_scrore', {
+                        `・ ${message.guild?.i18n.__mf('rule34.rating_score', {
                             rating: image.rating,
                             score: image.score,
                         })}`
