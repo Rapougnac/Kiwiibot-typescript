@@ -32,7 +32,7 @@ export default class FirstMessageCommand extends Command {
                     channel_name:
                         message.channel.type === 'GUILD_TEXT'
                             ? message.channel.name
-                            : '',
+                            : message.author.username,
                 })
             )
             .setURL(msg.url)
