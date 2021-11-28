@@ -1,8 +1,4 @@
-import {
-    Message,
-    MessageAttachment,
-    GuildMember,
-} from 'discord.js';
+import { Message, MessageAttachment, GuildMember } from 'discord.js';
 import Command from '../../../struct/Command';
 import Client from '../../../struct/Client';
 export default class ThreeTousandYearsCommand extends Command {
@@ -15,6 +11,11 @@ export default class ThreeTousandYearsCommand extends Command {
             category: 'image-manipulation',
             cooldown: 5,
             utilisation: '{prefix}3000y <member>',
+            clientPermissions: [
+                'SEND_MESSAGES',
+                'VIEW_CHANNEL',
+                'ATTACH_FILES',
+            ],
         });
     }
     async execute(client: Client, message: Message, args: string[]) {

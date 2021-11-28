@@ -12,6 +12,11 @@ export default class AfusionCommand extends Command {
             category: 'image-manipulation',
             utilisation: '{prefix}fusion [member]',
             guildOnly: true,
+            clientPermissions: [
+                'SEND_MESSAGES',
+                'VIEW_CHANNEL',
+                'ATTACH_FILES',
+            ],
         });
     }
     public async execute(

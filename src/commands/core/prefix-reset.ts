@@ -13,7 +13,9 @@ export default class PrefixResetCommand extends Command {
             description: 'Reset the prefix to the default one.',
             category: 'core',
             utilisation: '{prefix}prefix-reset',
-            permissions: ['MANAGE_MESSAGES'],
+            guildOnly: true,
+            permissions: ['SEND_MESSAGES', 'VIEW_CHANNEL','MANAGE_MESSAGES'],
+            clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
         });
     }
 

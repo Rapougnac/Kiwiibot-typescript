@@ -13,9 +13,9 @@ export default class SetLangCommand extends Command {
             category: 'core',
             cooldown: 5,
             utilisation: '{prefix}setlang [language]',
-            permissions: ['MANAGE_MESSAGES'],
+            permissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'MANAGE_MESSAGES'],
+            clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
             guildOnly: true,
-            ownerOnly: true,
             img: 'https://image.flaticon.com/icons/png/512/1940/1940634.png',
         });
     }
@@ -25,9 +25,12 @@ export default class SetLangCommand extends Command {
         message: Message,
         [language]: string[]
     ) {
-        if(!mongoose.connection._hasOpened) return await message.channel.send(message.guild!.i18n.__mf('setlanguage.no_conn'));
+        if (!mongoose.connection._hasOpened)
+            return await message.channel.send(
+                message.guild!.i18n.__mf('setlanguage.no_conn')
+            );
 
-        if (message.guild) {
+        if (message.guild && message.guild.available) {
             let targetedlanguage = language!.toLowerCase();
             if (targetedlanguage.includes('french')) targetedlanguage = 'fr';
             else if (targetedlanguage.includes('english'))

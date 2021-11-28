@@ -14,7 +14,9 @@ export default class SetPrefixCommand extends Command {
             category: 'core',
             cooldown: 5,
             utilisation: '{prefix}setprefix [prefix]',
-            permissions: ['MANAGE_MESSAGES'],
+            guildOnly: true,
+            permissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'MANAGE_MESSAGES'],
+            clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
             img: 'https://image.flaticon.com/icons/png/512/1799/1799807.png',
         });
     }

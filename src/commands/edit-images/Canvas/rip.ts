@@ -12,7 +12,11 @@ export default class RipCommand extends Command {
             description: 'Rip',
             category: 'edit-images',
             utilisation: '{prefix}rip <member>',
-            clientPermissions: ['ATTACH_FILES'],
+            clientPermissions: [
+                'SEND_MESSAGES',
+                'VIEW_CHANNEL',
+                'ATTACH_FILES',
+            ],
             img: 'https://cdn-icons-png.flaticon.com/512/1301/1301675.png',
         });
     }
@@ -36,7 +40,7 @@ export default class RipCommand extends Command {
                     .startsWith(args.join(' ').toLowerCase())
             );
 
-        if (User !== undefined) {
+        if (User !== undefined && message.guild?.available) {
             try {
                 client.utils.loader.start({
                     length: 4,
@@ -53,15 +57,7 @@ export default class RipCommand extends Command {
 
                 const cause = args.slice(1).join(' ');
                 const base = await loadImage(
-                    join(
-                        __dirname,
-                        '..',
-                        '..',
-                        '..',
-                        'assets',
-                        'images',
-                        'rip.png'
-                    )
+                    join(process.cwd(), 'src', 'assets', 'images', 'rip.png')
                 );
                 const avatar = await loadImage(avatarURL);
                 const canvas = createCanvas(base.width, base.height);
@@ -97,15 +93,7 @@ export default class RipCommand extends Command {
                 });
                 const cause = args.join(' ');
                 const base = await loadImage(
-                    join(
-                        __dirname,
-                        '..',
-                        '..',
-                        '..',
-                        'assets',
-                        'images',
-                        'rip.png'
-                    )
+                    join(process.cwd(), 'src', 'assets', 'images', 'rip.png')
                 );
                 const avatar = await loadImage(avatarURL);
                 const canvas = createCanvas(base.width, base.height);

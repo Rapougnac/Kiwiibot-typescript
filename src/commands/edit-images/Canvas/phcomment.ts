@@ -11,7 +11,7 @@ export default class PHCommentCommand extends Command {
             category: 'edit-images',
             cooldown: 5,
             utilisation: '{prefix}phcomment <user> [text]',
-            clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS'],
+            clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS', 'ATTACH_FILES'],
             img: 'https://image.flaticon.com/icons/png/512/2593/2593482.png',
             nsfw: true,
         });
