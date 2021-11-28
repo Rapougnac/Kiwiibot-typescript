@@ -48,7 +48,7 @@
                     <code>Description: </code> <%- i18n.__mf(`${command.help.name}.description`) !== `${command.help.name}.description` ? i18n.__mf(`${command.help.name}.description`, { prefix: _client.prefix }).replace(/`(.+?)`/g, '<code>$1</code>') : command.help.description.replace(/`(.+?)`/g, '<code>$1</code>') || i18n.__mf('help.no_desc') %>
                     <br />
                     <code><%- i18n.__mf('help.bot_permissions') %>: </code> <%- translatePermissions(command.config.clientPermissions, i18n.getLocale()).map(p => `<kbd>${p}</kbd>`).join(' ') %><br />
-                    <code><%- i18n.__n('Alias', command.config.aliases.length) %>: </code> <%- command.config.aliases.length !== 0 ? command.config.aliases.map(a => `<small class="text-muted">[${_client.prefix}${a}]</small>`).join(' ') : i18n.__mf('help.none_alias') %><br />
+                    <code><%- i18n.__n('help.alias', command.config.aliases.length) %>: </code> <%- command.config.aliases.length !== 0 ? command.config.aliases.map(a => `<small class="text-muted">[${_client.prefix}${a}]</small>`).join(' ') : i18n.__mf('help.none_alias') %><br />
                     <code><%- i18n.__mf('help.usage') %>: </code> <%= command.help.utilisation.replace(/{prefix}/g, _client.prefix) %>
                   </div>
                 </div>
