@@ -15,16 +15,15 @@ export default class AvatarCommand extends Command {
         });
     }
     public async execute(_client: Client, message: Message, args: string[]) {
-        let member: GuildMember | User;
-        if (message.channel.type === 'DM') {
+        let member: GuildMember | User | undefined;
+        if (message.channel.type === 'DM' && !message.guild?.available) {
             message.author = await this.client.users.fetch(message.author, {
                 force: true,
             });
             member = message.author;
         } else {
-            //@ts-expect-error
             member =
-                message.mentions.members!.first() ||
+                message.mentions.members?.first() ||
                 message.guild?.members.cache.get(args[0]!) ||
                 message.guild?.members.cache.find(
                     (r) =>
