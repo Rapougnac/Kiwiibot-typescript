@@ -13,6 +13,7 @@ export default class RoleInfoCommand extends Command {
             category: 'infos',
             utilisation: '{prefix}roleinfo [role]',
             img: 'https://cdn-icons-png.flaticon.com/512/4406/4406353.png',
+            guildOnly: true,
         });
     }
     public execute(
@@ -40,7 +41,10 @@ export default class RoleInfoCommand extends Command {
                 message.guild.i18n.__mf('roleinfo.specify_role')
             );
         let string = String();
-        const permsArr = translatePermissions(role.permissions.toArray(), message.guild.i18n.getLocale());
+        const permsArr = translatePermissions(
+            role.permissions.toArray(),
+            message.guild.i18n.getLocale()
+        );
         permsArr.forEach((perm) => {
             string += `\`${perm
                 .toLowerCase()
