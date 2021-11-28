@@ -3,6 +3,7 @@ import Command from '../../struct/Command';
 import malScraper from 'mal-scraper';
 import KiwiiClient from '../../struct/Client';
 import { parseDate } from '../../util/string';
+import translate from 'translate-google';
 export default class AnimeCommand extends Command {
     constructor(client: KiwiiClient) {
         super(client, {
@@ -13,6 +14,7 @@ export default class AnimeCommand extends Command {
             cooldown: 10,
             utilisation: '{prefix}anime [anime]',
             img: 'https://cdn-icons-png.flaticon.com/512/949/949549.png',
+            clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS'],
         });
     }
 
@@ -113,6 +115,23 @@ export default class AnimeCommand extends Command {
                     'N/A',
                     'N/A',
                 ];
+                let synopsis = anime.synopsis?.replace(
+                    '[Written by MAL Rewrite]',
+                    ''
+                );
+                if (message.guild!.i18n.getLocale() === 'en') {
+                    synopsis = anime.synopsis?.replace(
+                        '[Written by MAL Rewrite]',
+                        ''
+                    );
+                }
+                synopsis = await translate(
+                    anime.synopsis!.replace('[Written by MAL Rewrite]', ''),
+                    {
+                        from: 'en',
+                        to: message.guild!.i18n.getLocale(),
+                    }
+                );
                 const embed = new MessageEmbed()
                     .setColor('#FF2050')
                     .setAuthor(
@@ -121,7 +140,7 @@ export default class AnimeCommand extends Command {
                         anime.url
                     );
                 if (anime.synopsis && anime.synopsis.length < 2000)
-                    embed.setDescription(anime.synopsis);
+                    embed.setDescription(synopsis);
 
                 embed
                     .addField(
@@ -192,6 +211,23 @@ export default class AnimeCommand extends Command {
                 'N/A',
                 'N/A',
             ];
+            let synopsis = anime.synopsis?.replace(
+                '[Written by MAL Rewrite]',
+                ''
+            );
+            if (message.guild!.i18n.getLocale() === 'en') {
+                synopsis = anime.synopsis?.replace(
+                    '[Written by MAL Rewrite]',
+                    ''
+                );
+            }
+            synopsis = await translate(
+                anime.synopsis!.replace('[Written by MAL Rewrite]', ''),
+                {
+                    from: 'en',
+                    to: message.guild!.i18n.getLocale(),
+                }
+            );
             const embed = new MessageEmbed()
                 .setColor('#FF2050')
                 .setAuthor(
@@ -200,7 +236,7 @@ export default class AnimeCommand extends Command {
                     anime.url
                 );
             if (anime.synopsis && anime.synopsis.length < 2000)
-                embed.setDescription(anime.synopsis);
+                embed.setDescription(synopsis);
 
             embed
                 .addField(
