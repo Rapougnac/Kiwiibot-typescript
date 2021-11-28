@@ -15,6 +15,7 @@ specifiers:
   '@types/lodash': ^4.14.175
   '@types/passport-discord': ^0.1.5
   '@xelzs/mdn-browser-compat-api': ^1.1.0
+  akaneko: ^5.2.2
   amethyste-api: ^1.1.5
   axios: ^0.22.0
   booru: ^2.4.2
@@ -51,6 +52,7 @@ specifiers:
 dependencies:
   '@mdn/browser-compat-data': 4.0.10
   '@xelzs/mdn-browser-compat-api': 1.1.0
+  akaneko: 5.2.2
   amethyste-api: 1.1.5
   axios: 0.22.0
   booru: 2.4.2
@@ -528,6 +530,12 @@ packages:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+    dev: false
+
+  /akaneko/5.2.2:
+    resolution: {integrity: sha512-4yoRD8ApSKqJlyA22km5d7t2dPJxGq2/O0ae2LQPRAgCyLhCGJkk82zH+OpYnkH6L5/2aoZ9buklp+g1KG30Yw==}
+    dependencies:
+      node-fetch: 2.6.6
     dev: false
 
   /amethyste-api/1.1.5:

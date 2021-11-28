@@ -12,6 +12,7 @@ import Command from './Command';
 import NekoClient from 'nekos.life';
 import AmeClient from 'amethyste-api';
 import { officialApi } from 'mal-scraper';
+import akaneko from 'akaneko';
 export default class Util {
     /**
      * The client passed in
@@ -36,6 +37,10 @@ export default class Util {
     public readonly MALApi: officialApi;
 
     /**
+     * The akaneko api
+     */
+    public akaneko: typeof akaneko;
+    /**
      * This is a class where the client can acces easily
      * @param client The client that instancied this manager
      */
@@ -45,6 +50,7 @@ export default class Util {
         this.neko = new NekoClient();
         this.AmeAPI = new AmeClient(this.client.config.amethyste.client);
         this.MALApi = new officialApi(this.client.config.MAL);
+        this.akaneko = akaneko;
     }
 
     formatPerms(perms: PermissionString) {
