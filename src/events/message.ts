@@ -1,6 +1,16 @@
 import KiwiiClient from '../struct/Client';
 import Event from '../struct/Event';
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, MessageEmbed, GuildMemberManager } from 'discord.js';
+import { I18n } from 'i18n';
+import * as path from 'path';
+const i18n = new I18n();
+i18n.configure({
+    locales: ['en', 'fr', 'de'],
+    directory: path.join(process.cwd(), 'locales'),
+    defaultLocale: 'en',
+    objectNotation: true,
+});
+i18n.setLocale('en');
 
 export default class MessageEvent extends Event {
     constructor(client: KiwiiClient) {
@@ -11,11 +21,27 @@ export default class MessageEvent extends Event {
     }
 
     public override execute(message: Message): Promise<Message> | void {
-        const { author, guild } = message;
+        const { author } = message;
         const { bot } = author;
-        if (!guild) return;
+        if (!message.guild) {
+            // I'm not sure if this is the best way to do this, but it works, and it's not too bad.
+            Object.defineProperty(message, 'guild', {
+                value: {
+                    client: this.client,
+                },
+                writable: true,
+            });
+            // I'm sorry for this... But I don't know how else to do it. I'm sorry. I'm sorry. I'm sorry. I'm sorry. 
+            Object.defineProperty(message, 'guild', {
+                value: {
+                    i18n,
+                    //@ts-ignore: GuildMemberManager is private, and without it, it won't work, so we ignore it here for now (it's not a big deal) and we'll fix it later (I hope) 😔
+                    members: new GuildMemberManager(message.guild),
+                },
+            });
+        }
         let prefix = [this.client.prefix];
-        if (guild.prefix) prefix.push(guild.prefix);
+        if (message.guild?.prefix) prefix.push(message.guild.prefix);
         if ((bot || message.webhookId) && !this.client.config.discord.dev.debug)
             return;
 
@@ -38,11 +64,12 @@ export default class MessageEvent extends Event {
         if (
             message.content.startsWith(`<@!${this.client.user!.id}>`) &&
             message.content.endsWith(`<@!${this.client.user!.id}>`) &&
-            guild
+            message.guild &&
+            message.channel.type !== 'DM'
         )
             return message.reply(
                 message.guild!.i18n.__mf('MESSAGE_PREFIX.msg', {
-                    prefix: message.guild!.prefix,
+                    prefix: message.guild.prefix,
                 })
             );
         if (!prefix[index as number]) return;
