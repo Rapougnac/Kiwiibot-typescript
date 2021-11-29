@@ -35,4 +35,4 @@ Go to the directory of the bot, and then, type
 ```bash
 ./setup.sh
 ```
-And you're raedy to go!
+And you're redy to go!
