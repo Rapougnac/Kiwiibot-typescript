@@ -6,24 +6,19 @@ menuStr=""
 
 function hideCursor(){
   printf "\033[?25l"
-
   # capture CTRL+C so cursor can be reset
   trap "showCursor && exit 0" 2
 }
-
 function showCursor(){
   printf "\033[?25h"
 }
-
 function clearLastMenu(){
   local msgLineCount=$(printf "$menuStr" | wc -l)
   # moves the curser up N lines so the output overwrites it
   echo -en "\033[${msgLineCount}A"
-
   # clear to end of screen to ensure there's no text left behind from previous input
   [ $1 ] && tput ed
 }
-
 function renderMenu(){
   local start=0
   local selector=""
@@ -33,7 +28,6 @@ function renderMenu(){
   local longest=0
   local spaces=""
   menuStr="\n $instruction\n"
-
   # Get the longest item from the list so that we know how many spaces to add
   # to ensure there's no overlap from longer items when a list is scrolling up or down.
   for (( i=0; i<$itemsLength; i++ )); do
@@ -70,13 +64,11 @@ function renderMenu(){
   done
 
   menuStr="${menuStr}\n"
-
   # whether or not to overwrite the previous menu output
   [ $4 ] && clearLastMenu
 
   printf "${menuStr}"
 }
-
 function getChoice(){
   local KEY__ARROW_UP=$(echo -e "\033[A")
   local KEY__ARROW_DOWN=$(echo -e "\033[B")
@@ -119,31 +111,6 @@ function getChoice(){
         ;;
     esac
   done
-
-  # just display help
-  if $displayHelp; then
-    echo;
-    echo "Usage: getChoice [OPTION]..."
-    echo "Renders a keyboard navigable menu with a visual indicator of what's selected."
-    echo;
-    echo "  -h, --help     Displays this message"
-    echo "  -i, --index    The initially selected index for the options"
-    echo "  -m, --max      Limit how many options are displayed"
-    echo "  -o, --options  An Array of options for a User to choose from"
-    echo "  -q, --query    Question or statement presented to the User"
-    echo;
-    echo "Example:"
-    echo "  foodOptions=(\"pizza\" \"burgers\" \"chinese\" \"sushi\" \"thai\" \"italian\" \"shit\")"
-    echo;
-    echo "  getChoice -q \"What do you feel like eating?\" -o foodOptions -i \$((\${#foodOptions[@]}-1)) -m 4"
-    echo "  printf \"\\n First choice is '\${selectedChoice}'\\n\""
-    echo;
-    echo "  getChoice -q \"Select another option in case the first isn't available\" -o foodOptions"
-    echo "  printf \"\\n Second choice is '\${selectedChoice}'\\n\""
-    echo;
-
-    return 0
-  fi
 
   set -- "${remainingArgs[@]}"
   local itemsLength=${#menuItems[@]}
