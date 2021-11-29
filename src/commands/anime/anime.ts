@@ -3,8 +3,8 @@ import Command from '../../struct/Command';
 import malScraper from 'mal-scraper';
 import KiwiiClient from '../../struct/Client';
 import { parseDate } from '../../util/string';
-import translate from 'translate-google';
 import child from 'child_process';
+import util from 'util';
 export default class AnimeCommand extends Command {
     constructor(client: KiwiiClient) {
         super(client, {
@@ -120,82 +120,98 @@ export default class AnimeCommand extends Command {
                     '[Written by MAL Rewrite]',
                     ''
                 )!;
-                const python = child.execSync(
-                    `python ./src/util/index.py en ${message.guild!.i18n.getLocale()} "${synopsis}"`
+                child.exec(
+                    `python ./src/util/deepl.py en ${message.guild!.i18n.getLocale()} "${synopsis}"`,
+                    {
+                        encoding: 'buffer',
+                    },
+                    (err, stdout, stderr) => {
+                        if (err) throw err;
+                        if (stderr) throw stderr;
+                        if (message.guild!.i18n.getLocale() === 'en') {
+                            synopsis = anime.synopsis?.replace(
+                                '[Written by MAL Rewrite]',
+                                ''
+                            )!;
+                        } else {
+                            synopsis = stdout.toString('binary');
+                        }
+                        const embed = new MessageEmbed()
+                            .setColor('#FF2050')
+                            .setAuthor(
+                                `${anime.title} | ${_anime.payload?.media_type}`,
+                                _anime.thumbnail_url,
+                                anime.url
+                            );
+                        if (anime.synopsis && anime.synopsis.length < 2000)
+                            embed.setDescription(synopsis);
+
+                        embed
+                            .addField(
+                                '❯\u2000 Informations',
+                                `•\u2000 **${message.guild!.i18n.__mf(
+                                    'anime.japanese_name'
+                                )}** ${
+                                    anime.title
+                                }\n•\u2000 **${message.guild!.i18n.__mf(
+                                    'anime.age'
+                                )}** ${anime.rating}\n•\u2000 **NSFW:** ${
+                                    anime.rating === 'Rx - Hentai'
+                                        ? message.guild!.i18n.__mf('common.yes')
+                                        : message.guild!.i18n.__mf('common.no')
+                                }`,
+                                true
+                            )
+                            .addField(
+                                `❯\u2000 ${message.guild!.i18n.__mf(
+                                    'anime.stats'
+                                )}`,
+                                `•\u2000 **${message.guild!.i18n.__mf(
+                                    'anime.note'
+                                )}** ${
+                                    anime.score
+                                }\n•\u2000 **${message.guild!.i18n.__mf(
+                                    'anime.rank'
+                                )}** ${
+                                    anime.ranked
+                                }\n•\u2000 **${message.guild!.i18n.__mf(
+                                    'anime.poularity'
+                                )}** ${anime.popularity}`,
+                                true
+                            )
+                            .addField(
+                                '❯\u2000 Status',
+                                `•\u2000 **Episodes:** ${
+                                    anime.episodes ? anime.episodes : 'N/A'
+                                }\n•\u2000 **${message.guild!.i18n.__mf(
+                                    'anime.beginning'
+                                )}:** ${parseDate(
+                                    startDate!.trim(),
+                                    true
+                                ).replace(
+                                    /-/g,
+                                    '/'
+                                )}\n•\u2000 **${message.guild!.i18n.__mf(
+                                    'anime.end'
+                                )}:** ${
+                                    endDate!.trim() === '?'
+                                        ? message.guild!.i18n.__mf(
+                                              'anime.in_progress'
+                                          )
+                                        : parseDate(
+                                              endDate!.trim(),
+                                              true
+                                          ).replace(/-/g, '/')
+                                }`,
+                                true
+                            )
+                            .setThumbnail(
+                                anime.picture ?? _anime.thumbnail_url ?? ''
+                            );
+
+                        return message.channel.send({ embeds: [embed] });
+                    }
                 );
-                if (message.guild!.i18n.getLocale() === 'en') {
-                    synopsis = anime.synopsis?.replace(
-                        '[Written by MAL Rewrite]',
-                        ''
-                    )!;
-                } else {
-                    synopsis = python.toString('binary');
-                }
-                const embed = new MessageEmbed()
-                    .setColor('#FF2050')
-                    .setAuthor(
-                        `${anime.title} | ${_anime.payload?.media_type}`,
-                        _anime.thumbnail_url,
-                        anime.url
-                    );
-                if (anime.synopsis && anime.synopsis.length < 2000)
-                    embed.setDescription(synopsis);
-
-                embed
-                    .addField(
-                        '❯\u2000 Informations',
-                        `•\u2000 **${message.guild!.i18n.__mf(
-                            'anime.japanese_name'
-                        )}** ${
-                            anime.title
-                        }\n•\u2000 **${message.guild!.i18n.__mf(
-                            'anime.age'
-                        )}** ${anime.rating}\n•\u2000 **NSFW:** ${
-                            anime.rating === 'Rx - Hentai'
-                                ? message.guild!.i18n.__mf('common.yes')
-                                : message.guild!.i18n.__mf('common.no')
-                        }`,
-                        true
-                    )
-                    .addField(
-                        `❯\u2000 ${message.guild!.i18n.__mf('anime.stats')}`,
-                        `•\u2000 **${message.guild!.i18n.__mf(
-                            'anime.note'
-                        )}** ${
-                            anime.score
-                        }\n•\u2000 **${message.guild!.i18n.__mf(
-                            'anime.rank'
-                        )}** ${
-                            anime.ranked
-                        }\n•\u2000 **${message.guild!.i18n.__mf(
-                            'anime.poularity'
-                        )}** ${anime.popularity}`,
-                        true
-                    )
-                    .addField(
-                        '❯\u2000 Status',
-                        `•\u2000 **Episodes:** ${
-                            anime.episodes ? anime.episodes : 'N/A'
-                        }\n•\u2000 **${message.guild!.i18n.__mf(
-                            'anime.beginning'
-                        )}:** ${parseDate(startDate!.trim(), true).replace(
-                            /-/g,
-                            '/'
-                        )}\n•\u2000 **${message.guild!.i18n.__mf(
-                            'anime.end'
-                        )}:** ${
-                            endDate!.trim() === '?'
-                                ? message.guild!.i18n.__mf('anime.in_progress')
-                                : parseDate(endDate!.trim(), true).replace(
-                                      /-/g,
-                                      '/'
-                                  )
-                        }`,
-                        true
-                    )
-                    .setThumbnail(anime.picture ?? _anime.thumbnail_url ?? '');
-
-                return message.channel.send({ embeds: [embed] });
             }
         } else {
             const _anime = result[0];
@@ -215,7 +231,7 @@ export default class AnimeCommand extends Command {
                 ''
             )!;
             const python = child.execSync(
-                `python ./src/util/index.py en ${message.guild!.i18n.getLocale()} "${synopsis}"`
+                `python ./src/util/deepl.py en ${message.guild!.i18n.getLocale()} "${synopsis}"`
             );
             if (message.guild!.i18n.getLocale() === 'en') {
                 synopsis = anime.synopsis?.replace(
