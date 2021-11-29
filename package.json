@@ -56,7 +56,8 @@
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "assets": "cpx 'src/assets/**' 'dist/src/assets/'"
+        "assets": "cpx 'src/assets/**' 'dist/src/assets/'",
+        "build": "tsc"
     },
     "author": "Rapougnac",
     "license": "MIT"
