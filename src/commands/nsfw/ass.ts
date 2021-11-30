@@ -10,6 +10,7 @@ export default class AssCommand extends Command {
             description: 'Get a pic of an ass',
             category: 'nsfw',
             utilisation: '{prefix}ass',
+            nsfw: true,
         });
     }
     public override async execute(client: KiwiiClient, message: Message) {
