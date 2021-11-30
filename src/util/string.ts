@@ -1,4 +1,10 @@
-import { UserFlags, PermissionString, GuildMember, User, ImageURLOptions } from 'discord.js';
+import {
+    UserFlags,
+    PermissionString,
+    GuildMember,
+    User,
+    ImageURLOptions,
+} from 'discord.js';
 
 /* Thanks to maisans-maid on the [Mai Repo](https://github.com/maisans-maid/Mai) for theses functions */
 
@@ -658,11 +664,33 @@ function isEmpty(o: object): boolean {
     );
 }
 
-function displayAvatarURL(user: GuildMember | User, options: ImageURLOptions): string {
+function displayAvatarURL(
+    user: GuildMember | User,
+    options: ImageURLOptions
+): string {
     if (user instanceof GuildMember) {
         return user.user.displayAvatarURL(options);
     }
     return user.displayAvatarURL(options);
+}
+
+function safeEval(code: string): any {
+    // All the ts-ignore, because first I don't know how to type this properly, and second, "this" is typed as any. 
+    const fn = new Function('global', 'process', `return ${code}`);
+    (function () {
+        // @ts-ignore
+        if(!this) return void 0;
+        //@ts-ignore
+        const keys = Object.getOwnPropertyNames(this).concat(['constructor']);
+        keys.forEach((key) => {
+            //@ts-ignore
+            const item = this[key];
+            if (!item || typeof item !== 'function') return;
+            //@ts-ignore
+            this[key].constructor = undefined;
+        });
+    })();
+    return fn.bind(Function)(code);
 }
 
 export {
@@ -684,4 +712,5 @@ export {
     countWords,
     isEmpty,
     displayAvatarURL,
+    safeEval,
 };
