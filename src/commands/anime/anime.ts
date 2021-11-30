@@ -3,6 +3,7 @@ import Command from '../../struct/Command';
 import malScraper from 'mal-scraper';
 import KiwiiClient from '../../struct/Client';
 import { parseDate } from '../../util/string';
+
 import child from 'child_process';
 import util from 'util';
 export default class AnimeCommand extends Command {
