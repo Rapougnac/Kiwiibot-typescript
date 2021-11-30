@@ -86,7 +86,8 @@ function clean(text: string): string {
 /* ------------------------------------------------------------------------------------------------------------- */
 
 /**
- *
+ * Separate a number by a delimiter
+ * @default ','
  * @param number The number to separte
  * @param sep The separator of the numbers
  * @example separateNumbers(123456); // will return `123'456`;
