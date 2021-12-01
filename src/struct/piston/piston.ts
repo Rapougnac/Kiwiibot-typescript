@@ -97,6 +97,10 @@ interface PistonOutput {
     ): Promise<Output>;
 }
 
+const store: {
+    runtimes?: Runtimes[];
+} = {};
+
 /**
  * The Piston API.
  * @param opts The options to use.
@@ -104,13 +108,10 @@ interface PistonOutput {
  */
 export const piston = (opts: Piston = {}): PistonOutput => {
     const server = String(opts.server || defaultServer).replace(/\/$/, '');
-    const store: {
-        runtimes?: Runtimes[];
-    } = {};
 
     const api = {
         async runtimes(): Promise<Runtimes[]> {
-            if (store.runtimes && Array.isArray(store.runtimes)) {
+            if (store.runtimes?.length !== 0 && Array.isArray(store.runtimes)) {
                 return store.runtimes;
             }
             const suffix =
