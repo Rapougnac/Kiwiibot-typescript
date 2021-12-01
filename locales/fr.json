@@ -241,5 +241,8 @@
 	},
 	"unload": {
 		"description": "unload.description"
+	},
+	"run": {
+		"description": "Execute un bout de code dans le langage fourni."
 	}
 }
