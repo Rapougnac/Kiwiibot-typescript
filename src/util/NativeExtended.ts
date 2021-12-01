@@ -14,7 +14,7 @@ Array.prototype.filterIndex = function <T>(
     predicate: (value: T, index: number, array: T[]) => value is T,
     thisArg?: any
 ): number[] {
-    if (!!thisArg) thisArg = this;
+    if (!!thisArg) Array.prototype.filterIndex.bind(thisArg);
     let results: number[] = [];
     for (let i = 0; i < this.length; i++) {
         if (predicate(this[i], i, this)) {
