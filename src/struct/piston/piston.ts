@@ -1,6 +1,6 @@
-import get from './util/get.js';
-import post from './util/post.js';
-import or from './util/or.js';
+import get from './util/get';
+import post from './util/post';
+import or from './util/or';
 
 const defaultServer = 'https://emkc.org';
 
