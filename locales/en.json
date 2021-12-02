@@ -770,5 +770,14 @@
 			"en": "English",
 			"fr": "French"
 		}
+	},
+	"load": {
+		"description": "load.description"
+	},
+	"reload": {
+		"description": "reload.description"
+	},
+	"unload": {
+		"description": "unload.description"
 	}
 }
