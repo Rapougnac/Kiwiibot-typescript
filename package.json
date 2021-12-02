@@ -4,8 +4,7 @@
     "description": "A bot written in TS",
     "main": "index.js",
     "dependencies": {
-        "@discordjs/builders": "^0.8.2",
-        "@discordjs/rest": "^0.1.0-canary.0",
+        "@discordjs/voice": "^0.7.5",
         "@mdn/browser-compat-data": "^4.0.7",
         "@xelzs/mdn-browser-compat-api": "^1.1.0",
         "akaneko": "^5.2.2",
