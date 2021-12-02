@@ -633,6 +633,13 @@ function beautifyCategories(category: string, nsfw: boolean = true): string {
             if (nsfw) categoriesString = '🔞 nsfw';
             break;
         }
+        case 'misc': {
+            categoriesString = '🔧 misc';
+            break;
+        }
+        default: {
+            categoriesString = category;
+        }
     }
     return categoriesString.replace(/-/g, ' ');
 }
