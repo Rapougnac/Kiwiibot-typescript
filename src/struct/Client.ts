@@ -19,6 +19,7 @@ import mongoose from 'mongoose';
 import ProcessEvent from '../util/processEvent';
 import '../util/NativeExtended';
 import { sep } from 'path';
+import InteractionManager from './InteractionManager';
 /**
  * Represents a discord client
  * @extends Client
@@ -88,6 +89,16 @@ export default class KiwiiClient extends Client {
      * Get the filters in config
      */
     public filters: string[];
+
+    /**
+     * The interaction manager
+     */
+    public interactionManager: InteractionManager;
+
+    /**
+     * The main client.
+     * @param options The options of the client
+     */
     constructor(options: KiwiiClientOptions) {
         super(options.clientOptions);
         this.commands = new Collection();
@@ -108,6 +119,7 @@ export default class KiwiiClient extends Client {
             `Client has been initialized, you're using ${process.version}`
         );
         Guild.prototype.prefix = this.prefix;
+        this.interactionManager = new InteractionManager(this);
     }
 
     /**

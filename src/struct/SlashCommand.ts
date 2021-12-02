@@ -32,7 +32,21 @@ export default class SlashCommand {
             options.commandOptions as unknown as CommandOptions[];
     }
 
-    public execute(..._args: any): Promise<void | Message | string> | void | Message | string {
+    public execute(
+        ..._args: any
+    ): Promise<void | Message | string> | void | Message | string {
         throw new Error(`${this.name} dosen't have an execute() method!`);
+    }
+
+    public toJSON(): {
+        name: string;
+        description: string;
+        options: CommandOptions[];
+    } {
+        return {
+            name: this.name,
+            description: this.description,
+            options: this.commandOptions,
+        };
     }
 }
