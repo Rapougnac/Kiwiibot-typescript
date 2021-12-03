@@ -273,6 +273,14 @@ function translatePermissions(
                         _.push('CRÉER_DES_INVITATIONS');
                         break;
                     }
+                    case 'CREATE_PRIVATE_THREADS': {
+                        _.push('CRÉER_DES_FILS_PRIVÉS');
+                        break;
+                    }
+                    case 'CREATE_PUBLIC_THREADS': {
+                        _.push('CRÉER_DES_FILS_PUBLICS');
+                        break;
+                    }
                     case 'DEAFEN_MEMBERS': {
                         _.push('METTRE_EN_SOURDINE_DES_MEMBRES');
                         break;
@@ -309,6 +317,10 @@ function translatePermissions(
                         _.push('GÉRER_LES_RÔLES');
                         break;
                     }
+                    case 'MANAGE_THREADS': {
+                        _.push('GÉRER_DES_FILS');
+                        break;
+                    }
                     case 'MANAGE_WEBHOOKS': {
                         _.push('GÉRER_LES_WEBHOOKS');
                         break;
@@ -337,6 +349,10 @@ function translatePermissions(
                         _.push('ENVOYER_DES_MESSAGES');
                         break;
                     }
+                    case 'SEND_MESSAGES_IN_THREADS': {
+                        _.push('ENVOYER_DES_MESSAGES_DANS_DES_FILS');
+                        break;
+                    }
                     case 'SEND_TTS_MESSAGES': {
                         _.push('ENVOYER_DES_MESSAGES_DE_SYTHÈSE_VOCALE');
                         break;
@@ -349,8 +365,28 @@ function translatePermissions(
                         _.push('VIDÉO');
                         break;
                     }
+                    case 'START_EMBEDDED_ACTIVITIES': {
+                        _.push('DÉBUTER_DES_ACTIVITÉS_INTÉGRÉES');
+                        break;
+                    }
+                    case 'USE_APPLICATION_COMMANDS': {
+                        _.push("UTILISER_DES_COMMANDES_D'APPLICATION");
+                        break;
+                    }
                     case 'USE_EXTERNAL_EMOJIS': {
                         _.push('UTILISER_DES_ÉMOJIS_EXTERNES');
+                        break;
+                    }
+                    case 'USE_EXTERNAL_STICKERS': {
+                        _.push('UTILISER_DES_STICKERS_EXTERNES');
+                        break;
+                    }
+                    case 'USE_PRIVATE_THREADS': {
+                        _.push('UTILISER_DES_FILS_PRIVÉS');
+                        break;
+                    }
+                    case 'USE_PUBLIC_THREADS': {
+                        _.push('UTILISER_DES_FILS_PUBLICS');
                         break;
                     }
                     case 'USE_VAD': {
@@ -367,6 +403,7 @@ function translatePermissions(
                     }
                     case 'VIEW_GUILD_INSIGHTS': {
                         _.push('VOIR_UN_APERÇU_DU_SERVEUR');
+                        break;
                     }
                 }
             }
@@ -683,11 +720,11 @@ function displayAvatarURL(
 }
 
 function safeEval(code: string): any {
-    // All the ts-ignore, because first I don't know how to type this properly, and second, "this" is typed as any. 
+    // All the ts-ignore, because first I don't know how to type this properly, and second, "this" is typed as any.
     const fn = new Function('global', 'process', `return ${code}`);
     (function () {
         // @ts-ignore
-        if(!this) return void 0;
+        if (!this) return void 0;
         //@ts-ignore
         const keys = Object.getOwnPropertyNames(this).concat(['constructor']);
         keys.forEach((key) => {
