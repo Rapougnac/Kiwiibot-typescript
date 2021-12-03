@@ -1,6 +1,16 @@
 import Event from '../struct/Event';
 import KiwiiClient from '../struct/Client';
-import { Interaction } from 'discord.js';
+import { Interaction, GuildMemberManager } from 'discord.js';
+import { I18n } from 'i18n';
+import * as path from 'path';
+const i18n = new I18n();
+i18n.configure({
+    locales: ['en', 'fr', 'de'],
+    directory: path.join(process.cwd(), 'locales'),
+    defaultLocale: 'en',
+    objectNotation: true,
+});
+i18n.setLocale('en');
 
 export default class InteractionCreate extends Event {
     constructor(client: KiwiiClient) {
@@ -21,6 +31,22 @@ export default class InteractionCreate extends Event {
                 interaction,
                 commandInteraction?.commandOptions
             );
+        }
+        if(!interaction.guild) {
+            Object.defineProperty(interaction, 'guild', {
+                value: {
+                    client: this.client,
+                },
+                writable: true,
+            });
+            
+            Object.defineProperty(interaction, 'guild', {
+                value: {
+                    i18n,
+                    // @ts-ignore: Same error in the messageCreate event
+                    members: new GuildMemberManager(interaction.guild),
+                }
+            });
         }
         try {
             commandInteraction?.execute(interaction, args);
