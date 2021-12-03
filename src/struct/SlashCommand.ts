@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import Client from './Client';
 import { SlashCommandOptions, CommandOptions } from './interfaces/SlashCommand';
 
-export default class SlashCommand {
+export default abstract class SlashCommand {
     /**
      * The client from the slash command
      */

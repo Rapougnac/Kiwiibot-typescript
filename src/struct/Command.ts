@@ -9,7 +9,7 @@ import {
 import glob from 'glob';
 import * as path from 'path';
 
-export default class Command {
+export default abstract class Command {
     /**
      * The client used in the command
      */
