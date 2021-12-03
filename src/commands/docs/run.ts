@@ -60,8 +60,8 @@ export default class RunCommand extends Command {
                 args.join(' ')
             );
             if (res.run.stdout.length < 1900) {
-                message.channel.send(
-                    `Here are your result ${message.author} \`(using ${
+                message.channel.send({
+                    content: `Here are your result ${message.author} \`(using ${
                         res.language
                     } - v${res.version})\`\n\`\`\`${res.language}\n${
                         res.run.stdout
@@ -69,8 +69,12 @@ export default class RunCommand extends Command {
                             : res.run.stderr
                             ? `[ERROR]\n${res.run.stderr}`
                             : 'Your code ran without an output'
-                    }\n\`\`\``
-                );
+                    }\n\`\`\``,
+
+                    allowedMentions: {
+                        repliedUser: true,
+                    },
+                });
             } else {
                 const splittedRes = Util.splitMessage(res.run.stdout, {
                     maxLength: 1900,
