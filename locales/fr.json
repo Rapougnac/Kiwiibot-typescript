@@ -244,5 +244,8 @@
 	},
 	"run": {
 		"description": "Execute un bout de code dans le langage fourni."
+	},
+	"record": {
+		"description": "record.description"
 	}
 }
