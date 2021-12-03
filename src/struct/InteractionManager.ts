@@ -19,23 +19,29 @@ export default class InteractionManager {
         for (const option of options) {
             if (option.options) {
                 if (option.options.length > 0) {
-                    args['args'] = this.parseOptions(
+                    args[`args_${option.name}`] = this.parseOptions(
                         interaction,
                         option.options
                     );
+                    // Do this, otherwise the args are cleared.
+                    if (args[`args_${option.name}`]) {
+                        args[option.name] = args[`args_${option.name}`];
+                        delete args[`args_${option.name}`];
+                    }
                     continue;
                 }
             }
             switch (option.type) {
                 case 1:
-                    args[option.name] = interaction.options.getSubcommand(
-                        option.required ?? true
+                    args['subcommand'] = interaction.options.getSubcommand(
+                        option.required ?? false
                     );
                     break;
                 case 2:
-                    args[option.name] = interaction.options.getSubcommandGroup(
-                        option.required ?? true
-                    );
+                    args['subcommandGroup'] =
+                        interaction.options.getSubcommandGroup(
+                            option.required ?? false
+                        );
                     break;
                 case 3:
                     if (
@@ -114,9 +120,22 @@ export default class InteractionManager {
                         );
                     }
                     break;
+                default:
+                    break;
             }
         }
 
         return args;
     }
 }
+
+// function clearEmpties(o: { [key: string]: any }): { [key: string]: any } {
+//     for (const key in o) {
+//         if (!o[key] || typeof o[key] !== 'object') continue;
+
+//         if (Object.keys(o[key]).length === 0) {
+//             delete o[key];
+//         }
+//     }
+//     return o;
+// }
