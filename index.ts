@@ -1,6 +1,7 @@
 import KiwiiClient from './src/struct/Client';
 import * as config from './config';
 import './src/struct/Guild';
+import './src/struct/User';
 import Intents from './src/struct/Intents';
 
 const client = new KiwiiClient({
