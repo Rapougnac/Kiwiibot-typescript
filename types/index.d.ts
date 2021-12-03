@@ -1,4 +1,4 @@
-import { APIMessageContentResolvable, Message } from 'discord.js';
+import { APIMessageContentResolvable, Message, Presence } from 'discord.js';
 import { I18n } from 'i18n';
 
 declare global {
@@ -15,7 +15,10 @@ declare global {
          * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
          * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
          */
-        filterIndex<S extends T>(predicate: (value: S, index: number, array: S[]) => value is S, thisArg?: any): number[];
+        filterIndex<S extends T>(
+            predicate: (value: S, index: number, array: S[]) => value is S,
+            thisArg?: any
+        ): number[];
     }
 
     interface Object {
@@ -36,9 +39,6 @@ declare namespace Intl {
 }
 
 declare module 'discord.js' {
-    export interface MessageMentionOptions {
-        repliedUser?: boolean;
-    }
     export interface Guild {
         /**
          * The i18n object notation
@@ -48,6 +48,13 @@ declare module 'discord.js' {
          * The prefix of the guild, if there's one.
          */
         prefix: string;
+    }
+
+    export interface User {
+        /**
+         * The presence of this user.
+         */
+        readonly presence?: Presence;
     }
 }
 
