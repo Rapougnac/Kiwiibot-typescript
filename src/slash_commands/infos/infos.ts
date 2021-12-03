@@ -7,7 +7,12 @@ import {
 } from 'discord.js';
 import SlashCommand from '../../struct/SlashCommand';
 import type KiwiiClient from '../../struct/Client';
-import { convertUFB } from '../../util/string';
+import {
+    convertUFB,
+    trimArray,
+    joinArray,
+    translatePermissions,
+} from '../../util/string';
 import moment from 'moment';
 
 export default class InfosCommand extends SlashCommand {
@@ -56,7 +61,7 @@ export default class InfosCommand extends SlashCommand {
         {
             subcommand,
             user,
-            role,
+            role: _role,
         }: {
             user: { target?: User };
             role: { role: Role };
@@ -383,6 +388,256 @@ export default class InfosCommand extends SlashCommand {
                     }
                     return interaction.reply({ embeds: [embeduser] });
                 }
+            }
+            case 'server': {
+                if (interaction.guild?.available) {
+                    const { afkTimeout } = interaction.guild;
+                    const botcount = interaction.guild.members.cache.filter(
+                        (member) => member.user.bot
+                    ).size;
+                    const humancount = interaction.guild.members.cache.filter(
+                        (member) => !member.user.bot
+                    ).size;
+                    const owner = interaction.guild.members.resolve(
+                        interaction.guild.ownerId
+                    );
+                    const embedserv = new MessageEmbed()
+                        .setAuthor(
+                            interaction.guild.name,
+                            interaction.guild.iconURL({ dynamic: true })!
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf('serverinfo.owner'),
+                            `${owner}\n(\`${owner?.user.tag ?? '????'}\`)`,
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf('serverinfo.name'),
+                            interaction.guild.name,
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf('serverinfo.members'),
+                            `${
+                                interaction.guild.memberCount
+                            } ${interaction.guild.i18n.__mf(
+                                'serverinfo.members2'
+                            )}\n${humancount} ${interaction.guild.i18n.__mf(
+                                'serverinfo.humans'
+                            )}\n${botcount} ${interaction.guild.i18n.__mf(
+                                'serverinfo.bots'
+                            )}`,
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf(
+                                'serverinfo.online_members'
+                            ),
+                            interaction.guild.members.cache
+                                .filter(
+                                    ({ presence }) =>
+                                        presence?.status !== 'offline'
+                                )
+                                .size.toString(),
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf('serverinfo.channels'),
+                            `${
+                                interaction.guild.channels.cache.size
+                            } ${interaction.guild.i18n.__mf(
+                                'serverinfo.channels2'
+                            )}\n${
+                                interaction.guild.channels.cache.filter(
+                                    (channel) => channel.type === 'GUILD_TEXT'
+                                ).size
+                            } ${interaction.guild.i18n.__mf(
+                                'serverinfo.text_channels'
+                            )}\n${
+                                interaction.guild.channels.cache.filter(
+                                    (channel) => channel.type === 'GUILD_VOICE'
+                                ).size
+                            } ${interaction.guild.i18n.__mf(
+                                'serverinfo.voice_channels'
+                            )}\n${
+                                interaction.guild.channels.cache.filter(
+                                    (channel) =>
+                                        channel.type === 'GUILD_CATEGORY'
+                                ).size
+                            } ${interaction.guild.i18n.__mf(
+                                'serverinfo.category'
+                            )}`,
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf('serverinfo.emotes'),
+                            `${interaction.guild.emojis.cache.size} emojis\n${
+                                interaction.guild.emojis.cache.filter(
+                                    (emoji) => !emoji.animated
+                                ).size
+                            } ${interaction.guild.i18n.__mf(
+                                'serverinfo.static_emotes'
+                            )}\n${
+                                interaction.guild.emojis.cache.filter(
+                                    (emoji) => emoji.animated ?? false
+                                ).size
+                            } ${interaction.guild.i18n.__mf(
+                                'serverinfo.animated_emotes'
+                            )}`,
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf('common.creation_date'),
+                            moment(interaction.guild.createdAt).format(
+                                `[${interaction.guild.i18n.__mf(
+                                    'common.on'
+                                )}] DD/MM/YYYY [${interaction.guild.i18n.__mf(
+                                    'common.at'
+                                )}] HH:mm:ss`
+                            ) +
+                                `\n\`${moment(
+                                    interaction.guild.createdAt,
+                                    'DD/MM/YYYY'
+                                )
+                                    .locale(interaction.guild.i18n.getLocale())
+                                    .fromNow()}\``,
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf('serverinfo.nitro'),
+                            interaction.guild.i18n.__mf('serverinfo.tier', {
+                                tier: interaction.guild.premiumTier,
+                                boost_number:
+                                    interaction.guild.premiumSubscriptionCount,
+                            }),
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf('serverinfo.afk'),
+                            this.client.utils.format(afkTimeout),
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf(
+                                'serverinfo.verification_level'
+                            ),
+                            this.client.config.verificationLVL[
+                                interaction.guild.verificationLevel
+                            ],
+                            true
+                        )
+                        .addField(
+                            interaction.guild.i18n.__mf('serverinfo.roles', {
+                                role: interaction.guild.roles.cache.size - 1,
+                            }),
+                            trimArray(
+                                interaction.guild.roles.cache
+                                    .filter(
+                                        (r) => r.id !== interaction.guild!.id
+                                    )
+                                    .sort(
+                                        (A, B) => B.rawPosition - A.rawPosition
+                                    )
+                                    .map((x) => `${x}`),
+                                { maxLength: 30 }
+                            ).join(' | ') || '\u200b',
+                            false
+                        )
+                        .setFooter(
+                            interaction.guild.i18n.__mf('serverinfo.id', {
+                                id: interaction.guild.id,
+                            })
+                        )
+                        .setThumbnail(
+                            interaction.guild.iconURL({
+                                dynamic: true,
+                                size: 4096,
+                                format: 'png',
+                            })!
+                        );
+                    return interaction.reply({ embeds: [embedserv] });
+                } else {
+                    return interaction.reply(
+                        'This command cannot be used in DMs.'
+                    );
+                }
+            }
+            case 'role': {
+                const { role } = _role;
+                if (!interaction.guild?.available)
+                    return interaction.reply(
+                        'This command cannot be used in DMs.'
+                    );
+                let permsArray = joinArray(
+                    translatePermissions(
+                        role.permissions.toArray(),
+                        interaction.guild.i18n.getLocale()
+                    ).map(
+                        (perm) =>
+                            `\`${perm
+                                .toLowerCase()
+                                .replace(/(^|"|_)(\S)/g, (x) =>
+                                    x.toUpperCase()
+                                )}\``
+                    ),
+                    interaction.guild.i18n.getLocale()
+                );
+                permsArray = permsArray
+                    .toString()
+                    .replace(/_/g, ' ')
+                    .replace(/Use Vad/g, 'Use Voice Activity')
+                    .replace(/Guild/g, 'Server');
+                const embed = new MessageEmbed()
+                    .setDescription('Permissions\n')
+                    .addField(
+                        interaction.guild.i18n.__mf('roleinfo.role'),
+                        `${role}`,
+                        true
+                    )
+                    .addField(
+                        interaction.guild.i18n.__mf('roleinfo.role_name'),
+                        role.name,
+                        true
+                    )
+                    .addField(
+                        interaction.guild.i18n.__mf('roleinfo.who_own_it'),
+                        role.members.size.toString(),
+                        true
+                    )
+                    .addField(
+                        interaction.guild.i18n.__mf('roleinfo.color'),
+                        role.hexColor,
+                        true
+                    )
+                    .addField(
+                        interaction.guild.i18n.__mf('common.creation_date'),
+                        moment(role.createdAt).format(
+                            `[${interaction.guild.i18n.__mf(
+                                'roleinfo.on'
+                            )}] DD/MM/YYYY [${interaction.guild.i18n.__mf(
+                                'roleinfo.at'
+                            )}] HH:mm:ss`
+                        ),
+                        true
+                    )
+                    .addField(
+                        interaction.guild.i18n.__mf('roleinfo.hoisted'),
+                        role.hoist
+                            ? interaction.guild.i18n.__mf('common.yes')
+                            : interaction.guild.i18n.__mf('common.no'),
+                        true
+                    )
+                    .addField(
+                        interaction.guild.i18n.__mf('roleinfo.mentionable'),
+                        role.mentionable
+                            ? interaction.guild.i18n.__mf('common.yes')
+                            : interaction.guild.i18n.__mf('common.no'),
+                        true
+                    )
+                    .addField('Permissions', permsArray)
+                    .setFooter(`ID : ${role.id}`)
+                    .setColor(role.hexColor);
+                interaction.reply({ embeds: [embed] });
             }
         }
     }
