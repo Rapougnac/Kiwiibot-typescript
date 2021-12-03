@@ -6,10 +6,8 @@ const bootTime = Math.round(performance.now());
 import { loadLanguages, loadPrefix } from '../../load';
 import glob from 'glob';
 import { SlashCommandConstructor } from '../struct/interfaces/SlashCommand';
-import { resolve, sep } from 'path';
+import { resolve } from 'path';
 import dashboard from '../dashboard/dashboard';
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/v9';
 import SlashCommand from '../struct/SlashCommand';
 
 export default class ReadyEvent extends Event {
@@ -76,38 +74,19 @@ export default class ReadyEvent extends Event {
             } is now Online! (Loaded in ${bootTime} ms)\n`,
             `${timedate} ${timehrs}`
         );
-        // const commandData = {
-        //     name: 'ping',
-        //     description: 'Ping!',
-        // }
-        // const commands = [
-        //     new SlashCommandBuilder().setName('ping').setDescription('Pong!'),
-        // ].map((c) => c.toJSON());
-        // this.client.interactionManager.registerSlashCommands(commands as unknown as RESTPostAPIApplicationCommandsJSONBody[], '911736666551640075');
-        // this.client.guilds.cache.get('911736666551640075')?.commands.create(commandData).then(console.log)
-
         // Dashboard
         await dashboard(this.client);
         const commands = await this.loadSlashs();
-        // this.client.interactionManager.registerSlashCommands(
-        //     commands.filter((c) => c?.global).map((c) => c!.command.toJSON())
-        // );
-        // this.client.interactionManager.registerSlashCommands(
-        //     commands.filter((c) => !c?.global).map((c) => c!.command.toJSON()),
-        //     '911736666551640075'
-        // );
-        this.client.guilds.fetch('911736666551640075').then((guild) => {
-            console.log(guild.commands);
-        });
         commands.forEach(async (command) => {
-            if (!command?.global) {
+            if(!command) return;
+            if (!command.global) {
                 const guild = await this.client.guilds.fetch(
                     '911736666551640075'
                 );
-                guild.commands.create(command!.command.toJSON());
+                guild.commands.create(command.command.toJSON());
             } else {
                 this.client.application?.commands.create(
-                    command!.command.toJSON()
+                    command.command.toJSON()
                 );
             }
         });
