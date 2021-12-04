@@ -24,7 +24,6 @@ specifiers:
   common-tags: ^1.8.0
   corde: ^4.4.4
   didyoumean2: ^5.0.0
-  discord-api-types: ^0.25.2
   discord.js: ^13.3.1
   dompurify: ^2.3.3
   ejs: ^3.1.6
@@ -61,7 +60,6 @@ dependencies:
   cheerio: 1.0.0-rc.10
   common-tags: 1.8.1
   didyoumean2: 5.0.0
-  discord-api-types: 0.25.2
   discord.js: 13.3.1
   dompurify: 2.3.3
   ejs: 3.1.6
@@ -1153,11 +1151,6 @@ packages:
 
   /discord-api-types/0.24.0:
     resolution: {integrity: sha512-X0uA2a92cRjowUEXpLZIHWl4jiX1NsUpDhcEOpa1/hpO1vkaokgZ8kkPtPih9hHth5UVQ3mHBu/PpB4qjyfJ4A==}
-    engines: {node: '>=12'}
-    dev: false
-
-  /discord-api-types/0.25.2:
-    resolution: {integrity: sha512-O243LXxb5gLLxubu5zgoppYQuolapGVWPw3ll0acN0+O8TnPUE2kFp9Bt3sTRYodw8xFIknOVxjSeyWYBpVcEQ==}
     engines: {node: '>=12'}
     dev: false
 
