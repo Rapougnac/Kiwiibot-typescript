@@ -52,12 +52,17 @@
         "@types/jsdom": "^16.2.13",
         "@types/lodash": "^4.14.175",
         "@types/passport-discord": "^0.1.5",
-        "corde": "^4.4.4"
+        "@typescript-eslint/eslint-plugin": "^5.5.0",
+        "@typescript-eslint/parser": "^5.5.0",
+        "corde": "^4.4.4",
+        "eslint": "^8.4.0",
+        "typescript": "^4.5.2"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "assets": "cpx 'src/assets/**' 'dist/src/assets/'",
-        "build": "tsc"
+        "build": "tsc",
+        "lint": "eslint . --ext .ts,.js"
     },
     "author": "Rapougnac",
     "license": "MIT"
