@@ -27,6 +27,13 @@
         "no-with": "error",
         "prefer-const": "error",
         "prefer-template": "error",
-        "semi": ["error", "always"]
+        "semi": ["error", "always"],
+        "constructor-super": "error",
+        "getter-return": "error",
+        "no-fallthrough": "error",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            { "argsIgnorePattern": "^_" }
+        ]
     }
 }
