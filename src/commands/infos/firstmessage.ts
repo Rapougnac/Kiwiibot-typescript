@@ -19,6 +19,7 @@ export default class FirstMessageCommand extends Command {
         const fetchMessages = (await message.channel.messages.fetch({
             after: 1,
             limit: 1,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any)) as unknown as Collection<Snowflake, Message>;
         const msg = fetchMessages.first();
         if (!msg)
@@ -29,6 +30,7 @@ export default class FirstMessageCommand extends Command {
         const embed = new MessageEmbed()
             .setTitle(
                 message.guild.i18n.__mf('firstmessage.first_message', {
+                    // eslint-disable-next-line camelcase
                     channel_name:
                         message.channel.type === 'GUILD_TEXT'
                             ? message.channel.name

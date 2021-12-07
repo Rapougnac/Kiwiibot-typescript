@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Message } from 'discord.js';
 import Client from './Client';
 import { EventOptions, Listener, ClientEvents } from './interfaces/Event';
@@ -14,11 +15,14 @@ export default class Event {
         this.emitter =
             typeof options.emitter === 'string'
                 ? this.client[options.emitter]
-                : (options.emitter as Listener) || this.client as unknown as Listener;
+                : (options.emitter as Listener) ||
+                  (this.client as unknown as Listener);
         this._validate(options);
     }
-    public execute(..._args: any[]): Promise<void | Message> | void | Message {
-        throw new Error(`${this.name} doesn\'t have an execute() method!`);
+    public execute(
+        ..._args: unknown[]
+    ): Promise<void | Message> | void | Message {
+        throw new Error(`${this.name} doesn't have an execute() method!`);
     }
     private _validate(data: EventOptions): void {
         const events = [

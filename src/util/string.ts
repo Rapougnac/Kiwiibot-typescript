@@ -65,7 +65,7 @@ function ordinalize(n = 0): string {
  * @param array the array to join
  * @returns the joined array
  */
-function joinArray(array = [], lang = 'en-US'): string {
+function joinArray(array: string[] = [], lang = 'en-US'): string {
     const list = new Intl.ListFormat(lang);
     return list.format(array.map((x) => String(x)));
 }

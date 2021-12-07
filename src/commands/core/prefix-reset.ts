@@ -14,7 +14,7 @@ export default class PrefixResetCommand extends Command {
             category: 'core',
             utilisation: '{prefix}prefix-reset',
             guildOnly: true,
-            permissions: ['SEND_MESSAGES', 'VIEW_CHANNEL','MANAGE_MESSAGES'],
+            permissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'MANAGE_MESSAGES'],
             clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
         });
     }
@@ -23,9 +23,13 @@ export default class PrefixResetCommand extends Command {
         client: KiwiiClient,
         message: Message
     ): Promise<Message | void> {
-        if(!mongoose.connection._hasOpened) return await message.channel.send(message.guild!.i18n.__mf('prefix-reset.no_conn'));
+        if (!mongoose.connection._hasOpened)
+            return await message.channel.send(
+                message.guild?.i18n.__mf('prefix-reset.no_conn') ??
+                    'No connection to the database.'
+            );
         const msg = await message.channel.send(
-            message.guild!.i18n.__mf('prefix-reset.confirmation')
+            message.guild?.i18n.__mf('prefix-reset.confirmation') ?? ''
         );
 
         const emoji = await confirmation(
@@ -39,19 +43,19 @@ export default class PrefixResetCommand extends Command {
             case '✅': {
                 msg.delete();
                 await PrefixSchema.findOneAndDelete({
-                    GuildID: message.guild!.id,
+                    GuildID: message.guild?.id,
                 });
                 message.channel.send(
-                    message.guild!.i18n.__mf('prefix-reset.reset_prefix', {
+                    message.guild?.i18n.__mf('prefix-reset.reset_prefix', {
                         prefix: client.prefix,
-                    })
+                    }) ?? ''
                 );
                 break;
             }
             case '❌': {
                 msg.delete();
                 return message.channel.send(
-                    message.guild!.i18n.__mf('prefix-reset.canceled')
+                    message.guild?.i18n.__mf('prefix-reset.canceled') ?? ''
                 );
             }
         }

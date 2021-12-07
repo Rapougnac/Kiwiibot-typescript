@@ -39,7 +39,7 @@ export default class DocsCommand extends Command {
         let source;
         if (message.content.includes('--src')) {
             source = args[args.length - 1];
-            if (sources.indexOf(source!) === -1)
+            if (sources.indexOf(source ?? '') === -1)
                 return message.channel.send(
                     message.guild.i18n.__mf('docs.valid_sources')
                 );
@@ -50,7 +50,7 @@ export default class DocsCommand extends Command {
                 if (data) message.channel.send({ embeds: [data] });
                 else
                     return message.channel.send(
-                        message.guild?.i18n.__mf('docs.docs_fetch_error') as any
+                        message.guild?.i18n.__mf('docs.docs_fetch_error') ?? ''
                     );
             });
         } else {
@@ -63,7 +63,7 @@ export default class DocsCommand extends Command {
                     message.channel.send({ embeds: [data] });
                 } else {
                     return message.channel.send(
-                        message.guild?.i18n.__mf('docs.docs_fetch_error') as any
+                        message.guild?.i18n.__mf('docs.docs_fetch_error') ?? ''
                     );
                 }
             });

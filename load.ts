@@ -13,7 +13,9 @@ const loadLanguages = async (client: KiwiiClient): Promise<void> => {
             });
             guild.i18n.setLocale(result ? result.language : 'en');
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
+        // eslint-disable-next-line no-console
         console.error(
             `⚠️[DATABASE ERROR] The database responded with the following error: ${e.name}\n${e}`
         );
@@ -26,7 +28,7 @@ const loadPrefix = async (client: KiwiiClient): Promise<void> => {
             if (!mongoose.connection._hasOpened) return;
             await PrefixSchema.findOne(
                 { GuildID: id },
-                (err: Error, data: any) => {
+                (err: Error, data: { Prefix: string; } | null) => {
                     if (err) throw err;
                     if (data !== null) {
                         guild.prefix = data.Prefix;
@@ -34,6 +36,7 @@ const loadPrefix = async (client: KiwiiClient): Promise<void> => {
                 }
             );
         }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         return Promise.reject(
             `⚠️[DATABASE ERROR] The database responded with the following error: ${error.name}\n${error}`

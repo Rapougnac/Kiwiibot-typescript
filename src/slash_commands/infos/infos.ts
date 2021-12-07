@@ -1,10 +1,5 @@
-import {
-    Message,
-    MessageEmbed,
-    User,
-    Role,
-    CommandInteraction,
-} from 'discord.js';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { MessageEmbed, User, Role, CommandInteraction } from 'discord.js';
 import SlashCommand from '../../struct/SlashCommand';
 import type KiwiiClient from '../../struct/Client';
 import {
@@ -79,7 +74,7 @@ export default class InfosCommand extends SlashCommand {
                 const status = user.target?.presence?.status;
                 const userFlags = await target
                     .fetchFlags()
-                    .then((flags) => convertUFB(flags as any))
+                    .then((flags) => convertUFB(flags as never))
                     .then((flags) =>
                         flags.map(
                             (f) =>
@@ -99,27 +94,19 @@ export default class InfosCommand extends SlashCommand {
                     for (const p of platform) {
                         switch (p) {
                             case 'web':
-                                device +=
-                                    `Web ${
-                                    this.client.config.clientMap.web
-                                    }\n`;
+                                device += `Web ${this.client.config.clientMap.web}\n`;
 
                                 break;
                             case 'desktop':
-                                device +=
-                                    `${interaction.guild?.i18n.__mf(
-                                        'userinfo.desktop',
-                                        {
-                                            x: this.client.config.clientMap
-                                                .desktop,
-                                        }
-                                    )  }\n`;
+                                device += `${interaction.guild?.i18n.__mf(
+                                    'userinfo.desktop',
+                                    {
+                                        x: this.client.config.clientMap.desktop,
+                                    }
+                                )}\n`;
                                 break;
                             case 'mobile':
-                                device +=
-                                    `Mobile ${
-                                    this.client.config.clientMap.mobile
-                                    }\n`;
+                                device += `Mobile ${this.client.config.clientMap.mobile}\n`;
                                 break;
                             default:
                                 device = 'N/A';
@@ -167,7 +154,7 @@ export default class InfosCommand extends SlashCommand {
                     if (member?.permissions.has('ADMINISTRATOR')) {
                         userFlags.push('<:ADMINISTRATOR:827241621270560788>');
                     }
-                    if (member?.premiumSinceTimestamp! > 0) {
+                    if (member?.premiumSinceTimestamp) {
                         userFlags.push('<:ServerBooster:850729871477833759>');
                     }
 
@@ -179,7 +166,7 @@ export default class InfosCommand extends SlashCommand {
                     }
                     const embeduser = new MessageEmbed()
                         .setAuthor(
-                            interaction.guild!.i18n.__mf('userinfo.user', {
+                            interaction.guild.i18n.__mf('userinfo.user', {
                                 tag: target.tag,
                             }),
                             member?.user.displayAvatarURL({
@@ -191,102 +178,97 @@ export default class InfosCommand extends SlashCommand {
                         )
                         .setDescription(userFlags.join(' '))
                         .addField(
-                            interaction.guild!.i18n.__mf('userinfo.member'),
+                            interaction.guild.i18n.__mf('userinfo.member'),
                             String(member),
                             true
                         )
                         .addField(
-                            interaction.guild!.i18n.__mf('userinfo.name'),
+                            interaction.guild.i18n.__mf('userinfo.name'),
                             target.tag,
                             true
                         )
                         .addField(
-                            interaction.guild!.i18n.__mf('userinfo.nickname'),
+                            interaction.guild.i18n.__mf('userinfo.nickname'),
                             member?.nickname
                                 ? `${member.nickname}`
-                                : interaction.guild!.i18n.__mf(
+                                : interaction.guild.i18n.__mf(
                                       'userinfo.not_set'
                                   ),
                             true
                         )
                         .addField(
-                            interaction.guild!.i18n.__mf(
+                            interaction.guild.i18n.__mf(
                                 'userinfo.account_creation_date'
                             ),
                             `${moment(target.createdAt).format(
-                                `[${interaction.guild!.i18n.__mf(
+                                `[${interaction.guild.i18n.__mf(
                                     'common.on'
-                                )}] DD/MM/YYYY [${interaction.guild!.i18n.__mf(
+                                )}] DD/MM/YYYY [${interaction.guild.i18n.__mf(
                                     'common.at'
                                 )}] HH:mm:ss`
-                            )
-                                }\n\`${moment(target.createdAt, 'DD/MM/YYYY')
-                                    .locale(interaction.guild!.i18n.getLocale())
-                                    .fromNow()}\``,
+                            )}\n\`${moment(target.createdAt, 'DD/MM/YYYY')
+                                .locale(interaction.guild.i18n.getLocale())
+                                .fromNow()}\``,
                             true
                         )
                         .addField(
-                            interaction.guild!.i18n.__mf(
+                            interaction.guild.i18n.__mf(
                                 'userinfo.arrival_date'
                             ),
                             `${moment(member?.joinedAt).format(
-                                `[${interaction.guild!.i18n.__mf(
+                                `[${interaction.guild.i18n.__mf(
                                     'common.on'
-                                )}] DD/MM/YYYY [${interaction.guild!.i18n.__mf(
+                                )}] DD/MM/YYYY [${interaction.guild.i18n.__mf(
                                     'common.at'
                                 )}] HH:mm:ss`
-                            )
-                                }\n\`${moment(member?.joinedAt, 'DD/MM/YYYY')
-                                    .locale(interaction.guild!.i18n.getLocale())
-                                    .fromNow()}\``,
+                            )}\n\`${moment(member?.joinedAt, 'DD/MM/YYYY')
+                                .locale(interaction.guild.i18n.getLocale())
+                                .fromNow()}\``,
                             true
                         )
                         .addField(
-                            interaction.guild!.i18n.__mf(
+                            interaction.guild.i18n.__mf(
                                 'userinfo.boost_start_date'
                             ),
                             member?.premiumSince
                                 ? `${moment(member.premiumSince).format(
                                       `[${interaction.guild!.i18n.__mf(
                                           'common.on'
-                                      )}] DD/MM/YYYY [${interaction.guild!.i18n.__mf(
+                                      )}] DD/MM/YYYY [${interaction.guild.i18n.__mf(
                                           'common.at'
                                       )}] HH:mm:ss`
+                                  )}\n\`${moment(
+                                      member.premiumSince,
+                                      'DD/MM/YYYY'
                                   )
-                                      }\n\`${moment(
-                                          member.premiumSince,
-                                          'DD/MM/YYYY'
+                                      .locale(
+                                          interaction.guild.i18n.getLocale()
                                       )
-                                          .locale(
-                                              interaction.guild!.i18n.getLocale()
-                                          )
-                                          .fromNow()}\``
-                                : interaction.guild!.i18n.__mf(
+                                      .fromNow()}\``
+                                : interaction.guild.i18n.__mf(
                                       'userinfo.not_boosting'
                                   ),
                             true
                         )
                         .addField('Presence', Status, true)
                         .addField(
-                            interaction.guild!.i18n.__mf('userinfo.device'),
+                            interaction.guild.i18n.__mf('userinfo.device'),
                             device,
                             true
                         )
                         .addField(
-                            interaction.guild!.i18n.__mf('userinfo.type'),
+                            interaction.guild.i18n.__mf('userinfo.type'),
                             target.bot
                                 ? 'Bot'
-                                : interaction.guild!.i18n.__mf(
-                                      'userinfo.user2'
-                                  ),
+                                : interaction.guild.i18n.__mf('userinfo.user2'),
                             true
                         )
                         .addField(
-                            interaction.guild!.i18n.__mf('userinfo.roles', {
+                            interaction.guild.i18n.__mf('userinfo.roles', {
                                 role: member!.roles.cache.size - 1,
                             }),
                             member!.roles.cache.size - 1 <= 0
-                                ? interaction.guild!.i18n.__mf(
+                                ? interaction.guild.i18n.__mf(
                                       'userinfo.no_roles'
                                   )
                                 : member?.roles.cache
@@ -315,7 +297,7 @@ export default class InfosCommand extends SlashCommand {
                                 format: 'png',
                                 size: 4096,
                                 dynamic: true,
-                            })!
+                            }) ?? ''
                         );
                     }
                     return interaction.reply({ embeds: [embeduser] });
@@ -348,10 +330,9 @@ export default class InfosCommand extends SlashCommand {
                                 )}] DD/MM/YYYY [${interaction.guild!.i18n.__mf(
                                     'common.at'
                                 )}] HH:mm:ss`
-                            )
-                                }\n\`${moment(target.createdAt, 'DD/MM/YYYY')
-                                    .locale(interaction.guild!.i18n.getLocale())
-                                    .fromNow()}\``,
+                            )}\n\`${moment(target.createdAt, 'DD/MM/YYYY')
+                                .locale(interaction.guild!.i18n.getLocale())
+                                .fromNow()}\``,
                             true
                         )
                         .addField('Presence', Status, true)
@@ -383,7 +364,7 @@ export default class InfosCommand extends SlashCommand {
                                 format: 'png',
                                 size: 4096,
                                 dynamic: true,
-                            })!
+                            }) ?? ''
                         );
                     }
                     return interaction.reply({ embeds: [embeduser] });
@@ -404,7 +385,7 @@ export default class InfosCommand extends SlashCommand {
                     const embedserv = new MessageEmbed()
                         .setAuthor(
                             interaction.guild.name,
-                            interaction.guild.iconURL({ dynamic: true })!
+                            interaction.guild.iconURL({ dynamic: true }) ?? ''
                         )
                         .addField(
                             interaction.guild.i18n.__mf('serverinfo.owner'),
@@ -494,19 +475,19 @@ export default class InfosCommand extends SlashCommand {
                                 )}] DD/MM/YYYY [${interaction.guild.i18n.__mf(
                                     'common.at'
                                 )}] HH:mm:ss`
+                            )}\n\`${moment(
+                                interaction.guild.createdAt,
+                                'DD/MM/YYYY'
                             )
-                                }\n\`${moment(
-                                    interaction.guild.createdAt,
-                                    'DD/MM/YYYY'
-                                )
-                                    .locale(interaction.guild.i18n.getLocale())
-                                    .fromNow()}\``,
+                                .locale(interaction.guild.i18n.getLocale())
+                                .fromNow()}\``,
                             true
                         )
                         .addField(
                             interaction.guild.i18n.__mf('serverinfo.nitro'),
                             interaction.guild.i18n.__mf('serverinfo.tier', {
                                 tier: interaction.guild.premiumTier,
+                                // eslint-disable-next-line camelcase
                                 boost_number:
                                     interaction.guild.premiumSubscriptionCount,
                             }),

@@ -21,7 +21,7 @@ export default class BakaCommand extends Command {
         if (!message.guild) return;
         let member =
             message.mentions.members?.first() ||
-            message.guild.members.cache.get(args[0]!) ||
+            message.guild.members.cache.get(args[0] ?? '') ||
             message.guild.members.cache.find(
                 (r) =>
                     r.user.username.toLowerCase() ===

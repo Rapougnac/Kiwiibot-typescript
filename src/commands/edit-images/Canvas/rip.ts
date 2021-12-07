@@ -28,7 +28,7 @@ export default class RipCommand extends Command {
     ) {
         const User =
             message.mentions.members?.first() ||
-            message.guild?.members.cache.get(args[0]!) ||
+            message.guild?.members.cache.get(args[0] ?? '') ||
             message.guild?.members.cache.find((r) =>
                 r.user.username
                     .toLowerCase()
@@ -75,6 +75,7 @@ export default class RipCommand extends Command {
                 const att = new MessageAttachment(canvas.toBuffer(), 'rip.png');
                 return message.channel.send({ files: [att] });
             } catch (e) {
+                // eslint-disable-next-line no-console
                 console.error(e);
             }
         } else {
@@ -112,6 +113,7 @@ export default class RipCommand extends Command {
                 const att = new MessageAttachment(canvas.toBuffer(), 'rip.png');
                 return message.channel.send({ files: [att] });
             } catch (error) {
+                // eslint-disable-next-line no-console
                 console.error(error);
             }
         }

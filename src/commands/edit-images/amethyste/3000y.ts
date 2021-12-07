@@ -23,7 +23,7 @@ export default class ThreeTousandYearsCommand extends Command {
             message.channel.sendTyping();
             let member =
                 message.mentions.members?.first() ||
-                message.guild.members.cache.get(args[0]!) ||
+                message.guild.members.cache.get(args[0] ?? '') ||
                 message.guild.members.cache.find(
                     (r) =>
                         r.user.username
@@ -48,10 +48,10 @@ export default class ThreeTousandYearsCommand extends Command {
                 message.guild.i18n.__mf('common.wait')
             );
             const buffer = await client.utils.AmeAPI.generate('3000years', {
-                url: member!.user.displayAvatarURL({
+                url: member?.user.displayAvatarURL({
                     format: 'png',
                     size: 2048,
-                }),
+                }) as string,
             });
             const attachment = new MessageAttachment(buffer, '3000years.png');
             setTimeout(() => m.delete(), 3000);
@@ -59,7 +59,7 @@ export default class ThreeTousandYearsCommand extends Command {
         } else {
             const member = message.author;
             const m = await message.channel.send(
-                message.guild!.i18n.__mf('common.wait')
+                message.guild?.i18n.__mf('common.wait') ?? 'Wait...'
             );
             const buffer = await client.utils.AmeAPI.generate('3000years', {
                 url: member.displayAvatarURL({ format: 'png', size: 2048 }),

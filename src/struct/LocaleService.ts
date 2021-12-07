@@ -49,7 +49,7 @@ export default class LocaleService {
      * @param args The arguments to pass to the translation.
      * @returns The translated string.
      */
-    translate(key: string, ...args: any[]): string {
+    translate(key: string, ...args: unknown[]): string {
         return this.i18nProvider.__mf(key, ...args);
     }
 
@@ -68,7 +68,7 @@ export default class LocaleService {
      * @param key The key to get
      * @param args The arguments to pass to the translation
      */
-    __mf(key: string, ...args: any[]): string {
+    __mf(key: string, ...args: unknown[]): string {
         return this.i18nProvider.__mf(key, args);
     }
 }

@@ -27,11 +27,12 @@ export default class SetLangCommand extends Command {
     ) {
         if (!mongoose.connection._hasOpened)
             return await message.channel.send(
-                message.guild!.i18n.__mf('setlanguage.no_conn')
+                message.guild?.i18n.__mf('setlanguage.no_conn') ??
+                    'No connection'
             );
 
         if (message.guild && message.guild.available) {
-            let targetedlanguage = language!.toLowerCase();
+            let targetedlanguage = language?.toLowerCase() ?? 'en';
             if (targetedlanguage.includes('french')) targetedlanguage = 'fr';
             else if (targetedlanguage.includes('english'))
                 targetedlanguage = 'en';
@@ -58,7 +59,7 @@ export default class SetLangCommand extends Command {
                 }
             ).then(async () => {
                 return await message.reply(
-                    message.guild!.i18n.__mf('setlanguage.set_language')
+                    message.guild?.i18n.__mf('setlanguage.set_language') ?? ''
                 );
             });
         } else {

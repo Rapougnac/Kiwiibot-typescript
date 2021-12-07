@@ -1,9 +1,8 @@
 import PrefixSchema from '../../models/PrefixSchema';
 import { Message } from 'discord.js';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';
-import mongoose from 'mongoose';
 export default class SetPrefixCommand extends Command {
     constructor(client: Client) {
         super(client, {
@@ -45,36 +44,36 @@ export default class SetPrefixCommand extends Command {
             async (err: Error, data: Document) => {
                 if (err)
                     return message.channel.send(
-                        message.guild!.i18n.__mf('common.database_error', {
+                        message.guild?.i18n.__mf('common.database_error', {
                             error: err.name,
-                        })
+                        }) ?? 'Database error'
                     );
                 if (data) {
                     await PrefixSchema.findOneAndDelete({
-                        GuildID: message.guild!.id,
+                        GuildID: message.guild?.id,
                     });
                     data = new PrefixSchema({
-                        GuildID: message.guild!.id,
+                        GuildID: message.guild?.id,
                         Prefix: prefix,
                     });
                     data.save();
-                    message.guild!.prefix = prefix;
+                    if (message.guild) message.guild.prefix = prefix;
                     message.channel.send(
-                        message.guild!.i18n.__mf('setprefix.updated_prefix', {
+                        message.guild?.i18n.__mf('setprefix.updated_prefix', {
                             prefix: prefix,
-                        })
+                        }) ?? 'Updated prefix'
                     );
                 } else {
                     data = new PrefixSchema({
-                        GuildID: message.guild!.id,
+                        GuildID: message.guild?.id,
                         Prefix: prefix,
                     });
                     data.save();
-                    message.guild!.prefix = prefix;
+                    if (message.guild) message.guild.prefix = prefix;
                     message.channel.send(
-                        message.guild!.i18n.__mf('setprefix.new_prefix', {
+                        message.guild?.i18n.__mf('setprefix.new_prefix', {
                             prefix: prefix,
-                        })
+                        }) ?? 'New prefix'
                     );
                 }
             }

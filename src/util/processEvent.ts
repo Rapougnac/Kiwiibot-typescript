@@ -58,7 +58,7 @@ const registers = { unhandledRejection, uncaughtException };
 
 export default function processEvents(
     event: 'unhandledRejection' | 'uncaughtException',
-    args: never,
+    args: [Error],
     client: Client
 ) {
     if (registers[event]) {

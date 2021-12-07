@@ -18,13 +18,13 @@ export default class UptimeCommand extends Command {
             client.uptime ?? 0
         );
         message.reply(
-            message.guild!.i18n.__mf('uptime.msg', {
-                client: client.user!.tag,
+            message.guild?.i18n.__mf('uptime.msg', {
+                client: client.user?.tag,
                 days,
                 hours,
                 minutes,
                 seconds,
-            })
+            }) ?? ''
         );
     }
 }

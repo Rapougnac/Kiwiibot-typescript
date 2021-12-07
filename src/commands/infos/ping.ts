@@ -23,7 +23,7 @@ export default class PingCommand extends Command {
         const msg = await message.reply(`🏓 Pinging....`);
         const ping = msg.createdTimestamp - message.createdTimestamp;
 
-        const string = message.guild!.i18n.__mf('ping.msg', {
+        const string = message.guild?.i18n.__mf('ping.msg', {
             pong: 'o'.repeat(Math.min(Math.round(ping / 100), 1500)),
             ping: ping,
             heartbeat: separateNumbers(
@@ -31,6 +31,6 @@ export default class PingCommand extends Command {
                 message.guild?.i18n.getLocale()
             ),
         });
-        msg.edit(string);
+        msg.edit(string ?? '🏓 Pong!');
     }
 }

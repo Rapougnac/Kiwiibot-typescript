@@ -26,9 +26,9 @@ export default class AfusionCommand extends Command {
     ): Promise<void> {
         message.channel.sendTyping();
         let member =
-            message.mentions.members!.first() ||
-            message.guild!.members.cache.get(args[0]!) ||
-            message.guild!.members.cache.find(
+            message.mentions.members?.first() ||
+            message.guild?.members.cache.get(args[0] ?? '') ||
+            message.guild?.members.cache.find(
                 (r) =>
                     r.user.username
                         .toLowerCase()
@@ -37,7 +37,7 @@ export default class AfusionCommand extends Command {
                         .toLowerCase()
                         .endsWith(args.join(' ').toLowerCase())
             ) ||
-            message.guild!.members.cache.find(
+            message.guild?.members.cache.find(
                 (r) =>
                     r.displayName
                         .toLowerCase()
@@ -48,10 +48,10 @@ export default class AfusionCommand extends Command {
             );
         if (args.length === 0) member = message.member as GuildMember;
         const m = await message.channel.send(
-            message.guild!.i18n.__mf('common.wait')
+            message.guild?.i18n.__mf('common.wait') ?? 'Wait...'
         );
         const buffer = await client.utils.AmeAPI.generate('afusion', {
-            url: member!.user.displayAvatarURL({
+            url: member?.user.displayAvatarURL({
                 format: 'png',
                 size: 2048,
             }) as string,

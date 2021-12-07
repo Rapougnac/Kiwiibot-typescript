@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Client, Collection, Guild, User, UserResolvable } from 'discord.js';
 import Command from './Command';
 import {
@@ -130,6 +131,7 @@ export default class KiwiiClient extends Client {
         token: string | undefined = this.config.discord.token
     ): Promise<this> {
         // Log super in with the supplied token
+        // eslint-disable-next-line no-console
         await super.login(token).catch(console.error);
 
         return this;
@@ -159,10 +161,12 @@ export default class KiwiiClient extends Client {
                     `${process.cwd()}${path.sep}${file}`
                 );
                 let Command: ConstructorCommand = await import(`${filePath}`);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 Command = (Command as any).default;
                 if (this.utils.isClass(Command)) {
                     const command: Command = new Command(this);
                     if (this.commands.has(command.help.name)) {
+                        // eslint-disable-next-line no-console
                         console.error(
                             new Error(
                                 `Command name duplicate: ${command.help.name}`
@@ -172,7 +176,7 @@ export default class KiwiiClient extends Client {
                     }
                     this.commands.set(command.help.name, command);
                     if (command.help.category === '' || !command.help.category)
-                        command!.help.category = 'unspecified';
+                        command.help.category = 'unspecified';
                     this.categories.add(command.help.category);
 
                     Array.from(this.categories).forEach((category) => {
@@ -184,6 +188,7 @@ export default class KiwiiClient extends Client {
 
                         this.mappedCategories.set(category, [
                             category,
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             ...(this.mappedCategories.get(category) as any),
                         ]);
                     });
@@ -191,6 +196,7 @@ export default class KiwiiClient extends Client {
                     if (command.config.aliases) {
                         command.config.aliases.forEach((alias) => {
                             if (this.aliases.has(alias)) {
+                                // eslint-disable-next-line no-console
                                 console.error(
                                     new Error(
                                         `Alias name duplicate: ${command.config.aliases}`
@@ -204,6 +210,7 @@ export default class KiwiiClient extends Client {
                     }
                 }
             } catch (error) {
+                // eslint-disable-next-line no-console
                 console.error(error);
             }
         });
@@ -282,26 +289,32 @@ export default class KiwiiClient extends Client {
                     config.log_on_console &&
                     typeof config.log_on_console === 'boolean'
                 ) {
+                    // eslint-disable-next-line no-console
                     return console.error(args[0].stack);
                 } else if (
                     config.nologs &&
                     typeof config.nologs === 'boolean'
+                    // eslint-disable-next-line no-empty
                 ) {
-
                 } else if (
                     config.logsonboth &&
                     typeof config.logsonboth === 'boolean'
                 ) {
                     if (args[0].message === 'Unknown User') return;
+                    // eslint-disable-next-line no-console
                     console.error(args[0].stack);
                     return ProcessEvent(
-                        event as unknown as Record<string, any>,
+                        event as 'uncaughtException' | 'unhandledRejection',
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
                         args,
                         this
                     );
                 } else {
                     return ProcessEvent(
-                        event as unknown as Record<string, any>,
+                        event as 'uncaughtException' | 'unhandledRejection',
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
                         args,
                         this
                     );

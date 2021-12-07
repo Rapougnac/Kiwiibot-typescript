@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import { CommandInteraction, Message } from 'discord.js';
 import Client from './Client';
 import { SlashCommandOptions, CommandOptions } from './interfaces/SlashCommand';
 
@@ -33,7 +33,8 @@ export default abstract class SlashCommand {
     }
 
     public execute(
-        ..._args: never
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ..._args: [CommandInteraction, { [key: string]: any }?]
     ): Promise<void | Message | string> | void | Message | string {
         throw new Error(`${this.name} dosen't have an execute() method!`);
     }

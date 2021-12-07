@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Message } from 'discord.js';
 import Command from '../../struct/Command';
 import Client from '../../struct/Client';

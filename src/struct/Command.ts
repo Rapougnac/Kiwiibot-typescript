@@ -109,10 +109,12 @@ export default abstract class Command {
         delete require.cache[require.resolve(cmdPath as string)];
         this.client.commands.delete(commandName);
         // Cannot use import :<
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const command: Command = new (require(cmdPath as string).default)(
             this.client
         );
         if (this.client.commands.has(command.help.name)) {
+            // eslint-disable-next-line no-console
             console.error(
                 new Error(`Command name duplicate: ${command.help.name}`).stack
             );
@@ -148,6 +150,7 @@ export default abstract class Command {
         )
             return this.message?.channel.send("This command doesn't exist.");
         const cmdPath = this.trace({ command: commandName }) as string;
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const command: Command = new (require(cmdPath).default)(this.client);
         this.client.commands.set(commandName, command);
     }
@@ -157,10 +160,8 @@ export default abstract class Command {
     }
 
     public execute(
-        ..._args: any[]
+        ..._args: unknown[]
     ): Promise<Message | void | string> | Message | void | string {
-        throw new Error(
-            `${this.help.name} doesn\'t have an execute() method !`
-        );
+        throw new Error(`${this.help.name} doesn't have an execute() method !`);
     }
 }

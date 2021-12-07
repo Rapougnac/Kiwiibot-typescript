@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Event from '../struct/Event';
 import KiwiiClient from '../struct/Client';
 import * as Console from '../util/console';
@@ -45,7 +46,7 @@ export default class ReadyEvent extends Event {
         ];
         setInterval(async () => {
             const i = statuses[Math.floor(Math.random() * statuses.length)];
-            this.client.user!.setPresence({
+            this.client.user?.setPresence({
                 activities: [
                     {
                         name: `${this.client.prefix}help | ${i}`,
@@ -69,16 +70,14 @@ export default class ReadyEvent extends Event {
             ),
             timehrs = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
         Console.success(
-            `${
-                this.client.user!.username
-            } is now Online! (Loaded in ${bootTime} ms)\n`,
+            `${this.client.user?.username} is now Online! (Loaded in ${bootTime} ms)\n`,
             `${timedate} ${timehrs}`
         );
         // Dashboard
         await dashboard(this.client);
         const commands = await this.loadSlashs();
         commands.forEach(async (command) => {
-            if(!command) return;
+            if (!command) return;
             if (!command.global) {
                 const guild = await this.client.guilds.fetch(
                     '911736666551640075'
@@ -103,6 +102,7 @@ export default class ReadyEvent extends Event {
                 let SlashCommand: SlashCommandConstructor = await import(
                     `${filePath}`
                 );
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 SlashCommand = (SlashCommand as any).default;
                 if (this.client.utils.isClass(SlashCommand)) {
                     const command = new SlashCommand(this.client);

@@ -19,7 +19,7 @@ export default class InRoleCommand extends Command {
         if (!message.guild) return;
         let role =
             message.mentions.roles.first() ||
-            message.guild.roles.cache.get(args[0]!) ||
+            message.guild.roles.cache.get(args[0] ?? '') ||
             message.guild.roles.cache.find(
                 (r) =>
                     r.name
@@ -36,8 +36,8 @@ export default class InRoleCommand extends Command {
                 message.guild.i18n.__mf('inrole.missing_role')
             );
         const memRole = message.guild.roles.cache
-            .get(role.id)!
-            .members.map((m) => `${m.user.tag}${m.user.bot ? '[BOT]' : ''}`)
+            .get(role.id)
+            ?.members.map((m) => `${m.user.tag}${m.user.bot ? '[BOT]' : ''}`)
             .join('\n');
         const embed = new MessageEmbed()
             .setAuthor(
@@ -50,6 +50,7 @@ export default class InRoleCommand extends Command {
             )
             .setTitle(
                 message.guild.i18n.__mf('inrole.dislay_role', {
+                    // eslint-disable-next-line camelcase
                     role_name: role.name,
                 })
             )

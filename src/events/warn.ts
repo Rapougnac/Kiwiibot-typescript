@@ -9,6 +9,7 @@ export default class WarnEvent extends Event {
         });
     }
     public execute(info: string): void {
+        // eslint-disable-next-line no-console
         console.warn(info);
     }
 }

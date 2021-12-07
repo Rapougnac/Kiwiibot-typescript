@@ -3,7 +3,6 @@ import Command from '../../struct/Command';
 import Client from '../../struct/Client';
 import moment from 'moment';
 import 'moment-duration-format';
-import languageSchema from '../../models/languageSchema';
 import { convertUFB } from '../../util/string';
 import { isEmpty } from 'lodash';
 export default class UserInfoCommand extends Command {
@@ -23,8 +22,8 @@ export default class UserInfoCommand extends Command {
     public async execute(client: Client, message: Message, args: string[]) {
         if (!message.guild) return;
         let member =
-            message.mentions.members!.first() ||
-            message.guild.members.cache.get(args[0]!) ||
+            message.mentions.members?.first() ||
+            message.guild.members.cache.get(args[0] ?? '') ||
             message.guild.members.cache.find(
                 (r) =>
                     r.user.username
@@ -70,22 +69,20 @@ export default class UserInfoCommand extends Command {
                 platform.forEach((dev) => {
                     switch (dev) {
                         case 'web': {
-                            device +=
-                                `Web ${  client.config.clientMap.web  }\n`;
+                            device += `Web ${client.config.clientMap.web}\n`;
                             break;
                         }
                         case 'desktop': {
-                            device +=
-                                `${message.guild!.i18n.__mf('userinfo.desktop', {
+                            device += `${message.guild?.i18n.__mf(
+                                'userinfo.desktop',
+                                {
                                     x: client.config.clientMap.desktop,
-                                })  }\n`;
+                                }
+                            )}\n`;
                             break;
                         }
                         case 'mobile': {
-                            device +=
-                                `Mobile ${
-                                client.config.clientMap.mobile
-                                }\n`;
+                            device += `Mobile ${client.config.clientMap.mobile}\n`;
                             break;
                         }
                         default: {
@@ -95,7 +92,7 @@ export default class UserInfoCommand extends Command {
                 });
             } else {
                 if (member.user.bot) {
-                    device = `Web ${  client.config.clientMap.web  }\n`;
+                    device = `Web ${client.config.clientMap.web}\n`;
                 } else {
                     device = 'N/A';
                 }
@@ -137,26 +134,7 @@ export default class UserInfoCommand extends Command {
                     break;
                 }
             }
-            let lang;
-            try {
-                await languageSchema.findOne(
-                    {
-                        _id: message.guild.id,
-                    },
-                    (err: any, data: any) => {
-                        if (err) throw err;
-                        if (!data)
-                            data = new languageSchema({
-                                _id: message.guild!.id,
-                                language: 'en',
-                            });
-                        lang = data.language;
-                    }
-                );
-                if (!lang) lang = 'en';
-            } catch (e) {
-                console.error(e);
-            }
+            const lang = message.guild.i18n.getLocale();
             const embeduser = new MessageEmbed()
                 .setAuthor(
                     message.guild.i18n.__mf('userinfo.user', { tag: user.tag }),
@@ -193,10 +171,9 @@ export default class UserInfoCommand extends Command {
                         )}] DD/MM/YYYY [${message.guild.i18n.__mf(
                             'common.at'
                         )}] HH:mm:ss`
-                    )
-                        }\n\`${moment(member.user.createdAt, 'DD/MM/YYYY')
-                            .locale(lang ?? 'en')
-                            .fromNow()}\``,
+                    )}\n\`${moment(member.user.createdAt, 'DD/MM/YYYY')
+                        .locale(lang ?? 'en')
+                        .fromNow()}\``,
                     true
                 )
                 .addField(
@@ -207,10 +184,9 @@ export default class UserInfoCommand extends Command {
                         )}] DD/MM/YYYY [${message.guild.i18n.__mf(
                             'common.at'
                         )}] HH:mm:ss`
-                    )
-                        }\n\`${moment(member.joinedAt, 'DD/MM/YYYY')
-                            .locale(lang ?? 'en')
-                            .fromNow()}\``,
+                    )}\n\`${moment(member.joinedAt, 'DD/MM/YYYY')
+                        .locale(lang ?? 'en')
+                        .fromNow()}\``,
                     true
                 )
                 .addField(
@@ -222,10 +198,9 @@ export default class UserInfoCommand extends Command {
                               )}] DD/MM/YYYY [${message.guild.i18n.__mf(
                                   'common.at'
                               )}] HH:mm:ss`
-                          )
-                              }\n\`${moment(member.premiumSince, 'DD/MM/YYYY')
-                                  .locale(lang ?? 'en')
-                                  .fromNow()}\``
+                          )}\n\`${moment(member.premiumSince, 'DD/MM/YYYY')
+                              .locale(lang ?? 'en')
+                              .fromNow()}\``
                         : message.guild.i18n.__mf('userinfo.not_boosting'),
                     true
                 )
@@ -249,7 +224,7 @@ export default class UserInfoCommand extends Command {
                     member.roles.cache.size - 1 <= 0
                         ? message.guild.i18n.__mf('userinfo.no_roles')
                         : member.roles.cache
-                              .filter((r) => r.id !== message.guild!.id)
+                              .filter((r) => r.id !== message.guild?.id)
                               .sort((A, B) => B.rawPosition - A.rawPosition)
                               .map((x) => String(x))
                               .splice(0, 50)

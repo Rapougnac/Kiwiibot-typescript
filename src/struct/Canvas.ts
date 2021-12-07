@@ -27,9 +27,9 @@ export default class Canvas {
 
         for (let i = 0; i < data.data.length; i += 4) {
             const brightness =
-                0.34 * data.data[i]! +
-                0.5 * data.data[i + 1]! +
-                0.16 * data.data[i + 2]!;
+                0.34 * (data.data[i] ?? 0) +
+                0.5 * (data.data[i + 1] ?? 0) +
+                0.16 * (data.data[i + 2] ?? 0);
 
             data.data[i] = brightness;
             data.data[i + 1] = brightness;
@@ -71,10 +71,10 @@ export default class Canvas {
                 frame.height / 2 - dy * Math.sin(dist / (level * Math.PI) / 2)
             );
             const i2 = (y2 * frame.width + x2) * 4;
-            frame.data[i] = source[i2]!;
-            frame.data[i + 1] = source[i2 + 1]!;
-            frame.data[i + 2] = source[i2 + 2]!;
-            frame.data[i + 3] = source[i2 + 3]!;
+            frame.data[i] = source[i2] ?? 0;
+            frame.data[i + 1] = source[i2 + 1] ?? 0;
+            frame.data[i + 2] = source[i2 + 2] ?? 0;
+            frame.data[i + 3] = source[i2 + 3] ?? 0;
         }
         ctx.putImageData(frame, x, y);
         return ctx;
@@ -145,12 +145,12 @@ export default class Canvas {
         return new Promise((resolve) => {
             if (ctx.measureText(text).width < maxWidth) return resolve([text]);
             if (ctx.measureText('W').width > maxWidth) return resolve(null);
-            const words = text.split(' ');
+            const words = text.split(' ') ?? [''];
             const lines: string[] = [];
             let line = '';
             while (words.length > 0) {
                 let split = false;
-                while (ctx.measureText(words[0]!).width >= maxWidth) {
+                while (ctx.measureText(words[0] as string).width >= maxWidth) {
                     const temp = words[0];
                     if (!temp) break;
                     words[0] = temp.slice(0, -1);
@@ -180,7 +180,7 @@ export default class Canvas {
         if (!stream.readable) return Promise.resolve([]);
         return new Promise((resolve, reject) => {
             const arr: Uint8Array[] = [];
-            const onData = (data: any) => {
+            const onData = (data: Uint8Array) => {
                 arr.push(data);
             };
             const onEnd = (err: Error) => {

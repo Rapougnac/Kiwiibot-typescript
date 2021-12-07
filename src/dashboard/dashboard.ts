@@ -63,7 +63,7 @@ export default async function (client: KiwiiClient) {
         try {
             req.query['lang'] =
                 req.query['lang'] || req.cookies['lang'] || 'en';
-            next();
+            return next();
         } catch (e) {
             res.status(500).send(e);
         }

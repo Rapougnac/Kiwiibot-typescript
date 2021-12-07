@@ -18,7 +18,7 @@ export default class BlushCommand extends Command {
 
         const blushEmbed = new MessageEmbed()
             .setTitle(
-                this.message!.guild?.i18n.__mf('blush.msg', {
+                this.message?.guild?.i18n.__mf('blush.msg', {
                     author: this.message?.author.tag,
                 }) as string
             )

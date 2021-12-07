@@ -32,7 +32,7 @@ export default class InteractionCreate extends Event {
                 commandInteraction?.commandOptions
             );
         }
-        if(!interaction.guild) {
+        if (!interaction.guild) {
             Object.defineProperty(interaction, 'guild', {
                 value: {
                     client: this.client,
@@ -43,14 +43,32 @@ export default class InteractionCreate extends Event {
             Object.defineProperty(interaction, 'guild', {
                 value: {
                     i18n,
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore: Same error in the messageCreate event
                     members: new GuildMemberManager(interaction.guild),
-                }
+                },
             });
+        }
+        if (!args) {
+            try {
+                commandInteraction?.execute(interaction);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (e: any) {
+                // eslint-disable-next-line no-console
+                console.error(
+                    `Error from command: ${interaction.commandName}: ${e.message}\n${e.stack}`
+                );
+                return interaction.reply({
+                    content: 'Sorry, there was an error executing that command',
+                    ephemeral: true,
+                });
+            }
         }
         try {
             commandInteraction?.execute(interaction, args);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
+            // eslint-disable-next-line no-console
             console.error(
                 `Error from command: ${interaction.commandName}: ${e.message}\n${e.stack}`
             );
