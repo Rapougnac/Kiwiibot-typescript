@@ -35,6 +35,9 @@
         "eqeqeq": "error",
         "for-direction": "error",
         "no-unused-private-class-members": "error",
+        "default-case-last": "error",
+        "default-param-last": "error",
+        "no-array-constructor": "error",
         "@typescript-eslint/no-unused-vars": [
             "error",
             { "argsIgnorePattern": "^_" }
