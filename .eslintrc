@@ -31,6 +31,7 @@
         "constructor-super": "error",
         "getter-return": "error",
         "no-fallthrough": "error",
+        "no-await-in-loop": "error",
         "@typescript-eslint/no-unused-vars": [
             "error",
             { "argsIgnorePattern": "^_" }

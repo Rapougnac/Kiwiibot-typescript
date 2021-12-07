@@ -50,6 +50,7 @@ export default class TrumpCommand extends Command {
         encoder.setDelay(100);
         encoder.setQuality(200);
         loopFrames: for (const frame of frames) {
+            // eslint-disable-next-line no-await-in-loop
             const image = await loadImage(
                 join(
                     process.cwd(),

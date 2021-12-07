@@ -47,6 +47,7 @@ export async function createTranscript(
     // eslint-disable-next-line no-constant-condition
     while (true) {
         const messages: Collection<string, Message> =
+            // eslint-disable-next-line no-await-in-loop
             await channel.messages.fetch({ limit: 100, before: lastId });
         sumMessages.push(...messages.values());
         lastId = messages.last()?.id;

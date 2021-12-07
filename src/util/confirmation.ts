@@ -25,6 +25,7 @@ const confirmation = async (
             'Client must me have the "MANAGE_MESSAGES" permission'
         );
 
+    // eslint-disable-next-line no-await-in-loop
     for (const reaction of validReactions) await message.react(reaction);
     const filter = (reaction: MessageReaction, user: User) =>
         validReactions.includes(reaction.emoji.name as string) &&
