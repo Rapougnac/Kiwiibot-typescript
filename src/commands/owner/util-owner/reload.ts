@@ -13,7 +13,7 @@ export default class ReloadCommand extends Command {
         });
     }
     public override async execute(_client: KiwiiClient, message: Message, [commandName]: string[]) {
-        if(!commandName) 
+        if(!commandName)
             return message.reply('Please specify a command to reload');
         void await super.reload(commandName);
         return message.reply(`Successfully reloaded the ${commandName} command`);

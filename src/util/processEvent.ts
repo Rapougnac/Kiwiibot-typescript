@@ -4,24 +4,24 @@ import * as consoleUtil from './console';
 
 /**
  * Handle unhandledRejection
- * @param {Error} error The error object
- * @param {*} args other arguments passed through the event
- * @param {Client} client Client
- * @returns {Promise<Message|undefined>}
+ * @param error The error object
+ * @param args other arguments passed through the event
+ * @param Client
  */
 function unhandledRejection(
-    [error, ..._args]: [any, ...any],
+    [error]: [Error],
     client: Client
-): Promise<Message | undefined> | Promise<void> {
+): Promise<Message | Error | void> {
     const channel = client.channels.cache.get(client.config.channels.debug);
     const d = new Date(),
         timedate = [d.getMonth() + 1, d.getDate(), d.getFullYear()].join('/'),
         timehrs = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
 
     if (!channel) {
-        return Promise.resolve(console.log(error));
+        return Promise.resolve(error);
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore: Constant id, so it's always a TextChannel
     return channel.send(
         `\\🛠 ${error.name} caught!\n\`The ${timedate} at ${timehrs}\`\n\`\`\`xl\n${error.stack}\`\`\``
@@ -35,23 +35,21 @@ function unhandledRejection(
  * @returns {Promise<Message|undefined>}
  */
 function uncaughtException(
-    [error, ..._args]: [any, ...any],
+    [error]: [Error],
     client: Client
-): Promise<Message | undefined> | Promise<void> {
+): Promise<Message | Error | void> {
     const channel = client.channels.cache.get(client.config.channels.debug);
     const d = new Date(),
         timedate = [d.getMonth() + 1, d.getDate(), d.getFullYear()].join('/'),
         timehrs = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
     if (!channel) {
-        return Promise.resolve(console.log(error));
+        return Promise.resolve(error);
     }
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore: Constant id, so it's always TextChannel
     return channel.send(
-        `\\🛠 ${
-            error.name
-        } caught!\n\`At ${timedate} at ${timehrs}\`\n\`\`\`xl\n${
-            error.stack /*.split(process.cwd()).join('/home/container/').replaceAll('\\', '/')*/
-        }\`\`\``
+        `\\🛠 ${error.name} caught!\n\`At ${timedate} at ${timehrs}\`\n\`\`\`xl\n${error.stack}\`\`\``
     );
 }
 
@@ -59,13 +57,11 @@ function uncaughtException(
 const registers = { unhandledRejection, uncaughtException };
 
 export default function processEvents(
-    event: Record<string, any>,
-    args: any,
+    event: 'unhandledRejection' | 'uncaughtException',
+    args: never,
     client: Client
 ) {
-    //@ts-ignore: Event cannot be used as key, I dunno wh :(
     if (registers[event]) {
-        //@ts-ignore
         return registers[event](args, client);
     } else {
         return consoleUtil.warn(

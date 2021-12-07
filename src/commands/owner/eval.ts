@@ -41,7 +41,7 @@ export default class EvalCommand extends Command {
             if (result.length >= 2000) result = Util.splitMessage(result);
             if (Array.isArray(result)) {
                 for (let res of result) {
-                    res = Formatters.codeBlock('js', res + '\n');
+                    res = Formatters.codeBlock('js', `${res  }\n`);
                     return message.channel.send(res);
                 }
             } else return message.channel.send(`\`\`\`js\n${result}\n\`\`\``);

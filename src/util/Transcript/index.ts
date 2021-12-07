@@ -41,22 +41,23 @@ export async function createTranscript(
         throw new Error('Provided channel must be a text channel.');
     }
 
-    const sum_messages = [];
-    let last_id;
+    const sumMessages = [];
+    let lastId;
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
         const messages: Collection<string, Message> =
-            await channel.messages.fetch({ limit: 100, before: last_id });
-        sum_messages.push(...messages.values());
-        last_id = messages.last()!.id;
+            await channel.messages.fetch({ limit: 100, before: lastId });
+        sumMessages.push(...messages.values());
+        lastId = messages.last()?.id;
 
         if (
             messages.size != 100 ||
-            (options.limit > 0 && sum_messages.length >= options.limit)
+            (options.limit > 0 && sumMessages.length >= options.limit)
         ) {
             break;
         }
     }
 
-    return exportHtml(sum_messages, channel, options);
+    return exportHtml(sumMessages, channel, options);
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Console } from 'console';
 import { Transform } from 'stream';
 
@@ -6,7 +7,7 @@ import { Transform } from 'stream';
  * @param message The message to log on console
  * @param title The string to apply the color to
  */
-const success = (message: string, title: string = 'SUCCESS!'): void =>
+const success = (message: string, title = 'SUCCESS!'): void =>
     console.log('\x1b[32m', title, '\x1b[0m', message);
 
 /**
@@ -15,7 +16,7 @@ const success = (message: string, title: string = 'SUCCESS!'): void =>
  * @param title The string to apply the color to
  * @returns
  */
-const warn = (message: string, title: string = 'WARN!'): void =>
+const warn = (message: string, title = 'WARN!'): void =>
     console.log('\x1b[33m', title, '\x1b[0m', message);
 
 /**
@@ -23,7 +24,7 @@ const warn = (message: string, title: string = 'WARN!'): void =>
  * @param message The message to log on console
  * @param title The name of the error
  */
-const error = (message: string, title: string = ''): void =>
+const error = (message: string, title = ''): void =>
     console.log(title, '\x1b[31mERR!\x1b[0m', message);
 
 /**
@@ -47,8 +48,8 @@ const error = (message: string, title: string = ''): void =>
  * // │  1  │  Y  │
  * // │  Z  │  2  │
  * // └─────┴─────┘
- * 
- * 
+ *
+ *
  * console.table([{ a: 1, b: 'Y' }, { a: 'Z', b: 2 }], ['a']);
  * // ┌─────┐
  * // │  a  │
@@ -59,7 +60,10 @@ const error = (message: string, title: string = ''): void =>
  * ```
  * @param properties Alternate properties for constructing the table.
  */
-const table = (tabularData: any[], properties?: ReadonlyArray<string>): void => {
+const table = (
+    tabularData: unknown[],
+    properties?: ReadonlyArray<string>
+): void => {
     const ts = new Transform({
         transform(chunk, _, cb) {
             cb(null, chunk);

@@ -44,7 +44,7 @@ export default class ThreeTousandYearsCommand extends Command {
                 );
             if (args.length <= 0)
                 member = message.member as GuildMember | undefined;
-            let m = await message.channel.send(
+            const m = await message.channel.send(
                 message.guild.i18n.__mf('common.wait')
             );
             const buffer = await client.utils.AmeAPI.generate('3000years', {
@@ -57,8 +57,8 @@ export default class ThreeTousandYearsCommand extends Command {
             setTimeout(() => m.delete(), 3000);
             message.channel.send({ files: [attachment] });
         } else {
-            let member = message.author;
-            let m = await message.channel.send(
+            const member = message.author;
+            const m = await message.channel.send(
                 message.guild!.i18n.__mf('common.wait')
             );
             const buffer = await client.utils.AmeAPI.generate('3000years', {

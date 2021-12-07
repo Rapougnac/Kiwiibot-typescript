@@ -94,7 +94,7 @@ export interface HelpOptions {
     category: string | undefined;
 
     /**
-     * The image to set to the setFooter 
+     * The image to set to the setFooter
      */
     img: string | undefined;
 }

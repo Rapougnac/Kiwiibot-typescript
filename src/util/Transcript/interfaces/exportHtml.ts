@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { MessageAttachment as _MessageAttachment } from 'discord.js';
 
 export interface ExportHtmlOptions {

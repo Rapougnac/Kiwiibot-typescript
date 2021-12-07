@@ -52,9 +52,9 @@ export default class MDNCommand extends Command {
         let url = _url;
         // Set the url to the locale if it exists
         if (locale === 'en') {
-            url = domain + `${locale}-US/` + path;
+            url = `${domain  }${locale}-US/${  path}`;
         } else if (locale === 'fr') {
-            url = domain + `${locale}/` + path;
+            url = `${domain  }${locale}/${  path}`;
         }
         const html = await axios.get(url).then((res) => res.data);
         if (!html) return;
@@ -71,8 +71,8 @@ export default class MDNCommand extends Command {
         const title = $('h1').first().text();
         const element = cheerio.load(description ?? '');
         // Set the arrays that will contains the contentLinks and the links
-        let contentLinks: string[] = [];
-        let _links: string[] = [];
+        const contentLinks: string[] = [];
+        const _links: string[] = [];
         // Get all the links in the description
         element('a').each(function () {
             const fallRegex =

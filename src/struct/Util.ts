@@ -1,10 +1,4 @@
-import {
-    PermissionString,
-    Message,
-    GuildMember,
-    Permissions,
-    Guild,
-} from 'discord.js';
+import { PermissionString, Message, Guild } from 'discord.js';
 import Client from './Client';
 import Loader from './LoadingBar';
 import { TimeData } from './interfaces/main';
@@ -80,23 +74,23 @@ export default class Util {
      * @param time Time
      */
     format(time: number): string {
-        var hrs = ~~(time / 3600);
-        var mins = ~~((time % 3600) / 60);
-        var secs = ~~time % 60;
+        const hrs = ~~(time / 3600);
+        const mins = ~~((time % 3600) / 60);
+        const secs = ~~time % 60;
 
-        var ret = '';
+        let ret = '';
         if (hrs > 0) {
-            ret += '' + hrs + ':' + (mins < 10 ? '0' : '');
+            ret += `${hrs}:${mins < 10 ? '0' : ''}`;
         }
-        ret += '' + mins + ':' + (secs < 10 ? '0' : '');
-        ret += '' + secs;
+        ret += `${mins}:${secs < 10 ? '0' : ''}`;
+        ret += `${secs}`;
         return `\`${ret}\``;
     }
     /**
      * Check if the passed input is a class or not.
      * @param input The input to check
      */
-    isClass(input: any): boolean {
+    isClass(input: unknown): boolean {
         return (
             typeof input === 'function' &&
             typeof input.prototype === 'object' &&
@@ -107,7 +101,7 @@ export default class Util {
      * Remove duplicated values in an array.
      * @param array The array to pass in.
      */
-    removeDuplicates(array: any[]): any[] {
+    removeDuplicates(array: unknown[]): unknown[] {
         return [...new Set(array)];
     }
 
@@ -126,14 +120,14 @@ export default class Util {
         if (command.config.ownerOnly) {
             if (!this.client.isOwner(message.author)) {
                 reasons.push(
-                    message.guild!.i18n.__mf('PERMS_MESSAGE.dev_only')
+                    message.guild?.i18n.__mf('PERMS_MESSAGE.dev_only')
                 );
             }
         }
         if (command.config.adminOnly) {
-            if (!message.member!.permissions.has('ADMINISTRATOR')) {
+            if (!message.member?.permissions.has('ADMINISTRATOR')) {
                 reasons.push(
-                    message.guild!.i18n.__mf('PERMS_MESSAGE.admin_only')
+                    message.guild?.i18n.__mf('PERMS_MESSAGE.admin_only')
                 );
             }
         }
@@ -142,32 +136,29 @@ export default class Util {
                 message.channel.type === 'GUILD_TEXT' &&
                 !message.channel.nsfw
             ) {
-                reasons.push(message.guild!.i18n.__mf('PERMS_MESSAGE.nsfw'));
+                reasons.push(message.guild?.i18n.__mf('PERMS_MESSAGE.nsfw'));
             }
         }
         if (Array.isArray(command.config.permissions)) {
             if (
                 message.channel.type === 'GUILD_TEXT' &&
-                !(
-                    message.channel.permissionsFor(
-                        message.member!
-                    )
-                ).has(command.config.permissions)
+                message.member &&
+                !message.channel
+                    .permissionsFor(message.member)
+                    .has(command.config.permissions)
             ) {
                 reasons.push(
                     [
-                        message.guild!.i18n.__mf(
+                        message.guild?.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions_you'
                         ),
-                        message.guild!.i18n.__mf(
+                        message.guild?.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions1_you'
                         ),
                         Object.entries(
-                            (
-                                message.channel.permissionsFor(
-                                    message.member!
-                                )
-                            ).serialize()
+                            message.channel
+                                .permissionsFor(message.member)
+                                .serialize()
                         )
                             .filter(
                                 (p) =>
@@ -193,11 +184,11 @@ export default class Util {
         if (Array.isArray(command.config.clientPermissions)) {
             if (
                 message.channel.type === 'GUILD_TEXT' &&
-                !(
-                    message.channel.permissionsFor(
-                        message.guild!.me!
-                    )
-                ).has(command.config.clientPermissions)
+                message.guild &&
+                message.guild.me &&
+                !message.channel
+                    .permissionsFor(message.guild.me)
+                    .has(command.config.clientPermissions)
             ) {
                 reasons.push(
                     [
@@ -208,11 +199,9 @@ export default class Util {
                             'PERMS_MESSAGE.missing_permissions1_i'
                         ),
                         Object.entries(
-                            (
-                                message.channel.permissionsFor(
-                                    message.guild!.me as GuildMember
-                                ) as Readonly<Permissions>
-                            ).serialize()
+                            message.channel
+                                .permissionsFor(message.guild.me)
+                                .serialize()
                         )
                             .filter(
                                 (p) =>

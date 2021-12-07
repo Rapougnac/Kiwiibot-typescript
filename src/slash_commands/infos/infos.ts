@@ -100,26 +100,26 @@ export default class InfosCommand extends SlashCommand {
                         switch (p) {
                             case 'web':
                                 device +=
-                                    'Web ' +
-                                    this.client.config.clientMap.web +
-                                    '\n';
+                                    `Web ${
+                                    this.client.config.clientMap.web
+                                    }\n`;
 
                                 break;
                             case 'desktop':
                                 device +=
-                                    interaction.guild?.i18n.__mf(
+                                    `${interaction.guild?.i18n.__mf(
                                         'userinfo.desktop',
                                         {
                                             x: this.client.config.clientMap
                                                 .desktop,
                                         }
-                                    ) + '\n';
+                                    )  }\n`;
                                 break;
                             case 'mobile':
                                 device +=
-                                    'Mobile ' +
-                                    this.client.config.clientMap.mobile +
-                                    '\n';
+                                    `Mobile ${
+                                    this.client.config.clientMap.mobile
+                                    }\n`;
                                 break;
                             default:
                                 device = 'N/A';
@@ -213,14 +213,14 @@ export default class InfosCommand extends SlashCommand {
                             interaction.guild!.i18n.__mf(
                                 'userinfo.account_creation_date'
                             ),
-                            moment(target.createdAt).format(
+                            `${moment(target.createdAt).format(
                                 `[${interaction.guild!.i18n.__mf(
                                     'common.on'
                                 )}] DD/MM/YYYY [${interaction.guild!.i18n.__mf(
                                     'common.at'
                                 )}] HH:mm:ss`
-                            ) +
-                                `\n\`${moment(target.createdAt, 'DD/MM/YYYY')
+                            )
+                                }\n\`${moment(target.createdAt, 'DD/MM/YYYY')
                                     .locale(interaction.guild!.i18n.getLocale())
                                     .fromNow()}\``,
                             true
@@ -229,14 +229,14 @@ export default class InfosCommand extends SlashCommand {
                             interaction.guild!.i18n.__mf(
                                 'userinfo.arrival_date'
                             ),
-                            moment(member?.joinedAt).format(
+                            `${moment(member?.joinedAt).format(
                                 `[${interaction.guild!.i18n.__mf(
                                     'common.on'
                                 )}] DD/MM/YYYY [${interaction.guild!.i18n.__mf(
                                     'common.at'
                                 )}] HH:mm:ss`
-                            ) +
-                                `\n\`${moment(member?.joinedAt, 'DD/MM/YYYY')
+                            )
+                                }\n\`${moment(member?.joinedAt, 'DD/MM/YYYY')
                                     .locale(interaction.guild!.i18n.getLocale())
                                     .fromNow()}\``,
                             true
@@ -246,14 +246,14 @@ export default class InfosCommand extends SlashCommand {
                                 'userinfo.boost_start_date'
                             ),
                             member?.premiumSince
-                                ? moment(member.premiumSince).format(
+                                ? `${moment(member.premiumSince).format(
                                       `[${interaction.guild!.i18n.__mf(
                                           'common.on'
                                       )}] DD/MM/YYYY [${interaction.guild!.i18n.__mf(
                                           'common.at'
                                       )}] HH:mm:ss`
-                                  ) +
-                                      `\n\`${moment(
+                                  )
+                                      }\n\`${moment(
                                           member.premiumSince,
                                           'DD/MM/YYYY'
                                       )
@@ -342,14 +342,14 @@ export default class InfosCommand extends SlashCommand {
                             interaction.guild!.i18n.__mf(
                                 'userinfo.account_creation_date'
                             ),
-                            moment(target.createdAt).format(
+                            `${moment(target.createdAt).format(
                                 `[${interaction.guild!.i18n.__mf(
                                     'common.on'
                                 )}] DD/MM/YYYY [${interaction.guild!.i18n.__mf(
                                     'common.at'
                                 )}] HH:mm:ss`
-                            ) +
-                                `\n\`${moment(target.createdAt, 'DD/MM/YYYY')
+                            )
+                                }\n\`${moment(target.createdAt, 'DD/MM/YYYY')
                                     .locale(interaction.guild!.i18n.getLocale())
                                     .fromNow()}\``,
                             true
@@ -488,14 +488,14 @@ export default class InfosCommand extends SlashCommand {
                         )
                         .addField(
                             interaction.guild.i18n.__mf('common.creation_date'),
-                            moment(interaction.guild.createdAt).format(
+                            `${moment(interaction.guild.createdAt).format(
                                 `[${interaction.guild.i18n.__mf(
                                     'common.on'
                                 )}] DD/MM/YYYY [${interaction.guild.i18n.__mf(
                                     'common.at'
                                 )}] HH:mm:ss`
-                            ) +
-                                `\n\`${moment(
+                            )
+                                }\n\`${moment(
                                     interaction.guild.createdAt,
                                     'DD/MM/YYYY'
                                 )

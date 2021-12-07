@@ -2,5 +2,31 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint"],
-    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"]
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "rules": {
+        "no-console": "warn",
+        "camelcase": "error",
+        "callback-return": "error",
+        "switch-colon-spacing": "error",
+        "array-bracket-spacing": ["error", "never"],
+        "object-curly-spacing": ["error", "always"],
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "no-trailing-spaces": "error",
+        "no-multiple-empty-lines": ["error", { "max": 1 }],
+        "no-unused-expressions": "error",
+        "no-undef": "error",
+        "no-unused-labels": "error",
+        "no-useless-escape": "error",
+        "no-useless-return": "error",
+        "no-var": "error",
+        "no-with": "error",
+        "prefer-const": "error",
+        "prefer-template": "error",
+        "semi": ["error", "always"]
+    }
 }

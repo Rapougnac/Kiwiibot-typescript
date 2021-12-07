@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const { group, test, beforeStart, afterAll, expect } = require('corde');
 const { default: Client } = require('../dist/src/struct/Client');
 const config = require('../dist/config');
@@ -11,7 +13,6 @@ const client = new Client({
         intents: Intents.ALL,
     },
 });
-console.log(client);
 
 beforeStart(async () => {
     await client.connect();

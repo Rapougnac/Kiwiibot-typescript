@@ -39,7 +39,7 @@ export default class InteractionCreate extends Event {
                 },
                 writable: true,
             });
-            
+
             Object.defineProperty(interaction, 'guild', {
                 value: {
                     i18n,

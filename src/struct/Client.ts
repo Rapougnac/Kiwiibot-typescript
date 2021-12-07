@@ -287,7 +287,7 @@ export default class KiwiiClient extends Client {
                     config.nologs &&
                     typeof config.nologs === 'boolean'
                 ) {
-                    return;
+
                 } else if (
                     config.logsonboth &&
                     typeof config.logsonboth === 'boolean'

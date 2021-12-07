@@ -160,15 +160,15 @@ export default class ServerInfoCommand extends Command {
 }
 
 const format = (time: number) => {
-    var hrs = ~~(time / 3600);
-    var mins = ~~((time % 3600) / 60);
-    var secs = ~~time % 60;
+    const hrs = ~~(time / 3600);
+    const mins = ~~((time % 3600) / 60);
+    const secs = ~~time % 60;
 
-    var ret = '';
+    let ret = '';
     if (hrs > 0) {
-        ret += '' + hrs + ':' + (mins < 10 ? '0' : '');
+        ret += `${  hrs  }:${  mins < 10 ? '0' : ''}`;
     }
-    ret += '' + mins + ':' + (secs < 10 ? '0' : '');
-    ret += '' + secs;
+    ret += `${  mins  }:${  secs < 10 ? '0' : ''}`;
+    ret += `${  secs}`;
     return `\`${ret}\``;
 };

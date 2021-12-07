@@ -31,7 +31,7 @@ export default class MessageEvent extends Event {
                 },
                 writable: true,
             });
-            // I'm sorry for this... But I don't know how else to do it. I'm sorry. I'm sorry. I'm sorry. I'm sorry. 
+            // I'm sorry for this... But I don't know how else to do it. I'm sorry. I'm sorry. I'm sorry. I'm sorry.
             Object.defineProperty(message, 'guild', {
                 value: {
                     i18n,
@@ -40,7 +40,7 @@ export default class MessageEvent extends Event {
                 },
             });
         }
-        let prefix = [this.client.prefix];
+        const prefix = [this.client.prefix];
         if (message.guild?.prefix) prefix.push(message.guild.prefix);
         if ((bot || message.webhookId) && !this.client.config.discord.dev.debug)
             return;
@@ -124,7 +124,7 @@ export default class MessageEvent extends Event {
                             `\`${message.guild!.i18n.__mf(
                                 'PERMS_MESSAGE.reason'
                             )}:\`\n\n${reasons
-                                .map((reason) => '• ' + reason)
+                                .map((reason) => `• ${  reason}`)
                                 .join('\n')}`
                     );
                 return message.channel.send({ embeds: [embed] });

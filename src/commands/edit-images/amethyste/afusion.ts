@@ -47,7 +47,7 @@ export default class AfusionCommand extends Command {
                         .endsWith(args.join(' ').toLowerCase())
             );
         if (args.length === 0) member = message.member as GuildMember;
-        let m = await message.channel.send(
+        const m = await message.channel.send(
             message.guild!.i18n.__mf('common.wait')
         );
         const buffer = await client.utils.AmeAPI.generate('afusion', {

@@ -76,16 +76,16 @@ export default class HelpCommand extends Command {
                                 !c.config.hidden &&
                                 !c.config.nsfw
                         ).size
-                            ? upperFirstButAcceptEmojis(ct) +
-                              ' ' +
-                              '[' +
+                            ? `${upperFirstButAcceptEmojis(ct)
+                              } ` +
+                              `[${
                               this.client.commands.filter(
                                   (c) =>
                                       c.help.category === category &&
                                       !c.config.hidden &&
                                       !c.config.nsfw
-                              ).size +
-                              ']'
+                              ).size
+                              }]`
                             : ''
                     }`,
                     value: joinArray(

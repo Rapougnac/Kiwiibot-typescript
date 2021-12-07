@@ -45,7 +45,7 @@ export default class UserInfoCommand extends Command {
             );
         if (args.length <= 0) member = message.member as GuildMember;
         if (member) {
-            let { user: _user } = member;
+            const { user: _user } = member;
             const user = await client.users.fetch(_user, {
                 force: true,
             });
@@ -71,21 +71,21 @@ export default class UserInfoCommand extends Command {
                     switch (dev) {
                         case 'web': {
                             device +=
-                                'Web ' + client.config.clientMap.web + '\n';
+                                `Web ${  client.config.clientMap.web  }\n`;
                             break;
                         }
                         case 'desktop': {
                             device +=
-                                message.guild!.i18n.__mf('userinfo.desktop', {
+                                `${message.guild!.i18n.__mf('userinfo.desktop', {
                                     x: client.config.clientMap.desktop,
-                                }) + '\n';
+                                })  }\n`;
                             break;
                         }
                         case 'mobile': {
                             device +=
-                                'Mobile ' +
-                                client.config.clientMap.mobile +
-                                '\n';
+                                `Mobile ${
+                                client.config.clientMap.mobile
+                                }\n`;
                             break;
                         }
                         default: {
@@ -95,7 +95,7 @@ export default class UserInfoCommand extends Command {
                 });
             } else {
                 if (member.user.bot) {
-                    device = 'Web ' + client.config.clientMap.web + '\n';
+                    device = `Web ${  client.config.clientMap.web  }\n`;
                 } else {
                     device = 'N/A';
                 }
@@ -187,28 +187,28 @@ export default class UserInfoCommand extends Command {
                 )
                 .addField(
                     message.guild.i18n.__mf('common.creation_date'),
-                    moment(member.user.createdAt).format(
+                    `${moment(member.user.createdAt).format(
                         `[${message.guild.i18n.__mf(
                             'common.on'
                         )}] DD/MM/YYYY [${message.guild.i18n.__mf(
                             'common.at'
                         )}] HH:mm:ss`
-                    ) +
-                        `\n\`${moment(member.user.createdAt, 'DD/MM/YYYY')
+                    )
+                        }\n\`${moment(member.user.createdAt, 'DD/MM/YYYY')
                             .locale(lang ?? 'en')
                             .fromNow()}\``,
                     true
                 )
                 .addField(
                     message.guild.i18n.__mf('userinfo.arrival_date'),
-                    moment(member.joinedAt).format(
+                    `${moment(member.joinedAt).format(
                         `[${message.guild.i18n.__mf(
                             'common.on'
                         )}] DD/MM/YYYY [${message.guild.i18n.__mf(
                             'common.at'
                         )}] HH:mm:ss`
-                    ) +
-                        `\n\`${moment(member.joinedAt, 'DD/MM/YYYY')
+                    )
+                        }\n\`${moment(member.joinedAt, 'DD/MM/YYYY')
                             .locale(lang ?? 'en')
                             .fromNow()}\``,
                     true
@@ -216,14 +216,14 @@ export default class UserInfoCommand extends Command {
                 .addField(
                     message.guild.i18n.__mf('userinfo.boost_start_date'),
                     member.premiumSince
-                        ? moment(member.premiumSince).format(
+                        ? `${moment(member.premiumSince).format(
                               `[${message.guild.i18n.__mf(
                                   'common.on'
                               )}] DD/MM/YYYY [${message.guild.i18n.__mf(
                                   'common.at'
                               )}] HH:mm:ss`
-                          ) +
-                              `\n\`${moment(member.premiumSince, 'DD/MM/YYYY')
+                          )
+                              }\n\`${moment(member.premiumSince, 'DD/MM/YYYY')
                                   .locale(lang ?? 'en')
                                   .fromNow()}\``
                         : message.guild.i18n.__mf('userinfo.not_boosting'),
