@@ -80,6 +80,7 @@ export interface CommandOptions {
  * The constructor of the slash command
  */
 export interface SlashCommandConstructor {
+    // eslint-disable-next-line no-unused-vars
     new (client: KiwiiClient, options?: CommandOptions): SlashCommand;
     readonly prototype: SlashCommand;
 }

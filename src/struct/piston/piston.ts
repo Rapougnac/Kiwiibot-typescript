@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
 import get from './util/get';
 import post from './util/post';
 import or from './util/or';
