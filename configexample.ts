@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export const domain = 'DOMAIN_HERE';
 export const port = 'PORT_HERE';
 export const usingCustomDomain = false;
