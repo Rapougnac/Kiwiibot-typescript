@@ -1,4 +1,4 @@
-name: Lint
+name: TS Build
 
 # Controls when the workflow will run
 on:
@@ -35,6 +35,6 @@ jobs:
             - name: Install dependencies
               run: pnpm i
 
-            # Runs eslint
-            - name: Run eslint
-              run: pnpm lint
+            # Runs typescript
+            - name: Run tsc
+              run: tsc
