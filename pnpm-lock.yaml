@@ -50,6 +50,7 @@ specifiers:
   node-fetch: ^2.6.5
   passport: ^0.5.0
   passport-discord: ^0.1.4
+  prettier: ^2.5.1
   translate-google: ^1.5.0
   typescript: ^4.5.2
 
@@ -106,6 +107,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.5.0_eslint@8.4.0+typescript@4.5.2
   corde: 4.4.5_ffmpeg-static@4.4.0
   eslint: 8.4.0
+  prettier: 2.5.1
   typescript: 4.5.2
 
 packages:
@@ -2984,6 +2986,12 @@ packages:
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+    dev: true
+
+  /prettier/2.5.1:
+    resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
     dev: true
 
   /pretty-format/27.3.1:
