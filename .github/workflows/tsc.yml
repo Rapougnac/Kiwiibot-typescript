@@ -35,18 +35,9 @@ jobs:
             - name: Install dependencies
               run: pnpm i
 
+            - name: Rename config
+              run: mv configexample.ts config.ts
 
-            # Create config.ts
-            - name: Create config.ts
-              run: touch config.ts
-            
-            - name: Echo TEST
-              run: echo ${{ secrets.TEST }}
-            
-            - name: Echo AAA
-              run: ${{ secrets.PAF }}
-
-
-            # Runs typescript
-            # - name: Run tsc
-            #   run: tsc
+            Runs typescript
+            - name: Run tsc
+              run: tsc
