@@ -23,7 +23,7 @@
       <div class="col-sm-3" id="category">
         <div class="list-group" id="myList" role="tablist">
           <% for(const [i, category] of [..._client.categories].filter(c => c !== 'auto').entries()) { %>
-            <a class="list-group-item list-group-item-action <%= i === 0 ? 'active' : ''%> <%= category === 'nsfw' ? 'nsfw' : '' %>" data-bs-toggle="list" href="#<%= category %>" role="tab" aria-controls="<%= category %>" <%# category === 'nsfw' ? 'style="display: none;"' : '' %>><%= upperFirstButAcceptEmojis(beautifyCategories(category)); %></a>
+            <a class="list-group-item list-group-item-action <%= i === 0 ? 'active' : ''%> <%= category === 'nsfw' ? 'nsfw' : '' %>" data-bs-toggle="list" href="#<%= category %>" role="tab" aria-controls="<%= category %>"><%= upperFirstButAcceptEmojis(beautifyCategories(category)); %></a>
           <% }%>
         </div>
       </div>
