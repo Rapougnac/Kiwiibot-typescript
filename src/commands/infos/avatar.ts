@@ -90,12 +90,12 @@ export default class AvatarCommand extends Command {
                         ? member.user.displayAvatarURL({
                               size: 4096,
                               dynamic: true,
-                              format: 'webp',
+                              format: 'jpg',
                           })
                         : member.displayAvatarURL({
                               size: 4096,
                               dynamic: true,
-                              format: 'webp',
+                              format: 'jpg',
                           })
                 }) • [jpeg](${
                     member instanceof GuildMember
