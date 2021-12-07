@@ -38,3 +38,7 @@ jobs:
             # Runs eslint
             - name: Run eslint
               run: pnpm lint
+
+            # Runs ejslint
+            - name: Run ejslint
+              run: pnpm ejs-lint

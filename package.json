@@ -55,6 +55,7 @@
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.5.0",
         "corde": "^4.4.4",
+        "ejs-lint": "^1.2.1",
         "eslint": "^8.4.0",
         "prettier": "^2.5.1",
         "typescript": "^4.5.2"
@@ -63,7 +64,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "assets": "cpx 'src/assets/**' 'dist/src/assets/'",
         "build": "tsc",
-        "lint": "eslint . --ext .ts,.js"
+        "lint": "eslint . --ext .ts,.js",
+        "ejs-lint": "ejslint ./src/dashboard/**/*.ejs"
     },
     "author": "Rapougnac",
     "license": "MIT"
