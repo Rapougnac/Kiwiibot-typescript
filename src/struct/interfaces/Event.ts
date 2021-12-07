@@ -20,6 +20,7 @@ export interface Listener {
     once: () => void;
 }
 export interface EventConstructor {
+    // eslint-disable-next-line no-unused-vars
     new (client: KiwiiClient, options?: EventOptions): Event;
     readonly prototype: Event;
 }

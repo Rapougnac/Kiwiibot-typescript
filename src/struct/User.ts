@@ -7,7 +7,8 @@ Object.defineProperty(User.prototype, 'presence', {
                 return guild.presences.cache.get(this.id);
             }
         }
-        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore: Presence is protected.
         return new Presence(this.client, {
             user: {
                 id: this.id,
