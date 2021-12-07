@@ -2,7 +2,8 @@ import fetch from 'node-fetch';
 
 export const post = async (
     url: string,
-    body: object,
+    body: object
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any | { success: boolean; error: unknown }> => {
     try {
         const res = await fetch(url, {
