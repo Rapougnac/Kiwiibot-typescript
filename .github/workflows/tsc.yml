@@ -41,7 +41,10 @@ jobs:
               run: touch config.ts
             
             - name: Echo TEST
-              run: echo ${{ secrets.AAA }}
+              run: echo ${{ secrets.TEST }}
+            
+            - name: Echo AAA
+              run: ${{ secrets.PAF }}
 
 
             # Runs typescript
