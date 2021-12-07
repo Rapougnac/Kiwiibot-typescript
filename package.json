@@ -65,7 +65,7 @@
         "assets": "cpx 'src/assets/**' 'dist/src/assets/'",
         "build": "tsc",
         "lint": "eslint . --ext .ts,.js",
-        "ejs-lint": "ejslint ./src/dashboard/**/*.ejs"
+        "ejs-lint": "ejslint \"./src/dashboard/**/*.ejs\""
     },
     "author": "Rapougnac",
     "license": "MIT"
