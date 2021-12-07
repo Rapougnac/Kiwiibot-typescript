@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import {
     ClientOptions,
     PermissionString,
     PresenceStatusData,
 } from 'discord.js';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _ServerInfoCommand from '../../commands/infos/serverinfo';
 
 export interface Config {

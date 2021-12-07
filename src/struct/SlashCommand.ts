@@ -33,7 +33,7 @@ export default abstract class SlashCommand {
     }
 
     public execute(
-        ..._args: any
+        ..._args: never
     ): Promise<void | Message | string> | void | Message | string {
         throw new Error(`${this.name} dosen't have an execute() method!`);
     }
