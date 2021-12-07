@@ -53,7 +53,7 @@ export async function createTranscript(
         lastId = messages.last()?.id;
 
         if (
-            messages.size != 100 ||
+            messages.size !== 100 ||
             (options.limit > 0 && sumMessages.length >= options.limit)
         ) {
             break;
