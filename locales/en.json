@@ -780,5 +780,8 @@
 	},
 	"unload": {
 		"description": "unload.description"
+	},
+	"run": {
+		"description": "run.description"
 	}
 }
