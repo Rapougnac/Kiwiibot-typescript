@@ -54,8 +54,8 @@ export default class ThreeTousandYearsCommand extends Command {
                 }) as string,
             });
             const attachment = new MessageAttachment(buffer, '3000years.png');
-            setTimeout(() => m.delete(), 3000);
-            message.channel.send({ files: [attachment] });
+            setTimeout(() => void m.delete(), 3000);
+            await message.channel.send({ files: [attachment] });
         } else {
             const member = message.author;
             const m = await message.channel.send(
@@ -65,8 +65,8 @@ export default class ThreeTousandYearsCommand extends Command {
                 url: member.displayAvatarURL({ format: 'png', size: 2048 }),
             });
             const attachment = new MessageAttachment(buffer, '3000years.png');
-            setTimeout(() => m.delete(), 3000);
-            message.channel.send({ files: [attachment] });
+            setTimeout(() => void m.delete(), 3000);
+            await message.channel.send({ files: [attachment] });
         }
     }
 }

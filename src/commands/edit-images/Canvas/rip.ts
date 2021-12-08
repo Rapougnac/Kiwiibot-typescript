@@ -42,7 +42,7 @@ export default class RipCommand extends Command {
 
         if (User !== undefined && message.guild?.available) {
             try {
-                client.utils.loader.start({
+                await client.utils.loader.start({
                     length: 4,
                     time: 1000,
                     allowMessage: true,
@@ -80,7 +80,7 @@ export default class RipCommand extends Command {
             }
         } else {
             try {
-                client.utils.loader.start({
+                await client.utils.loader.start({
                     length: 4,
                     time: 1000,
                     allowMessage: true,

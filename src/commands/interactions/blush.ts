@@ -13,7 +13,7 @@ export default class BlushCommand extends Command {
         });
     }
 
-    public execute(): void {
+    public async execute(): Promise<void> {
         const result = gifu('blush');
 
         const blushEmbed = new MessageEmbed()
@@ -25,6 +25,6 @@ export default class BlushCommand extends Command {
             .setColor('#202225')
             .setImage(result)
             .setURL(result);
-        this.message?.channel.send({ embeds: [blushEmbed] });
+        await this.message?.channel.send({ embeds: [blushEmbed] });
     }
 }

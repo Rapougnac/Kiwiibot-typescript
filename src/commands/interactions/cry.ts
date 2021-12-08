@@ -13,7 +13,7 @@ export default class CryCommand extends Command {
         });
     }
 
-    public execute(_client: Client, message: Message) {
+    public async execute(_client: Client, message: Message) {
         const gif = gifu('cry');
         const embed = new MessageEmbed()
             .setColor('#202225')
@@ -23,6 +23,6 @@ export default class CryCommand extends Command {
                     author: message.author.tag,
                 }) ?? 'Cry'
             );
-        message.channel.send({ embeds: [embed] });
+        await message.channel.send({ embeds: [embed] });
     }
 }

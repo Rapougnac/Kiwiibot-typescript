@@ -18,10 +18,10 @@ export default class AvatarCommand extends SlashCommand {
         });
     }
 
-    public async execute(
+    public execute(
         interaction: CommandInteraction,
         { user }: { user: User }
-    ): Promise<void> {
+    ): void {
         if (!user) user = interaction.user;
         const member = interaction.guild?.members.cache.get(user.id);
         const embed = new MessageEmbed()

@@ -15,7 +15,7 @@ export default class InRoleCommand extends Command {
             guildOnly: true,
         });
     }
-    async execute(_client: Client, message: Message, args: string[]) {
+    public async execute(_client: Client, message: Message, args: string[]) {
         if (!message.guild) return;
         let role =
             message.mentions.roles.first() ||
@@ -56,6 +56,6 @@ export default class InRoleCommand extends Command {
             )
             .setColor(role.color)
             .setDescription(`\`\`\`css\n${memRole}\`\`\``);
-        message.channel.send({ embeds: [embed] });
+        await message.channel.send({ embeds: [embed] });
     }
 }

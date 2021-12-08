@@ -23,7 +23,7 @@ export default class SendPinsCommand extends Command {
             ...(await message.channel.messages.fetchPinned()),
         ].flat();
         pinned.reverse();
-        message.channel.send(
+        await message.channel.send(
             pinned
                 .map(
                     (pin, i) =>

@@ -35,8 +35,7 @@ export default class MessageEvent extends Event {
             Object.defineProperty(message, 'guild', {
                 value: {
                     i18n,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    //@ts-ignore: GuildMemberManager is private, and without it, it won't work, so we ignore it here for now (it's not a big deal) and we'll fix it later (I hope) 😔
+                    //@ts-expect-error: GuildMemberManager is private, and without it, it won't work, so we ignore it here for now (it's not a big deal) and we'll fix it later (I hope) 😔
                     members: new GuildMemberManager(message.guild),
                 },
             });
@@ -97,14 +96,18 @@ export default class MessageEvent extends Event {
         if (index === null || index === undefined) return;
         if (this.client.isOwner(author)) {
             try {
-                commandToExecute.execute(this.client, message, args);
+                void commandToExecute.execute(this.client, message, args);
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
                 // eslint-disable-next-line no-console
                 console.error(error);
-                message.reply(
-                    message.guild?.i18n.__mf('ERROR_MESSAGE.msg') + error.name
-                );
+                message
+                    .reply(
+                        `${message.guild?.i18n.__mf('ERROR_MESSAGE.msg')} ${
+                            error.name
+                        }`
+                    )
+                    .catch(() => []);
             }
         } else {
             if (!message.content.toLowerCase().startsWith(prefix[index] ?? ''))
@@ -134,14 +137,18 @@ export default class MessageEvent extends Event {
                 return message.channel.send({ embeds: [embed] });
             } else {
                 try {
-                    commandToExecute.execute(this.client, message, args);
+                    void commandToExecute.execute(this.client, message, args);
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (error: any) {
                     // eslint-disable-next-line no-console
                     console.error(error);
-                    message.reply(
-                        message.guild?.i18n.__mf('ERROR_MESSAGE') + error.name
-                    );
+                    message
+                        .reply(
+                            `${message.guild?.i18n.__mf('ERROR_MESSAGE')} ${
+                                error.name
+                            }`
+                        )
+                        .catch(() => []);
                 }
             }
         }

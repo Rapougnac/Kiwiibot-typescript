@@ -17,7 +17,7 @@ export default class YouDiedCommand extends Command {
             img: 'https://cdn-icons-png.flaticon.com/512/3782/3782105.png',
         });
     }
-    async execute(_client: Client, message: Message, args: string[]) {
+    public async execute(_client: Client, message: Message, args: string[]) {
         const base = await loadImage(
             join(process.cwd(), 'src', 'assets', 'images', 'you-died.png')
         );
@@ -63,6 +63,6 @@ export default class YouDiedCommand extends Command {
             canvas.toBuffer(),
             'you-died.png'
         );
-        message.channel.send({ files: [attachment] });
+        await message.channel.send({ files: [attachment] });
     }
 }

@@ -21,7 +21,7 @@ export default class PHCommentCommand extends Command {
             nsfw: true,
         });
     }
-    async execute(_client: Client, message: Message, args: string[]) {
+    public async execute(_client: Client, message: Message, args: string[]) {
         if (!message.mentions.members) return;
         if (!message.guild) return;
         const User =
@@ -47,7 +47,7 @@ export default class PHCommentCommand extends Command {
                 )}&username=${encodeURIComponent(User.user.username)}`
             );
             const att = new MessageAttachment(data.message);
-            message.channel.send({ files: [att] });
+            await message.channel.send({ files: [att] });
         } else {
             const query = args.join(' ');
             const data: {
@@ -58,7 +58,7 @@ export default class PHCommentCommand extends Command {
                 )}&username=${encodeURIComponent(message.author.username)}`
             );
             const att = new MessageAttachment(data.message);
-            message.channel.send({ files: [att] });
+            await message.channel.send({ files: [att] });
         }
     }
 }

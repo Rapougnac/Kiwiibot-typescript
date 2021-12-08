@@ -28,7 +28,7 @@ const confirmation = async (
     // eslint-disable-next-line no-await-in-loop
     for (const reaction of validReactions) await message.react(reaction);
     const filter = (reaction: MessageReaction, user: User) =>
-        validReactions.includes(reaction.emoji.name as string) &&
+        validReactions.includes(reaction.emoji.name ?? '') &&
         user.id === author.id;
     return message
         .awaitReactions({ filter, max: 1, time })

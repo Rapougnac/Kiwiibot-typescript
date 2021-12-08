@@ -57,6 +57,6 @@ export default class FirstMessageCommand extends Command {
                 msg.createdAt.toLocaleDateString(),
                 true
             );
-        message.channel.send({ embeds: [embed] });
+        await message.channel.send({ embeds: [embed] });
     }
 }

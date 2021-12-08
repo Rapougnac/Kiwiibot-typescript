@@ -56,7 +56,7 @@ export default class LoadingBar {
                     );
                 } else {
                     // Edit message
-                    message.edit(
+                    await message.edit(
                         `\r${start}${Full}${Empty}${end} ${
                             Number.isInteger(percentage)
                                 ? percentage
@@ -67,7 +67,7 @@ export default class LoadingBar {
                 // If this is the end of the progress, and deleteMessage has been enabled, delete the message
                 if (i === length && deleteMessage && allowMessage && message) {
                     setTimeout(() => {
-                        message?.delete();
+                        message?.delete().catch(() => []);
                     }, timeoutMessage);
                 }
                 await LoadingBar.wait(time);

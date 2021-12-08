@@ -18,7 +18,7 @@ export default class InteractionCreate extends Event {
             name: 'interactionCreate',
         });
     }
-    public override async execute(interaction: Interaction) {
+    public override execute(interaction: Interaction) {
         if (!interaction.isCommand()) return;
 
         if (!this.client.slashs.has(interaction.commandName)) return;
@@ -43,15 +43,14 @@ export default class InteractionCreate extends Event {
             Object.defineProperty(interaction, 'guild', {
                 value: {
                     i18n,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore: Same error in the messageCreate event
+                    // @ts-expect-error: Same error in the messageCreate event
                     members: new GuildMemberManager(interaction.guild),
                 },
             });
         }
         if (!args) {
             try {
-                commandInteraction?.execute(interaction);
+                void commandInteraction?.execute(interaction);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (e: any) {
                 // eslint-disable-next-line no-console
@@ -65,7 +64,7 @@ export default class InteractionCreate extends Event {
             }
         }
         try {
-            commandInteraction?.execute(interaction, args);
+            void commandInteraction?.execute(interaction, args);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
             // eslint-disable-next-line no-console

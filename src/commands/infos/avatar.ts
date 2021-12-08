@@ -157,6 +157,6 @@ export default class AvatarCommand extends Command {
                     ? member.displayHexColor
                     : member.hexAccentColor || 'GREY'
             );
-        message.channel.send({ embeds: [embed] });
+        await message.channel.send({ embeds: [embed] });
     }
 }

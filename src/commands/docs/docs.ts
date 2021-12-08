@@ -46,27 +46,35 @@ export default class DocsCommand extends Command {
             const url = `https://djsdocs.sorta.moe/v2/embed?src=${source}&q=${encodeURIComponent(
                 query
             )}`;
-            axios.get(url).then(({ data }) => {
-                if (data) message.channel.send({ embeds: [data] });
-                else
-                    return message.channel.send(
-                        message.guild?.i18n.__mf('docs.docs_fetch_error') ?? ''
-                    );
-            });
+            axios
+                .get(url)
+                .then(async ({ data }) => {
+                    if (data) await message.channel.send({ embeds: [data] });
+                    else
+                        return await message.channel.send(
+                            message.guild?.i18n.__mf('docs.docs_fetch_error') ??
+                                ''
+                        );
+                })
+                .catch(() => []);
         } else {
             source = 'stable';
             const url = `https://djsdocs.sorta.moe/v2/embed?src=${source}&q=${encodeURIComponent(
                 query
             )}`;
-            axios.get(url).then(({ data }) => {
-                if (data) {
-                    message.channel.send({ embeds: [data] });
-                } else {
-                    return message.channel.send(
-                        message.guild?.i18n.__mf('docs.docs_fetch_error') ?? ''
-                    );
-                }
-            });
+            axios
+                .get(url)
+                .then(async ({ data }) => {
+                    if (data) {
+                        await message.channel.send({ embeds: [data] });
+                    } else {
+                        return message.channel.send(
+                            message.guild?.i18n.__mf('docs.docs_fetch_error') ??
+                                ''
+                        );
+                    }
+                })
+                .catch(() => []);
         }
     }
 }

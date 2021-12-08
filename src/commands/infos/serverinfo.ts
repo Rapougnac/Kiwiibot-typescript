@@ -155,7 +155,7 @@ export default class ServerInfoCommand extends Command {
                     format: 'png',
                 }) ?? ''
             );
-        message.channel.send({ embeds: [embedserv] });
+        await message.channel.send({ embeds: [embedserv] });
     }
 }
 

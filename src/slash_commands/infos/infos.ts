@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { MessageEmbed, User, Role, CommandInteraction } from 'discord.js';
 import SlashCommand from '../../struct/SlashCommand';
 import type KiwiiClient from '../../struct/Client';
@@ -63,6 +62,7 @@ export default class InfosCommand extends SlashCommand {
             subcommand: 'user' | 'server' | 'role';
         }
     ) {
+        if (!interaction.guild) return;
         switch (subcommand) {
             case 'user': {
                 let { target } = user;
@@ -124,26 +124,25 @@ export default class InfosCommand extends SlashCommand {
 
                 switch (status) {
                     case 'dnd': {
-                        Status = interaction.guild!.i18n.__mf('userinfo.dnd');
+                        Status = interaction.guild.i18n.__mf('userinfo.dnd');
                         break;
                     }
                     case 'online': {
-                        Status =
-                            interaction.guild!.i18n.__mf('userinfo.online');
+                        Status = interaction.guild.i18n.__mf('userinfo.online');
                         break;
                     }
                     case 'offline': {
                         Status =
-                            interaction.guild!.i18n.__mf('userinfo.offline');
+                            interaction.guild.i18n.__mf('userinfo.offline');
                         break;
                     }
                     case 'idle': {
-                        Status = interaction.guild!.i18n.__mf('userinfo.idle');
+                        Status = interaction.guild.i18n.__mf('userinfo.idle');
                         break;
                     }
                     default: {
                         Status =
-                            interaction.guild!.i18n.__mf('userinfo.offline');
+                            interaction.guild.i18n.__mf('userinfo.offline');
                         break;
                     }
                 }
@@ -232,7 +231,7 @@ export default class InfosCommand extends SlashCommand {
                             ),
                             member?.premiumSince
                                 ? `${moment(member.premiumSince).format(
-                                      `[${interaction.guild!.i18n.__mf(
+                                      `[${interaction.guild.i18n.__mf(
                                           'common.on'
                                       )}] DD/MM/YYYY [${interaction.guild.i18n.__mf(
                                           'common.at'
@@ -265,9 +264,9 @@ export default class InfosCommand extends SlashCommand {
                         )
                         .addField(
                             interaction.guild.i18n.__mf('userinfo.roles', {
-                                role: member!.roles.cache.size - 1,
+                                role: (member?.roles.cache.size ?? 1) - 1,
                             }),
-                            member!.roles.cache.size - 1 <= 0
+                            (member?.roles.cache.size ?? 1) - 1 <= 0
                                 ? interaction.guild.i18n.__mf(
                                       'userinfo.no_roles'
                                   )
@@ -304,7 +303,7 @@ export default class InfosCommand extends SlashCommand {
                 } else {
                     const embeduser = new MessageEmbed()
                         .setAuthor(
-                            interaction.guild!.i18n.__mf('userinfo.user', {
+                            interaction.guild.i18n.__mf('userinfo.user', {
                                 tag: target.tag,
                             }),
                             target.displayAvatarURL({
@@ -316,38 +315,36 @@ export default class InfosCommand extends SlashCommand {
                         )
                         .setDescription(userFlags.join(' '))
                         .addField(
-                            interaction.guild!.i18n.__mf('userinfo.name'),
+                            interaction.guild.i18n.__mf('userinfo.name'),
                             target.tag,
                             true
                         )
                         .addField(
-                            interaction.guild!.i18n.__mf(
+                            interaction.guild.i18n.__mf(
                                 'userinfo.account_creation_date'
                             ),
                             `${moment(target.createdAt).format(
-                                `[${interaction.guild!.i18n.__mf(
+                                `[${interaction.guild.i18n.__mf(
                                     'common.on'
-                                )}] DD/MM/YYYY [${interaction.guild!.i18n.__mf(
+                                )}] DD/MM/YYYY [${interaction.guild.i18n.__mf(
                                     'common.at'
                                 )}] HH:mm:ss`
                             )}\n\`${moment(target.createdAt, 'DD/MM/YYYY')
-                                .locale(interaction.guild!.i18n.getLocale())
+                                .locale(interaction.guild.i18n.getLocale())
                                 .fromNow()}\``,
                             true
                         )
                         .addField('Presence', Status, true)
                         .addField(
-                            interaction.guild!.i18n.__mf('userinfo.device'),
+                            interaction.guild.i18n.__mf('userinfo.device'),
                             device,
                             true
                         )
                         .addField(
-                            interaction.guild!.i18n.__mf('userinfo.type'),
+                            interaction.guild.i18n.__mf('userinfo.type'),
                             target.bot
                                 ? 'Bot'
-                                : interaction.guild!.i18n.__mf(
-                                      'userinfo.user2'
-                                  ),
+                                : interaction.guild.i18n.__mf('userinfo.user2'),
                             true
                         )
                         .setThumbnail(
@@ -514,7 +511,7 @@ export default class InfosCommand extends SlashCommand {
                             trimArray(
                                 interaction.guild.roles.cache
                                     .filter(
-                                        (r) => r.id !== interaction.guild!.id
+                                        (r) => r.id !== interaction.guild?.id
                                     )
                                     .sort(
                                         (A, B) => B.rawPosition - A.rawPosition
@@ -534,7 +531,8 @@ export default class InfosCommand extends SlashCommand {
                                 dynamic: true,
                                 size: 4096,
                                 format: 'png',
-                            })!
+                            }) ??
+                                'https://cdn.discordapp.com/embed/avatars/0.png'
                         );
                     return interaction.reply({ embeds: [embedserv] });
                 } else {

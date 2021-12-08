@@ -137,6 +137,6 @@ export default class MDNCommand extends Command {
                           value: no,
                       })
             );
-        message.channel.send({ embeds: [embed] });
+        await message.channel.send({ embeds: [embed] });
     }
 }

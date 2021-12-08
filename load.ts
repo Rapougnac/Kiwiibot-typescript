@@ -30,6 +30,7 @@ const loadLanguages = async (client: KiwiiClient): Promise<void> => {
     } catch (e: any) {
         // eslint-disable-next-line no-console
         console.error(
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             `⚠️[DATABASE ERROR] The database responded with the following error: ${e.name}\n${e}`
         );
     }
@@ -53,6 +54,7 @@ const loadPrefix = async (client: KiwiiClient): Promise<void> => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         return Promise.reject(
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             `⚠️[DATABASE ERROR] The database responded with the following error: ${error.name}\n${error}`
         );
     }

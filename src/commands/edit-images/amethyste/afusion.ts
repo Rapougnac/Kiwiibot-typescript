@@ -61,7 +61,7 @@ export default class AfusionCommand extends Command {
             }),
         });
         const attachment = new MessageAttachment(buffer, 'fusion.png');
-        setTimeout(() => m.delete(), 3000);
-        message.channel.send({ files: [attachment] });
+        setTimeout(() => void m.delete(), 3000);
+        await message.channel.send({ files: [attachment] });
     }
 }

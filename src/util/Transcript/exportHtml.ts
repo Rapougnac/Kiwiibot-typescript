@@ -42,6 +42,7 @@ export default function generateTranscript(
     DOMPurify.setConfig({
         ALLOWED_TAGS: [],
     });
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const { sanitize: xss } = DOMPurify;
 
     (

@@ -248,9 +248,11 @@ export default class UserInfoCommand extends Command {
                     }) ?? ''
                 );
             }
-            message.channel.send({ embeds: [embeduser] });
+            await message.channel.send({ embeds: [embeduser] });
         } else {
-            message.reply(message.guild.i18n.__mf('userinfo.cant_find_member'));
+            await message.reply(
+                message.guild.i18n.__mf('userinfo.cant_find_member')
+            );
         }
     }
 }

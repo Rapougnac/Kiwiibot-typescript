@@ -82,7 +82,7 @@ export default class TrumpCommand extends Command {
         }
         encoder.finish();
         const buffer = await Canvas.streamToArray(stream);
-        client.utils.loader.start({
+        await client.utils.loader.start({
             length: 4,
             time: 1250,
             allowMessage: true,

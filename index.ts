@@ -17,5 +17,5 @@ const client = new KiwiiClient({
     },
 });
 
-(async () => await client.connect())();
+(async () => await client.connect())().catch(() => []);
 client.start();

@@ -56,9 +56,9 @@ export default class SetPrefixCommand extends Command {
                         GuildID: message.guild?.id,
                         Prefix: prefix,
                     });
-                    data.save();
+                    await data.save();
                     if (message.guild) message.guild.prefix = prefix;
-                    message.channel.send(
+                    await message.channel.send(
                         message.guild?.i18n.__mf('setprefix.updated_prefix', {
                             prefix: prefix,
                         }) ?? 'Updated prefix'
@@ -68,9 +68,9 @@ export default class SetPrefixCommand extends Command {
                         GuildID: message.guild?.id,
                         Prefix: prefix,
                     });
-                    data.save();
+                    await data.save();
                     if (message.guild) message.guild.prefix = prefix;
-                    message.channel.send(
+                    await message.channel.send(
                         message.guild?.i18n.__mf('setprefix.new_prefix', {
                             prefix: prefix,
                         }) ?? 'New prefix'

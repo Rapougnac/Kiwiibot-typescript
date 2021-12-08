@@ -60,7 +60,7 @@ export default class RunCommand extends Command {
                 args.join(' ')
             );
             if (res.run.stdout.length < 1900) {
-                message.channel.send({
+                await message.channel.send({
                     content: `Here are your result ${message.author} \`(using ${
                         res.language
                     } - v${res.version})\`\n\`\`\`${res.language}\n${
@@ -80,12 +80,13 @@ export default class RunCommand extends Command {
                     maxLength: 1900,
                     char: '\n',
                 });
-                splittedRes.forEach((s, i) =>
-                    message.channel.send(
-                        i !== 0
-                            ? `\`\`\`${res.language}\n${s}\n\`\`\``
-                            : `Here are your result ${message.author} \`(using ${res.language} - v${res.version})\`\n\`\`\`${res.language}\n${s}\n\`\`\``
-                    )
+                splittedRes.forEach(
+                    (s, i) =>
+                        void message.channel.send(
+                            i !== 0
+                                ? `\`\`\`${res.language}\n${s}\n\`\`\``
+                                : `Here are your result ${message.author} \`(using ${res.language} - v${res.version})\`\n\`\`\`${res.language}\n${s}\n\`\`\``
+                        )
                 );
             }
         } else {

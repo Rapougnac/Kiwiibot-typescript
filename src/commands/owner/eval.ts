@@ -46,7 +46,7 @@ export default class EvalCommand extends Command {
                 }
             } else return message.channel.send(`\`\`\`js\n${result}\n\`\`\``);
         } catch (e: unknown) {
-            message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(e as string)}\n\`\`\``);
+            await message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(e as string)}\n\`\`\``);
         }
     }
 }

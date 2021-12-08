@@ -88,7 +88,7 @@ export default class AnimeCommand extends Command {
             const continued = await new Promise((resolve) => {
                 let count: number;
                 collector
-                    .on('collect', async (m) => {
+                    .on('collect', (m) => {
                         const arg = m.content.toLowerCase().trim().split(/ +/g);
                         number = Number(arg[0]);
                         if (Number.isNaN(number) || !number) resolve(false);

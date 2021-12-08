@@ -31,6 +31,6 @@ export default class PingCommand extends Command {
                 message.guild?.i18n.getLocale()
             ),
         });
-        msg.edit(string ?? '🏓 Pong!');
+        await msg.edit(string ?? '🏓 Pong!');
     }
 }

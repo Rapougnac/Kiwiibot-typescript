@@ -21,10 +21,13 @@ function unhandledRejection(
         return Promise.resolve(error);
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore: Constant id, so it's always a TextChannel
+    //@ts-expect-error: Constant id, so it's always a TextChannel
     return channel.send(
-        `\\🛠 ${error.name} caught!\n\`The ${timedate} at ${timehrs}\`\n\`\`\`xl\n${error.stack}\`\`\``
+        `\\🛠 ${
+            error.name
+        } caught!\n\`The ${timedate} at ${timehrs}\`\n\`\`\`xl\n${
+            error.stack ?? 'No stack thrown'
+        }\`\`\``
     );
 }
 
@@ -46,10 +49,9 @@ function uncaughtException(
         return Promise.resolve(error);
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore: Constant id, so it's always TextChannel
+    //@ts-expect-error: Constant id, so it's always TextChannel
     return channel.send(
-        `\\🛠 ${error.name} caught!\n\`At ${timedate} at ${timehrs}\`\n\`\`\`xl\n${error.stack}\`\`\``
+        `\\🛠 ${error.name} caught!\n\`At ${timedate} at ${timehrs}\`\n\`\`\`xl\n${error.stack ?? 'No stack thrown'}\`\`\``
     );
 }
 

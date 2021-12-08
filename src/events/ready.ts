@@ -44,9 +44,9 @@ export default class ReadyEvent extends Event {
             `There's a lot of statuses no?`,
             `Ugh, Kyofu, it rhymes with tofu, so she has to be a fool`,
         ];
-        setInterval(async () => {
+        setInterval(() => {
             const i = statuses[Math.floor(Math.random() * statuses.length)];
-            this.client.user?.setPresence({
+            void this.client.user?.setPresence({
                 activities: [
                     {
                         name: `${this.client.prefix}help | ${i}`,
@@ -74,20 +74,22 @@ export default class ReadyEvent extends Event {
             `${timedate} ${timehrs}`
         );
         // Dashboard
-        await dashboard(this.client);
+        dashboard(this.client);
         const commands = await this.loadSlashs();
-        commands.forEach(async (command) => {
-            if (!command) return;
-            if (!command.global) {
-                const guild = await this.client.guilds.fetch(
-                    '911736666551640075'
-                );
-                guild.commands.create(command.command.toJSON());
-            } else {
-                this.client.application?.commands.create(
-                    command.command.toJSON()
-                );
-            }
+        commands.forEach((command) => {
+            void (async () => {
+                if (!command) return;
+                if (!command.global) {
+                    const guild = await this.client.guilds.fetch(
+                        '911736666551640075'
+                    );
+                    guild.commands.create(command.command.toJSON());
+                } else {
+                    this.client.application?.commands.create(
+                        command.command.toJSON()
+                    );
+                }
+            })();
         });
     }
 
@@ -97,52 +99,54 @@ export default class ReadyEvent extends Event {
         const files = glob.sync('./dist/src/slash_commands/**/*.js');
         const commands: [{ global?: boolean; command: SlashCommand }?] = [];
         try {
-            files.forEach(async (file) => {
-                const filePath = resolve(process.cwd(), file);
-                let SlashCommand: SlashCommandConstructor = await import(
-                    `${filePath}`
-                );
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                SlashCommand = (SlashCommand as any).default;
-                if (this.client.utils.isClass(SlashCommand)) {
-                    const command = new SlashCommand(this.client);
-                    if (command.global) {
-                        // this.client.interactionManager.registerSlashCommands(
-                        //     command as any
+            files.forEach((file) => {
+                void (async () => {
+                    const filePath = resolve(process.cwd(), file);
+                    let SlashCommand: SlashCommandConstructor = await import(
+                        `${filePath}`
+                    );
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    SlashCommand = (SlashCommand as any).default;
+                    if (this.client.utils.isClass(SlashCommand)) {
+                        const command = new SlashCommand(this.client);
+                        if (command.global) {
+                            // this.client.interactionManager.registerSlashCommands(
+                            //     command as any
+                            // );
+                            commands.push({ global: true, command });
+                        } else {
+                            // this.client.interactionManager.registerSlashCommands(
+                            //     command as any,
+                            //     '911736666551640075'
+                            // );
+                            commands.push({ global: false, command });
+                        }
+                        this.client.slashs.set(command.name, command);
+                        // console.log(
+                        //     `Command posted: ${command!.name} from ${resolve(
+                        //         process.cwd() + sep + file
+                        //     )} [${command!.global ? 'global' : 'guild'}]`
                         // );
-                        commands.push({ global: true, command });
-                    } else {
-                        // this.client.interactionManager.registerSlashCommands(
-                        //     command as any,
-                        //     '911736666551640075'
-                        // );
-                        commands.push({ global: false, command });
                     }
-                    this.client.slashs.set(command.name, command);
-                    // console.log(
-                    //     `Command posted: ${command!.name} from ${resolve(
-                    //         process.cwd() + sep + file
-                    //     )} [${command!.global ? 'global' : 'guild'}]`
-                    // );
-                }
-            });
+                })();
 
-            // const globalCommands = await this.client.application?.commands.fetch();
-            // const guildCommands = await this.client.guilds.cache
-            //     .get('895600122510069801')
-            //     ?.commands.fetch();
-            // globalCommands?.toJSON().forEach((globCmd: any) => {
-            //     // console.log(
-            //     //     `Global command has been loaded: ${globCmd.name} | [${globCmd.id}]`
-            //     // );
-            //     console.log(globCmd);
-            // });
-            // guildCommands?.toJSON().forEach((guildCmd: any) => {
-            //     // console.log(
-            //     //     `Guild command has been loaded: ${guildCmd.name} | [${guildCmd.id}]`
-            //     // );
-            //     console.log(guildCmd);
-            // });
+                // const globalCommands = await this.client.application?.commands.fetch();
+                // const guildCommands = await this.client.guilds.cache
+                //     .get('895600122510069801')
+                //     ?.commands.fetch();
+                // globalCommands?.toJSON().forEach((globCmd: any) => {
+                //     // console.log(
+                //     //     `Global command has been loaded: ${globCmd.name} | [${globCmd.id}]`
+                //     // );
+                //     console.log(globCmd);
+                // });
+                // guildCommands?.toJSON().forEach((guildCmd: any) => {
+                //     // console.log(
+                //     //     `Guild command has been loaded: ${guildCmd.name} | [${guildCmd.id}]`
+                //     // );
+                //     console.log(guildCmd);
+                // });
+            });
         } catch (e) {
             return Promise.reject(e);
         }

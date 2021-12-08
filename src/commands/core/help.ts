@@ -144,7 +144,7 @@ export default class HelpCommand extends Command {
                         : ''
                 );
             if (this.help.img) embed.setThumbnail(this.help.img);
-            message.channel.send({ embeds: [embed] });
+           await message.channel.send({ embeds: [embed] });
         } else {
             const command =
                 this.client.commands.get(args.join(' ').toLowerCase()) ||

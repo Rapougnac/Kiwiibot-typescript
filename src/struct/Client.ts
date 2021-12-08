@@ -155,64 +155,71 @@ export default class KiwiiClient extends Client {
                 );
             }
         }
-        files.forEach(async (file) => {
-            try {
-                const filePath = path.resolve(
-                    `${process.cwd()}${path.sep}${file}`
-                );
-                let Command: ConstructorCommand = await import(`${filePath}`);
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                Command = (Command as any).default;
-                if (this.utils.isClass(Command)) {
-                    const command: Command = new Command(this);
-                    if (this.commands.has(command.help.name)) {
-                        // eslint-disable-next-line no-console
-                        console.error(
-                            new Error(
-                                `Command name duplicate: ${command.help.name}`
-                            ).stack
-                        );
-                        return process.exit(1);
-                    }
-                    this.commands.set(command.help.name, command);
-                    if (command.help.category === '' || !command.help.category)
-                        command.help.category = 'unspecified';
-                    this.categories.add(command.help.category);
+        files.forEach((file) => {
+            void (async () => {
+                try {
+                    const filePath = path.resolve(
+                        `${process.cwd()}${path.sep}${file}`
+                    );
+                    let Command: ConstructorCommand = await import(
+                        `${filePath}`
+                    );
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    Command = (Command as any).default;
+                    if (this.utils.isClass(Command)) {
+                        const command: Command = new Command(this);
+                        if (this.commands.has(command.help.name)) {
+                            // eslint-disable-next-line no-console
+                            console.error(
+                                new Error(
+                                    `Command name duplicate: ${command.help.name}`
+                                ).stack
+                            );
+                            return process.exit(1);
+                        }
+                        this.commands.set(command.help.name, command);
+                        if (
+                            command.help.category === '' ||
+                            !command.help.category
+                        )
+                            command.help.category = 'unspecified';
+                        this.categories.add(command.help.category);
 
-                    Array.from(this.categories).forEach((category) => {
-                        this.mappedCategories.set(category, [
-                            this.commands.filter(
-                                (c) => c.help.category === category
-                            ),
-                        ]);
+                        Array.from(this.categories).forEach((category) => {
+                            this.mappedCategories.set(category, [
+                                this.commands.filter(
+                                    (c) => c.help.category === category
+                                ),
+                            ]);
 
-                        this.mappedCategories.set(category, [
-                            category,
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            ...(this.mappedCategories.get(category) as any),
-                        ]);
-                    });
-
-                    if (command.config.aliases) {
-                        command.config.aliases.forEach((alias) => {
-                            if (this.aliases.has(alias)) {
-                                // eslint-disable-next-line no-console
-                                console.error(
-                                    new Error(
-                                        `Alias name duplicate: ${command.config.aliases}`
-                                    ).stack
-                                );
-                                return process.exit(1);
-                            } else {
-                                this.aliases.set(alias, command);
-                            }
+                            this.mappedCategories.set(category, [
+                                category,
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                ...(this.mappedCategories.get(category) as any),
+                            ]);
                         });
+
+                        if (command.config.aliases) {
+                            command.config.aliases.forEach((alias) => {
+                                if (this.aliases.has(alias)) {
+                                    // eslint-disable-next-line no-console
+                                    console.error(
+                                        new Error(
+                                            `Alias name duplicate: ${command.config.aliases}`
+                                        ).stack
+                                    );
+                                    return process.exit(1);
+                                } else {
+                                    this.aliases.set(alias, command);
+                                }
+                            });
+                        }
                     }
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.error(error);
                 }
-            } catch (error) {
-                // eslint-disable-next-line no-console
-                console.error(error);
-            }
+            })();
         });
 
         Console.success(`Loaded ${files.length} commands`);
@@ -233,29 +240,32 @@ export default class KiwiiClient extends Client {
             }
         }
         files = files.filter((file) => file.endsWith('.js'));
-        files.forEach(async (file) => {
-            let Event: EventConstructor = await import(
-                `${process.cwd()}${sep}dist${sep}src${sep}events${sep}${file}`
-            );
-            Event = (Event as any).default;
-            if (this.utils.isClass(Event)) {
-                const event = new Event(this);
-                this.events.set(event.name, event);
-                (event.emitter as any)[event.type](event.name, (...args: any) =>
-                    event.execute(...args)
+        files.forEach((file) => {
+            void (async () => {
+                let Event: EventConstructor = await import(
+                    `${process.cwd()}${sep}dist${sep}src${sep}events${sep}${file}`
                 );
-                if (event.name) {
-                    evts.push({
-                        name: event.name,
-                        state: '🟢Ready',
-                    });
-                } else {
-                    evts.push({
-                        name: event.name,
-                        state: '❌ERR!',
-                    });
+                Event = (Event as any).default;
+                if (this.utils.isClass(Event)) {
+                    const event = new Event(this);
+                    this.events.set(event.name, event);
+                    (event.emitter as any)[event.type](
+                        event.name,
+                        (...args: any) => event.execute(...args)
+                    );
+                    if (event.name) {
+                        evts.push({
+                            name: event.name,
+                            state: '🟢Ready',
+                        });
+                    } else {
+                        evts.push({
+                            name: event.name,
+                            state: '❌ERR!',
+                        });
+                    }
                 }
-            }
+            })();
         });
         setTimeout(() => Console.table(evts), 500);
         return this;
@@ -303,18 +313,16 @@ export default class KiwiiClient extends Client {
                     if (args[0].message === 'Unknown User') return;
                     // eslint-disable-next-line no-console
                     console.error(args[0].stack);
-                    return ProcessEvent(
+                    return void ProcessEvent(
                         event as 'uncaughtException' | 'unhandledRejection',
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
+                        // @ts-expect-error: Same as below
                         args,
                         this
                     );
                 } else {
-                    return ProcessEvent(
+                    return void ProcessEvent(
                         event as 'uncaughtException' | 'unhandledRejection',
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
+                        // @ts-expect-error: Ugn, types...
                         args,
                         this
                     );
@@ -333,7 +341,7 @@ export default class KiwiiClient extends Client {
         if (this.config.database.enable) {
             this.mongoInit();
         } else {
-            mongoose.disconnect();
+            void mongoose.disconnect();
             Console.warn(
                 'Database is not enabled! Some commands may cause dysfunctions, please active it in the config.json!'
             );

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/prefer-ts-expect-error */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
     UserFlags,
@@ -54,9 +56,9 @@ function textTruncate(str = '', length = 100, end = '...'): string {
  */
 function ordinalize(n = 0): string {
     return (
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        Number(n) + ['st', 'nd', 'rd'][(n / 10) % 10 ^ 1 && n % 10]! ||
-        `${Number(n)}th`
+        `${Number(n)} ${
+            ['st', 'nd', 'rd'][(n / 10) % 10 ^ 1 && n % 10] ?? 'th'
+        }` || `${Number(n)}th`
     );
 }
 
@@ -560,7 +562,7 @@ function upperFirstButAcceptEmojis(str: string): string {
         str = str[0].toUpperCase() + str.slice(1);
     } else if (emoji?.[0] && str[0]) {
         str = str.slice(emoji[0].length);
-        str = str[0]?.toUpperCase() + str.slice(1);
+        str = `${str[0]?.toUpperCase() ?? ''} ${str.slice(1)}`;
         str = emoji[0] + str;
     }
     return str;
@@ -616,7 +618,9 @@ function parseDate(date: string, reverse?: boolean): string {
         Dec: 12,
     };
 
-    const fullDate = `${year}-${months[month as Months]}-${day}`;
+    const fullDate = `${year ?? '1900'}-${months[month as Months] ?? '01'}-${
+        day ?? '01'
+    }`;
 
     const toSplit = fullDate.split('-');
     const reversed = toSplit.reverse();
@@ -720,6 +724,7 @@ function displayAvatarURL(
 
 function safeEval(code: string): string {
     // All the ts-ignore, because first I don't know how to type this properly, and second, "this" is typed as any.
+    // eslint-disable-next-line @typescript-eslint/no-implied-eval
     const fn = new Function('global', 'process', `return ${code}`);
     (function () {
         // @ts-ignore
@@ -734,6 +739,7 @@ function safeEval(code: string): string {
             this[key].constructor = undefined;
         });
     })();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     return fn.bind(Function)(code);
 }
 

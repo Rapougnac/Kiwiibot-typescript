@@ -41,11 +41,11 @@ export default class PrefixResetCommand extends Command {
 
         switch (emoji) {
             case '✅': {
-                msg.delete();
+                await msg.delete();
                 await PrefixSchema.findOneAndDelete({
                     GuildID: message.guild?.id,
                 });
-                message.channel.send(
+                await message.channel.send(
                     message.guild?.i18n.__mf('prefix-reset.reset_prefix', {
                         prefix: client.prefix,
                     }) ?? ''
@@ -53,8 +53,8 @@ export default class PrefixResetCommand extends Command {
                 break;
             }
             case '❌': {
-                msg.delete();
-                return message.channel.send(
+                await msg.delete();
+                return await message.channel.send(
                     message.guild?.i18n.__mf('prefix-reset.canceled') ?? ''
                 );
             }
