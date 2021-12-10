@@ -1,12 +1,10 @@
-/* eslint-disable no-unused-vars */
 import {
     ClientOptions,
     PermissionString,
-    PresenceStatusData,
+    PresenceStatusData
 } from 'discord.js';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _ServerInfoCommand from '../../commands/infos/serverinfo';
+import { ClientEvents } from './Event';
 
 export interface Config {
     /**
@@ -211,7 +209,7 @@ export interface KiwiiClientOptions {
     /**
      * If there should be events that not triggers
      */
-    disabledEvents?: string[];
+    disabledEvents?: ClientEvents[];
     /**
      * The owner(s) of the bot, by theirs ids
      */
