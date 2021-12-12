@@ -6,6 +6,7 @@ export default class MYSql {
     private _connection!: Connection;
     private _options: MySqlOptions;
     public etablishedConnection: boolean | null;
+    public connected: boolean;
     constructor(
         { host, password, user, database }: MySqlOptions = {
             host: 'localhost',
@@ -13,13 +14,21 @@ export default class MYSql {
             user: 'root',
         }
     ) {
+        this.connected = false;
         this._options = { host, password, user, database };
         this.etablishedConnection = null;
         (async () => {
             this._connection = await this.createConnection();
         })()
-            .then(() => success('Connected to MySql', 'MySql'))
-            .catch(error);
+            .then(() => {
+                success('Connected to MySql', 'MySql');
+                this.connected = true;
+            })
+            .catch((e) => {
+                error(e, 'MySql');
+                this.connected = false;
+            });
+        if (!this._connection) this.connected = false;
     }
 
     private async createConnection() {
@@ -35,7 +44,7 @@ export default class MYSql {
     public dropConnection() {
         if (this._connection) {
             this._connection.end().catch(error);
+            this.connected = false;
         }
     }
 }
-
