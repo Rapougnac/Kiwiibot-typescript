@@ -1,11 +1,9 @@
-import LanguageSchema from '../../models/languageSchema';
-import { Message } from 'discord.js';
 import Command from '../../struct/Command';
-import Client from '../../struct/Client';
-import mongoose from 'mongoose';
+import KiwiiClient from '../../struct/Client';
+import { Message } from 'discord.js';
 
 export default class SetLangCommand extends Command {
-    constructor(client: Client) {
+    constructor(client: KiwiiClient) {
         super(client, {
             name: 'setlanguage',
             aliases: ['setlang'],
@@ -19,18 +17,16 @@ export default class SetLangCommand extends Command {
             img: 'https://image.flaticon.com/icons/png/512/1940/1940634.png',
         });
     }
-
-    public async execute(
-        _client: Client,
+    public override async execute(
+        _client: KiwiiClient,
         message: Message,
         [language]: string[]
     ) {
-        if (!mongoose.connection._hasOpened)
+        if (!this.client.mySql.connection)
             return await message.channel.send(
-                message.guild?.i18n.__mf('setlanguage.no_conn') ??
-                    'No connection'
+                message.guild?.i18n.__mf('prefix-reset.no_conn') ??
+                    'No connection to the database.'
             );
-
         if (message.guild && message.guild.available) {
             let targetedlanguage = language?.toLowerCase() ?? 'en';
             if (targetedlanguage.includes('french')) targetedlanguage = 'fr';
@@ -46,24 +42,21 @@ export default class SetLangCommand extends Command {
 
             message.guild.i18n.setLocale(targetedlanguage);
 
-            await LanguageSchema.findOneAndUpdate(
-                {
-                    _id: message.guild.id,
-                },
-                {
-                    _id: message.guild.id,
-                    language: targetedlanguage,
-                },
-                {
-                    upsert: true,
-                }
-            ).then(async () => {
-                return await message.reply(
-                    message.guild?.i18n.__mf('setlanguage.set_language') ?? ''
+            await this.client.mySql.connection
+                .execute(
+                    'INSERT INTO `guildSettings` (`guildId`, `language`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `language` = ?',
+                    [message.guild.id, targetedlanguage, targetedlanguage]
+                )
+                .then(
+                    async () =>
+                        await message.reply(
+                            message.guild?.i18n.__mf(
+                                'setlanguage.set_language'
+                            ) as string
+                        )
                 );
-            });
         } else {
-            return message.channel.send(
+            return await message.channel.send(
                 "You can't set a language inside dms, the default langage is `english`"
             );
         }
