@@ -1,63 +1,28 @@
-import languageSchema from './src/models/languageSchema';
-import PrefixSchema from './src/models/PrefixSchema';
 import KiwiiClient from './src/struct/Client';
-import mongoose from 'mongoose';
+import { error } from './src/util/console';
 
-const loadLanguages = async (client: KiwiiClient): Promise<void> => {
+export const load = async (client: KiwiiClient) => {
     try {
         const asyncResults = [];
         for (const [id, guild] of client.guilds.cache) {
-            if (!mongoose.connection._hasOpened)
-                return guild.i18n.setLocale('en');
-            const result = languageSchema.findOne({
-                _id: id,
-            });
-            asyncResults.push(result);
-            // guild.i18n.setLocale(result ? result.language : 'en');
+            if (!client.mySql.connected) return guild.i18n.setLocale('en');
+            const results = client.mySql.connection.query(
+                `SELECT * FROM guildsettings WHERE guildId = ${id}`
+            );
+            asyncResults.push(results);
         }
-
         const results = await Promise.all(asyncResults);
-        for (const result of results) {
-            if (result) {
-                const guild = client.guilds.cache.get(result._id);
-                if (guild) {
-                    guild.i18n.setLocale(result.language);
-                }
+        for (const _res of results) {
+            // @ts-expect-error: TypeScript doesn't know about the `guildId` column
+            const result = _res[0][0];
+            if (!result) continue;
+            const guild = client.guilds.cache.get(result.guildId);
+            if (guild) {
+                guild.i18n.setLocale(result.language);
+                guild.prefix = result.prefix;
             }
         }
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-        // eslint-disable-next-line no-console
-        console.error(
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            `⚠️[DATABASE ERROR] The database responded with the following error: ${e.name}\n${e}`
-        );
+    } catch (e) {
+        error(e as string, '[DATABASE]');
     }
 };
-
-const loadPrefix = async (client: KiwiiClient): Promise<void> => {
-    try {
-        for (const [id, guild] of client.guilds.cache) {
-            if (!mongoose.connection._hasOpened) return;
-            // eslint-disable-next-line no-await-in-loop
-            await PrefixSchema.findOne(
-                { GuildID: id },
-                (err: Error, data: { Prefix: string } | null) => {
-                    if (err) throw err;
-                    if (data !== null) {
-                        guild.prefix = data.Prefix;
-                    }
-                }
-            );
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-        return Promise.reject(
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            `⚠️[DATABASE ERROR] The database responded with the following error: ${error.name}\n${error}`
-        );
-    }
-};
-
-export { loadLanguages, loadPrefix };
