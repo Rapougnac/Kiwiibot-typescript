@@ -4,7 +4,8 @@ import KiwiiClient from '../struct/Client';
 import * as Console from '../util/console';
 import { performance } from 'perf_hooks';
 const bootTime = Math.round(performance.now());
-import { loadLanguages, loadPrefix } from '../../load';
+// import { loadLanguages, loadPrefix } from '../../load';
+import { load } from '../../load';
 import glob from 'glob';
 import { SlashCommandConstructor } from '../struct/interfaces/SlashCommand';
 import { resolve } from 'path';
@@ -20,13 +21,14 @@ export default class ReadyEvent extends Event {
     }
 
     public override async execute(): Promise<void> {
-        loadLanguages(this.client)
-            .then(() => Console.success('Loaded languages', 'LoadLangs'))
-            .catch(console.error);
+        // loadLanguages(this.client)
+        //     .then(() => Console.success('Loaded languages', 'LoadLangs'))
+        //     .catch(console.error);
 
-        loadPrefix(this.client)
-            .then(() => Console.success('Loaded prefix(es)', 'LoadPrefix'))
-            .catch(console.error);
+        // loadPrefix(this.client)
+        //     .then(() => Console.success('Loaded prefix(es)', 'LoadPrefix'))
+        //     .catch(console.error);
+        load(this.client).catch(console.error);
 
         // await this.loadSlashs().catch(console.error);
 
