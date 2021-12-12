@@ -3,6 +3,7 @@ import * as config from './config';
 import './src/struct/Guild';
 import './src/struct/User';
 import Intents from './src/struct/Intents';
+import { error } from './src/util/console';
 
 const client = new KiwiiClient({
     config: config,
@@ -23,5 +24,5 @@ const client = new KiwiiClient({
     },
 });
 
-(async () => await client.connect())().catch(console.error);
+(async () => await client.connect())().catch(error);
 client.start();
