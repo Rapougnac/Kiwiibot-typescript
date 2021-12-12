@@ -1,7 +1,7 @@
 import {
     ClientOptions,
     PermissionString,
-    PresenceStatusData
+    PresenceStatusData,
 } from 'discord.js';
 import _ServerInfoCommand from '../../commands/infos/serverinfo';
 import { ClientEvents } from './Event';
@@ -189,7 +189,7 @@ export interface Config {
 
     kiwii: {
         apiKey: string;
-    }
+    };
 }
 
 export interface KiwiiClientOptions {
@@ -214,6 +214,11 @@ export interface KiwiiClientOptions {
      * The owner(s) of the bot, by theirs ids
      */
     owners: string | string[];
+
+    /**
+     * The database
+     */
+    database?: DataBaseOptions;
 }
 
 export interface ProcessEventOptions {
@@ -221,12 +226,43 @@ export interface ProcessEventOptions {
      * Logs the error on the console
      */
     log_on_console: boolean;
+
     /**
      * No error sended both on the channel & the console
      */
     nologs: boolean;
+
     /**
      * Logs the error on the console & the channel
      */
     logsonboth: boolean;
+}
+
+/**
+ * The database options
+ */
+export interface DataBaseOptions {
+    /**
+     * The host of the database
+     * @default 'localhost'
+     */
+    host?: string;
+
+    /**
+     * The password of the database
+     * @default ''
+     */
+    password?: string;
+
+    /**
+     * The database name
+     * @default 'test'
+     */
+    database?: string;
+
+    /**
+     * The username of the database
+     * @default 'root'
+     */
+    user?: string;
 }

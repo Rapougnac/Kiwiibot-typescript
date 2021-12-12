@@ -21,6 +21,7 @@ import ProcessEvent from '../util/processEvent';
 import '../util/NativeExtended';
 import { sep } from 'path';
 import InteractionManager from './InteractionManager';
+import MYSql from './MySql';
 /**
  * Represents a discord client
  * @extends Client
@@ -97,6 +98,11 @@ export default class KiwiiClient extends Client {
     public interactionManager: InteractionManager;
 
     /**
+     * The mysql manager
+     */
+    public mySql: MYSql;
+
+    /**
      * The main client.
      * @param options The options of the client
      */
@@ -121,6 +127,7 @@ export default class KiwiiClient extends Client {
         );
         Guild.prototype.prefix = this.prefix;
         this.interactionManager = new InteractionManager(this);
+        this.mySql = new MYSql(options.database);
     }
 
     /**
@@ -129,7 +136,8 @@ export default class KiwiiClient extends Client {
      */
     public async connect(
         token: string | undefined = this.config.discord.token
-    ): Promise<this> {
+    ): Promise<this | Error> {
+        if(!token) Promise.reject(new Error('No token provided')).finally(() => this.destroy());
         // Log super in with the supplied token
         // eslint-disable-next-line no-console
         await super.login(token).catch(console.error);

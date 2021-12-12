@@ -15,7 +15,13 @@ const client = new KiwiiClient({
         },
         partials: ['CHANNEL', 'MESSAGE', 'REACTION', 'USER'],
     },
+    database: {
+        database: 'test',
+        host: 'localhost',
+        password: '',
+        user: 'root',
+    },
 });
 
-(async () => await client.connect())().catch(() => []);
+(async () => await client.connect())().catch(console.error);
 client.start();
