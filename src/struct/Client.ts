@@ -16,7 +16,6 @@ import * as Console from '../util/console';
 import glob from 'glob';
 import * as path from 'path';
 import { readdirSync } from 'fs';
-import mongoose from 'mongoose';
 import ProcessEvent from '../util/processEvent';
 import '../util/NativeExtended';
 import { sep } from 'path';
@@ -278,16 +277,6 @@ export default class KiwiiClient extends Client {
         setTimeout(() => Console.table(evts), 500);
         return this;
     }
-    public mongoInit() {
-        mongoose
-            .connect(this.config.database.URI, this.config.database.config)
-            .then(() => {
-                Console.success(`Connected to MongoDB`, 'MongoDB');
-            })
-            .catch((e) => {
-                Console.error('Failed to connect to MongoDB', e);
-            });
-    }
     /**
      * Listener for process events.
      * @param events The process event name to listen to
@@ -344,16 +333,6 @@ export default class KiwiiClient extends Client {
     public start() {
         //Load the events, player events and commands
         this.loadEvents().loadCommands();
-
-        //Mongodb
-        if (this.config.database.enable) {
-            this.mongoInit();
-        } else {
-            void mongoose.disconnect();
-            Console.warn(
-                'Database is not enabled! Some commands may cause dysfunctions, please active it in the config.json!'
-            );
-        }
         return this;
     }
     /**
