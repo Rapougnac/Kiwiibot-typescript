@@ -37,7 +37,7 @@ export default class CustomPrefixRef extends Command {
         const prefixesArray = prefixes.map((prefix: any) => prefix.prefix);
         if (prefixesArray.includes(prefix)) {
             await client.mySql.connection.query(
-                `INSERT INTO \`guildsettings\` (\`guildId\`, \`prefix\`) VALUES (?) ON DUPLICATE KEY UPDATE \`prefix\` = ?`,
+                `INSERT INTO \`guildsettings\` (\`guildId\`, \`prefix\`) VALUES (?, ?) ON DUPLICATE KEY UPDATE \`prefix\` = ?`,
                 [message.guild.id, prefix, prefix]
             );
             message.guild.prefix = prefix;
@@ -49,8 +49,8 @@ export default class CustomPrefixRef extends Command {
         }
 
         await client.mySql.connection.query(
-            `INSERT INTO guildsettings (\`prefix\`) VALUES (?, ?)`,
-            [message.guild.id, prefix]
+            `INSERT INTO \`guildsettings\` (\`guildId\`, \`prefix\`) VALUES (?, ?) ON DUPLICATE KEY UPDATE \`prefix\` = ?`,
+            [message.guild.id, prefix, prefix]
         );
         message.guild.prefix = prefix;
         return await message.channel.send(
