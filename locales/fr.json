@@ -149,7 +149,8 @@
         "new_prefix": "Le préfixe dans le serveur a maintenant été établi sur **{prefix}**",
         "prefix_length": "Erreur, mon préfixe ne peut pas être plus long que cinq caractères.",
         "updated_prefix": "Mon préfixe a été mis à jour sur **{prefix}**",
-        "missing_prefix": "Veuillez spécifier un préfixe !"
+        "missing_prefix": "Veuillez spécifier un préfixe !",
+        "same_prefix": "Ce préfixe est le même que celui actuel !"
     },
     "docs": {
         "description": "Obtenez la documentation de discord.js en un embed, vous pouvez spécifier la source en faisant `--src '{'source'}'` (sans les accolades). Les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`",

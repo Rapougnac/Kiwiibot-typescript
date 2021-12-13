@@ -37,11 +37,17 @@ export default class CustomPrefixRef extends Command {
                 message.guild.i18n.__mf('setprefix.prefix_length')
             );
 
-        const prefixes = await client.mySql.connection.query(
+        const prefixes = (await client.mySql.connection.query(
             'SELECT * FROM guildSettings'
+        )) as unknown as {
+            prefix: string;
+            guildId: string;
+            language: string;
+        }[][];
+        const checkIfPrefix = prefixes[0]?.find(
+            (p) => p.guildId === message.guild?.id
         );
-        const prefixesArray = prefixes.map((prefix: any) => prefix.prefix);
-        if (prefixesArray.includes(prefix)) {
+        if (checkIfPrefix?.prefix && checkIfPrefix.prefix !== prefix) {
             await client.mySql.connection.query(
                 `INSERT INTO \`guildsettings\` (\`guildId\`, \`prefix\`) VALUES (?, ?) ON DUPLICATE KEY UPDATE \`prefix\` = ?`,
                 [message.guild.id, prefix, prefix]
@@ -51,6 +57,10 @@ export default class CustomPrefixRef extends Command {
                 message.guild.i18n.__mf('setprefix.updated_prefix', {
                     prefix: prefix,
                 })
+            );
+        } else if (checkIfPrefix?.prefix === prefix) {
+            return await message.channel.send(
+                message.guild.i18n.__mf('setprefix.same_prefix')
             );
         }
 

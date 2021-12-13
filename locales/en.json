@@ -42,7 +42,8 @@
 		"missing_prefix": "Please specify a prefix!",
 		"prefix_length": "Error, my prefix cannot be longer than 5 characters!",
 		"updated_prefix": "My prefix has been updated to **{prefix}**",
-		"new_prefix": "Prefix in this server is now set to **{prefix}**"
+		"new_prefix": "Prefix in this server is now set to **{prefix}**",
+		"same_prefix": "This prefix is the same as before!"
 	},
 	"help": {
 		"title": "Help pannel",
@@ -783,5 +784,8 @@
 	},
 	"run": {
 		"description": "run.description"
+	},
+	"customprefixr": {
+		"description": "customprefixr.description"
 	}
 }
