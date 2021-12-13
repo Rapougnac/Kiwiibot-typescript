@@ -56,9 +56,14 @@ export default class RunCommand extends Command {
                     r.aliases.includes(language.replace(/\n/, ''))
                 );
             const res = await runtime.execute(
-                runtimeName?.language ?? language,
+                runtimeName?.language ?? language.replace(/\n/g, ''),
                 args.join(' ')
             );
+            if (res.message) {
+                return await message.channel.send(
+                    `[ERROR]\nThe result sended the following error: ${res.message}`
+                );
+            }
             if (res.run.stdout.length < 1900) {
                 await message.channel.send({
                     content: `Here are your result ${message.author} \`(using ${

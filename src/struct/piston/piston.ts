@@ -48,6 +48,11 @@ interface Output {
      * The version of the language the output is in.
      */
     version: string;
+
+    /**
+     * If there's an error message
+     */
+    message?: string;
 }
 
 /**
