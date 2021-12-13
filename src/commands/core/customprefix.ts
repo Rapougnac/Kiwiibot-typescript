@@ -1,10 +1,9 @@
-import PrefixSchema from '../../models/PrefixSchema';
-import { Message } from 'discord.js';
-import mongoose, { Document } from 'mongoose';
 import Command from '../../struct/Command';
-import Client from '../../struct/Client';
-export default class SetPrefixCommand extends Command {
-    constructor(client: Client) {
+import KiwiiClient from '../../struct/Client';
+import { Message } from 'discord.js';
+
+export default class CustomPrefixRef extends Command {
+    constructor(client: KiwiiClient) {
         super(client, {
             name: 'setprefix',
             aliases: ['setp'],
@@ -19,64 +18,51 @@ export default class SetPrefixCommand extends Command {
             img: 'https://image.flaticon.com/icons/png/512/1799/1799807.png',
         });
     }
-    public async execute(
-        _client: Client,
+    public override async execute(
+        client: KiwiiClient,
         message: Message,
         [prefix]: string[]
-    ): Promise<Message | void> {
+    ) {
         if (!message.guild) return;
-        if (!mongoose.connection._hasOpened)
+        if (!client.mySql.connected)
             return await message.channel.send(
                 message.guild.i18n.__mf('setprefix.no_conn')
             );
-        if (!prefix) {
-            return message.channel.send(
+        if (!prefix)
+            return await message.channel.send(
                 message.guild.i18n.__mf('setprefix.missing_prefix')
             );
-        } else if (prefix.length > 5) {
-            return message.channel.send(
+        else if (prefix.length > 5)
+            return await message.channel.send(
                 message.guild.i18n.__mf('setprefix.prefix_length')
+            );
+
+        const prefixes = await client.mySql.connection.query(
+            'SELECT * FROM guildSettings'
+        );
+        const prefixesArray = prefixes.map((prefix: any) => prefix.prefix);
+        if (prefixesArray.includes(prefix)) {
+            await client.mySql.connection.query(
+                `INSERT INTO \`guildsettings\` (\`guildId\`, \`prefix\`) VALUES (?, ?) ON DUPLICATE KEY UPDATE \`prefix\` = ?`,
+                [message.guild.id, prefix, prefix]
+            );
+            message.guild.prefix = prefix;
+            return await message.channel.send(
+                message.guild.i18n.__mf('setprefix.updated_prefix', {
+                    prefix: prefix,
+                })
             );
         }
 
-        PrefixSchema.findOne(
-            { GuildID: message.guild.id },
-            async (err: Error, data: Document) => {
-                if (err)
-                    return message.channel.send(
-                        message.guild?.i18n.__mf('common.database_error', {
-                            error: err.name,
-                        }) ?? 'Database error'
-                    );
-                if (data) {
-                    await PrefixSchema.findOneAndDelete({
-                        GuildID: message.guild?.id,
-                    });
-                    data = new PrefixSchema({
-                        GuildID: message.guild?.id,
-                        Prefix: prefix,
-                    });
-                    await data.save();
-                    if (message.guild) message.guild.prefix = prefix;
-                    await message.channel.send(
-                        message.guild?.i18n.__mf('setprefix.updated_prefix', {
-                            prefix: prefix,
-                        }) ?? 'Updated prefix'
-                    );
-                } else {
-                    data = new PrefixSchema({
-                        GuildID: message.guild?.id,
-                        Prefix: prefix,
-                    });
-                    await data.save();
-                    if (message.guild) message.guild.prefix = prefix;
-                    await message.channel.send(
-                        message.guild?.i18n.__mf('setprefix.new_prefix', {
-                            prefix: prefix,
-                        }) ?? 'New prefix'
-                    );
-                }
-            }
+        await client.mySql.connection.query(
+            `INSERT INTO \`guildsettings\` (\`guildId\`, \`prefix\`) VALUES (?, ?) ON DUPLICATE KEY UPDATE \`prefix\` = ?`,
+            [message.guild.id, prefix, prefix]
+        );
+        message.guild.prefix = prefix;
+        return await message.channel.send(
+            message.guild.i18n.__mf('setprefix.new_prefix', {
+                prefix,
+            })
         );
     }
 }
