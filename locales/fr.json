@@ -1,254 +1,253 @@
 {
-	"MESSAGE_PREFIX": {
-		"msg": "Mon prefix actuel dans le serveur est `{prefix}`"
-	},
-	"ping": {
-		"description": "Ping!",
-		"msg": "🏓 P{pong}ng ! Le ping est de: `{ping}ms`\nHeartbeat: `{heartbeat}ms`"
-	},
-	"common": {
-		"database_error": "⚠️[ERREUR DE DATABASE] La database à renvoyé l'erreur suivante: {error}",
-		"creation_date": "Date de création",
-		"yes": "Oui",
-		"no": "Non",
-		"on": "Le",
-		"at": "à",
-		"wait": "**Veuillez patientez...**"
-	},
-	"setlanguage": {
-		"description": "Change la langue du bot.\nActuellement, il y a les langues `FRançais` & `(E)ANglais`",
-		"set_language": "La langue a bien été définie !",
-		"not_supported_language": "Cette langue n'est pas encore supportée !"
-	},
-	"roleinfo": {
-		"description": "Montre des informations sur le rôle spécifié",
-		"specify_role": "Veuillez spécifez le rôle dont vous voulez voir les infos.",
-		"role": "Rôle",
-		"role_name": "Nom du rôle",
-		"who_own_it": "Membres le possédant",
-		"color": "Couleur",
-		"on": "Le",
-		"at": "à",
-		"hoisted": "Séparé des autres",
-		"mentionnable": "Mentionnable"
-	},
-	"userinfo": {
-		"description": "Montre des informations sur vous ou l'utilisateur spécifié",
-		"idle": "Inactif <:idle:838003208588230706>",
-		"dnd": "Ne Pas Déranger <:dnd:838001604098654229>",
-		"online": "En Ligne <:online:838001438972968990>",
-		"offline": "Hors-Ligne <:offline:850733725704126474>",
-		"desktop": "Bureau {x}",
-		"user": "Utilisateur {tag}",
-		"member": "Membre",
-		"name": "Nom",
-		"nickname": "Pseudo",
-		"not_set": "[---](https://rebrand.ly/r1ckr0l13r)",
-		"on": "Le",
-		"at": "à",
-		"account_creation_date": "Date de création du compte",
-		"arrival_date": "Date d'arrivée sur le serveur",
-		"boost_start_date": "Date du début de boost du serveur",
-		"not_boosting": "Ne boost pas",
-		"device": "Plateforme",
-		"type": "Type d'utilisateur",
-		"roles": "Rôles [{role}]",
-		"no_roles": "Il n'y a pas de rôles à afficher",
-		"user2": "Utilisateur"
-	},
-	"help": {
-		"title": "Commande d'aide",
-		"name": "Nom",
-		"category": "Catégorie",
-		"alias": {
-			"one": "Alias",
-			"other": "Alias"
-		},
-		"usage": "Utilisation",
-		"seconds": "secondes",
-		"guild_only": "Si la commande ne peut être utilisée que dans les serveurs",
-		"admin_only": "Si la commande nécessite la permission administrateur",
-		"owner_only": "Si la commande ne peut être utilisée que par le propriétaire du bot",
-		"user_permissions": "Permissions requises pour l'utilisateur",
-		"bot_permissions": "Permissions requises par le bot",
-		"information": "Trouvez des informations sur la commande fournie.\nArguments obligatoires `[]`, arguments facultatifs `<>`.",
-		"cmd_usage": "Faites {prefix}help [commande] pour avoir plus d'informations sur celle-ci.",
-		"none_alias": "Aucun alias",
-		"nsfw": "Vous ne pouvez pas afficher le panneau d'aide sur une commande nsfw si le channel n'est pas marqué en tant que nsfw.",
-		"nsfw_message": "\nPour afficher les commandes nsfw, faites {prefix}help dans un channel nsfw.",
-		"no_desc": "Aucune description fournie pour cette commande.",
-		"description": "Affichez l'aide sur la commande d'aide",
-		"not_found_dym": "Je n'ai pas trouvé cette commande ! Est-ce que vous vouliez écrire `{command}` ?",
-		"not_found": "Je n'ai pas trouvé cette commande !",
-		"no_usage": "Aucune utilisation fournie pour cette commande."
-	},
-	"PERMS_MESSAGE": {
-		"guild_only": "**Commande indisponible en MP** - Cette commande ne peut être éxecutée que dans des serveurs.",
-		"dev_only": "**Limité aux Développeurs** - Cette commande ne peut être utilisée que par mes développeurs.",
-		"admin_only": "**Limité aux Admins** - Cette commande ne peut être utilisée que par les administrateurs du serveur.",
-		"nsfw": "**Commande NSFW** - Vous ne pouvez éxecuter cette commande que dans un salon nsfw.",
-		"missing_permissions_you": "**⚠[Erreur] Vous n'avez pas les permissions requises** -",
-		"missing_permissions1_you": "Vous avez besoin des permissions suivantes:\n",
-		"missing_permissions_i": "**⚠[Erreur] Je n'ai pas les permissions requises** -",
-		"missing_permissions1_i": "J'ai besoin des permissions suivantes:\n",
-		"blocked_cmd": "Execution de commande bloquée !",
-		"reason": "Raison(s)"
-	},
-	"baka": {
-		"description": "Dites \"baka\" à quelqu'un",
-		"title_alone": "{author} s'est dit baka à lui·elle même <:Baka:900843311387017297>",
-		"title_smbdy": "{author} a dit baka à {member} <:Baka:900843311387017297>"
-	},
-	"anime": {
-		"description": "Obtenez des informations sur l'animé spécifé",
-		"specify": "S'il vous plaît, veuillez spécifier un animé à chercher",
-		"not_found": "Aucun animé n'a été trouvé pour la recherche: **{search}**",
-		"japanese_name": "Nom japonais",
-		"age": "Âge du public",
-		"yes": "Oui",
-		"no": "Non",
-		"note": "Note globale",
-		"rank": "Classement:",
-		"popularity": "Popularité:",
-		"stop_collect_msg": "Le message va s'arrêter de collecter les réponses après un délai de 60 secondes.",
-		"stats": "Statistiques",
-		"beginning": "Début",
-		"end": "Fin",
-		"in_progress": "En cours...",
-		"choose": "Choisissez entre les nombres affichés.",
-		"number_range": "Veuillez, s'il vous plaît, mettre un nombre entre 1 et {number}",
-		"poularity": "Popularité"
-	},
-	"trump": {
-		"description": "trump.description"
-	},
-	"ERROR_MESSAGE": {
-		"msg": "ERROR_MESSAGE.msg"
-	},
-	"mdn": {
-		"description": "Cherchez dans la documentation de MDN",
-		"experimental": "Experimental",
-		"experimental_desc": "Valeur qui indique que cette fonctionnalité est destinée à être un ajout à la plateforme Web. Certaines fonctionnalités sont ajoutées pour effectuer des tests.\n\n`{value}`",
-		"deprecated": "Obsolète",
-		"deprecated_desc": "Valeur qui indique si la fonctionnalité n'est plus recommandée. Elle pourrait être supprimée à l'avenir ou être conservée uniquement à des fins de compatibilité. Évitez d'utiliser cette fonctionnalité.\n\n`{value}`",
-		"not_found": "Votre recherche n'a rien donné !\nEssayez une autre recherche.",
-		"doc": "Documentation pour: {val}"
-	},
-	"blush": {
-		"description": "Haaa tu rougis !",
-		"msg": "{author} est en train de rougir !"
-	},
-	"prefix-reset": {
-		"description": "Réinitialise le préfixe à celui par défaut.",
-		"confirmation": "Êtes-vous sûr·e de vouloir réinitialiser le préfixe ?",
-		"reset_prefix": "Le préfixe a été réinitialisé sur `{prefix}`",
-		"canceled": "La réinitialisation du préfixe a été annulée !"
-	},
-	"setprefix": {
-		"description": "Changez le préfixe du bot sur celui spécifé, vous pouvez toujours utiliser celui par défaut",
-		"new_prefix": "Le préfixe dans le serveur a maintenant été établi sur **{prefix}**",
-		"prefix_length": "Erreur, mon préfixe ne peut pas être plus long que cinq caractères.",
-		"updated_prefix": "Mon préfixe a été mis à jour sur **{prefix}**",
-		"missing_prefix": "Veuillez spécifier un préfixe !",
-		"same_prefix": "Ce préfixe est le même que celui actuel !"
-	},
-	"docs": {
-		"description": "Obtenez la documentation de discord.js en un embed, vous pouvez spécifier la source en faisant `--src '{'source'}'` (sans les accolades). Les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`",
-		"missing_query": "Veuillez spécifier une recherche !",
-		"docs_fetch_error": "Hmm, il semble que je n'aie pas pu récupérer les données dont vous avez besoin, merci de bien vouloir réessayer plus tard",
-		"valid_sources": "Cela ne me semble pas être une source valide, les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`"
-	},
-	"avatar": {
-		"avatar_of": "Avatar de {avatar}",
-		"msg": "Si l'avatar ne charge pas, [cliquez ici]",
-		"description": "avatar.description"
-	},
-	"rule34": {
-		"description": "Récupérez des images provenant du site rule34",
-		"no_tags_provided": "S'il vous plaît, veuilleuz spécifier au moins un mot-clé.",
-		"no_results": "Aucun résultat trouvé pour la recherche **{query}** !",
-		"pedo": "Maman, je vois un pédo.",
-		"rating_scrore": "Classement: `{rating}` (s: 'Sûr', q: 'Questionnable', e: 'Explicite', u: 'Non évalué') | Score: {score}",
-		"tags": "Mots-clés: ",
-		"no_results_err": "Aucun résultat trouvé pour la recherche **{query}** !",
-		"rating_score": "rule34.rating_score"
-	},
-	"cry": {
-		"description": "Pleurez",
-		"msg": "{author} pleure"
-	},
-	"anal": {
-		"description": "Envoie un gif ou une image aléaoire d'anal.",
-		"msg": "Demandé par {author}"
-	},
-	"tag": {
-		"description": "Faites `{prefix}`tag pour voir les tags affichés."
-	},
-	"transcript": {
-		"description": "transcript.description"
-	},
-	"sendpins": {
-		"description": "sendpins.description"
-	},
-	"3000y": {
-		"description": "3000y.description"
-	},
-	"fusion": {
-		"description": "fusion.description"
-	},
-	"phcomment": {
-		"description": "phcomment.description"
-	},
-	"rip": {
-		"description": "rip.description"
-	},
-	"youdied": {
-		"description": "youdied.description"
-	},
-	"firstmessage": {
-		"description": "firstmessage.description"
-	},
-	"inrole": {
-		"description": "inrole.description"
-	},
-	"serverinfo": {
-		"description": "serverinfo.description"
-	},
-	"uptime": {
-		"description": "uptime.description"
-	},
-	"eval": {
-		"description": "eval.description"
-	},
-	"website": {
-		"login": "Connexion",
-		"logout": "Se déconnecter",
-		"invite": "Invitez moi",
-		"commands": "Commandes",
-		"language": {
-			"language": "Changez la langue",
-			"fr": "Français",
-			"en": "Anglais",
-			"french": "website.language.french",
-			"english": "website.language.english"
-		}
-	},
-	"ass": {
-		"description": "ass.description"
-	},
-	"load": {
-		"description": "load.description"
-	},
-	"reload": {
-		"description": "reload.description"
-	},
-	"unload": {
-		"description": "unload.description"
-	},
-	"run": {
-		"description": "Execute un bout de code dans le langage fourni."
-	},
-	"record": {
-		"description": "record.description"
-	}
+    "MESSAGE_PREFIX": {
+        "msg": "Mon prefix actuel dans le serveur est `{prefix}`"
+    },
+    "ping": {
+        "description": "Ping!",
+        "msg": "🏓 P{pong}ng ! Le ping est de: `{ping}ms`\nHeartbeat: `{heartbeat}ms`"
+    },
+    "common": {
+        "database_error": "⚠️[ERREUR DE DATABASE] La database à renvoyé l'erreur suivante: {error}",
+        "creation_date": "Date de création",
+        "yes": "Oui",
+        "no": "Non",
+        "on": "Le",
+        "at": "à",
+        "wait": "**Veuillez patientez...**"
+    },
+    "setlanguage": {
+        "description": "Change la langue du bot.\nActuellement, il y a les langues `FRançais` & `(E)ANglais`",
+        "set_language": "La langue a bien été définie !",
+        "not_supported_language": "Cette langue n'est pas encore supportée !"
+    },
+    "roleinfo": {
+        "description": "Montre des informations sur le rôle spécifié",
+        "specify_role": "Veuillez spécifez le rôle dont vous voulez voir les infos.",
+        "role": "Rôle",
+        "role_name": "Nom du rôle",
+        "who_own_it": "Membres le possédant",
+        "color": "Couleur",
+        "on": "Le",
+        "at": "à",
+        "hoisted": "Séparé des autres",
+        "mentionnable": "Mentionnable"
+    },
+    "userinfo": {
+        "description": "Montre des informations sur vous ou l'utilisateur spécifié",
+        "idle": "Inactif <:idle:838003208588230706>",
+        "dnd": "Ne Pas Déranger <:dnd:838001604098654229>",
+        "online": "En Ligne <:online:838001438972968990>",
+        "offline": "Hors-Ligne <:offline:850733725704126474>",
+        "desktop": "Bureau {x}",
+        "user": "Utilisateur {tag}",
+        "member": "Membre",
+        "name": "Nom",
+        "nickname": "Pseudo",
+        "not_set": "[---](https://rebrand.ly/r1ckr0l13r)",
+        "on": "Le",
+        "at": "à",
+        "account_creation_date": "Date de création du compte",
+        "arrival_date": "Date d'arrivée sur le serveur",
+        "boost_start_date": "Date du début de boost du serveur",
+        "not_boosting": "Ne boost pas",
+        "device": "Plateforme",
+        "type": "Type d'utilisateur",
+        "roles": "Rôles [{role}]",
+        "no_roles": "Il n'y a pas de rôles à afficher",
+        "user2": "Utilisateur"
+    },
+    "help": {
+        "title": "Commande d'aide",
+        "name": "Nom",
+        "category": "Catégorie",
+        "alias": {
+            "one": "Alias",
+            "other": "Alias"
+        },
+        "usage": "Utilisation",
+        "seconds": "secondes",
+        "guild_only": "Si la commande ne peut être utilisée que dans les serveurs",
+        "admin_only": "Si la commande nécessite la permission administrateur",
+        "owner_only": "Si la commande ne peut être utilisée que par le propriétaire du bot",
+        "user_permissions": "Permissions requises pour l'utilisateur",
+        "bot_permissions": "Permissions requises par le bot",
+        "information": "Trouvez des informations sur la commande fournie.\nArguments obligatoires `[]`, arguments facultatifs `<>`.",
+        "cmd_usage": "Faites {prefix}help [commande] pour avoir plus d'informations sur celle-ci.",
+        "none_alias": "Aucun alias",
+        "nsfw": "Vous ne pouvez pas afficher le panneau d'aide sur une commande nsfw si le channel n'est pas marqué en tant que nsfw.",
+        "nsfw_message": "\nPour afficher les commandes nsfw, faites {prefix}help dans un channel nsfw.",
+        "no_desc": "Aucune description fournie pour cette commande.",
+        "description": "Affichez l'aide sur la commande d'aide",
+        "not_found_dym": "Je n'ai pas trouvé cette commande ! Est-ce que vous vouliez écrire `{command}` ?",
+        "not_found": "Je n'ai pas trouvé cette commande !",
+        "no_usage": "Aucune utilisation fournie pour cette commande."
+    },
+    "PERMS_MESSAGE": {
+        "guild_only": "**Commande indisponible en MP** - Cette commande ne peut être éxecutée que dans des serveurs.",
+        "dev_only": "**Limité aux Développeurs** - Cette commande ne peut être utilisée que par mes développeurs.",
+        "admin_only": "**Limité aux Admins** - Cette commande ne peut être utilisée que par les administrateurs du serveur.",
+        "nsfw": "**Commande NSFW** - Vous ne pouvez éxecuter cette commande que dans un salon nsfw.",
+        "missing_permissions_you": "**⚠[Erreur] Vous n'avez pas les permissions requises** -",
+        "missing_permissions1_you": "Vous avez besoin des permissions suivantes:\n",
+        "missing_permissions_i": "**⚠[Erreur] Je n'ai pas les permissions requises** -",
+        "missing_permissions1_i": "J'ai besoin des permissions suivantes:\n",
+        "blocked_cmd": "Execution de commande bloquée !",
+        "reason": "Raison(s)"
+    },
+    "baka": {
+        "description": "Dites \"baka\" à quelqu'un",
+        "title_alone": "{author} s'est dit baka à lui·elle même <:Baka:900843311387017297>",
+        "title_smbdy": "{author} a dit baka à {member} <:Baka:900843311387017297>"
+    },
+    "anime": {
+        "description": "Obtenez des informations sur l'animé spécifé",
+        "specify": "S'il vous plaît, veuillez spécifier un animé à chercher",
+        "not_found": "Aucun animé n'a été trouvé pour la recherche: **{search}**",
+        "japanese_name": "Nom japonais",
+        "age": "Âge du public",
+        "yes": "Oui",
+        "no": "Non",
+        "note": "Note globale",
+        "rank": "Classement:",
+        "popularity": "Popularité:",
+        "stop_collect_msg": "Le message va s'arrêter de collecter les réponses après un délai de 60 secondes.",
+        "stats": "Statistiques",
+        "beginning": "Début",
+        "end": "Fin",
+        "in_progress": "En cours...",
+        "choose": "Choisissez entre les nombres affichés.",
+        "number_range": "Veuillez, s'il vous plaît, mettre un nombre entre 1 et {number}",
+        "poularity": "Popularité"
+    },
+    "trump": {
+        "description": "trump.description"
+    },
+    "ERROR_MESSAGE": {
+        "msg": "ERROR_MESSAGE.msg"
+    },
+    "mdn": {
+        "description": "Cherchez dans la documentation de MDN",
+        "experimental": "Experimental",
+        "experimental_desc": "Valeur qui indique que cette fonctionnalité est destinée à être un ajout à la plateforme Web. Certaines fonctionnalités sont ajoutées pour effectuer des tests.\n\n`{value}`",
+        "deprecated": "Obsolète",
+        "deprecated_desc": "Valeur qui indique si la fonctionnalité n'est plus recommandée. Elle pourrait être supprimée à l'avenir ou être conservée uniquement à des fins de compatibilité. Évitez d'utiliser cette fonctionnalité.\n\n`{value}`",
+        "not_found": "Votre recherche n'a rien donné !\nEssayez une autre recherche.",
+        "doc": "Documentation pour: {val}"
+    },
+    "blush": {
+        "description": "Haaa tu rougis !",
+        "msg": "{author} est en train de rougir !"
+    },
+    "prefix-reset": {
+        "description": "Réinitialise le préfixe à celui par défaut.",
+        "confirmation": "Êtes-vous sûr·e de vouloir réinitialiser le préfixe ?",
+        "reset_prefix": "Le préfixe a été réinitialisé sur `{prefix}`",
+        "canceled": "La réinitialisation du préfixe a été annulée !"
+    },
+    "setprefix": {
+        "description": "Changez le préfixe du bot sur celui spécifé, vous pouvez toujours utiliser celui par défaut",
+        "new_prefix": "Le préfixe dans le serveur a maintenant été établi sur **{prefix}**",
+        "prefix_length": "Erreur, mon préfixe ne peut pas être plus long que cinq caractères.",
+        "updated_prefix": "Mon préfixe a été mis à jour sur **{prefix}**",
+        "missing_prefix": "Veuillez spécifier un préfixe !",
+        "same_prefix": "Ce préfixe est le même que celui actuel !"
+    },
+    "docs": {
+        "description": "Obtenez la documentation de discord.js en un embed, vous pouvez spécifier la source en faisant `--src '{'source'}'` (sans les accolades). Les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`",
+        "missing_query": "Veuillez spécifier une recherche !",
+        "docs_fetch_error": "Hmm, il semble que je n'aie pas pu récupérer les données dont vous avez besoin, merci de bien vouloir réessayer plus tard",
+        "valid_sources": "Cela ne me semble pas être une source valide, les sources sont listées ici: `stable`, `master`, `commando`, `rpc`, `akairo`, `akairo-master` and `collection`"
+    },
+    "avatar": {
+        "avatar_of": "Avatar de {avatar}",
+        "msg": "Si l'avatar ne charge pas, [cliquez ici]",
+        "description": "avatar.description"
+    },
+    "rule34": {
+        "description": "Récupérez des images provenant du site rule34",
+        "no_tags_provided": "S'il vous plaît, veuilleuz spécifier au moins un mot-clé.",
+        "no_results": "Aucun résultat trouvé pour la recherche **{query}** !",
+        "pedo": "Maman, je vois un pédo.",
+        "rating_score": "Classement: `{rating}` (s: 'Sûr', q: 'Questionnable', e: 'Explicite', u: 'Non évalué') | Score: {score}",
+        "tags": "Mots-clés: ",
+        "no_results_err": "Aucun résultat trouvé pour la recherche **{query}** !"
+    },
+    "cry": {
+        "description": "Pleurez",
+        "msg": "{author} pleure"
+    },
+    "anal": {
+        "description": "Envoie un gif ou une image aléaoire d'anal.",
+        "msg": "Demandé par {author}"
+    },
+    "tag": {
+        "description": "Faites `{prefix}`tag pour voir les tags affichés."
+    },
+    "transcript": {
+        "description": "transcript.description"
+    },
+    "sendpins": {
+        "description": "sendpins.description"
+    },
+    "3000y": {
+        "description": "3000y.description"
+    },
+    "fusion": {
+        "description": "fusion.description"
+    },
+    "phcomment": {
+        "description": "phcomment.description"
+    },
+    "rip": {
+        "description": "rip.description"
+    },
+    "youdied": {
+        "description": "youdied.description"
+    },
+    "firstmessage": {
+        "description": "firstmessage.description"
+    },
+    "inrole": {
+        "description": "inrole.description"
+    },
+    "serverinfo": {
+        "description": "serverinfo.description"
+    },
+    "uptime": {
+        "description": "uptime.description"
+    },
+    "eval": {
+        "description": "eval.description"
+    },
+    "website": {
+        "login": "Connexion",
+        "logout": "Se déconnecter",
+        "invite": "Invitez moi",
+        "commands": "Commandes",
+        "language": {
+            "language": "Changez la langue",
+            "fr": "Français",
+            "en": "Anglais",
+            "french": "website.language.french",
+            "english": "website.language.english"
+        }
+    },
+    "ass": {
+        "description": "ass.description"
+    },
+    "load": {
+        "description": "load.description"
+    },
+    "reload": {
+        "description": "reload.description"
+    },
+    "unload": {
+        "description": "unload.description"
+    },
+    "run": {
+        "description": "Execute un bout de code dans le langage fourni."
+    },
+    "record": {
+        "description": "record.description"
+    }
 }
