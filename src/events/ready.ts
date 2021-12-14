@@ -4,7 +4,7 @@ import KiwiiClient from '../struct/Client';
 import * as Console from '../util/console';
 import { performance } from 'perf_hooks';
 const bootTime = Math.round(performance.now());
-import { loadLanguages, loadPrefix } from '../../load';
+import { load } from '../../load';
 import glob from 'glob';
 import { SlashCommandConstructor } from '../struct/interfaces/SlashCommand';
 import { resolve } from 'path';
@@ -20,15 +20,7 @@ export default class ReadyEvent extends Event {
     }
 
     public override async execute(): Promise<void> {
-        loadLanguages(this.client)
-            .then(() => Console.success('Loaded languages', 'LoadLangs'))
-            .catch(console.error);
-
-        loadPrefix(this.client)
-            .then(() => Console.success('Loaded prefix(es)', 'LoadPrefix'))
-            .catch(console.error);
-
-        // await this.loadSlashs().catch(console.error);
+        load(this.client).catch(console.error);
 
         const statuses = [
             `Currently on ${this.client.guilds.cache.size} servers`,
@@ -105,47 +97,17 @@ export default class ReadyEvent extends Event {
                     let SlashCommand: SlashCommandConstructor = await import(
                         `${filePath}`
                     );
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    SlashCommand = (SlashCommand as any).default;
+                    SlashCommand = (SlashCommand as unknown as { default: SlashCommandConstructor }).default;
                     if (this.client.utils.isClass(SlashCommand)) {
                         const command = new SlashCommand(this.client);
                         if (command.global) {
-                            // this.client.interactionManager.registerSlashCommands(
-                            //     command as any
-                            // );
                             commands.push({ global: true, command });
                         } else {
-                            // this.client.interactionManager.registerSlashCommands(
-                            //     command as any,
-                            //     '911736666551640075'
-                            // );
                             commands.push({ global: false, command });
                         }
                         this.client.slashs.set(command.name, command);
-                        // console.log(
-                        //     `Command posted: ${command!.name} from ${resolve(
-                        //         process.cwd() + sep + file
-                        //     )} [${command!.global ? 'global' : 'guild'}]`
-                        // );
                     }
                 })();
-
-                // const globalCommands = await this.client.application?.commands.fetch();
-                // const guildCommands = await this.client.guilds.cache
-                //     .get('895600122510069801')
-                //     ?.commands.fetch();
-                // globalCommands?.toJSON().forEach((globCmd: any) => {
-                //     // console.log(
-                //     //     `Global command has been loaded: ${globCmd.name} | [${globCmd.id}]`
-                //     // );
-                //     console.log(globCmd);
-                // });
-                // guildCommands?.toJSON().forEach((guildCmd: any) => {
-                //     // console.log(
-                //     //     `Guild command has been loaded: ${guildCmd.name} | [${guildCmd.id}]`
-                //     // );
-                //     console.log(guildCmd);
-                // });
             });
         } catch (e) {
             return Promise.reject(e);

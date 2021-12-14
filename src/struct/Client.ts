@@ -16,11 +16,11 @@ import * as Console from '../util/console';
 import glob from 'glob';
 import * as path from 'path';
 import { readdirSync } from 'fs';
-import mongoose from 'mongoose';
 import ProcessEvent from '../util/processEvent';
 import '../util/NativeExtended';
 import { sep } from 'path';
 import InteractionManager from './InteractionManager';
+import MYSql from './MySql';
 /**
  * Represents a discord client
  * @extends Client
@@ -97,6 +97,11 @@ export default class KiwiiClient extends Client {
     public interactionManager: InteractionManager;
 
     /**
+     * The mysql manager
+     */
+    public mySql: MYSql;
+
+    /**
      * The main client.
      * @param options The options of the client
      */
@@ -121,6 +126,7 @@ export default class KiwiiClient extends Client {
         );
         Guild.prototype.prefix = this.prefix;
         this.interactionManager = new InteractionManager(this);
+        this.mySql = new MYSql(options.database);
     }
 
     /**
@@ -129,7 +135,8 @@ export default class KiwiiClient extends Client {
      */
     public async connect(
         token: string | undefined = this.config.discord.token
-    ): Promise<this> {
+    ): Promise<this | Error> {
+        if(!token) Promise.reject(new Error('No token provided')).finally(() => this.destroy());
         // Log super in with the supplied token
         // eslint-disable-next-line no-console
         await super.login(token).catch(console.error);
@@ -270,16 +277,6 @@ export default class KiwiiClient extends Client {
         setTimeout(() => Console.table(evts), 500);
         return this;
     }
-    public mongoInit() {
-        mongoose
-            .connect(this.config.database.URI, this.config.database.config)
-            .then(() => {
-                Console.success(`Connected to MongoDB`, 'MongoDB');
-            })
-            .catch((e) => {
-                Console.error('Failed to connect to MongoDB', e);
-            });
-    }
     /**
      * Listener for process events.
      * @param events The process event name to listen to
@@ -336,16 +333,6 @@ export default class KiwiiClient extends Client {
     public start() {
         //Load the events, player events and commands
         this.loadEvents().loadCommands();
-
-        //Mongodb
-        if (this.config.database.enable) {
-            this.mongoInit();
-        } else {
-            void mongoose.disconnect();
-            Console.warn(
-                'Database is not enabled! Some commands may cause dysfunctions, please active it in the config.json!'
-            );
-        }
         return this;
     }
     /**

@@ -562,7 +562,7 @@ function upperFirstButAcceptEmojis(str: string): string {
         str = str[0].toUpperCase() + str.slice(1);
     } else if (emoji?.[0] && str[0]) {
         str = str.slice(emoji[0].length);
-        str = `${str[0]?.toUpperCase() ?? ''} ${str.slice(1)}`;
+        str = `${str[0]?.toUpperCase() ?? ''}${str.slice(1)}`;
         str = emoji[0] + str;
     }
     return str;
