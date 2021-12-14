@@ -1,6 +1,10 @@
 import type { CommandInteraction, Message } from 'discord.js';
+import type { APIMessage } from 'discord-api-types/v9';
 import type Client from './Client';
-import type { SlashCommandOptions, CommandOptions } from './interfaces/SlashCommand';
+import type {
+    SlashCommandOptions,
+    CommandOptions,
+} from './interfaces/SlashCommand';
 
 export default abstract class SlashCommand {
     /**
@@ -33,9 +37,10 @@ export default abstract class SlashCommand {
     }
 
     public execute(
+        _interaction: CommandInteraction,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ..._args: [CommandInteraction, { [key: string]: any }?]
-    ): Promise<void | Message | string> | void | Message | string {
+        _args?: { [key: string]: any }
+    ): Promise<void | Message | string | APIMessage> | void | Message | string | APIMessage {
         throw new Error(`${this.name} dosen't have an execute() method!`);
     }
 
