@@ -47,6 +47,7 @@
         "default-param-last": "error",
         "no-array-constructor": "error",
         "no-useless-concat": "error",
+        "yoda": "error",
         "@typescript-eslint/no-unused-vars": [
             "error",
             { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
