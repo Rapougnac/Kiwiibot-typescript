@@ -14,6 +14,7 @@ export default class InteractionManager {
     ) {
         if (!options) return;
         const args: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             [key: string]: any;
         } = {};
         for (const option of options) {

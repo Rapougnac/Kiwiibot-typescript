@@ -16,15 +16,15 @@ export default class RoleInfoCommand extends Command {
             guildOnly: true,
         });
     }
-    public execute(
+    public async execute(
         _client: Client,
         message: Message,
         args: string[]
-    ): void | Promise<Message> {
+    ): Promise<Message | void> {
         if (!message.guild) return;
         let role =
             message.mentions.roles.first() ||
-            message.guild.roles.cache.get(args[0]!) ||
+            message.guild.roles.cache.get(args[0] ?? '') ||
             message.guild.roles.cache.find(
                 (r) =>
                     r.name
@@ -54,10 +54,10 @@ export default class RoleInfoCommand extends Command {
                 .replace(/Guild/g, 'Server')}\`, `;
         });
 
-        message.channel.send({
+        await message.channel.send({
             embeds: [
                 new MessageEmbed()
-                    .setDescription('Permissions\n' + string)
+                    .setDescription(`Permissions\n${string}`)
                     .addField(
                         message.guild.i18n.__mf('roleinfo.role'),
                         `<@${role.id}>`,

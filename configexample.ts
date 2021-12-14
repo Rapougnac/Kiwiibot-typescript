@@ -1,14 +1,18 @@
+/* eslint-disable camelcase */
+import type { Config } from './src/struct/interfaces/Client';
+
 export const domain = 'DOMAIN_HERE';
-export const port = 'PORT_HERE';
+export const port = 0; // PORT_HERE
 export const usingCustomDomain = false;
 export const clientSecret = 'CLIENT_SECRET_HERE';
-export const discord = {
+export const discord: Config['discord'] = {
     token: 'TOKEN_HERE',
     status: 'idle',
     dev: {
         include_cmd: [],
         exclude_cmd: [],
         active: false, //Default is false, you can put it to true to exclude or include commands
+        debug: false, // Default is false, you can put it to true to enable debug mode (Don't use it in v13)
     },
     defaultPerms: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
 };
@@ -78,4 +82,33 @@ export const verificationLVL = {
     MEDIUM: 'Medium',
     HIGH: '(╯°□°）╯︵ ┻━┻',
     VERY_HIGH: '┻━┻彡 ヽ(ಠ益ಠ)ノ彡┻━┻',
+};
+
+export const MAL = {
+    // Optional
+    username: 'MAL_USERNAME_HERE',
+    password: 'MAL_PASSWORD_HERE',
+};
+
+export const kiwii = {
+    // Optional
+    apiKey: '',
+};
+
+export const genius_lyrics = {
+    // Optional
+    TOKEN: 'GENIUS_LYRICS_KEY_HERE',
+};
+
+export const chatbot = {
+    // Optional
+    id: '',
+    key: '',
+};
+
+export const mysql = {
+    host: '',
+    user: '',
+    password: '',
+    database: '',
 };

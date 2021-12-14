@@ -94,7 +94,7 @@ export interface HelpOptions {
     category: string | undefined;
 
     /**
-     * The image to set to the setFooter 
+     * The image to set to the setFooter
      */
     img: string | undefined;
 }
@@ -169,6 +169,7 @@ export interface TraceOptions {
 }
 
 export interface ConstructorCommand {
+    // eslint-disable-next-line no-unused-vars
     new (client: KiwiiClient, options?: CommandOptions): Command;
     /**
      * A reference to the prototype of the command.

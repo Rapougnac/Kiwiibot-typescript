@@ -31,29 +31,30 @@ export default class MessageEvent extends Event {
                 },
                 writable: true,
             });
-            // I'm sorry for this... But I don't know how else to do it. I'm sorry. I'm sorry. I'm sorry. I'm sorry. 
+            // I'm sorry for this... But I don't know how else to do it. I'm sorry. I'm sorry. I'm sorry. I'm sorry.
             Object.defineProperty(message, 'guild', {
                 value: {
                     i18n,
-                    //@ts-ignore: GuildMemberManager is private, and without it, it won't work, so we ignore it here for now (it's not a big deal) and we'll fix it later (I hope) 😔
+                    //@ts-expect-error: GuildMemberManager is private, and without it, it won't work, so we ignore it here for now (it's not a big deal) and we'll fix it later (I hope) 😔
                     members: new GuildMemberManager(message.guild),
                 },
             });
         }
-        let prefix = [this.client.prefix];
+        const prefix = [this.client.prefix];
         if (message.guild?.prefix) prefix.push(message.guild.prefix);
         if ((bot || message.webhookId) && !this.client.config.discord.dev.debug)
             return;
 
         if (message.content.match(/n+o+\s+u+/gi))
             return message.channel.send('no u');
+        // eslint-disable-next-line no-useless-escape
         if (message.content.match(/\(╯°□°\）╯︵ ┻━┻/g))
             return message.channel.send('┻━┻       (゜-゜)');
         // Check prefix
         let index;
         // Find which prefix are used
         for (let i = 0; i < prefix.length; i++) {
-            if (message.content.toLowerCase().startsWith(prefix[i]!)) {
+            if (message.content.toLowerCase().startsWith(prefix[i] ?? '')) {
                 index = i;
                 break;
             } else {
@@ -62,55 +63,61 @@ export default class MessageEvent extends Event {
             }
         }
         if (
-            message.content.startsWith(`<@!${this.client.user!.id}>`) &&
-            message.content.endsWith(`<@!${this.client.user!.id}>`) &&
+            message.content.startsWith(`<@!${this.client.user?.id}>`) &&
+            message.content.endsWith(`<@!${this.client.user?.id}>`) &&
             message.guild &&
             message.channel.type !== 'DM'
         )
             return message.reply(
-                message.guild!.i18n.__mf('MESSAGE_PREFIX.msg', {
+                message.guild?.i18n.__mf('MESSAGE_PREFIX.msg', {
                     prefix: message.guild.prefix,
                 })
             );
         if (!prefix[index as number]) return;
         const args = message.content
-            .slice(prefix[index as number]!.length)
+            .slice(prefix[index as number]?.length)
             .trim()
             .split(/\s+/g);
-        const command = args.shift()!.toLowerCase();
+        const command = args.shift()?.toLowerCase() ?? '';
         if (
             !this.client.commands.has(command) &&
             !this.client.aliases.has(command)
         )
             return;
-        const command_to_execute =
+        const commandToExecute =
             this.client.commands.get(command) ||
             this.client.aliases.get(command);
-        if (!command_to_execute) return;
-        command_to_execute.setMessage(message);
+        if (!commandToExecute) return;
+        commandToExecute.setMessage(message);
         const reasons = this.client.utils.checkPermissions(
             message,
-            command_to_execute
+            commandToExecute
         );
         if (index === null || index === undefined) return;
         if (this.client.isOwner(author)) {
             try {
-                command_to_execute.execute(this.client, message, args);
+                void commandToExecute.execute(this.client, message, args);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
+                // eslint-disable-next-line no-console
                 console.error(error);
-                message.reply(
-                    message.guild!.i18n.__mf('ERROR_MESSAGE.msg') + error.name
-                );
+                message
+                    .reply(
+                        `${message.guild?.i18n.__mf('ERROR_MESSAGE.msg')} ${
+                            error.name
+                        }`
+                    )
+                    .catch(() => []);
             }
         } else {
-            if (!message.content.toLowerCase().startsWith(prefix[index]!))
+            if (!message.content.toLowerCase().startsWith(prefix[index] ?? ''))
                 return;
 
             if (reasons.length > 0) {
                 const embed = new MessageEmbed()
                     .setAuthor(
-                        message.client.user!.tag,
-                        message.client.user!.displayAvatarURL({
+                        message.client.user?.tag ?? '',
+                        message.client.user?.displayAvatarURL({
                             dynamic: true,
                             format: 'png',
                             size: 2048,
@@ -118,24 +125,30 @@ export default class MessageEvent extends Event {
                     )
                     .setColor('RED')
                     .setDescription(
-                        `\`\`\`diff\n-${message.guild!.i18n.__mf(
+                        `\`\`\`diff\n-${message.guild?.i18n.__mf(
                             'PERMS_MESSAGE.blocked_cmd'
                         )}\n\`\`\`\n\n` +
-                            `\`${message.guild!.i18n.__mf(
+                            `\`${message.guild?.i18n.__mf(
                                 'PERMS_MESSAGE.reason'
                             )}:\`\n\n${reasons
-                                .map((reason) => '• ' + reason)
+                                .map((reason) => `• ${reason}`)
                                 .join('\n')}`
                     );
                 return message.channel.send({ embeds: [embed] });
             } else {
                 try {
-                    command_to_execute.execute(this.client, message, args);
+                    void commandToExecute.execute(this.client, message, args);
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (error: any) {
+                    // eslint-disable-next-line no-console
                     console.error(error);
-                    message.reply(
-                        message.guild!.i18n.__mf('ERROR_MESSAGE') + error.name
-                    );
+                    message
+                        .reply(
+                            `${message.guild?.i18n.__mf('ERROR_MESSAGE')} ${
+                                error.name
+                            }`
+                        )
+                        .catch(() => []);
                 }
             }
         }

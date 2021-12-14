@@ -13,18 +13,18 @@ export default class BlushCommand extends Command {
         });
     }
 
-    public execute(): void {
+    public async execute(): Promise<void> {
         const result = gifu('blush');
 
         const blushEmbed = new MessageEmbed()
             .setTitle(
-                this.message!.guild?.i18n.__mf('blush.msg', {
+                this.message?.guild?.i18n.__mf('blush.msg', {
                     author: this.message?.author.tag,
                 }) as string
             )
             .setColor('#202225')
             .setImage(result)
             .setURL(result);
-        this.message?.channel.send({ embeds: [blushEmbed] });
+        await this.message?.channel.send({ embeds: [blushEmbed] });
     }
 }

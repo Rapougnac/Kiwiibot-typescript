@@ -17,14 +17,14 @@ export default class UptimeCommand extends Command {
         const { days, hours, minutes, seconds } = this.client.utils.parseMs(
             client.uptime ?? 0
         );
-        message.reply(
-            message.guild!.i18n.__mf('uptime.msg', {
-                client: client.user!.tag,
+        await message.reply(
+            message.guild?.i18n.__mf('uptime.msg', {
+                client: client.user?.tag,
                 days,
                 hours,
                 minutes,
                 seconds,
-            })
+            }) ?? ''
         );
     }
 }

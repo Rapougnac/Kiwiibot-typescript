@@ -125,6 +125,6 @@ export default class Paginate {
                     'Paginate: Passed argument is not an instance of MessageEmbed!'
                 );
         }
-        return;
+
     }
 }

@@ -16,12 +16,12 @@ export default class PingCommand extends SlashCommand {
             if (!(message instanceof Message)) return;
             const ping =
                 message.createdTimestamp - interaction.createdTimestamp;
-            const reply = message.guild!.i18n.__mf('ping.msg', {
+            const reply = message.guild?.i18n.__mf('ping.msg', {
                 pong: 'o'.repeat(Math.min(Math.round(ping / 100), 1500)),
                 ping,
                 heartbeat: this.client.ws.ping,
             });
-            interaction.editReply(reply);
+            interaction.editReply(reply ?? '');
         }
     }
 }

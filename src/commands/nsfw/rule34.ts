@@ -39,7 +39,7 @@ export default class Rule34Command extends Command {
                             query: query.join(' '),
                         }) as string
                     );
-                    setTimeout(() => msg.delete(), 3000);
+                    setTimeout(() => void msg.delete(), 3000);
                 }
                 if (
                     (query.includes('loli') || query.includes('shota')) &&
@@ -70,22 +70,25 @@ export default class Rule34Command extends Command {
                     )
                     .setColor('#FF0000')
                     .setFooter(
+                        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                         message.guild?.i18n.__mf('rule34.tags') +
                             trimArray(image.tags, { maxLength: 2000 }).join(
                                 ' | '
                             )
                     );
-                message.channel.send({ embeds: [embed] });
+                await message.channel.send({ embeds: [embed] });
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 if (err instanceof BooruError)
-                    return message.channel.send(
+                    return await message.channel.send(
+                        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                         message.guild?.i18n.__mf('rule34.no_results_err', {
-                            query: query,
+                            query,
                         }) + err.message
                     );
                 else
-                    return message.channel.send(
+                    return await message.channel.send(
+                        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                         message.guild?.i18n.__mf('rule34.no_results_err', {
                             query: query,
                         }) + err

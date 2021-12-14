@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/prefer-ts-expect-error */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
     UserFlags,
     PermissionString,
@@ -37,11 +40,7 @@ import {
  * @param end the end of the string indicating it's truncated
  * @returns Truncated string
  */
-function textTruncate(
-    str: string = '',
-    length: number = 100,
-    end: string = '...'
-): string {
+function textTruncate(str = '', length = 100, end = '...'): string {
     return (
         String(str).substring(0, length - end.length) +
         (str.length > length ? end : '')
@@ -55,10 +54,11 @@ function textTruncate(
  * @returns Ordinalized number
  * @note Does not support negative numbers!
  */
-function ordinalize(n: number = 0): string {
+function ordinalize(n = 0): string {
     return (
-        Number(n) + ['st', 'nd', 'rd'][(n / 10) % 10 ^ 1 && n % 10]! ||
-        Number(n) + 'th'
+        `${Number(n)} ${
+            ['st', 'nd', 'rd'][(n / 10) % 10 ^ 1 && n % 10] ?? 'th'
+        }` || `${Number(n)}th`
     );
 }
 
@@ -67,8 +67,8 @@ function ordinalize(n: number = 0): string {
  * @param array the array to join
  * @returns the joined array
  */
-function joinArray(array: any[] = [], lang = 'en-US'): string {
-    let list = new Intl.ListFormat(lang);
+function joinArray(array: string[] = [], lang = 'en-US'): string {
+    const list = new Intl.ListFormat(lang);
     return list.format(array.map((x) => String(x)));
 }
 
@@ -96,8 +96,8 @@ function clean(text: string): string {
  */
 function separateNumbers(
     number: number | string,
-    locale: string = 'en',
-    sep: string = ','
+    locale = 'en',
+    sep = ','
 ): string {
     if (locale === 'fr') sep = "'";
     return Number(number)
@@ -115,9 +115,9 @@ function separateNumbers(
  * @returns The joined array
  */
 function joinArrayAndLimit(
-    array: any[] | any = [],
+    array = [],
     limit: number | string = 1000,
-    connector: string = ', '
+    connector = ', '
 ): { text: string; excess: number } {
     if (!Array.isArray(array))
         throw new TypeError(
@@ -129,11 +129,12 @@ function joinArrayAndLimit(
         const excess = array.length - limit;
         array = array.splice(0, limit);
         const text = array.join(connector);
-        array = { text: text, excess: excess };
+        const value = { text, excess };
+        return value;
     } else {
-        array = { text: array.join(connector), excess: 0 };
+        const value = { text: array.join(connector), excess: 0 };
+        return value;
     }
-    return array;
 }
 
 /**
@@ -148,7 +149,7 @@ function convertUFB(bitfield: number): string[] {
     if (Number.isNaN(bitfield))
         throw new TypeError(`${bitfield} is not a number`);
     let processConvert = bitfield;
-    let UFConvertResult: string[] = [];
+    const UFConvertResult: string[] = [];
     const ACFlags = Object.entries(UserFlags.FLAGS).sort(function (a, b) {
         return Number(b[1]) - Number(a[1]);
     });
@@ -179,9 +180,9 @@ type TrimArrayOptions = {
  * @returns {*[]} The trimmed array.
  */
 function trimArray(
-    array: any[],
+    array: string[],
     { maxLength = 10, end = 'And {length} more...' }: TrimArrayOptions
-): any[] {
+): string[] {
     if (!Array.isArray(array))
         throw new TypeError(
             `An array was expected, received "${typeof array}"`
@@ -215,14 +216,13 @@ function toProperCase(s: string): string {
     );
 }
 
-function remove(array: string[], ..._args: any): string[] {
+function remove(array: string[], ...args: string[]): string[] {
     let what,
-        a = arguments,
-        L = a.length,
+        L = args.length,
         ax;
     while (L && array.length) {
-        what = a[--L];
-        while ((ax = array.indexOf(what)) !== -1) {
+        what = args[--L];
+        while ((ax = array.indexOf(what ?? '0')) !== -1) {
             array.splice(ax, 1);
         }
     }
@@ -242,7 +242,7 @@ function translatePermissions(
             return permissions;
         }
         case 'fr': {
-            let _: string[] = [];
+            const _: string[] = [];
             for (const permission of permissions) {
                 switch (permission) {
                     case 'ADD_REACTIONS': {
@@ -410,7 +410,7 @@ function translatePermissions(
             return _;
         }
         case 'de': {
-            let _: string[] = [];
+            const _: string[] = [];
             for (const permission of permissions) {
                 switch (permission) {
                     case 'ADD_REACTIONS': {
@@ -554,14 +554,15 @@ function translatePermissions(
 function upperFirstButAcceptEmojis(str: string): string {
     if (str.length === 0) throw new Error('String is empty');
     const reg =
+        // eslint-disable-next-line no-misleading-character-class
         /[\u{1f300}-\u{1f5ff}\u{1f900}-\u{1f9ff}\u{1f600}-\u{1f64f}\u{1f680}-\u{1f6ff}\u{2600}-\u{26ff}\u{2700}-\u{27bf}\u{1f1e6}-\u{1f1ff}\u{1f191}-\u{1f251}\u{1f004}\u{1f0cf}\u{1f170}-\u{1f171}\u{1f17e}-\u{1f17f}\u{1f18e}\u{3030}\u{2b50}\u{2b55}\u{2934}-\u{2935}\u{2b05}-\u{2b07}\u{2b1b}-\u{2b1c}\u{3297}\u{3299}\u{303d}\u{00a9}\u{00ae}\u{2122}\u{23f3}\u{24c2}\u{23e9}-\u{23ef}\u{25b6}\u{23f8}-\u{23fa}\u{200d}\u{2139}] /gu;
 
     const emoji = reg.exec(str);
-    if (!emoji) {
-        str = str[0]!.toUpperCase() + str.slice(1);
-    } else {
-        str = str.slice(emoji[0]!.length);
-        str = str[0]!.toUpperCase() + str.slice(1);
+    if (!emoji && str[0]) {
+        str = str[0].toUpperCase() + str.slice(1);
+    } else if (emoji?.[0] && str[0]) {
+        str = str.slice(emoji[0].length);
+        str = `${str[0]?.toUpperCase() ?? ''}${str.slice(1)}`;
         str = emoji[0] + str;
     }
     return str;
@@ -572,7 +573,7 @@ function testCombinaisonsOfWord(input: string): string[] {
     const permCount: number = 1 << input.length;
     const results: string[] = [];
 
-    for (let perm: number = 0; perm < permCount; perm++) {
+    for (let perm = 0; perm < permCount; perm++) {
         letters.reduce((perm, letter, i) => {
             letters[i] = perm & 1 ? letter.toUpperCase() : letter.toLowerCase();
             return perm >> 1;
@@ -617,7 +618,9 @@ function parseDate(date: string, reverse?: boolean): string {
         Dec: 12,
     };
 
-    const fullDate = `${year}-${months[month as Months]}-${day}`;
+    const fullDate = `${year ?? '1900'}-${months[month as Months] ?? '01'}-${
+        day ?? '01'
+    }`;
 
     const toSplit = fullDate.split('-');
     const reversed = toSplit.reverse();
@@ -626,8 +629,8 @@ function parseDate(date: string, reverse?: boolean): string {
     return reverse ? joined : fullDate;
 }
 
-function beautifyCategories(category: string, nsfw: boolean = true): string {
-    let categoriesString: string = '';
+function beautifyCategories(category: string, nsfw = true): string {
+    let categoriesString = '';
 
     switch (category) {
         case 'auto': {
@@ -719,8 +722,9 @@ function displayAvatarURL(
     return user.displayAvatarURL(options);
 }
 
-function safeEval(code: string): any {
+function safeEval(code: string): string {
     // All the ts-ignore, because first I don't know how to type this properly, and second, "this" is typed as any.
+    // eslint-disable-next-line @typescript-eslint/no-implied-eval
     const fn = new Function('global', 'process', `return ${code}`);
     (function () {
         // @ts-ignore
@@ -735,6 +739,7 @@ function safeEval(code: string): any {
             this[key].constructor = undefined;
         });
     })();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     return fn.bind(Function)(code);
 }
 

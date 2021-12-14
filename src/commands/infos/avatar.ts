@@ -24,7 +24,7 @@ export default class AvatarCommand extends Command {
         } else {
             member =
                 message.mentions.members?.first() ||
-                message.guild?.members.cache.get(args[0]!) ||
+                message.guild?.members.cache.get(args[0] ?? '') ||
                 message.guild?.members.cache.find(
                     (r) =>
                         r.user.username
@@ -123,14 +123,14 @@ export default class AvatarCommand extends Command {
                           })
                 }) ${
                     member instanceof GuildMember
-                        ? member.user.avatar!.startsWith('a_')
+                        ? member.user.avatar?.startsWith('a_')
                             ? ` • [gif](${member.user.displayAvatarURL({
                                   dynamic: true,
                                   format: 'gif',
                                   size: 4096,
                               })})`
                             : ''
-                        : member.avatar!.startsWith('a_')
+                        : member.avatar?.startsWith('a_')
                         ? ` • [gif](${member.displayAvatarURL({
                               dynamic: true,
                               format: 'gif',
@@ -152,7 +152,11 @@ export default class AvatarCommand extends Command {
                           format: 'png',
                       })
             )
-            .setColor(member instanceof GuildMember ? member.displayHexColor : member.hexAccentColor || 'GREY');
-        message.channel.send({ embeds: [embed] });
+            .setColor(
+                member instanceof GuildMember
+                    ? member.displayHexColor
+                    : member.hexAccentColor || 'GREY'
+            );
+        await message.channel.send({ embeds: [embed] });
     }
 }

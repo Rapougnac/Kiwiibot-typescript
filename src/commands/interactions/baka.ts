@@ -21,7 +21,7 @@ export default class BakaCommand extends Command {
         if (!message.guild) return;
         let member =
             message.mentions.members?.first() ||
-            message.guild.members.cache.get(args[0]!) ||
+            message.guild.members.cache.get(args[0] ?? '') ||
             message.guild.members.cache.find(
                 (r) =>
                     r.user.username.toLowerCase() ===
@@ -44,7 +44,7 @@ export default class BakaCommand extends Command {
                 )
                 .setImage(GIF.url)
                 .setURL(GIF.url);
-            message.channel.send({ embeds: [embed] });
+            await message.channel.send({ embeds: [embed] });
         } else {
             const GIF = await client.utils.neko.sfw.baka();
             const embed = new MessageEmbed()
@@ -57,7 +57,7 @@ export default class BakaCommand extends Command {
                 )
                 .setURL(GIF.url)
                 .setImage(GIF.url);
-            message.channel.send({ embeds: [embed] });
+            await message.channel.send({ embeds: [embed] });
         }
     }
 }

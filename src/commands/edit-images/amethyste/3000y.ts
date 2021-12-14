@@ -23,7 +23,7 @@ export default class ThreeTousandYearsCommand extends Command {
             message.channel.sendTyping();
             let member =
                 message.mentions.members?.first() ||
-                message.guild.members.cache.get(args[0]!) ||
+                message.guild.members.cache.get(args[0] ?? '') ||
                 message.guild.members.cache.find(
                     (r) =>
                         r.user.username
@@ -44,29 +44,29 @@ export default class ThreeTousandYearsCommand extends Command {
                 );
             if (args.length <= 0)
                 member = message.member as GuildMember | undefined;
-            let m = await message.channel.send(
+            const m = await message.channel.send(
                 message.guild.i18n.__mf('common.wait')
             );
             const buffer = await client.utils.AmeAPI.generate('3000years', {
-                url: member!.user.displayAvatarURL({
+                url: member?.user.displayAvatarURL({
                     format: 'png',
                     size: 2048,
-                }),
+                }) as string,
             });
             const attachment = new MessageAttachment(buffer, '3000years.png');
-            setTimeout(() => m.delete(), 3000);
-            message.channel.send({ files: [attachment] });
+            setTimeout(() => void m.delete(), 3000);
+            await message.channel.send({ files: [attachment] });
         } else {
-            let member = message.author;
-            let m = await message.channel.send(
-                message.guild!.i18n.__mf('common.wait')
+            const member = message.author;
+            const m = await message.channel.send(
+                message.guild?.i18n.__mf('common.wait') ?? 'Wait...'
             );
             const buffer = await client.utils.AmeAPI.generate('3000years', {
                 url: member.displayAvatarURL({ format: 'png', size: 2048 }),
             });
             const attachment = new MessageAttachment(buffer, '3000years.png');
-            setTimeout(() => m.delete(), 3000);
-            message.channel.send({ files: [attachment] });
+            setTimeout(() => void m.delete(), 3000);
+            await message.channel.send({ files: [attachment] });
         }
     }
 }

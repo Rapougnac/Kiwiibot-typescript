@@ -42,24 +42,32 @@ export default function generateTranscript(
     DOMPurify.setConfig({
         ALLOWED_TAGS: [],
     });
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const { sanitize: xss } = DOMPurify;
 
     (
         document.getElementsByClassName(
             'preamble__guild-icon'
         )[0] as HTMLImageElement
-    ).src = channel.guild.iconURL({
-        dynamic: true,
-        size: 4096,
-        format: 'png',
-    })!;
-    document.getElementById('guildname')!.textContent = channel.guild.name;
-    document.getElementById('ticketname')!.textContent = channel.name;
-    document.querySelector('link')!.href = channel.guild.iconURL({
-        size: 4096,
-        format: 'png',
-    })!;
+    ).src =
+        channel.guild.iconURL({
+            dynamic: true,
+            size: 4096,
+            format: 'png',
+        }) ?? staticValues.DummyUser.displayAvatarURL();
+    const guildName = document.getElementById('guild_name');
+    const ticketName = document.getElementById('ticketname');
+    const link = document.querySelector('link');
+    if (guildName) guildName.textContent = channel.guild.name;
+    if (ticketName) ticketName.textContent = channel.name;
+    if (link)
+        link.href =
+            channel.guild.iconURL({
+                dynamic: true,
+                size: 4096,
 
+                format: 'png',
+            }) ?? staticValues.DummyUser.displayAvatarURL();
     const transcript = document.getElementById('chatlog');
 
     for (const message of Array.from(messages.values()).sort(
@@ -79,9 +87,9 @@ export default function generateTranscript(
                 messages instanceof Collection
                     ? messages.get(message.reference.messageId)
                     : messages.find(
-                          (m) => m.id === message.reference!.messageId
+                          (m) => m.id === message.reference?.messageId
                       );
-            const author = referencedMessage!.author ?? staticValues.DummyUser;
+            const author = referencedMessage?.author ?? staticValues.DummyUser;
 
             reference.innerHTML = `<img class="chatlog__reference-avatar" src="${author.displayAvatarURL(
                 { dynamic: true, format: 'png', size: 4096 }
@@ -196,9 +204,11 @@ export default function generateTranscript(
                 const attachmentsDiv = document.createElement('div');
                 attachmentsDiv.classList.add('chatlog__attachment');
 
-                const attachmentType = attachment.name!.split('.').pop();
+                const attachmentType = attachment.name?.split('.').pop();
 
-                if (['png', 'jpg', 'jpeg', 'gif'].includes(attachmentType!)) {
+                if (
+                    ['png', 'jpg', 'jpeg', 'gif'].includes(attachmentType ?? '')
+                ) {
                     const attachmentLink = document.createElement('a');
 
                     const attachmentImage = document.createElement('img');
@@ -212,7 +222,7 @@ export default function generateTranscript(
 
                     attachmentLink.appendChild(attachmentImage);
                     attachmentsDiv.appendChild(attachmentLink);
-                } else if (['mp4', 'webm'].includes(attachmentType!)) {
+                } else if (['mp4', 'webm'].includes(attachmentType ?? '')) {
                     const attachmentVideo = document.createElement('video');
                     attachmentVideo.classList.add('chatlog__attachment-media');
                     attachmentVideo.src = attachment.url ?? attachment.proxyURL;
@@ -222,7 +232,7 @@ export default function generateTranscript(
                     } (${formatBytes(attachment.size)})`;
 
                     attachmentsDiv.appendChild(attachmentVideo);
-                } else if (['mp3', 'ogg'].includes(attachmentType!)) {
+                } else if (['mp3', 'ogg'].includes(attachmentType ?? '')) {
                     const attachmentAudio = document.createElement('audio');
                     attachmentAudio.classList.add('chatlog__attachment-media');
                     attachmentAudio.src = attachment.url ?? attachment.proxyURL;
@@ -555,7 +565,7 @@ export default function generateTranscript(
         }
 
         messageGroup.appendChild(content);
-        transcript!.appendChild(messageGroup);
+        transcript?.appendChild(messageGroup);
     }
 
     return options.returnBuffer
@@ -580,13 +590,17 @@ function formatContent(
     purify = he.escape
 ) {
     content = purify(content)
-        .replace(/\&\#x60;/g, '`')
+        .replace(/&#x60;/g, '`')
         .replace(/```(.+?)```/gs, (code: string) => {
             if (!replyStyle) {
                 const split = code.slice(3, -3).split('\n');
+
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 let language = split.shift()!.trim().toLowerCase();
 
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 if ((staticValues.LanguageAliases as any)[language])
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     language = (staticValues.LanguageAliases as any)[language];
 
                 if (languages.includes(language)) {
@@ -617,9 +631,10 @@ function formatContent(
         .replace(/\*(.+?)\*/g, '<em>$1</em>')
         .replace(/~~(.+?)~~/g, '<s>$1</s>')
         .replace(/__(.+?)__/g, '<u>$1</u>')
-        .replace(/\_(.+?)\_/g, '<em>$1</em>')
+        .replace(/_(.+?)_/g, '<em>$1</em>')
         .replace(/`(.+?)`/g, `<span class="pre pre--inline">$1</span>`)
         .replace(
+            // eslint-disable-next-line no-useless-escape
             /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,10}\b([-a-zA-Z0-9()@:;%_\+.~#?&//=]*))/g,
             '<a href="$1">$1</a>'
         )
@@ -681,5 +696,5 @@ function formatBytes(bytes: number, decimals = 2): string {
 
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }

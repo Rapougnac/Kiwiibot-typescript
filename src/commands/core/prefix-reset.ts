@@ -1,9 +1,7 @@
-import PrefixSchema from '../../models/PrefixSchema';
 import { confirmation } from '../../util/confirmation';
 import { Message } from 'discord.js';
 import Command from '../../struct/Command';
 import KiwiiClient from '../../struct/Client';
-import mongoose from 'mongoose';
 
 export default class PrefixResetCommand extends Command {
     constructor(client: KiwiiClient) {
@@ -14,7 +12,7 @@ export default class PrefixResetCommand extends Command {
             category: 'core',
             utilisation: '{prefix}prefix-reset',
             guildOnly: true,
-            permissions: ['SEND_MESSAGES', 'VIEW_CHANNEL','MANAGE_MESSAGES'],
+            permissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'MANAGE_MESSAGES'],
             clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
         });
     }
@@ -23,9 +21,13 @@ export default class PrefixResetCommand extends Command {
         client: KiwiiClient,
         message: Message
     ): Promise<Message | void> {
-        if(!mongoose.connection._hasOpened) return await message.channel.send(message.guild!.i18n.__mf('prefix-reset.no_conn'));
+        if (!message.guild) return;
+        if (!client.mySql.connected)
+            return await message.channel.send(
+                message.guild.i18n.__mf('prefix-reset.no_conn')
+            );
         const msg = await message.channel.send(
-            message.guild!.i18n.__mf('prefix-reset.confirmation')
+            message.guild.i18n.__mf('prefix-reset.confirmation')
         );
 
         const emoji = await confirmation(
@@ -37,21 +39,22 @@ export default class PrefixResetCommand extends Command {
 
         switch (emoji) {
             case '✅': {
-                msg.delete();
-                await PrefixSchema.findOneAndDelete({
-                    GuildID: message.guild!.id,
-                });
-                message.channel.send(
-                    message.guild!.i18n.__mf('prefix-reset.reset_prefix', {
+                await msg.delete();
+                await client.mySql.connection.query(
+                    `UPDATE \`guildsettings\` SET \`prefix\` = NULL WHERE \`guildId\` = ${message.guild.id}`
+                );
+                message.guild.prefix = client.prefix;
+                await message.channel.send(
+                    message.guild.i18n.__mf('prefix-reset.reset_prefix', {
                         prefix: client.prefix,
                     })
                 );
                 break;
             }
             case '❌': {
-                msg.delete();
-                return message.channel.send(
-                    message.guild!.i18n.__mf('prefix-reset.canceled')
+                await msg.delete();
+                return await message.channel.send(
+                    message.guild.i18n.__mf('prefix-reset.canceled')
                 );
             }
         }

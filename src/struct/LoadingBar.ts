@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { StartOptions } from './interfaces/LoadingBar';
 
 export default class LoadingBar {
@@ -26,6 +27,7 @@ export default class LoadingBar {
                 const Empty = empty.repeat(left);
                 const nbr = length * (100 / length);
                 const percentage = (i * nbr) / length;
+                // eslint-disable-next-line no-console
                 console.log(
                     `\r${start}${Full}${Empty}${end} ${
                         Number.isInteger(percentage)
@@ -35,7 +37,7 @@ export default class LoadingBar {
                 );
                 await LoadingBar.wait(time);
             }
-        } else {
+        } else if (message) {
             for (let i = 0; i <= length; i++) {
                 const Full = full.repeat(i);
                 const left = length - i;
@@ -45,7 +47,7 @@ export default class LoadingBar {
                 // If this is the 1st time, send the message
                 if (i === 0) {
                     // Reassign message
-                    message = await message!.channel.send(
+                    message = await message.channel.send(
                         `\r${start}${Full}${Empty}${end} ${
                             Number.isInteger(percentage)
                                 ? percentage
@@ -54,7 +56,7 @@ export default class LoadingBar {
                     );
                 } else {
                     // Edit message
-                    message!.edit(
+                    await message.edit(
                         `\r${start}${Full}${Empty}${end} ${
                             Number.isInteger(percentage)
                                 ? percentage
@@ -65,7 +67,7 @@ export default class LoadingBar {
                 // If this is the end of the progress, and deleteMessage has been enabled, delete the message
                 if (i === length && deleteMessage && allowMessage && message) {
                     setTimeout(() => {
-                        message!.delete();
+                        message?.delete().catch(() => []);
                     }, timeoutMessage);
                 }
                 await LoadingBar.wait(time);
@@ -77,7 +79,7 @@ export default class LoadingBar {
      * Method to wait
      * @param milliseconds The time in ms to wait
      */
-    static wait(milliseconds: number = 250): Promise<unknown> {
+    static wait(milliseconds = 250): Promise<unknown> {
         return new Promise((res) => setTimeout(res, milliseconds));
     }
 }

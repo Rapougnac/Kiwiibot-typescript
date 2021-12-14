@@ -42,7 +42,8 @@
 		"missing_prefix": "Please specify a prefix!",
 		"prefix_length": "Error, my prefix cannot be longer than 5 characters!",
 		"updated_prefix": "My prefix has been updated to **{prefix}**",
-		"new_prefix": "Prefix in this server is now set to **{prefix}**"
+		"new_prefix": "Prefix in this server is now set to **{prefix}**",
+		"same_prefix": "This prefix is the same as before!"
 	},
 	"help": {
 		"title": "Help pannel",
@@ -72,7 +73,8 @@
 		"cmd_usage": "Do {prefix}help [command] to get more information about it.",
 		"nsfw": "You can't show the help pannel if the command to display is nsfw and the channel is not.",
 		"nsfw_message": "\nTo display the nsfw commands, do help in a nsfw channel.",
-		"no_desc": "No description was found for this command."
+		"no_desc": "No description was found for this command.",
+		"no_usage": "No usage was found for this command."
 	},
 	"prefix-reset": {
 		"description": "Reset the prefix to the default one.",

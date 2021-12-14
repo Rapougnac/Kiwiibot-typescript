@@ -12,6 +12,6 @@ export default class AutoNOU extends Command {
         });
     }
     public execute(): void {
-        this.message!.channel.send('no u');
+        void this.message?.channel.send('no u');
     }
 }

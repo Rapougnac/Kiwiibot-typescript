@@ -12,7 +12,7 @@ import i18n from 'i18n';
 
 const app = express();
 
-export default async function (client: KiwiiClient) {
+export default function (client: KiwiiClient) {
     app.set('view engine', 'ejs');
     app.use(express.static(path.resolve(`${process.cwd()}/src/dashboard/`)));
     app.use((_req, res, next) => {
@@ -31,7 +31,7 @@ export default async function (client: KiwiiClient) {
             }
         );
     });
-    app.get('/commands', async (_req, res) => {
+    app.get('/commands', (_req, res) => {
         res.status(200).render(
             path.resolve(`${process.cwd()}/src/dashboard/ejs/commands.ejs`),
             {
@@ -63,9 +63,10 @@ export default async function (client: KiwiiClient) {
         try {
             req.query['lang'] =
                 req.query['lang'] || req.cookies['lang'] || 'en';
-            next();
-        } catch (e) {
-            res.status(500).send(e);
+            return next();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (e: any) {
+            res.status(500).send(e.message);
         }
     });
     app.listen(client.config.port);

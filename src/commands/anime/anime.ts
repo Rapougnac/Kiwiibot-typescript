@@ -5,7 +5,7 @@ import KiwiiClient from '../../struct/Client';
 import { parseDate } from '../../util/string';
 
 import child, { ExecException } from 'child_process';
-import util from 'util';
+// import util from 'util';
 export default class AnimeCommand extends Command {
     constructor(client: KiwiiClient) {
         super(client, {
@@ -28,25 +28,26 @@ export default class AnimeCommand extends Command {
         const search = args.join(' ').toLowerCase();
         if (!search) {
             return message.channel.send(
-                message.guild!.i18n.__mf('anime.specify')
+                message.guild?.i18n.__mf('anime.specify') ?? 'Specify an anime'
             );
         }
         const result = await malScraper
             .getResultsFromSearch(search)
             .catch((err) => {
+                // eslint-disable-next-line no-console
                 console.error(err.stack);
                 return message.channel.send(
-                    message.guild!.i18n.__mf('anime.not_found', {
+                    message.guild?.i18n.__mf('anime.not_found', {
                         search: search,
-                    })
+                    }) ?? 'Anime not found'
                 );
             });
         if (result instanceof Message) return;
         if (result.length === 0) {
             return message.channel.send(
-                message.guild!.i18n.__mf('anime.not_found', {
+                message.guild?.i18n.__mf('anime.not_found', {
                     search: search,
-                })
+                }) ?? 'Placeholder'
             );
         }
         if (result.length > 2) {
@@ -58,14 +59,15 @@ export default class AnimeCommand extends Command {
                 embeds: [
                     {
                         author: {
-                            name: message.guild!.i18n.__mf(
+                            name: message.guild?.i18n.__mf(
                                 'anime.stop_collect_msg'
                             ),
                         },
-                        title: message.guild!.i18n.__mf('anime.choose'),
+                        title: message.guild?.i18n.__mf('anime.choose'),
                         description: s,
                         footer: {
                             text: `Requested by ${message.author.username}`,
+                            // eslint-disable-next-line camelcase
                             icon_url: message.author.displayAvatarURL({
                                 dynamic: true,
                             }),
@@ -86,7 +88,7 @@ export default class AnimeCommand extends Command {
             const continued = await new Promise((resolve) => {
                 let count: number;
                 collector
-                    .on('collect', async (m) => {
+                    .on('collect', (m) => {
                         const arg = m.content.toLowerCase().trim().split(/ +/g);
                         number = Number(arg[0]);
                         if (Number.isNaN(number) || !number) resolve(false);
@@ -100,35 +102,36 @@ export default class AnimeCommand extends Command {
             result.forEach((_, index) => (c = index + 1));
             if (!continued)
                 return message.channel.send(
-                    message.guild!.i18n.__mf('anime.number_range', {
+                    message.guild?.i18n.__mf('anime.number_range', {
                         number: c,
-                    })
+                    }) ?? 'Number out of range'
                 );
             else {
                 const _anime = result[(number ?? 1) - 1];
                 if (!_anime)
                     return message.channel.send(
-                        message.guild!.i18n.__mf('anime.not_found', {
+                        message.guild?.i18n.__mf('anime.not_found', {
                             search: search,
-                        })
+                        }) ?? 'Anime not found'
                     );
                 const anime = await malScraper.getInfoFromName(_anime.name);
-                const [startDate, endDate] = anime.aired!.split('to') ?? [
+                const [startDate, endDate] = anime.aired?.split('to') ?? [
                     'N/A',
                     'N/A',
                 ];
                 let synopsis = anime.synopsis?.replace(
                     '[Written by MAL Rewrite]',
                     ''
-                )!;
-                if (message.guild!.i18n.getLocale() === 'en') {
-                    synopsis = anime.synopsis?.replace(
-                        '[Written by MAL Rewrite]',
-                        ''
-                    )!;
+                );
+                if (message.guild?.i18n.getLocale() === 'en') {
+                    synopsis =
+                        anime.synopsis?.replace(
+                            '[Written by MAL Rewrite]',
+                            ''
+                        ) ?? 'N/A';
                 } else {
                     const stdout = await this.exec(
-                        `python ./src/util/deepl.py en ${message.guild!.i18n.getLocale()} "${synopsis}"`
+                        `python ./src/util/deepl.py en ${message.guild?.i18n.getLocale()} "${synopsis}"`
                     );
                     synopsis = stdout.toString('binary');
                 }
@@ -145,30 +148,30 @@ export default class AnimeCommand extends Command {
                 embed
                     .addField(
                         '❯\u2000 Informations',
-                        `•\u2000 **${message.guild!.i18n.__mf(
+                        `•\u2000 **${message.guild?.i18n.__mf(
                             'anime.japanese_name'
                         )}** ${
                             anime.title
-                        }\n•\u2000 **${message.guild!.i18n.__mf(
+                        }\n•\u2000 **${message.guild?.i18n.__mf(
                             'anime.age'
                         )}** ${anime.rating}\n•\u2000 **NSFW:** ${
                             anime.rating === 'Rx - Hentai'
-                                ? message.guild!.i18n.__mf('common.yes')
-                                : message.guild!.i18n.__mf('common.no')
+                                ? message.guild?.i18n.__mf('common.yes')
+                                : message.guild?.i18n.__mf('common.no')
                         }`,
                         true
                     )
                     .addField(
-                        `❯\u2000 ${message.guild!.i18n.__mf('anime.stats')}`,
-                        `•\u2000 **${message.guild!.i18n.__mf(
+                        `❯\u2000 ${message.guild?.i18n.__mf('anime.stats')}`,
+                        `•\u2000 **${message.guild?.i18n.__mf(
                             'anime.note'
                         )}** ${
                             anime.score
-                        }\n•\u2000 **${message.guild!.i18n.__mf(
+                        }\n•\u2000 **${message.guild?.i18n.__mf(
                             'anime.rank'
                         )}** ${
                             anime.ranked
-                        }\n•\u2000 **${message.guild!.i18n.__mf(
+                        }\n•\u2000 **${message.guild?.i18n.__mf(
                             'anime.poularity'
                         )}** ${anime.popularity}`,
                         true
@@ -177,20 +180,23 @@ export default class AnimeCommand extends Command {
                         '❯\u2000 Status',
                         `•\u2000 **Episodes:** ${
                             anime.episodes ? anime.episodes : 'N/A'
-                        }\n•\u2000 **${message.guild!.i18n.__mf(
+                        }\n•\u2000 **${message.guild?.i18n.__mf(
                             'anime.beginning'
-                        )}:** ${parseDate(startDate!.trim(), true).replace(
+                        )}:** ${parseDate(
+                            startDate?.trim() ?? 'Jan, 01 1900',
+                            true
+                        ).replace(
                             /-/g,
                             '/'
-                        )}\n•\u2000 **${message.guild!.i18n.__mf(
+                        )}\n•\u2000 **${message.guild?.i18n.__mf(
                             'anime.end'
                         )}:** ${
-                            endDate!.trim() === '?'
-                                ? message.guild!.i18n.__mf('anime.in_progress')
-                                : parseDate(endDate!.trim(), true).replace(
-                                      /-/g,
-                                      '/'
-                                  )
+                            endDate?.trim() === '?'
+                                ? message.guild?.i18n.__mf('anime.in_progress')
+                                : parseDate(
+                                      endDate?.trim() ?? 'Jan, 01 19000',
+                                      true
+                                  ).replace(/-/g, '/')
                         }`,
                         true
                     )
@@ -202,9 +208,9 @@ export default class AnimeCommand extends Command {
             const _anime = result[0];
             if (!_anime)
                 return message.channel.send(
-                    message.guild!.i18n.__mf('anime.not_found', {
+                    message.guild?.i18n.__mf('anime.not_found', {
                         search: search,
-                    })
+                    }) ?? 'Anime not found'
                 );
             const anime = await malScraper.getInfoFromName(_anime.name);
             const [startDate, endDate] = anime.aired?.split('to') ?? [
@@ -214,15 +220,15 @@ export default class AnimeCommand extends Command {
             let synopsis = anime.synopsis?.replace(
                 '[Written by MAL Rewrite]',
                 ''
-            )!;
-            const python = child.execSync(
-                `python ./src/util/deepl.py en ${message.guild!.i18n.getLocale()} "${synopsis}"`
             );
-            if (message.guild!.i18n.getLocale() === 'en') {
+            const python = child.execSync(
+                `python ./src/util/deepl.py en ${message.guild?.i18n.getLocale()} "${synopsis}"`
+            );
+            if (message.guild?.i18n.getLocale() === 'en') {
                 synopsis = anime.synopsis?.replace(
                     '[Written by MAL Rewrite]',
                     ''
-                )!;
+                );
             } else {
                 synopsis = python.toString('binary');
             }
@@ -234,29 +240,29 @@ export default class AnimeCommand extends Command {
                     anime.url
                 );
             if (anime.synopsis && anime.synopsis.length < 2000)
-                embed.setDescription(synopsis);
+                embed.setDescription(synopsis ?? 'N/A');
 
             embed
                 .addField(
                     '❯\u2000 Informations',
-                    `•\u2000 **${message.guild!.i18n.__mf(
+                    `•\u2000 **${message.guild?.i18n.__mf(
                         'anime.japanese_name'
-                    )}** ${anime.title}\n•\u2000 **${message.guild!.i18n.__mf(
+                    )}** ${anime.title}\n•\u2000 **${message.guild?.i18n.__mf(
                         'anime.age'
                     )}** ${anime.rating}\n•\u2000 **NSFW:** ${
                         anime.rating === 'Rx - Hentai'
-                            ? message.guild!.i18n.__mf('common.yes')
-                            : message.guild!.i18n.__mf('common.no')
+                            ? message.guild?.i18n.__mf('common.yes')
+                            : message.guild?.i18n.__mf('common.no')
                     }`,
                     true
                 )
                 .addField(
-                    `❯\u2000 ${message.guild!.i18n.__mf('anime.stats')}`,
-                    `•\u2000 **${message.guild!.i18n.__mf('anime.note')}** ${
+                    `❯\u2000 ${message.guild?.i18n.__mf('anime.stats')}`,
+                    `•\u2000 **${message.guild?.i18n.__mf('anime.note')}** ${
                         anime.score
-                    }\n•\u2000 **${message.guild!.i18n.__mf('anime.rank')}** ${
+                    }\n•\u2000 **${message.guild?.i18n.__mf('anime.rank')}** ${
                         anime.ranked
-                    }\n•\u2000 **${message.guild!.i18n.__mf(
+                    }\n•\u2000 **${message.guild?.i18n.__mf(
                         'anime.poularity'
                     )}** ${anime.popularity}`,
                     true
@@ -265,18 +271,20 @@ export default class AnimeCommand extends Command {
                     '❯\u2000 Status',
                     `•\u2000 **Episodes:** ${
                         anime.episodes ? anime.episodes : 'N/A'
-                    }\n•\u2000 **${message.guild!.i18n.__mf(
+                    }\n•\u2000 **${message.guild?.i18n.__mf(
                         'anime.beginning'
-                    )}:** ${parseDate(startDate!.trim(), true).replace(
-                        /-/g,
-                        '/'
-                    )}\n•\u2000 **${message.guild!.i18n.__mf('anime.end')}:** ${
-                        endDate!.trim() === '?'
-                            ? message.guild!.i18n.__mf('anime.in_progress')
-                            : parseDate(endDate!.trim(), true).replace(
-                                  /-/g,
-                                  '/'
-                              )
+                    )}:** ${parseDate(
+                        startDate?.trim() ?? 'Jan, 01 1900',
+                        true
+                    ).replace(/-/g, '/')}\n•\u2000 **${message.guild?.i18n.__mf(
+                        'anime.end'
+                    )}:** ${
+                        endDate?.trim() === '?'
+                            ? message.guild?.i18n.__mf('anime.in_progress')
+                            : parseDate(
+                                  endDate?.trim() ?? 'Jan, 01 1900',
+                                  true
+                              ).replace(/-/g, '/')
                     }`,
                     true
                 )

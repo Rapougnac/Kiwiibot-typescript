@@ -36,3 +36,8 @@ Go to the directory of the bot, and then, type
 ./setup.sh
 ```
 And you're ready to go!
+
+* ## Requirements
+   - Have MySql installed on your computer.
+   - Have Nodejs installed on your computer.
+   - Have TypeScript installed on your computer.

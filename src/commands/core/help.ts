@@ -76,16 +76,16 @@ export default class HelpCommand extends Command {
                                 !c.config.hidden &&
                                 !c.config.nsfw
                         ).size
-                            ? upperFirstButAcceptEmojis(ct) +
-                              ' ' +
-                              '[' +
+                            ? `${upperFirstButAcceptEmojis(ct)
+                              } ` +
+                              `[${
                               this.client.commands.filter(
                                   (c) =>
                                       c.help.category === category &&
                                       !c.config.hidden &&
                                       !c.config.nsfw
-                              ).size +
-                              ']'
+                              ).size
+                              }]`
                             : ''
                     }`,
                     value: joinArray(
@@ -144,7 +144,7 @@ export default class HelpCommand extends Command {
                         : ''
                 );
             if (this.help.img) embed.setThumbnail(this.help.img);
-            message.channel.send({ embeds: [embed] });
+           await message.channel.send({ embeds: [embed] });
         } else {
             const command =
                 this.client.commands.get(args.join(' ').toLowerCase()) ||
@@ -163,7 +163,7 @@ export default class HelpCommand extends Command {
                     possibleCommand ? possibleCommand : possibleCommandAlias
                 )
             ) {
-                const notFoudDym = message!.guild.i18n.__mf(
+                const notFoudDym = message?.guild.i18n.__mf(
                     'help.not_found_dym',
                     {
                         command: possibleCommand
@@ -176,7 +176,7 @@ export default class HelpCommand extends Command {
                 );
             } else if (!command)
                 return message.channel.send(
-                    `${client.emotes.error} - ${message!.guild.i18n.__mf(
+                    `${client.emotes.error} - ${message?.guild.i18n.__mf(
                         'help.not_found'
                     )}`
                 );
@@ -234,10 +234,10 @@ export default class HelpCommand extends Command {
                     },
                     {
                         name: message.guild.i18n.__mf('help.usage'),
-                        value: command.help.utilisation!.replace(
+                        value: command.help.utilisation?.replace(
                             '{prefix}',
                             client.prefix
-                        ),
+                        ) ?? message.guild.i18n.__mf('help.no_usage'),
                         inline: true,
                     },
                     {

@@ -39,34 +39,42 @@ export default class DocsCommand extends Command {
         let source;
         if (message.content.includes('--src')) {
             source = args[args.length - 1];
-            if (sources.indexOf(source!) === -1)
+            if (sources.indexOf(source ?? '') === -1)
                 return message.channel.send(
                     message.guild.i18n.__mf('docs.valid_sources')
                 );
             const url = `https://djsdocs.sorta.moe/v2/embed?src=${source}&q=${encodeURIComponent(
                 query
             )}`;
-            axios.get(url).then(({ data }) => {
-                if (data) message.channel.send({ embeds: [data] });
-                else
-                    return message.channel.send(
-                        message.guild?.i18n.__mf('docs.docs_fetch_error') as any
-                    );
-            });
+            axios
+                .get(url)
+                .then(async ({ data }) => {
+                    if (data) await message.channel.send({ embeds: [data] });
+                    else
+                        return await message.channel.send(
+                            message.guild?.i18n.__mf('docs.docs_fetch_error') ??
+                                ''
+                        );
+                })
+                .catch(() => []);
         } else {
             source = 'stable';
             const url = `https://djsdocs.sorta.moe/v2/embed?src=${source}&q=${encodeURIComponent(
                 query
             )}`;
-            axios.get(url).then(({ data }) => {
-                if (data) {
-                    message.channel.send({ embeds: [data] });
-                } else {
-                    return message.channel.send(
-                        message.guild?.i18n.__mf('docs.docs_fetch_error') as any
-                    );
-                }
-            });
+            axios
+                .get(url)
+                .then(async ({ data }) => {
+                    if (data) {
+                        await message.channel.send({ embeds: [data] });
+                    } else {
+                        return message.channel.send(
+                            message.guild?.i18n.__mf('docs.docs_fetch_error') ??
+                                ''
+                        );
+                    }
+                })
+                .catch(() => []);
         }
     }
 }

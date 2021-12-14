@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
 import get from './util/get';
 import post from './util/post';
 import or from './util/or';
@@ -46,6 +48,11 @@ interface Output {
      * The version of the language the output is in.
      */
     version: string;
+
+    /**
+     * If there's an error message
+     */
+    message?: string;
 }
 
 /**

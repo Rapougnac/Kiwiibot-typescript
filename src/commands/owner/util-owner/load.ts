@@ -14,7 +14,7 @@ export default class LoadCommand extends Command {
         });
     }
     public override async execute(_client: KiwiiClient, message: Message, [commandName]: string[]) {
-        if(!commandName) 
+        if(!commandName)
             return message.reply('Please provide a command name to load');
         void super.load(commandName);
         return message.reply(`Command \`${commandName}\` has been loaded`);

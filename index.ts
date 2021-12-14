@@ -1,8 +1,8 @@
 import KiwiiClient from './src/struct/Client';
 import * as config from './config';
-import './src/struct/Guild';
 import './src/struct/User';
 import Intents from './src/struct/Intents';
+import { error } from './src/util/console';
 
 const client = new KiwiiClient({
     config: config,
@@ -15,7 +15,8 @@ const client = new KiwiiClient({
         },
         partials: ['CHANNEL', 'MESSAGE', 'REACTION', 'USER'],
     },
+    database: config.mysql,
 });
 
-(async () => await client.connect())();
+(async () => await client.connect())().catch(error);
 client.start();

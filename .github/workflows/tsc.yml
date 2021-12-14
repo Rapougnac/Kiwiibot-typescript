@@ -1,0 +1,43 @@
+name: TS Build
+
+# Controls when the workflow will run
+on:
+    # Triggers the workflow on push events but only for the main and dev branch
+    push:
+        branches: [main, dev]
+    # Triggers the workflow on pull request events but only for the main branch
+    pull_request:
+        branches: [main, dev]
+
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [16]
+
+        steps:
+            - uses: actions/checkout@v2
+            - uses: pnpm/action-setup@v2.0.1
+              with:
+                  version: 6.20.3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v2
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
+
+            # Install dependencies
+            - name: Install dependencies
+              run: pnpm i
+
+            - name: Rename config
+              run: mv configexample.ts config.ts
+
+            # Runs typescript
+            - name: Run tsc
+              run: tsc
