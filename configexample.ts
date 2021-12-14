@@ -105,3 +105,10 @@ export const chatbot = {
     id: '',
     key: '',
 };
+
+export const mysql = {
+    host: '',
+    user: '',
+    password: '',
+    database: '',
+};

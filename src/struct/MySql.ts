@@ -11,7 +11,7 @@ export default class MYSql {
         { host, password, user, database }: MySqlOptions = {
             host: 'localhost',
             password: '',
-            user: 'root',
+            user: '',
         }
     ) {
         this.connected = false;

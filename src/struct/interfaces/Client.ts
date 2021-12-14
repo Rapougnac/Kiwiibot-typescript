@@ -190,6 +190,8 @@ export interface Config {
     kiwii: {
         apiKey: string;
     };
+
+    mysql: DataBaseOptions;
 }
 
 export interface KiwiiClientOptions {
@@ -262,7 +264,7 @@ export interface DataBaseOptions {
 
     /**
      * The username of the database
-     * @default 'root'
+     * @default ''
      */
     user?: string;
 }
