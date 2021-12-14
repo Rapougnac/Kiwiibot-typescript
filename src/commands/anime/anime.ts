@@ -108,6 +108,7 @@ export default class AnimeCommand extends Command {
                     }) ?? 'Number out of range'
                 );
             else {
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 const _anime = result[(number ?? 1) - 1];
                 if (!_anime)
                     return message.channel.send(
@@ -302,7 +303,7 @@ export default class AnimeCommand extends Command {
                 { encoding: 'buffer' },
                 (error, stdout, stderr) => {
                     if (error) reject(error);
-                    if (stderr) reject(stderr);
+                    if (stderr.length) reject(stderr);
                     resolve(stdout);
                 }
             );

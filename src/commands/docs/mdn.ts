@@ -29,10 +29,8 @@ export default class MDNCommand extends Command {
             mdn.find(upperFirstButAcceptEmojis(word), 'javascript').length === 0
                 ? mdn.find(word, 'javascript')
                 : mdn.find(upperFirstButAcceptEmojis(word), 'javascript');
-        const notFound =
-            message.guild?.i18n.__mf('mdn.not_found') ??
-            'Your query was not found!';
-        if (!arrayOfProperties) return message.channel.send(notFound);
+        const notFound = message.guild.i18n.__mf('mdn.not_found');
+        if (!arrayOfProperties.length) return message.channel.send(notFound);
         let foo: IdentifierMeta | null = null;
         if (
             Object.prototype.hasOwnProperty.call(
@@ -50,7 +48,7 @@ export default class MDNCommand extends Command {
         // Get the domain of mdn (https://developer.mozilla.org/)
         const domain = _url.substring(0, 30);
         // Here we get the url of the page
-        const [, path] = _url.split(domain ?? 'https://developer.mozilla.org/');
+        const [, path] = _url.split(domain);
         const locale = message.guild.i18n.getLocale();
         let url = _url;
         // Set the url to the locale if it exists
@@ -60,6 +58,7 @@ export default class MDNCommand extends Command {
             url = `${domain}${locale}/${path}`;
         }
         const html = await axios.get(url).then((res) => res.data);
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!html) return;
         const $ = cheerio.load(html);
         const reg = /`?<a\shref="([^"]*)">([^<]*)<\/a>`?/im;
@@ -96,8 +95,8 @@ export default class MDNCommand extends Command {
             if (
                 contentLinks[i]?.[0] === '`' &&
                 contentLinks[i]?.[(contentLinks[i]?.length ?? 0) - 1] === '`' &&
-                description?.[description?.indexOf('<a') - 1] === '`' &&
-                description?.[description?.indexOf('</a>') + 1] === '`'
+                description?.[description.indexOf('<a') - 1] === '`' &&
+                description[description.indexOf('</a>') + 1] === '`'
             )
                 contentLinks[i] = contentLinks[i]?.replace(/`/g, '') ?? '';
             return `[${contentLinks[i]}](${li})`;
@@ -107,8 +106,8 @@ export default class MDNCommand extends Command {
             description = description?.replace(reg, link);
         });
         if (!description) description = foo.__compat?.description;
-        const yes = message.guild?.i18n.__mf('common.yes'),
-            no = message.guild?.i18n.__mf('common.no');
+        const yes = message.guild.i18n.__mf('common.yes'),
+            no = message.guild.i18n.__mf('common.no');
         const embed = new MessageEmbed()
             .setTitle(message.guild.i18n.__mf('mdn.doc', { val: title }))
             .setDescription(String(description))
@@ -120,7 +119,7 @@ export default class MDNCommand extends Command {
                 message.guild.i18n.__mf('mdn.experimental'),
                 String(
                     foo.__compat?.status?.experimental
-                        ? message.guild?.i18n.__mf('mdn.experimental_desc', {
+                        ? message.guild.i18n.__mf('mdn.experimental_desc', {
                               value: yes,
                           })
                         : message.guild.i18n.__mf('mdn.experimental_desc', {

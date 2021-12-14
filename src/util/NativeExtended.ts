@@ -11,10 +11,8 @@ Array.prototype.remove = function (...keys: string[]): string[] {
 };
 
 Array.prototype.filterIndex = function <T>(
-    predicate: (value: T, _index: number, _array: T[]) => value is T,
-    thisArg?: never
+    predicate: (value: T, _index: number, _array: T[]) => value is T
 ): number[] {
-    if (thisArg) Array.prototype.filterIndex.bind(thisArg);
     const results: number[] = [];
     for (let i = 0; i < this.length; i++) {
         if (predicate(this[i], i, this)) {

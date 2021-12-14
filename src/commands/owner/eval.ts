@@ -30,24 +30,26 @@ export default class EvalCommand extends Command {
         }
         if (!_disableSecure) _disableSecure = 'false';
         let disableSecure = _disableSecure.split('=')[1];
-        if (disableSecure === 'true' && disableSecure) disableSecure = 'true';
+        if (disableSecure === 'true') disableSecure = 'true';
         else disableSecure = 'false';
         try {
-            const code = args
-                .join(' ')
-                .split(`--disable-secure=${disableSecure}`)[0] ?? '';
+            const code =
+                args.join(' ').split(`--disable-secure=${disableSecure}`)[0] ??
+                '';
             let result = disableSecure === 'true' ? eval(code) : safeEval(code);
             if (typeof result !== 'string') result = inspect(result);
             result = clean(result);
             if (result.length >= 2000) result = Util.splitMessage(result);
             if (Array.isArray(result)) {
                 for (let res of result) {
-                    res = Formatters.codeBlock('js', `${res  }\n`);
+                    res = Formatters.codeBlock('js', `${res}\n`);
                     return message.channel.send(res);
                 }
             } else return message.channel.send(`\`\`\`js\n${result}\n\`\`\``);
         } catch (e: unknown) {
-            await message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(e as string)}\n\`\`\``);
+            await message.channel.send(
+                `\`ERROR\` \`\`\`xl\n${clean(e as string)}\n\`\`\``
+            );
         }
     }
 }

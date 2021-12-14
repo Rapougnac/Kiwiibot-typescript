@@ -71,7 +71,7 @@ export default class TrumpCommand extends Command {
             ctx.textBaseline = 'top';
             ctx.font = '20px Open Sans';
             const maxLength =
-                (frame.corners?.[1]?.[0] ?? 0) - (frame.corners[0]?.[0] ?? 0);
+                (frame.corners[1]?.[0] ?? 0) - (frame.corners[0]?.[0] ?? 0);
             ctx.fillText(
                 `${text}\n${verb?.toUpperCase()} NOW\nILLEGAL`,
                 frame.corners[0]?.[0] ?? 0,

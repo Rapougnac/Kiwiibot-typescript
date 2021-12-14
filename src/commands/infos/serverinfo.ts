@@ -64,6 +64,7 @@ export default class ServerInfoCommand extends Command {
                 message.guild.i18n.__mf('serverinfo.online_members'),
                 String(
                     message.guild.members.cache.filter(
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                         ({ presence }) => presence?.status !== 'offline'
                     ).size
                 ),
@@ -92,11 +93,11 @@ export default class ServerInfoCommand extends Command {
                 message.guild.i18n.__mf('serverinfo.emotes'),
                 `${message.guild.emojis.cache.size} emojis\n${
                     message.guild.emojis.cache.filter(
-                        (emoji) => !emoji.animated ?? false
+                        (emoji) => !emoji.animated
                     ).size
                 } ${message.guild.i18n.__mf('serverinfo.static_emotes')}\n${
                     message.guild.emojis.cache.filter(
-                        (emoji) => emoji.animated ?? false
+                        (emoji) => emoji.animated || false
                     ).size
                 } ${message.guild.i18n.__mf('serverinfo.animated_emotes')}`,
                 true

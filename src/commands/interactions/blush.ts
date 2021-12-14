@@ -19,7 +19,7 @@ export default class BlushCommand extends Command {
         const blushEmbed = new MessageEmbed()
             .setTitle(
                 this.message?.guild?.i18n.__mf('blush.msg', {
-                    author: this.message?.author.tag,
+                    author: this.message.author.tag,
                 }) as string
             )
             .setColor('#202225')

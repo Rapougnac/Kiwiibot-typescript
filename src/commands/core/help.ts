@@ -108,6 +108,7 @@ export default class HelpCommand extends Command {
         }
         if (
             fields.some(
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 (x) => (x.name && x.value) || x.name || x.value === null || ''
             )
         ) {
@@ -164,7 +165,7 @@ export default class HelpCommand extends Command {
                     possibleCommand ? possibleCommand : possibleCommandAlias
                 )
             ) {
-                const notFoudDym = message?.guild.i18n.__mf(
+                const notFoudDym = message.guild.i18n.__mf(
                     'help.not_found_dym',
                     {
                         command: possibleCommand
@@ -177,7 +178,7 @@ export default class HelpCommand extends Command {
                 );
             } else if (!command)
                 return message.channel.send(
-                    `${client.emotes.error} - ${message?.guild.i18n.__mf(
+                    `${client.emotes.error} - ${message.guild.i18n.__mf(
                         'help.not_found'
                     )}`
                 );

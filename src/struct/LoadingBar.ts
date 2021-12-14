@@ -65,7 +65,7 @@ export default class LoadingBar {
                     );
                 }
                 // If this is the end of the progress, and deleteMessage has been enabled, delete the message
-                if (i === length && deleteMessage && allowMessage && message) {
+                if (i === length && deleteMessage && allowMessage) {
                     setTimeout(() => {
                         message?.delete().catch(() => []);
                     }, timeoutMessage);

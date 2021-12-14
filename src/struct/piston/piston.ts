@@ -127,9 +127,9 @@ export const piston = (opts: Piston = {}): PistonOutput => {
                     : '/api/v2/runtimes';
             const url = `${server}${suffix}`;
             const runtimes = await get(url);
-            if (runtimes && Array.isArray(runtimes)) {
+            if (Array.isArray(runtimes)) {
                 store.runtimes = runtimes;
-            } else if (runtimes.success === false) {
+            } else if (!runtimes.success) {
                 throw new Error(String(runtimes.error));
             }
             return Array.isArray(runtimes) ? runtimes : [];

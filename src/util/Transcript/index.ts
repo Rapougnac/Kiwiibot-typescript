@@ -40,8 +40,8 @@ export async function createTranscript(
     const sumMessages = [];
     let lastId;
 
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
+    let True = true;
+    while (True) {
         const messages: Collection<string, Message> =
             // eslint-disable-next-line no-await-in-loop
             await channel.messages.fetch({ limit: 100, before: lastId });
@@ -52,7 +52,7 @@ export async function createTranscript(
             messages.size !== 100 ||
             (options.limit > 0 && sumMessages.length >= options.limit)
         ) {
-            break;
+            True = false;
         }
     }
 

@@ -49,6 +49,7 @@ export default class DocsCommand extends Command {
             axios
                 .get(url)
                 .then(async ({ data }) => {
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                     if (data) await message.channel.send({ embeds: [data] });
                     else
                         return await message.channel.send(
@@ -65,6 +66,7 @@ export default class DocsCommand extends Command {
             axios
                 .get(url)
                 .then(async ({ data }) => {
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                     if (data) {
                         await message.channel.send({ embeds: [data] });
                     } else {

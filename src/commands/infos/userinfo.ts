@@ -1,4 +1,5 @@
-import type { Message, GuildMember, PresenceStatus } from 'discord.js';
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+import type { Message, GuildMember } from 'discord.js';
 import { MessageEmbed } from 'discord.js';
 import Command from '../../struct/Command';
 import type Client from '../../struct/Client';
@@ -49,8 +50,7 @@ export default class UserInfoCommand extends Command {
             const user = await client.users.fetch(_user, {
                 force: true,
             });
-            let status =
-                (member.presence?.status as PresenceStatus | string) ?? 'N/A';
+            let status = member.presence?.status ?? 'N/A';
             const userFlags = (await user
                 .fetchFlags()
                 .then((flags) => convertUFB(flags.bitfield))

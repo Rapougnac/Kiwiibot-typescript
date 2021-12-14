@@ -195,7 +195,7 @@ export default function generateTranscript(
             messageContent.appendChild(messageContentContent);
         }
 
-        if (message.attachments && message.attachments.size > 0) {
+        if (message.attachments.size > 0) {
             for (const attachment of message.attachments.values()) {
                 const attachmentsDiv = document.createElement('div');
                 attachmentsDiv.classList.add('chatlog__attachment');
@@ -209,7 +209,7 @@ export default function generateTranscript(
 
                     const attachmentImage = document.createElement('img');
                     attachmentImage.classList.add('chatlog__attachment-media');
-                    attachmentImage.src = attachment.url ?? attachment.proxyURL;
+                    attachmentImage.src = attachment.url;
                     attachmentImage.alt = 'Image attachment';
                     attachmentImage.loading = 'lazy';
                     attachmentImage.title = `Image: ${
@@ -221,7 +221,7 @@ export default function generateTranscript(
                 } else if (['mp4', 'webm'].includes(attachmentType ?? '')) {
                     const attachmentVideo = document.createElement('video');
                     attachmentVideo.classList.add('chatlog__attachment-media');
-                    attachmentVideo.src = attachment.url ?? attachment.proxyURL;
+                    attachmentVideo.src = attachment.url;
                     attachmentVideo.controls = true;
                     attachmentVideo.title = `Video: ${
                         attachment.name
@@ -231,7 +231,7 @@ export default function generateTranscript(
                 } else if (['mp3', 'ogg'].includes(attachmentType ?? '')) {
                     const attachmentAudio = document.createElement('audio');
                     attachmentAudio.classList.add('chatlog__attachment-media');
-                    attachmentAudio.src = attachment.url ?? attachment.proxyURL;
+                    attachmentAudio.src = attachment.url;
                     attachmentAudio.controls = true;
                     attachmentAudio.title = `Audio: ${
                         attachment.name
@@ -266,8 +266,7 @@ export default function generateTranscript(
 
                     const attachmentGenericNameLink =
                         document.createElement('a');
-                    attachmentGenericNameLink.href =
-                        attachment.url ?? attachment.proxyURL;
+                    attachmentGenericNameLink.href = attachment.url;
                     attachmentGenericNameLink.textContent = attachment.name;
 
                     attachmentGenericName.appendChild(
@@ -294,7 +293,7 @@ export default function generateTranscript(
 
         content.appendChild(messageContent);
 
-        if (message.embeds && message.embeds.length > 0) {
+        if (message.embeds.length > 0) {
             for (const embed of message.embeds) {
                 const embedDiv = document.createElement('div');
                 embedDiv.classList.add('chatlog__embed');
@@ -414,7 +413,7 @@ export default function generateTranscript(
                     embedText.appendChild(embedDescription);
                 }
 
-                if (embed.fields && embed.fields.length > 0) {
+                if (embed.fields.length > 0) {
                     const embedFields = document.createElement('div');
                     embedFields.classList.add('chatlog__embed-fields');
 
@@ -483,15 +482,13 @@ export default function generateTranscript(
                     embedThumbnailLink.classList.add(
                         'chatlog__embed-thumbnail-link'
                     );
-                    embedThumbnailLink.href =
-                        embed.thumbnail.url ?? embed.thumbnail.proxyURL;
+                    embedThumbnailLink.href = embed.thumbnail.url;
 
                     const embedThumbnailImage = document.createElement('img');
                     embedThumbnailImage.classList.add(
                         'chatlog__embed-thumbnail'
                     );
-                    embedThumbnailImage.src =
-                        embed.thumbnail.url ?? embed.thumbnail.proxyURL;
+                    embedThumbnailImage.src = embed.thumbnail.url;
                     embedThumbnailImage.alt = 'Thumbnail';
                     embedThumbnailImage.loading = 'lazy';
 
@@ -509,13 +506,11 @@ export default function generateTranscript(
 
                     const embedImageLink = document.createElement('a');
                     embedImageLink.classList.add('chatlog__embed-image-link');
-                    embedImageLink.href =
-                        embed.image.url ?? embed.image.proxyURL;
+                    embedImageLink.href = embed.image.url;
 
                     const embedImageImage = document.createElement('img');
                     embedImageImage.classList.add('chatlog__embed-image');
-                    embedImageImage.src =
-                        embed.image.url ?? embed.image.proxyURL;
+                    embedImageImage.src = embed.image.url;
                     embedImageImage.alt = 'Image';
                     embedImageImage.loading = 'lazy';
 
@@ -534,8 +529,7 @@ export default function generateTranscript(
                         embedFooterIcon.classList.add(
                             'chatlog__embed-footer-icon'
                         );
-                        embedFooterIcon.src =
-                            embed.footer.iconURL ?? embed.footer.proxyIconURL;
+                        embedFooterIcon.src = embed.footer.iconURL;
                         embedFooterIcon.alt = 'Footer icon';
                         embedFooterIcon.loading = 'lazy';
 

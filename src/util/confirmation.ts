@@ -11,8 +11,7 @@ const confirmation = async (
     validReactions: string[],
     time = 60000
 ): Promise<string | void | null> => {
-    if (!message) throw new ReferenceError('The message is not defined!');
-    if (!validReactions || validReactions.length !== 2)
+    if (validReactions.length !== 2)
         throw new ReferenceError('Invalid from body [validReactions]');
     if (typeof time !== 'number')
         throw new SyntaxError('Type of time must be a number.');
@@ -28,7 +27,7 @@ const confirmation = async (
     // eslint-disable-next-line no-await-in-loop
     for (const reaction of validReactions) await message.react(reaction);
     const filter = (reaction: MessageReaction, user: User) =>
-        validReactions.includes(reaction.emoji.name ?? '') &&
+        validReactions.includes(reaction.emoji.name || '') &&
         user.id === author.id;
     return message
         .awaitReactions({ filter, max: 1, time })

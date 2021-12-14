@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { User, UserResolvable } from 'discord.js';
+import type { UserResolvable } from 'discord.js';
 import { Client, Collection, Guild } from 'discord.js';
 import type Command from './Command';
 import type {
@@ -210,7 +210,7 @@ export default class KiwiiClient extends Client {
                             ]);
                         });
 
-                        if (command.config.aliases) {
+                        if (command.config.aliases.length) {
                             command.config.aliases.forEach((alias) => {
                                 if (this.aliases.has(alias)) {
                                     // eslint-disable-next-line no-console
@@ -264,17 +264,10 @@ export default class KiwiiClient extends Client {
                         event.name,
                         (...args: any) => event.execute(...args)
                     );
-                    if (event.name) {
-                        evts.push({
-                            name: event.name,
-                            state: '🟢Ready',
-                        });
-                    } else {
-                        evts.push({
-                            name: event.name,
-                            state: '❌ERR!',
-                        });
-                    }
+                    evts.push({
+                        name: event.name,
+                        state: '🟢Ready',
+                    });
                 }
             })();
         });
@@ -343,9 +336,10 @@ export default class KiwiiClient extends Client {
      * Checks whether a user is an owner of the bot (in {@link KiwiiClientOptions.owners})
      * @param user - User to check for the ownership
      */
-    public isOwner(user: UserResolvable): boolean {
+    public isOwner(user: UserResolvable | null): boolean {
+        if (!user) return false;
         if (!this.owners) return false;
-        user = this.users.resolve(user) as User;
+        user = this.users.resolve(user);
         if (!user) throw new RangeError('Unable to resolve the user.');
         if (typeof this.owners === 'string') return user.id === this.owners;
         if (this.owners instanceof Array) return this.owners.includes(user.id);
@@ -358,8 +352,9 @@ export default class KiwiiClient extends Client {
      * Fetch the user via the api to get their properties.
      * @param user - User to fetch via the api.
      */
-    public async fetchUserViaAPI(user: UserResolvable): Promise<object> {
-        user = this.users.resolve(user) as User;
+    public async fetchUserViaAPI(user: UserResolvable | null): Promise<object> {
+        if (!user) return {};
+        user = this.users.resolve(user);
         if (!user)
             throw new RangeError('Please, give me a valid user to resolve.');
         const data = await axios.get(

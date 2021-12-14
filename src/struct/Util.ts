@@ -192,10 +192,10 @@ export default class Util {
             ) {
                 reasons.push(
                     [
-                        message.guild?.i18n.__mf(
+                        message.guild.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions_i'
                         ),
-                        message.guild?.i18n.__mf(
+                        message.guild.i18n.__mf(
                             'PERMS_MESSAGE.missing_permissions1_i'
                         ),
                         Object.entries(

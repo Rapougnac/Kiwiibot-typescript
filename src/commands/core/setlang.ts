@@ -22,7 +22,7 @@ export default class SetLangCommand extends Command {
         message: Message,
         [language]: string[]
     ) {
-        if (!this.client.mySql.connection)
+        if (!this.client.mySql.connected)
             return await message.channel.send(
                 message.guild?.i18n.__mf('prefix-reset.no_conn') ??
                     'No connection to the database.'

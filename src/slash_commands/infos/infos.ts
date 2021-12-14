@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import type { User, Role, CommandInteraction } from 'discord.js';
 import { MessageEmbed } from 'discord.js';
 import SlashCommand from '../../struct/SlashCommand';
@@ -355,7 +356,7 @@ export default class InfosCommand extends SlashCommand {
                             })
                         )
                         .setFooter(`ID : ${target.id}`)
-                        .setColor(target?.hexAccentColor || 'GREY');
+                        .setColor(target.hexAccentColor || 'GREY');
                     if (target.banner) {
                         embeduser.setImage(
                             target.bannerURL({

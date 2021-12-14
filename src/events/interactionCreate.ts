@@ -30,7 +30,7 @@ export default class InteractionCreate extends Event {
         if (commandInteraction?.commandOptions) {
             args = this.client.interactionManager.parseOptions(
                 interaction,
-                commandInteraction?.commandOptions
+                commandInteraction.commandOptions
             );
         }
         if (!interaction.guild) {
@@ -52,7 +52,7 @@ export default class InteractionCreate extends Event {
         if (!args) {
             try {
                 void commandInteraction?.execute(interaction);
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (e: any) {
                 // eslint-disable-next-line no-console
                 console.error(
@@ -66,7 +66,7 @@ export default class InteractionCreate extends Event {
         }
         try {
             void commandInteraction?.execute(interaction, args);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
             // eslint-disable-next-line no-console
             console.error(

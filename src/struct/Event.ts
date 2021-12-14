@@ -15,8 +15,7 @@ export default class Event {
         this.emitter =
             typeof options.emitter === 'string'
                 ? this.client[options.emitter]
-                : (options.emitter as Listener) ||
-                  (this.client as unknown as Listener);
+                : (options.emitter as Listener);
         this._validate(options);
     }
     public execute(
@@ -94,10 +93,6 @@ export default class Event {
             'warn',
             'webhookUpdate',
         ];
-        if (!data.name) {
-            console.error(new Error("This event dosen't have any name."));
-            process.exit(1);
-        }
         if (!events.includes(data.name as unknown as string)) {
             console.error(new Error('This event is not a part of the events!'));
             process.exit(1);

@@ -21,7 +21,7 @@ export default class AvatarCommand extends SlashCommand {
 
     public execute(
         interaction: CommandInteraction,
-        { user }: { user: User }
+        { user }: { user?: User }
     ): void {
         if (!user) user = interaction.user;
         const member = interaction.guild?.members.cache.get(user.id);

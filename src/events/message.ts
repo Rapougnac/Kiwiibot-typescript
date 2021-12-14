@@ -70,7 +70,7 @@ export default class MessageEvent extends Event {
             message.channel.type !== 'DM'
         )
             return message.reply(
-                message.guild?.i18n.__mf('MESSAGE_PREFIX.msg', {
+                message.guild.i18n.__mf('MESSAGE_PREFIX.msg', {
                     prefix: message.guild.prefix,
                 })
             );

@@ -612,7 +612,7 @@ function parseDate(date: string, reverse?: boolean): string {
         Dec: 12,
     };
 
-    const fullDate = `${year ?? '1900'}-${months[month as Months] ?? '01'}-${
+    const fullDate = `${year ?? '1900'}-${months[month as Months] || '01'}-${
         day ?? '01'
     }`;
 
@@ -700,7 +700,6 @@ function countWords(str: string): { [key: string]: number } {
  */
 function isEmpty(o: object): boolean {
     return (
-        o &&
         Object.keys(o).length === 0 &&
         Object.getPrototypeOf(o) === Object.prototype
     );

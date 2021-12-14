@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import mysql from 'mysql2/promise';
 import type { Connection } from 'mysql2/promise';
 import type { MySqlOptions } from './interfaces/MySql';

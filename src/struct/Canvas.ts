@@ -6,6 +6,7 @@ import type {
 import type { Readable } from 'stream';
 import type { centerImageOutput } from './interfaces/main';
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class Canvas {
     /**
      * Add a greyscale effect to the canvas
@@ -145,7 +146,7 @@ export default class Canvas {
         return new Promise((resolve) => {
             if (ctx.measureText(text).width < maxWidth) return resolve([text]);
             if (ctx.measureText('W').width > maxWidth) return resolve(null);
-            const words = text.split(' ') ?? [''];
+            const words = text.split(' ');
             const lines: string[] = [];
             let line = '';
             while (words.length > 0) {
@@ -183,7 +184,7 @@ export default class Canvas {
             const onData = (data: Uint8Array) => {
                 arr.push(data);
             };
-            const onEnd = (err: Error) => {
+            const onEnd = (err?: Error) => {
                 if (err) reject(err);
                 else resolve(arr);
                 cleanUp();

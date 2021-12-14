@@ -1,6 +1,5 @@
 import type { Message } from 'discord.js';
 import type Client from '../struct/Client';
-import * as consoleUtil from './console';
 
 /**
  * Handle unhandledRejection
@@ -51,7 +50,11 @@ function uncaughtException(
 
     //@ts-expect-error: Constant id, so it's always TextChannel
     return channel.send(
-        `\\🛠 ${error.name} caught!\n\`At ${timedate} at ${timehrs}\`\n\`\`\`xl\n${error.stack ?? 'No stack thrown'}\`\`\``
+        `\\🛠 ${
+            error.name
+        } caught!\n\`At ${timedate} at ${timehrs}\`\n\`\`\`xl\n${
+            error.stack ?? 'No stack thrown'
+        }\`\`\``
     );
 }
 
@@ -63,12 +66,5 @@ export default function processEvents(
     args: [Error],
     client: Client
 ) {
-    if (registers[event]) {
-        return registers[event](args, client);
-    } else {
-        return consoleUtil.warn(
-            `Function for process#event \`${event}\` not registered at ${__filename}`,
-            '[BOT PROCESS]'
-        );
-    }
+    return registers[event](args, client);
 }
