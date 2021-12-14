@@ -1,10 +1,10 @@
-import {
+import type {
     ClientOptions,
     PermissionString,
     PresenceStatusData,
 } from 'discord.js';
 import _ServerInfoCommand from '../../commands/infos/serverinfo';
-import { ClientEvents } from './Event';
+import type { ClientEvents } from './Event';
 
 export interface Config {
     /**

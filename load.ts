@@ -1,4 +1,4 @@
-import KiwiiClient from './src/struct/Client';
+import type KiwiiClient from './src/struct/Client';
 import { I18n } from 'i18n';
 import * as path from 'path';
 

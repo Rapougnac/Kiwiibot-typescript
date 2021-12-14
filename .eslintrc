@@ -60,6 +60,9 @@
         "@typescript-eslint/prefer-ts-expect-error": "warn",
         "@typescript-eslint/no-duplicate-imports": "error",
         "@typescript-eslint/no-useless-constructor": "error",
-        "@typescript-eslint/prefer-namespace-keyword": "off"
+        "@typescript-eslint/prefer-namespace-keyword": "off",
+        "@typescript-eslint/adjacent-overload-signatures": "error",
+        "@typescript-eslint/consistent-type-exports": "error",
+        "@typescript-eslint/consistent-type-imports": "error"
     }
 }

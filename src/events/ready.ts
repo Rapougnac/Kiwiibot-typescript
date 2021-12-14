@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
 import Event from '../struct/Event';
-import KiwiiClient from '../struct/Client';
+import type KiwiiClient from '../struct/Client';
 import * as Console from '../util/console';
 import { performance } from 'perf_hooks';
 const bootTime = Math.round(performance.now());
 import { load } from '../../load';
 import glob from 'glob';
-import { SlashCommandConstructor } from '../struct/interfaces/SlashCommand';
+import type { SlashCommandConstructor } from '../struct/interfaces/SlashCommand';
 import { resolve } from 'path';
 import dashboard from '../dashboard/dashboard';
-import SlashCommand from '../struct/SlashCommand';
+import type SlashCommand from '../struct/SlashCommand';
 
 export default class ReadyEvent extends Event {
     constructor(client: KiwiiClient) {

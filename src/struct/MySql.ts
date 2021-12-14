@@ -1,5 +1,6 @@
-import mysql, { Connection } from 'mysql2/promise';
-import { MySqlOptions } from './interfaces/MySql';
+import mysql from 'mysql2/promise';
+import type { Connection } from 'mysql2/promise';
+import type { MySqlOptions } from './interfaces/MySql';
 import { error, success } from '../util/console';
 
 export default class MYSql {
