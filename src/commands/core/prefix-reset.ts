@@ -1,5 +1,5 @@
-import { confirmation } from '../../util/confirmation';
-import type { Message } from 'discord.js';
+import type { Message, MessageComponentInteraction } from 'discord.js';
+import { MessageActionRow, MessageButton } from 'discord.js';
 import Command from '../../struct/Command';
 import type KiwiiClient from '../../struct/Client';
 
@@ -26,20 +26,34 @@ export default class PrefixResetCommand extends Command {
             return await message.channel.send(
                 message.guild.i18n.__mf('prefix-reset.no_conn')
             );
-        const msg = await message.channel.send(
-            message.guild.i18n.__mf('prefix-reset.confirmation')
+        const row = new MessageActionRow().addComponents(
+            new MessageButton()
+                .setCustomId('confirm')
+                .setLabel('Yes')
+                .setStyle('SUCCESS'),
+            new MessageButton()
+                .setCustomId('cancel')
+                .setLabel('No')
+                .setStyle('DANGER')
         );
+        const msg = await message.channel.send({
+            content: message.guild.i18n.__mf('prefix-reset.confirmation'),
+            components: [row],
+        });
 
-        const emoji = await confirmation(
-            message,
-            message.author,
-            ['✅', '❌'],
-            10000
-        );
+        const filter = (component: MessageComponentInteraction) =>
+            component.customId === 'confirm' &&
+            component.user.id === message.author.id;
 
-        switch (emoji) {
-            case '✅': {
-                await msg.delete();
+        const collector = msg.createMessageComponentCollector({
+            filter,
+            time: 15000,
+        });
+
+        collector.on('collect', async (component) => {
+            if (!message.guild) return;
+            if (component.customId === 'confirm') {
+                await component.update({ components: [] });
                 await client.mySql.connection.query(
                     `UPDATE \`guildsettings\` SET \`prefix\` = NULL WHERE \`guildId\` = ${message.guild.id}`
                 );
@@ -49,14 +63,35 @@ export default class PrefixResetCommand extends Command {
                         prefix: client.prefix,
                     })
                 );
-                break;
-            }
-            case '❌': {
+            } else if (component.customId === 'cancel') {
+                await component.update({ components: [] });
                 await msg.delete();
-                return await message.channel.send(
+                return void message.channel.send(
                     message.guild.i18n.__mf('prefix-reset.canceled')
                 );
             }
-        }
+        });
+
+        // switch (emoji) {
+        //     case '✅': {
+        //         await msg.delete();
+        //         await client.mySql.connection.query(
+        //             `UPDATE \`guildsettings\` SET \`prefix\` = NULL WHERE \`guildId\` = ${message.guild.id}`
+        //         );
+        //         message.guild.prefix = client.prefix;
+        //         await message.channel.send(
+        //             message.guild.i18n.__mf('prefix-reset.reset_prefix', {
+        //                 prefix: client.prefix,
+        //             })
+        //         );
+        //         break;
+        //     }
+        //     case '❌': {
+        //         await msg.delete();
+        //         return await message.channel.send(
+        //             message.guild.i18n.__mf('prefix-reset.canceled')
+        //         );
+        //     }
+        // }
     }
 }
