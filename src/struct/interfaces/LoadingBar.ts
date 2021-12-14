@@ -1,4 +1,4 @@
-import type { Message } from 'discord.js';
+import type { Message, CommandInteraction } from 'discord.js';
 
 export interface StartOptions {
     /**The length of the loading bar */
@@ -21,4 +21,6 @@ export interface StartOptions {
     deleteMessage?: boolean;
     /**If it should delete the message after a time */
     timeoutMessage?: number;
+    /**The interaction */
+    interaction?: CommandInteraction;
 }

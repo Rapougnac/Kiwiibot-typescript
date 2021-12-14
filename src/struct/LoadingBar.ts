@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import type { StartOptions } from './interfaces/LoadingBar';
+import type { Message } from 'discord.js';
 
 export default class LoadingBar {
     /**
@@ -19,6 +20,7 @@ export default class LoadingBar {
         full = '\u2588',
         deleteMessage = false,
         timeoutMessage = 0,
+        interaction,
     }: StartOptions = {}): Promise<void> {
         if (!allowMessage && !message) {
             for (let i = 0; i <= length; i++) {
@@ -68,6 +70,43 @@ export default class LoadingBar {
                 if (i === length && deleteMessage && allowMessage) {
                     setTimeout(() => {
                         message?.delete().catch(() => []);
+                    }, timeoutMessage);
+                }
+                await LoadingBar.wait(time);
+            }
+        } else if (interaction) {
+            let msg: Message | undefined;
+            for (let i = 0; i <= length; i++) {
+                const Full = full.repeat(i);
+                const left = length - i;
+                const Empty = empty.repeat(left);
+                // Get the percentage with the constant nbr
+                const percentage = (i * 100) / length;
+                // If this is the 1st time, send the message
+                if (i === 0) {
+                    // Reassign message
+                    await interaction.reply(
+                        `\r${start}${Full}${Empty}${end} ${
+                            Number.isInteger(percentage)
+                                ? percentage
+                                : percentage.toFixed(2)
+                        }%`
+                    );
+                    msg = (await interaction.fetchReply()) as Message;
+                } else {
+                    // Edit message
+                    await msg?.edit(
+                        `\r${start}${Full}${Empty}${end} ${
+                            Number.isInteger(percentage)
+                                ? percentage
+                                : percentage.toFixed(2)
+                        }%`
+                    );
+                }
+                // If this is the end of the progress, and deleteMessage has been enabled, delete the message
+                if (i === length && deleteMessage && allowMessage) {
+                    setTimeout(() => {
+                        msg?.edit('\u200b').catch(() => []);
                     }, timeoutMessage);
                 }
                 await LoadingBar.wait(time);
