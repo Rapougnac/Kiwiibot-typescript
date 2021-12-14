@@ -47,6 +47,9 @@ export default class TrumpSlashCommand extends SlashCommand {
         { verb, text }: { verb?: 'is' | 'are' | 'am'; text: string }
     ) {
         if (!verb) verb = 'is';
+        if (text.length > 20) {
+            return interaction.reply('The text is too long');
+        }
         const encoder = new GIFEncoder(262, 264);
         const stream = encoder.createReadStream();
         encoder.start();
