@@ -1,9 +1,8 @@
 import KiwiiClient from './src/struct/Client';
-import { error } from './src/util/console';
 import { I18n } from 'i18n';
 import * as path from 'path';
 
-export const load = async (client: KiwiiClient) => {
+export const load = async (client: KiwiiClient): Promise<void> => {
     try {
         const asyncResults = [];
         for (const [id, guild] of client.guilds.cache) {
@@ -39,12 +38,12 @@ export const load = async (client: KiwiiClient) => {
                 guild.prefix = result.prefix;
                 continue;
             } else {
-                error(
+                void Promise.reject(
                     `Guild ${result.guildId} not found, but settings found in database.`
                 );
             }
         }
     } catch (e) {
-        error(e as string, '[DATABASE]');
+        void Promise.reject(e);
     }
 };
