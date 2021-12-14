@@ -3,3 +3,4 @@ config.ts
 dist/
 .vscode
 corde.config.json
+.env
