@@ -7,7 +7,7 @@ export default class AvatarCommand extends Command {
         super(client, {
             name: 'avatar',
             aliases: ['pp', 'pfp', 'profilepicture'],
-            description: 'Get your avatar ou the specified user',
+            description: 'Get your avatar or the specified user',
             category: 'infos',
             cooldown: 5,
             utilisation: '{prefix}avatar <member>',

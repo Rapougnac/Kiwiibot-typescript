@@ -161,7 +161,7 @@
     "avatar": {
         "avatar_of": "Avatar de {avatar}",
         "msg": "Si l'avatar ne charge pas, [cliquez ici]",
-        "description": "avatar.description"
+        "description": "Obtenez votre avatar, ou celui de l'utilisateur spécifié"
     },
     "rule34": {
         "description": "Récupérez des images provenant du site rule34",

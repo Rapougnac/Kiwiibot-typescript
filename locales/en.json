@@ -360,7 +360,7 @@
 		"description": ""
 	},
 	"avatar": {
-		"description": "",
+		"description": "Get your avatar or the specified user",
 		"avatar_of": "Avatar of {avatar}",
 		"msg": "If the image is not displayed, [click here]"
 	},
