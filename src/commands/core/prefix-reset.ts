@@ -42,8 +42,8 @@ export default class PrefixResetCommand extends Command {
         });
 
         const filter = (component: MessageComponentInteraction) =>
-            component.customId === 'confirm' &&
-            component.user.id === message.author.id;
+            component.user.id === message.author.id &&
+            component.channelId === message.channel.id;
 
         const collector = msg.createMessageComponentCollector({
             filter,
