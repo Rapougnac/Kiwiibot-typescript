@@ -15,7 +15,9 @@ export default class Event {
         this.emitter =
             typeof options.emitter === 'string'
                 ? this.client[options.emitter]
-                : (options.emitter as Listener);
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                : (options.emitter as Listener) ||
+                  (this.client as unknown as Listener);
         this._validate(options);
     }
     public execute(
