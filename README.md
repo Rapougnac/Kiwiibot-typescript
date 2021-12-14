@@ -41,3 +41,4 @@ And you're ready to go!
    - Have MySql installed on your computer.
    - Have Nodejs installed on your computer.
    - Have TypeScript installed on your computer.
+   - Have Python on your computer.
