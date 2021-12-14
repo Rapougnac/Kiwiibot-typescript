@@ -784,8 +784,5 @@
 	},
 	"run": {
 		"description": "run.description"
-	},
-	"customprefixr": {
-		"description": "customprefixr.description"
 	}
 }
