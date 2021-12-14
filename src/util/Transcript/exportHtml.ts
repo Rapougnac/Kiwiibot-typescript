@@ -1,19 +1,15 @@
-import {
-    Message,
-    Collection,
-    MessageAttachment,
-    TextChannel,
-    MessageEmbed,
-} from 'discord.js';
+import type { TextChannel, MessageEmbed } from 'discord.js';
+import { Message, Collection, MessageAttachment } from 'discord.js';
 import jsdom = require('jsdom');
 import * as fs from 'fs';
 import * as path from 'path';
 import purify from 'dompurify';
 import he from 'he';
-import { ExportHtmlOptions } from './interfaces/exportHtml';
+import type { ExportHtmlOptions } from './interfaces/exportHtml';
 import * as staticValues from './static/static';
 import hljs from 'highlight.js';
 // import util from 'util';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const { JSDOM } = jsdom;
 
 const template = fs.readFileSync(

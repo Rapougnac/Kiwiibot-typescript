@@ -1,6 +1,6 @@
-import { CommandInteraction, Message } from 'discord.js';
-import Client from './Client';
-import { SlashCommandOptions, CommandOptions } from './interfaces/SlashCommand';
+import type { CommandInteraction, Message } from 'discord.js';
+import type Client from './Client';
+import type { SlashCommandOptions, CommandOptions } from './interfaces/SlashCommand';
 
 export default abstract class SlashCommand {
     /**

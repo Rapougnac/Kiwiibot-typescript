@@ -1,4 +1,4 @@
-import KiwiiClient from '../../struct/Client';
+import type KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
 
 export default class AutoNOU extends Command {

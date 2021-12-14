@@ -1,6 +1,6 @@
 import Command from '../../struct/Command';
-import KiwiiClient from '../../struct/Client';
-import { Message } from 'discord.js';
+import type KiwiiClient from '../../struct/Client';
+import type { Message } from 'discord.js';
 import { separateNumbers } from '../../util/string';
 
 export default class PingCommand extends Command {

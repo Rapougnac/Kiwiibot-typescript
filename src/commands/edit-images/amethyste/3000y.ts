@@ -1,6 +1,7 @@
-import { Message, MessageAttachment, GuildMember } from 'discord.js';
+import type { Message, GuildMember } from 'discord.js';
+import { MessageAttachment } from 'discord.js';
 import Command from '../../../struct/Command';
-import Client from '../../../struct/Client';
+import type Client from '../../../struct/Client';
 export default class ThreeTousandYearsCommand extends Command {
     constructor(client: Client) {
         super(client, {

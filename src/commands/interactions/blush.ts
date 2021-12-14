@@ -1,5 +1,5 @@
 import Command from '../../struct/Command';
-import KiwiiClient from '../../struct/Client';
+import type KiwiiClient from '../../struct/Client';
 import { gifu } from 'gifu';
 import { MessageEmbed } from 'discord.js';
 

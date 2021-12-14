@@ -1,6 +1,6 @@
-import KiwiiClient from './Client';
-import { CommandOptions } from './interfaces/SlashCommand';
-import { CommandInteraction } from 'discord.js';
+import type KiwiiClient from './Client';
+import type { CommandOptions } from './interfaces/SlashCommand';
+import type { CommandInteraction } from 'discord.js';
 
 export default class InteractionManager {
     readonly client: KiwiiClient;

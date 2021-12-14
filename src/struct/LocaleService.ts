@@ -1,4 +1,4 @@
-import i18n from 'i18n';
+import type i18n from 'i18n';
 
 /**
  * LocaleService

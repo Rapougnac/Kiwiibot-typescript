@@ -1,4 +1,4 @@
-import { Message, MessageReaction, User } from 'discord.js';
+import type { Message, MessageReaction, User } from 'discord.js';
 /**
  * Confirm a message with reaction
  * @param message The message

@@ -1,6 +1,6 @@
 import Command from '../../struct/Command';
-import KiwiiClient from '../../struct/Client';
-import { Message } from 'discord.js';
+import type KiwiiClient from '../../struct/Client';
+import type { Message } from 'discord.js';
 
 export default class SetLangCommand extends Command {
     constructor(client: KiwiiClient) {

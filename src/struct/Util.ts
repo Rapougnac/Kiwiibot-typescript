@@ -1,8 +1,8 @@
-import { PermissionString, Message, Guild } from 'discord.js';
-import Client from './Client';
+import type { PermissionString, Message, Guild } from 'discord.js';
+import type Client from './Client';
 import Loader from './LoadingBar';
-import { TimeData } from './interfaces/main';
-import Command from './Command';
+import type { TimeData } from './interfaces/main';
+import type Command from './Command';
 import NekoClient from 'nekos.life';
 import AmeClient from 'amethyste-api';
 import { officialApi } from 'mal-scraper';

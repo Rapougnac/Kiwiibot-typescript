@@ -5,8 +5,9 @@ import {
     upperFirstButAcceptEmojis,
     beautifyCategories,
 } from '../../util/string';
-import { Message, MessageEmbed } from 'discord.js';
-import KiwiiClient from '../../struct/Client';
+import type { Message } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
+import type KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
 import didYouMean from 'didyoumean2';
 export default class HelpCommand extends Command {

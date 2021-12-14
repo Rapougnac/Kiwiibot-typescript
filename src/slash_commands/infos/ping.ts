@@ -1,6 +1,7 @@
 import SlashCommand from '../../struct/SlashCommand';
-import KiwiiClient from '../../struct/Client';
-import { CommandInteraction, Message } from 'discord.js';
+import type KiwiiClient from '../../struct/Client';
+import type { CommandInteraction } from 'discord.js';
+import { Message } from 'discord.js';
 
 export default class PingCommand extends SlashCommand {
     constructor(client: KiwiiClient) {

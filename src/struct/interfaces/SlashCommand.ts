@@ -1,5 +1,5 @@
-import KiwiiClient from '../Client';
-import SlashCommand from '../SlashCommand';
+import type KiwiiClient from '../Client';
+import type SlashCommand from '../SlashCommand';
 
 export interface SlashCommandOptions {
     /**

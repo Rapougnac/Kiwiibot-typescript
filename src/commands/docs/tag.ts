@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 import Command from '../../struct/Command';
-import Client from '../../struct/Client';
+import type Client from '../../struct/Client';
 import { stripIndents } from 'common-tags';
 export default class TagCommand extends Command {
     constructor(client: Client) {

@@ -1,8 +1,9 @@
 import Command from '../../struct/Command';
-import KiwiiClient from '../../struct/Client';
+import type KiwiiClient from '../../struct/Client';
 import mdn from '@xelzs/mdn-browser-compat-api';
-import { IdentifierMeta } from '@mdn/browser-compat-data/types';
-import { Message, MessageEmbed } from 'discord.js';
+import type { IdentifierMeta } from '@mdn/browser-compat-data/types';
+import type { Message } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import { upperFirstButAcceptEmojis } from '../../util/string';
 import cheerio from 'cheerio';
 import axios from 'axios';

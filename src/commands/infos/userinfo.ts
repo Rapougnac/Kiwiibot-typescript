@@ -1,6 +1,7 @@
-import { Message, MessageEmbed, GuildMember, PresenceStatus } from 'discord.js';
+import type { Message, GuildMember, PresenceStatus } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import Command from '../../struct/Command';
-import Client from '../../struct/Client';
+import type Client from '../../struct/Client';
 import moment from 'moment';
 import 'moment-duration-format';
 import { convertUFB } from '../../util/string';

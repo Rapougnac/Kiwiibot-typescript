@@ -1,6 +1,7 @@
-import { Message, MessageAttachment } from 'discord.js';
+import type { Message } from 'discord.js';
+import { MessageAttachment } from 'discord.js';
 import Command from '../../../struct/Command';
-import Client from '../../../struct/Client';
+import type Client from '../../../struct/Client';
 import axios from 'axios';
 export default class PHCommentCommand extends Command {
     constructor(client: Client) {

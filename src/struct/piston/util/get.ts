@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { Runtimes } from '../piston';
+import type { Runtimes } from '../piston';
 
 export const get = async (
     url: string

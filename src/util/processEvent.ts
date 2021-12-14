@@ -1,5 +1,5 @@
-import { Message } from 'discord.js';
-import Client from '../struct/Client';
+import type { Message } from 'discord.js';
+import type Client from '../struct/Client';
 import * as consoleUtil from './console';
 
 /**

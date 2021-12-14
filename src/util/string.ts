@@ -1,13 +1,7 @@
-/* eslint-disable @typescript-eslint/prefer-ts-expect-error */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {
-    UserFlags,
-    PermissionString,
-    GuildMember,
-    User,
-    ImageURLOptions,
-} from 'discord.js';
+/* eslint-disable @typescript-eslint/prefer-ts-expect-error */
+import type { PermissionString, User, ImageURLOptions } from 'discord.js';
+import { UserFlags, GuildMember } from 'discord.js';
 
 /* Thanks to maisans-maid on the [Mai Repo](https://github.com/maisans-maid/Mai) for theses functions */
 
@@ -56,7 +50,7 @@ function textTruncate(str = '', length = 100, end = '...'): string {
  */
 function ordinalize(n = 0): string {
     return (
-        `${Number(n)} ${
+        `${Number(n)}${
             ['st', 'nd', 'rd'][(n / 10) % 10 ^ 1 && n % 10] ?? 'th'
         }` || `${Number(n)}th`
     );

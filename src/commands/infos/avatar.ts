@@ -1,6 +1,7 @@
-import { Message, MessageEmbed, GuildMember, User } from 'discord.js';
+import type { Message, User } from 'discord.js';
+import { MessageEmbed, GuildMember } from 'discord.js';
 import Command from '../../struct/Command';
-import Client from '../../struct/Client';
+import type Client from '../../struct/Client';
 export default class AvatarCommand extends Command {
     constructor(client: Client) {
         super(client, {

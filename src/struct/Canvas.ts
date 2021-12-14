@@ -1,10 +1,10 @@
-import {
+import type {
     CanvasRenderingContext2D,
     Image,
     NodeCanvasRenderingContext2D,
 } from 'canvas';
-import { Readable } from 'stream';
-import { centerImageOutput } from './interfaces/main';
+import type { Readable } from 'stream';
+import type { centerImageOutput } from './interfaces/main';
 
 export default class Canvas {
     /**

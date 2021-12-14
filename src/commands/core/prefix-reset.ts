@@ -1,7 +1,7 @@
 import { confirmation } from '../../util/confirmation';
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 import Command from '../../struct/Command';
-import KiwiiClient from '../../struct/Client';
+import type KiwiiClient from '../../struct/Client';
 
 export default class PrefixResetCommand extends Command {
     constructor(client: KiwiiClient) {

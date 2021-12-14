@@ -1,6 +1,7 @@
 import SlashCommand from '../../struct/SlashCommand';
-import KiwiiClient from '../../struct/Client';
-import { CommandInteraction, User, MessageEmbed } from 'discord.js';
+import type KiwiiClient from '../../struct/Client';
+import type { CommandInteraction, User } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 
 export default class AvatarCommand extends SlashCommand {
     constructor(client: KiwiiClient) {

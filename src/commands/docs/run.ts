@@ -1,7 +1,8 @@
 import Command from '../../struct/Command';
-import KiwiiClient from '../../struct/Client';
+import type KiwiiClient from '../../struct/Client';
 import piston from '../../struct/piston/piston';
-import { Message, Util, MessageEmbed } from 'discord.js';
+import type { Message } from 'discord.js';
+import { Util, MessageEmbed } from 'discord.js';
 
 export default class RunCommand extends Command {
     constructor(client: KiwiiClient) {

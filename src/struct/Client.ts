@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Client, Collection, Guild, User, UserResolvable } from 'discord.js';
-import Command from './Command';
-import {
+import type { User, UserResolvable } from 'discord.js';
+import { Client, Collection, Guild } from 'discord.js';
+import type Command from './Command';
+import type {
     Config,
     KiwiiClientOptions,
     EventConstructor,
     ProcessEventOptions,
     ConstructorCommand,
 } from './interfaces/main';
-import SlashCommand from './SlashCommand';
-import Event from './Event';
+import type SlashCommand from './SlashCommand';
+import type Event from './Event';
 import Util from './Util';
 import axios from 'axios';
 import * as Console from '../util/console';
@@ -136,7 +137,10 @@ export default class KiwiiClient extends Client {
     public async connect(
         token: string | undefined = this.config.discord.token
     ): Promise<this | Error> {
-        if(!token) Promise.reject(new Error('No token provided')).finally(() => this.destroy());
+        if (!token)
+            Promise.reject(new Error('No token provided')).finally(() =>
+                this.destroy()
+            );
         // Log super in with the supplied token
         // eslint-disable-next-line no-console
         await super.login(token).catch(console.error);

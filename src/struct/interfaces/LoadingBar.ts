@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 
 export interface StartOptions {
     /**The length of the loading bar */

@@ -1,10 +1,11 @@
 import { Message, MessageEmbed } from 'discord.js';
 import Command from '../../struct/Command';
 import malScraper from 'mal-scraper';
-import KiwiiClient from '../../struct/Client';
+import type KiwiiClient from '../../struct/Client';
 import { parseDate } from '../../util/string';
 
-import child, { ExecException } from 'child_process';
+import type { ExecException } from 'child_process';
+import child from 'child_process';
 // import util from 'util';
 export default class AnimeCommand extends Command {
     constructor(client: KiwiiClient) {

@@ -1,4 +1,5 @@
-import { MessageEmbed, User, Role, CommandInteraction } from 'discord.js';
+import type { User, Role, CommandInteraction } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import SlashCommand from '../../struct/SlashCommand';
 import type KiwiiClient from '../../struct/Client';
 import {

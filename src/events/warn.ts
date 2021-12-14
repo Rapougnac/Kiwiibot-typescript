@@ -1,4 +1,4 @@
-import KiwiiClient from '../struct/Client';
+import type KiwiiClient from '../struct/Client';
 import Event from '../struct/Event';
 
 export default class WarnEvent extends Event {

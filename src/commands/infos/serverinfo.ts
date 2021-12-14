@@ -1,7 +1,8 @@
-import { Message, MessageEmbed } from 'discord.js';
+import type { Message } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import 'moment-duration-format';
-import KiwiiClient from '../../struct/Client';
+import type KiwiiClient from '../../struct/Client';
 import Command from '../../struct/Command';
 import { trimArray } from '../../util/string';
 export default class ServerInfoCommand extends Command {

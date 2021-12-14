@@ -1,6 +1,7 @@
-import { Message, MessageEmbed } from 'discord.js';
+import type { Message } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import Command from '../../struct/Command';
-import Client from '../../struct/Client';
+import type Client from '../../struct/Client';
 
 export default class AnalCommand extends Command {
     constructor(client: Client) {

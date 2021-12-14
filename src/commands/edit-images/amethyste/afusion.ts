@@ -1,6 +1,7 @@
 import Command from '../../../struct/Command';
-import KiwiiClient from '../../../struct/Client';
-import { Message, MessageAttachment, GuildMember } from 'discord.js';
+import type KiwiiClient from '../../../struct/Client';
+import type { Message, GuildMember } from 'discord.js';
+import { MessageAttachment } from 'discord.js';
 
 export default class AfusionCommand extends Command {
     constructor(client: KiwiiClient) {

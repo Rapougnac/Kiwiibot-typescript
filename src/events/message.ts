@@ -1,6 +1,7 @@
-import KiwiiClient from '../struct/Client';
+import type KiwiiClient from '../struct/Client';
 import Event from '../struct/Event';
-import { Message, MessageEmbed, GuildMemberManager } from 'discord.js';
+import type { Message } from 'discord.js';
+import { MessageEmbed, GuildMemberManager } from 'discord.js';
 import { I18n } from 'i18n';
 import * as path from 'path';
 const i18n = new I18n();

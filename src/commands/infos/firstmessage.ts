@@ -1,6 +1,7 @@
-import { Message, MessageEmbed, Snowflake, Collection } from 'discord.js';
+import type { Message, Snowflake, Collection } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import Command from '../../struct/Command';
-import Client from '../../struct/Client';
+import type Client from '../../struct/Client';
 export default class FirstMessageCommand extends Command {
     constructor(client: Client) {
         super(client, {

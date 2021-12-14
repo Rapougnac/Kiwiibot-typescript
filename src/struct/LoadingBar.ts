@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-import { StartOptions } from './interfaces/LoadingBar';
+import type { StartOptions } from './interfaces/LoadingBar';
 
 export default class LoadingBar {
     /**

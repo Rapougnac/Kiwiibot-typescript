@@ -1,7 +1,8 @@
-import { MessageEmbed, Message } from 'discord.js';
+import type { Message } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import 'moment-duration-format';
-import Client from '../../struct/Client';
+import type Client from '../../struct/Client';
 import Command from '../../struct/Command';
 import { translatePermissions } from '../../util/string';
 export default class RoleInfoCommand extends Command {

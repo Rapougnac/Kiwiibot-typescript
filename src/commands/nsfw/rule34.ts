@@ -1,8 +1,9 @@
 import { BooruError, search } from 'booru';
 import Command from '../../struct/Command';
-import KiwiiClient from '../../struct/Client';
+import type KiwiiClient from '../../struct/Client';
 import { trimArray } from '../../util/string';
-import { MessageEmbed, Message } from 'discord.js';
+import type { Message } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 
 export default class Rule34Command extends Command {
     constructor(client: KiwiiClient) {

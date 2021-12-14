@@ -63,6 +63,7 @@
         "@typescript-eslint/prefer-namespace-keyword": "off",
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/consistent-type-exports": "error",
-        "@typescript-eslint/consistent-type-imports": "error"
+        "@typescript-eslint/consistent-type-imports": "error",
+        "@typescript-eslint/method-signature-style": ["error", "method"]
     }
 }

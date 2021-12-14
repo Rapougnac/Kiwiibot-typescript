@@ -1,6 +1,6 @@
-import { PermissionString } from 'discord.js';
-import KiwiiClient from '../Client';
-import Command from '../Command';
+import type { PermissionString } from 'discord.js';
+import type KiwiiClient from '../Client';
+import type Command from '../Command';
 export interface CommandOptions {
     /**
      * The name of the command

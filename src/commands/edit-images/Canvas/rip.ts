@@ -2,8 +2,9 @@ import { loadImage, createCanvas } from 'canvas';
 import { join } from 'path';
 import Canvas from '../../../struct/Canvas';
 import Command from '../../../struct/Command';
-import KiwiiClient from '../../../struct/Client';
-import { Message, MessageAttachment } from 'discord.js';
+import type KiwiiClient from '../../../struct/Client';
+import type { Message } from 'discord.js';
+import { MessageAttachment } from 'discord.js';
 
 export default class RipCommand extends Command {
     constructor(client: KiwiiClient) {

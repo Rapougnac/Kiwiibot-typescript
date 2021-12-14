@@ -1,6 +1,7 @@
-import { Collection, Message } from 'discord.js';
-import Client from './Client';
-import {
+import type { Message } from 'discord.js';
+import { Collection } from 'discord.js';
+import type Client from './Client';
+import type {
     CommandOptions,
     HelpOptions,
     ConfigOptions,

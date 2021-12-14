@@ -1,5 +1,5 @@
-import KiwiiClient from '../Client';
-import Event from '../Event';
+import type KiwiiClient from '../Client';
+import type Event from '../Event';
 export interface EventOptions {
     /**
      * If the event is triggered `<Event>.once();` instead of `<Event>.on();`
@@ -16,8 +16,8 @@ export interface EventOptions {
 }
 
 export interface Listener {
-    on: () => void;
-    once: () => void;
+    on(): void;
+    once(): void;
 }
 export interface EventConstructor {
     // eslint-disable-next-line no-unused-vars

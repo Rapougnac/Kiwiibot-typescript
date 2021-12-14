@@ -1,6 +1,7 @@
-import { Message, MessageAttachment, GuildMember } from 'discord.js';
+import type { Message } from 'discord.js';
+import { MessageAttachment, GuildMember } from 'discord.js';
 import Command from '../../../struct/Command';
-import Client from '../../../struct/Client';
+import type Client from '../../../struct/Client';
 import Canvas from '../../../struct/Canvas';
 import { loadImage, createCanvas } from 'canvas';
 import { join } from 'path';

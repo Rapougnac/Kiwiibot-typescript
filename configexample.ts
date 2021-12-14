@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+
 import type { Config } from './src/struct/interfaces/Client';
 
 export const domain = 'DOMAIN_HERE';

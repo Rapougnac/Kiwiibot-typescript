@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import { Message } from 'discord.js';
-import Client from './Client';
-import { EventOptions, Listener, ClientEvents } from './interfaces/Event';
+import type { Message } from 'discord.js';
+import type Client from './Client';
+import type { EventOptions, Listener, ClientEvents } from './interfaces/Event';
 
 export default class Event {
     public readonly client: Client;

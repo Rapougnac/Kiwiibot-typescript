@@ -1,11 +1,7 @@
 import exportHtml from './exportHtml';
-import { ExportHtmlOptions } from './interfaces/exportHtml';
-import {
-    Message,
-    MessageAttachment,
-    TextChannel,
-    Collection,
-} from 'discord.js';
+import type { ExportHtmlOptions } from './interfaces/exportHtml';
+import type { MessageAttachment, TextChannel, Collection } from 'discord.js';
+import { Message } from 'discord.js';
 
 /**
  * Create a transcript, but with your own messages provided

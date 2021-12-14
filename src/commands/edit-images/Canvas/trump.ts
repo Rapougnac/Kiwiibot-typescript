@@ -1,6 +1,6 @@
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 import Command from '../../../struct/Command';
-import Client from '../../../struct/Client';
+import type Client from '../../../struct/Client';
 import GifEncoder from 'gifencoder';
 import { join } from 'path';
 import { createCanvas, loadImage } from 'canvas';
