@@ -119,12 +119,6 @@
         "number_range": "Veuillez, s'il vous plaît, mettre un nombre entre 1 et {number}",
         "poularity": "Popularité"
     },
-    "trump": {
-        "description": "trump.description"
-    },
-    "ERROR_MESSAGE": {
-        "msg": "ERROR_MESSAGE.msg"
-    },
     "mdn": {
         "description": "Cherchez dans la documentation de MDN",
         "experimental": "Experimental",
@@ -183,42 +177,6 @@
     "tag": {
         "description": "Faites `{prefix}`tag pour voir les tags affichés."
     },
-    "transcript": {
-        "description": "transcript.description"
-    },
-    "sendpins": {
-        "description": "sendpins.description"
-    },
-    "3000y": {
-        "description": "3000y.description"
-    },
-    "fusion": {
-        "description": "fusion.description"
-    },
-    "phcomment": {
-        "description": "phcomment.description"
-    },
-    "rip": {
-        "description": "rip.description"
-    },
-    "youdied": {
-        "description": "youdied.description"
-    },
-    "firstmessage": {
-        "description": "firstmessage.description"
-    },
-    "inrole": {
-        "description": "inrole.description"
-    },
-    "serverinfo": {
-        "description": "serverinfo.description"
-    },
-    "uptime": {
-        "description": "uptime.description"
-    },
-    "eval": {
-        "description": "eval.description"
-    },
     "website": {
         "login": "Connexion",
         "logout": "Se déconnecter",
@@ -232,8 +190,90 @@
             "english": "website.language.english"
         }
     },
-    "ass": {
-        "description": "ass.description"
+    "run": {
+        "description": "Execute un bout de code dans le langage fourni."
+    },
+    "sendpins": {
+        "description": "Sends all pinned message(s)"
+    },
+    "3000y": {
+        "description": "Sends you, or the specified member with the 3000y meme"
+    },
+    "fusion": {
+        "description": "Fusionnate your profile pictur with the specified member"
+    },
+    "inrole": {
+        "description": "Get all members with the specified role",
+        "dislay_role": "All members with the {role_name} role",
+        "missing_role": "Please specify a role."
+    },
+    "invitations": {
+        "description": "Get the the members who has invited the most people in the guild"
+    },
+    "serverinfo": {
+        "description": "Get informations about the server",
+        "name": "Name",
+        "region": "Region",
+        "members": "Members",
+        "online_members": "Online members",
+        "channels": "Channels",
+        "emotes": "Emojis",
+        "roles": "Roles [{role}]",
+        "owner": "Owner",
+        "creation_date": "Creation date",
+        "nitro": "Nitro boots",
+        "afk": "Afk timeout",
+        "verification_level": "Verification level",
+        "id": "ID: {id}",
+        "tier": "Tier : `{tier}`\nNumber of boosts: `{boost_number}`",
+        "members2": "Members",
+        "humans": "Humans",
+        "bots": "Bots",
+        "channels2": "Channels",
+        "text_channels": "Text channel(s)",
+        "voice_channels": "Voice channel(s)",
+        "category": "category",
+        "animated_emotes": "Animated emoji(s)",
+        "on": "On",
+        "at": "at",
+        "static_emotes": "Static emoji(s)"
+    },
+    "uptime": {
+        "description": "Get the uptime of the bot",
+        "msg": "**{client}** is since `{days} days` `{hours} hours` `{minutes} minutes` and `{seconds} seconds` online"
+    },
+    "firstmessage": {
+        "description": "Get the first message in the current channel",
+        "first_message": "First message in: **{channel_name}**",
+        "content": "**Content:**",
+        "author": "**Author:**",
+        "msg_id": "**Message ID:**",
+        "created": "**Created at:**",
+        "not_found": "No message was found!"
+    },
+    "phcomment": {
+        "description": "Write a comment in ph ( ͡• ͜ʖ ͡• )"
+    },
+    "rip": {
+        "description": ""
+    },
+    "trump": {
+        "description": ""
+    },
+    "weather": {
+        "description": ""
+    },
+    "youdied": {
+        "description": ""
+    },
+    "ban": {
+        "description": "Ban the specified member"
+    },
+    "eval": {
+        "description": "Execute some javascript code"
+    },
+    "transcript": {
+        "description": "transcript.description"
     },
     "load": {
         "description": "load.description"
@@ -243,11 +283,5 @@
     },
     "unload": {
         "description": "unload.description"
-    },
-    "run": {
-        "description": "Execute un bout de code dans le langage fourni."
-    },
-    "record": {
-        "description": "record.description"
     }
 }
