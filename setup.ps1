@@ -159,6 +159,12 @@ if($potential_cmd -eq $true) {
 
     } elseif ($options -eq "Use npm") {
 
+        Write-Output 'Starting installation of dependencies'
+        Start-Sleep 3
+        rm pnpm-lock.yaml
+        npm i
+        Write-Output 'All packages have been installed sucessfully'
+        Start-Sleep 3
         Write-Output 'Starting compilation of TypeScript'
         npm run build
         Write-Output 'Compilation of TypeScript complete'
