@@ -39,7 +39,7 @@ export default class Transcript extends SlashCommand {
             await interaction.deferReply();
             const transcript = await createTranscript(channel, { limit });
             interaction.editReply({ files: [transcript] });
-            interaction.react('📄');
+            await interaction.react('📄');
         }
     }
 }
