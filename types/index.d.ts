@@ -1,4 +1,4 @@
-import { APIMessageContentResolvable, Message, Presence } from 'discord.js';
+import { APIMessageContentResolvable, Message, Presence, EmojiIdentifierResolvable, MessageReaction } from 'discord.js';
 import { I18n } from 'i18n';
 
 declare global {
@@ -55,6 +55,14 @@ declare module 'discord.js' {
          * The presence of this user.
          */
         readonly presence?: Presence;
+    }
+
+    export interface CommandInteraction {
+        /**
+         * Adds a reaction to the reaction.
+         * @param emoji The emoji to react with
+         */
+        react(emoji: EmojiIdentifierResolvable): Promise<MessageReaction>;
     }
 }
 
