@@ -1,7 +1,7 @@
 import Event from '../struct/Event';
 import type KiwiiClient from '../struct/Client';
 import type { Interaction } from 'discord.js';
-import { GuildMemberManager } from 'discord.js';
+import { GuildMemberManager, CommandInteraction } from 'discord.js';
 import { I18n } from 'i18n';
 import * as path from 'path';
 const i18n = new I18n();
@@ -20,18 +20,20 @@ export default class InteractionCreate extends Event {
         });
     }
     public override execute(interaction: Interaction) {
-        if (!interaction.isCommand()) return;
+        if (!interaction.isCommand() && !interaction.isContextMenu()) return;
 
         if (!this.client.slashs.has(interaction.commandName)) return;
         const commandInteraction = this.client.slashs.get(
             interaction.commandName
         );
         let args;
-        if (commandInteraction?.commandOptions) {
-            args = this.client.interactionManager.parseOptions(
-                interaction,
-                commandInteraction.commandOptions
-            );
+        if (interaction instanceof CommandInteraction) {
+            if (commandInteraction?.commandOptions) {
+                args = this.client.interactionManager.parseOptions(
+                    interaction,
+                    commandInteraction.commandOptions
+                );
+            }
         }
         if (!interaction.guild) {
             Object.defineProperty(interaction, 'guild', {
