@@ -35,7 +35,7 @@ export default class ReadyEvent extends Event {
             `Why am I here`,
             `There's a lot of statuses no?`,
             `Ugh, Kyofu, it rhymes with tofu, so she has to be a fool`,
-        ];
+        ] as const;
         setInterval(() => {
             const i = statuses[Math.floor(Math.random() * statuses.length)];
             void this.client.user?.setPresence({
@@ -49,8 +49,7 @@ export default class ReadyEvent extends Event {
             });
         }, 1e4);
         Console.success(
-            `Ready on ${
-                this.client.guilds.cache.size
+            `Ready on ${this.client.guilds.cache.size
             } servers, for a total of ${this.client.guilds.cache.reduce(
                 (a, b) => a + b.memberCount,
                 0
@@ -75,6 +74,7 @@ export default class ReadyEvent extends Event {
                     const guild = await this.client.guilds.fetch(
                         '911736666551640075'
                     );
+                    if (['USER'].includes(command.command.type)) command.command.description = '';
                     guild.commands.create(command.command.toJSON());
                 } else {
                     this.client.application?.commands.create(
