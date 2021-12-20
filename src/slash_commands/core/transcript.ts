@@ -21,6 +21,7 @@ export default class Transcript extends SlashCommand {
                         'The number of messages to include in the transcript.',
                     type: 4,
                     required: false,
+                    channelTypes: ['GUILD_TEXT'],
                 },
             ],
         });
@@ -38,6 +39,7 @@ export default class Transcript extends SlashCommand {
             await interaction.deferReply();
             const transcript = await createTranscript(channel, { limit });
             interaction.editReply({ files: [transcript] });
+            interaction.react('📄');
         }
     }
 }
