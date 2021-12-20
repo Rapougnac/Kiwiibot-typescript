@@ -40,8 +40,8 @@ export default class PHCommentCommand extends Command {
             );
         if (User) {
             const query = args.slice(1).join(' ');
-            const data: {
-                message: string;
+            const { data }: {
+                data: { message: string };
             } = await axios.get(
                 `https://nekobot.xyz/api/imagegen?type=phcomment&image=${User.user.displayAvatarURL()}&text=${encodeURIComponent(
                     query
@@ -51,8 +51,8 @@ export default class PHCommentCommand extends Command {
             await message.channel.send({ files: [att] });
         } else {
             const query = args.join(' ');
-            const data: {
-                message: string;
+            const { data }: {
+                data: { message: string; }
             } = await axios.get(
                 `https://nekobot.xyz/api/imagegen?type=phcomment&image=${message.author.displayAvatarURL()}&text=${encodeURIComponent(
                     query
