@@ -1,6 +1,8 @@
 import type KiwiiClient from './Client';
-import type { CommandOptions } from './interfaces/SlashCommand';
-import type { CommandInteraction } from 'discord.js';
+import type {
+    ApplicationCommandOptionData,
+    CommandInteraction,
+} from 'discord.js';
 
 export default class InteractionManager {
     readonly client: KiwiiClient;
@@ -10,7 +12,7 @@ export default class InteractionManager {
 
     public parseOptions(
         interaction: CommandInteraction,
-        options?: CommandOptions[]
+        options?: ApplicationCommandOptionData[]
     ) {
         if (!options) return;
         const args: {
@@ -18,8 +20,11 @@ export default class InteractionManager {
             [key: string]: any;
         } = {};
         for (const option of options) {
-            if (option.options) {
-                if (option.options.length > 0) {
+            if (
+                option.type === 'SUB_COMMAND' ||
+                option.type === 'SUB_COMMAND_GROUP'
+            ) {
+                if (option.options && option.options.length > 0) {
                     args[`args_${option.name}`] = this.parseOptions(
                         interaction,
                         option.options
@@ -34,17 +39,16 @@ export default class InteractionManager {
             }
             switch (option.type) {
                 case 1:
-                    args['subcommand'] = interaction.options.getSubcommand(
-                        option.required ?? false
-                    );
+                case 'SUB_COMMAND':
+                    args['subcommand'] = interaction.options.getSubcommand();
                     break;
                 case 2:
+                case 'SUB_COMMAND_GROUP':
                     args['subcommandGroup'] =
-                        interaction.options.getSubcommandGroup(
-                            option.required ?? false
-                        );
+                        interaction.options.getSubcommandGroup();
                     break;
                 case 3:
+                case 'STRING':
                     if (
                         option.name &&
                         interaction.options.getString(option.name)
@@ -56,6 +60,7 @@ export default class InteractionManager {
                     }
                     break;
                 case 4:
+                case 'INTEGER':
                     if (
                         option.name &&
                         interaction.options.getInteger(option.name)
@@ -67,6 +72,7 @@ export default class InteractionManager {
                     }
                     break;
                 case 5:
+                case 'BOOLEAN':
                     if (
                         option.name &&
                         interaction.options.getBoolean(option.name)
@@ -78,6 +84,7 @@ export default class InteractionManager {
                     }
                     break;
                 case 6:
+                case 'USER':
                     if (
                         option.name &&
                         interaction.options.getUser(option.name)
@@ -89,6 +96,7 @@ export default class InteractionManager {
                     }
                     break;
                 case 7:
+                case 'CHANNEL':
                     if (
                         option.name &&
                         interaction.options.getChannel(option.name)
@@ -100,6 +108,7 @@ export default class InteractionManager {
                     }
                     break;
                 case 8:
+                case 'ROLE':
                     if (
                         option.name &&
                         interaction.options.getRole(option.name)
@@ -111,6 +120,7 @@ export default class InteractionManager {
                     }
                     break;
                 case 9:
+                case 'MENTIONABLE':
                     if (
                         option.name &&
                         interaction.options.getMentionable(option.name)
