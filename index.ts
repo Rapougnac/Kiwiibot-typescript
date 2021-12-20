@@ -1,6 +1,7 @@
 import KiwiiClient from './src/struct/Client';
 import * as config from './config';
 import './src/struct/User';
+import './src/struct/CommandInteraction';
 import Intents from './src/struct/Intents';
 import { error } from './src/util/console';
 
