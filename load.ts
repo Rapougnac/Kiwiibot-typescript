@@ -17,7 +17,7 @@ export const load = async (client: KiwiiClient): Promise<void> => {
             Object.defineProperty(guild, 'i18n', {
                 value: i18n,
             });
-            if (!client.mySql.connected) return guild.i18n.setLocale('en');
+            if (!client.mySql.connected) { guild.i18n.setLocale('en'); continue; }
             const results = client.mySql.connection.query(
                 `SELECT * FROM guildsettings WHERE guildId = ${id}`
             ) as unknown as {
