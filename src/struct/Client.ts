@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UserResolvable } from 'discord.js';
-import { Client, Collection, Guild } from 'discord.js';
+import { Collection, Guild, Client } from 'discord.js';
 import type Command from './Command';
 import type {
     Config,
