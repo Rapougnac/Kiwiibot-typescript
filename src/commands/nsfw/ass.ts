@@ -25,7 +25,6 @@ export default class AssCommand extends Command {
                     format: 'png',
                 })
             )
-            // eslint-disable-next-line @typescript-eslint/await-thenable
             .setImage(await client.utils.akaneko.nsfw.ass())
             .setFooter(`Requested by ${message.author.username}`);
         await message.channel.send({ embeds: [embed] });
