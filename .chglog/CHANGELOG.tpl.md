@@ -1,4 +1,4 @@
-{{ .Info.Title }}
+# {{ .Info.Title }}
 
 {{ range .Versions }}
 <a name="{{ .Tag.Name }}"></a>

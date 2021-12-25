@@ -1,10 +1,20 @@
-Kiwiibot
+# Kiwiibot
 
 
-<a name="v2.2.0"></a>
-## v2.2.0
+<a name="2.2.2"></a>
+## [2.2.2](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.2.1...2.2.2)
 
-> 2021-12-24
+> 2021-12-25
+
+### Bug Fixes
+
+* **Changelog:** Configured changelog ([b471f1d](https://github.com/Rapougnac/Kiwiibot-typescript/commit/b471f1d9b4a5d680ef5f9c8d76c8b3d28af250e4))
+
+
+<a name="2.2.1"></a>
+## 2.2.1
+
+> 2021-12-25
 
 ### Bug Fixes
 
@@ -48,6 +58,7 @@ Kiwiibot
 ### Features
 
 * Add transcript in slash commands ([9365e52](https://github.com/Rapougnac/Kiwiibot-typescript/commit/9365e5280cdd8e446a8b2c903a446e78b47bd1b2))
+* Added message delete + setlogs ([928b50a](https://github.com/Rapougnac/Kiwiibot-typescript/commit/928b50ac89c124005729ec428a79419d822b638a))
 * Added bdsm.ts ([54bd031](https://github.com/Rapougnac/Kiwiibot-typescript/commit/54bd0316df9281ce6bd43c3de323263e9ab7c1af))
 * Add commit lint ([076fa2a](https://github.com/Rapougnac/Kiwiibot-typescript/commit/076fa2a7da3c17b659e5708fc06a8d4e4f67167e))
 * Added AnimeSlashCommand ([7010d55](https://github.com/Rapougnac/Kiwiibot-typescript/commit/7010d5593a2f67a2fcb0e6665ac2084a87f59d88))
@@ -55,7 +66,7 @@ Kiwiibot
 * Created trump.ts ([5e1b0c6](https://github.com/Rapougnac/Kiwiibot-typescript/commit/5e1b0c6af7a8d165c2df20b6a199e1cfa1493d96))
 * Add rule34.ts slash ([f17285c](https://github.com/Rapougnac/Kiwiibot-typescript/commit/f17285c9fd10fa5b26ad8bc875b09a933a419390))
 * Added new strings ([9e8d4e7](https://github.com/Rapougnac/Kiwiibot-typescript/commit/9e8d4e7639e47cb08205fb828d193c4a545a3653))
-* Added message delete + setlogs ([928b50a](https://github.com/Rapougnac/Kiwiibot-typescript/commit/928b50ac89c124005729ec428a79419d822b638a))
+* Added CHANGELOG.md ([e91fab4](https://github.com/Rapougnac/Kiwiibot-typescript/commit/e91fab4a194fdb7b7764a132549a59e5f99be48b))
 * **AvatarCommand:** Added translated description ([18f37a1](https://github.com/Rapougnac/Kiwiibot-typescript/commit/18f37a1f9d7f39e1856943f3dfab289f60a6fc1f))
 * **CommandInteraction:** Added CommandInteraction#react() ([9f1aa3d](https://github.com/Rapougnac/Kiwiibot-typescript/commit/9f1aa3d3c5ab0a68c2b0df761c4a9c6461b27e9a))
 * **CommandInteraction:** Import for side-effects ([b0d61e8](https://github.com/Rapougnac/Kiwiibot-typescript/commit/b0d61e83883ce8ee2db0c60302d929193f486d70))
@@ -69,9 +80,9 @@ Kiwiibot
 
 ### Pull Requests
 
-* Merge pull request [#5](https://github.com/Rapougnac/Kiwiibot-typescript/pull/5) from Rapougnac/dev
-* Merge pull request [#10](https://github.com/Rapougnac/Kiwiibot-typescript/pull/10) from Rapougnac/mysql
-* Merge pull request [#7](https://github.com/Rapougnac/Kiwiibot-typescript/pull/7) from Rapougnac/add-license
-* Merge pull request [#6](https://github.com/Rapougnac/Kiwiibot-typescript/pull/6) from Rapougnac/dev-eslint
-* Merge pull request [#2](https://github.com/Rapougnac/Kiwiibot-typescript/pull/2) from Rapougnac/v13
+* Merge pull request [#5](https://github.com/Rapougnac/Kiwiibot-typescript/issues/5) from Rapougnac/dev
+* Merge pull request [#10](https://github.com/Rapougnac/Kiwiibot-typescript/issues/10) from Rapougnac/mysql
+* Merge pull request [#7](https://github.com/Rapougnac/Kiwiibot-typescript/issues/7) from Rapougnac/add-license
+* Merge pull request [#6](https://github.com/Rapougnac/Kiwiibot-typescript/issues/6) from Rapougnac/dev-eslint
+* Merge pull request [#2](https://github.com/Rapougnac/Kiwiibot-typescript/issues/2) from Rapougnac/v13
 
