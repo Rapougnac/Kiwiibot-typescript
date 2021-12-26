@@ -663,6 +663,10 @@ function beautifyCategories(category: string, nsfw = true): string {
       categoriesString = '🔧 misc';
       break;
     }
+    case 'moderation': {
+      categoriesString = '🔨 moderation';
+      break;
+    }
     default: {
       categoriesString = category;
     }
