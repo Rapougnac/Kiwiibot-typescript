@@ -49,6 +49,11 @@
     "owner_only": "help.owner_only",
     "user_permissions": "help.user_permissions",
     "bot_permissions": "help.bot_permissions",
-    "information": "help.information"
+    "information": "help.information",
+    "cmd_usage": "help.cmd_usage",
+    "nsfw_message": "help.nsfw_message"
+  },
+  "ping": {
+    "msg": "ping.msg"
   }
 }
