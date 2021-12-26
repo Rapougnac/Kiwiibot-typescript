@@ -131,11 +131,11 @@ export default class HelpCommand extends Command {
             ? message.channel.nsfw
               ? message.guild.i18n.__mf(`help.cmd_usage`, {
                   prefix: client.prefix,
-                }) +
-                message.guild.i18n.__mf('help.nsfw_message', {
-                  prefix: client.prefix,
                 })
               : message.guild.i18n.__mf('help.cmd_usage', {
+                  prefix: client.prefix,
+                }) +
+                message.guild.i18n.__mf('help.nsfw_message', {
                   prefix: client.prefix,
                 })
             : ''
