@@ -51,9 +51,14 @@
     "bot_permissions": "help.bot_permissions",
     "information": "help.information",
     "cmd_usage": "help.cmd_usage",
-    "nsfw_message": "help.nsfw_message"
+    "nsfw_message": "help.nsfw_message",
+    "description": "help.description",
+    "none_alias": "help.none_alias"
   },
   "ping": {
     "msg": "ping.msg"
+  },
+  "mdn": {
+    "description": "mdn.description"
   }
 }
