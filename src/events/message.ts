@@ -74,9 +74,10 @@ export default class MessageEvent extends Event {
           prefix: message.guild.prefix,
         })
       );
-    if (!prefix[index as number]) return;
+    if (!index) return;
+    if (!prefix[index]) return;
     const args = message.content
-      .slice(prefix[index as number]?.length)
+      .slice(prefix[index]?.length)
       .trim()
       .split(/\s+/g);
     const command = args.shift()?.toLowerCase() ?? '';
@@ -90,7 +91,6 @@ export default class MessageEvent extends Event {
       message,
       commandToExecute
     );
-    if (index === null || index === undefined) return;
     if (this.client.isOwner(author)) {
       try {
         void commandToExecute.execute(this.client, message, args);
