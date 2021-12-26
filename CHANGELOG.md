@@ -1,6 +1,32 @@
 # [Kiwiibot](https://github.com/Rapougnac/Kiwiibot-typescript/tree/dev)
 
 
+<a name="2.3.1"></a>
+## [2.3.1](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.3.0...2.3.1)
+
+> 2021-12-26
+
+### Features
+
+* **locales:** Auto locales ([fed2716](https://github.com/Rapougnac/Kiwiibot-typescript/commit/fed2716d842fee410c56cf8e40767a8f72eea682))
+
+
+<a name="2.3.0"></a>
+## [2.3.0](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.2.2...2.3.0)
+
+> 2021-12-26
+
+### Code Refactoring
+
+* **Changelog:** Url in title ([2475601](https://github.com/Rapougnac/Kiwiibot-typescript/commit/247560123b052f46d092c7a744fab1b36db59be8))
+* **Changelog:** Title to.. title ([e0a1df2](https://github.com/Rapougnac/Kiwiibot-typescript/commit/e0a1df2e50d83fa9d438a1480266cef991e7c9b1))
+* **MessageEvent:** Removed type assertion & checked for null index ([306a00f](https://github.com/Rapougnac/Kiwiibot-typescript/commit/306a00ffd495f44b9882c5c93bbf008cd4856621))
+
+### Features
+
+* **LocaleService:** Fallback to english if translation not found ([22ffee3](https://github.com/Rapougnac/Kiwiibot-typescript/commit/22ffee365cf06b6cc3973b8b7c780498304c5137))
+
+
 <a name="2.2.2"></a>
 ## [2.2.2](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.2.1...2.2.2)
 

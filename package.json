@@ -1,6 +1,6 @@
 {
     "name": "kiwiibots",
-    "version": "2.2.2",
+    "version": "2.3.1",
     "description": "A bot written in TS",
     "main": "index.js",
     "dependencies": {
