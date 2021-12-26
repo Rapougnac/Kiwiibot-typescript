@@ -207,7 +207,7 @@ export default class HelpCommand extends Command {
             inline: true,
           },
           {
-            name: message.guild.i18n.__n(
+            name: message.guild.i18n.translatePlural(
               'help.alias',
               command.config.aliases.length
             ),
