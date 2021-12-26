@@ -9,6 +9,7 @@ export default class LookWhatKarenhave extends Command {
       aliases: ['lwkh'],
       description: "Well, it's all in the name, look what Karen have.",
       utilisation: `{prefix}lookwhatkarenhave <member>`,
+      category: 'image-manipulation',
       clientPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'ATTACH_FILES'],
     });
   }
