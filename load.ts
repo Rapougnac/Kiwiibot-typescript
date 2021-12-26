@@ -1,19 +1,21 @@
 import type KiwiiClient from './src/struct/Client';
 import { I18n } from 'i18n';
 import * as path from 'path';
+import LocaleService from './src/struct/LocaleService';
 
 export const load = async (client: KiwiiClient): Promise<void> => {
     try {
         const asyncResults = [];
         for (const [id, guild] of client.guilds.cache) {
-            const i18n = new I18n();
-            i18n.configure({
+            const _i18n = new I18n();
+            _i18n.configure({
                 locales: ['en', 'fr', 'de'],
                 directory: path.join(process.cwd(), 'locales'),
                 defaultLocale: 'en',
                 objectNotation: true,
             });
-            i18n.setLocale('en');
+            _i18n.setLocale('en');
+            const i18n = new LocaleService(_i18n);
             Object.defineProperty(guild, 'i18n', {
                 value: i18n,
             });

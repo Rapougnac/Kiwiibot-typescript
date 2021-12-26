@@ -4,15 +4,17 @@ import type { Interaction } from 'discord.js';
 import { GuildMemberManager, CommandInteraction } from 'discord.js';
 import { I18n } from 'i18n';
 import * as path from 'path';
-const i18n = new I18n();
-i18n.configure({
+import LocaleService from '../struct/LocaleService';
+const _i18n = new I18n();
+_i18n.configure({
   locales: ['en', 'fr', 'de'],
   directory: path.join(process.cwd(), 'locales'),
   defaultLocale: 'en',
   objectNotation: true,
 });
-i18n.setLocale('en');
+_i18n.setLocale('en');
 
+const i18n = new LocaleService(_i18n);
 export default class InteractionCreate extends Event {
   constructor(client: KiwiiClient) {
     super(client, {

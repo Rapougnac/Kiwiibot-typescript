@@ -1,5 +1,5 @@
 import { APIMessageContentResolvable, Message, Presence, EmojiIdentifierResolvable, MessageReaction } from 'discord.js';
-import { I18n } from 'i18n';
+import type LocaleService from '../src/struct/LocaleService';
 
 declare global {
     interface Array<T> {
@@ -43,11 +43,11 @@ declare module 'discord.js' {
         /**
          * The i18n object notation
          */
-        readonly i18n: I18n;
+        readonly i18n: LocaleService;
         /**
          * The prefix of the guild, if there's one.
          */
-        prefix: string;
+        prefix?: string;
     }
 
     export interface User {

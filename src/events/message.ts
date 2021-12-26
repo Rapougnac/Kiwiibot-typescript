@@ -4,14 +4,17 @@ import type { Message } from 'discord.js';
 import { MessageEmbed, GuildMemberManager } from 'discord.js';
 import { I18n } from 'i18n';
 import * as path from 'path';
-const i18n = new I18n();
-i18n.configure({
+import LocaleService from '../struct/LocaleService';
+const _i18n = new I18n();
+_i18n.configure({
   locales: ['en', 'fr', 'de'],
   directory: path.join(process.cwd(), 'locales'),
   defaultLocale: 'en',
   objectNotation: true,
 });
-i18n.setLocale('en');
+_i18n.setLocale('en');
+
+const i18n = new LocaleService(_i18n);
 
 export default class MessageEvent extends Event {
   constructor(client: KiwiiClient) {
@@ -71,13 +74,12 @@ export default class MessageEvent extends Event {
     )
       return message.reply(
         message.guild.i18n.__mf('MESSAGE_PREFIX.msg', {
-          prefix: message.guild.prefix,
+          prefix: message.guild.prefix || this.client.prefix,
         })
       );
-    if (!index) return;
-    if (!prefix[index]) return;
+    if (!prefix[index ?? 0]) return;
     const args = message.content
-      .slice(prefix[index]?.length)
+      .slice(prefix[index ?? 0]?.length)
       .trim()
       .split(/\s+/g);
     const command = args.shift()?.toLowerCase() ?? '';
@@ -91,6 +93,7 @@ export default class MessageEvent extends Event {
       message,
       commandToExecute
     );
+    if(typeof index === 'undefined' || index === null) return;
     if (this.client.isOwner(author)) {
       try {
         void commandToExecute.execute(this.client, message, args);
