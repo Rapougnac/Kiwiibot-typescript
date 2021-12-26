@@ -1,4 +1,4 @@
-# {{ .Info.Title }}
+# [{{ .Info.Title }}]({{ $.Info.RepositoryURL }}/tree/dev)
 
 {{ range .Versions }}
 <a name="{{ .Tag.Name }}"></a>
