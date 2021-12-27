@@ -242,7 +242,7 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
         if (this.utils.isClass(Event)) {
           const event = new Event(this);
           this.events.set(event.name, event);
-          (event.emitter as any)[event.type](event.name, (...args: any) =>
+          (event.emitter)[event.type](event.name, (...args: any) =>
             event.execute(...args)
           );
           evts.push({

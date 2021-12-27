@@ -6,7 +6,7 @@ import type { EventOptions, Listener, ClientEvents } from './interfaces/Event';
 export default class Event {
   public readonly client: Client;
   public name: ClientEvents;
-  public type: string;
+  public type: 'on' | 'once';
   public emitter: Listener;
   constructor(client: Client, options: EventOptions) {
     this.client = client;
