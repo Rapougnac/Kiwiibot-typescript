@@ -93,7 +93,7 @@ export default class MessageEvent extends Event {
       message,
       commandToExecute
     );
-    if(typeof index === 'undefined' || index === null) return;
+    if (typeof index === 'undefined' || index === null) return;
     if (this.client.isOwner(author)) {
       try {
         void commandToExecute.execute(this.client, message, args);
