@@ -26,7 +26,7 @@ import MYSql from './MySql';
  * Represents a discord client
  * @extends Client
  */
-export default class KiwiiClient extends Client {
+export default class KiwiiClient<Ready extends boolean = boolean> extends Client<Ready> {
   /**
    * A collection of all the bot's commands
    */
