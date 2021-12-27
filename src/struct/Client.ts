@@ -237,10 +237,8 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
     files = files.filter((file) => file.endsWith('.js'));
     files.forEach((file) => {
       void (async () => {
-        let Event: EventConstructor = await import(
-          `${process.cwd()}${sep}dist${sep}src${sep}events${sep}${file}`
-        );
-        Event = (Event as any).default;
+        const path = `${process.cwd()}${sep}dist${sep}src${sep}events${sep}${file}`;
+        const Event = await import(`${path}`).then((event: EventConstructor) => event.default);
         if (this.utils.isClass(Event)) {
           const event = new Event(this);
           this.events.set(event.name, event);

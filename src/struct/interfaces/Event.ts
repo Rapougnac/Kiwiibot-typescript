@@ -16,12 +16,13 @@ export interface EventOptions {
 }
 
 export interface Listener {
-  on(): void;
-  once(): void;
+  on(...args: unknown[]): void;
+  once(...args: unknown[]): void;
 }
 export interface EventConstructor {
   // eslint-disable-next-line no-unused-vars
   new (client: KiwiiClient, options?: EventOptions): Event;
+  default: EventConstructor;
   readonly prototype: Event;
 }
 export type ClientEvents =
