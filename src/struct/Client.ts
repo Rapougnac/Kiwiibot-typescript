@@ -168,11 +168,9 @@ export default class KiwiiClient extends Client {
       void (async () => {
         try {
           const filePath = path.resolve(`${process.cwd()}${path.sep}${file}`);
-          let Command: ConstructorCommand = await import(`${filePath}`);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          Command = (Command as any).default;
+          const Command = await import(`${filePath}`).then((c: ConstructorCommand) => c.default);
           if (this.utils.isClass(Command)) {
-            const command: Command = new Command(this);
+            const command = new Command(this);
             if (this.commands.has(command.help.name)) {
               // eslint-disable-next-line no-console
               console.error(
