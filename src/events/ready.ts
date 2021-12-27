@@ -25,7 +25,7 @@ export default class ReadyEvent extends Event {
     const statuses = [
       `Currently on ${this.client.guilds.cache.size} servers`,
       `Serving ${this.client.guilds.cache.reduce(
-        (a, b) => a + b.memberCount,
+        (a, b) => Number(a) + Number(b.memberCount),
         0
       )} users`,
       `Do you know how to make bots ?`,
@@ -52,7 +52,7 @@ export default class ReadyEvent extends Event {
       `Ready on ${
         this.client.guilds.cache.size
       } servers, for a total of ${this.client.guilds.cache.reduce(
-        (a, b) => a + b.memberCount,
+        (a, b) => Number(a) + Number(b.memberCount),
         0
       )} users`
     );
