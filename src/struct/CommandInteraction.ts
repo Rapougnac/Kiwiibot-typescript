@@ -7,8 +7,8 @@ CommandInteraction.prototype.react = async function (
 ): Promise<MessageReaction> {
   if (emoji) emoji = this.client.emojis.resolveIdentifier(emoji) as string;
   if (!emoji) throw new TypeError('Invalid emoji');
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const msg = await (this.client as unknown as ClientApi).api
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     .webhooks(this.client.user!.id, this.token)
     .messages('@original')
     .get();
