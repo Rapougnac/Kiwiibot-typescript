@@ -295,5 +295,8 @@
   },
   "bdsm": {
     "description": "bdsm.description"
+  },
+  "ERROR_MESSAGE": {
+    "msg": "Il y a eu une erreur en essayant d'éxécuter cette commande !"
   }
 }
