@@ -17,7 +17,7 @@ export default class Canvas {
    * @param height The height of the image
    * @returns The context of the canvas
    */
-  static greyscale(
+  public static greyscale(
     ctx: CanvasRenderingContext2D,
     x: number,
     y: number,
@@ -49,7 +49,7 @@ export default class Canvas {
    * @param width The width of the image
    * @param height The height of the image
    */
-  static fishEye(
+  public static fishEye(
     ctx: CanvasRenderingContext2D,
     level: number,
     x: number,
@@ -90,7 +90,7 @@ export default class Canvas {
    * @param width The width parameter
    * @param height The height parameter
    */
-  static drawImageWithTint(
+  public static drawImageWithTint(
     ctx: NodeCanvasRenderingContext2D,
     image: Image,
     color: string,
@@ -113,7 +113,7 @@ export default class Canvas {
    * @param base The base to pass in
    * @param data The data to pass in
    */
-  static centerImage(base: Image, data: Image): centerImageOutput {
+  public static centerImage(base: Image, data: Image): centerImageOutput {
     const dataRatio = data.width / data.height;
     const baseRatio = base.width / base.height;
     let { width, height } = data;
@@ -138,7 +138,7 @@ export default class Canvas {
    * @param text The text to add to
    * @param maxWidth The max width of the text
    */
-  static wrapText(
+  public static wrapText(
     ctx: CanvasRenderingContext2D,
     text: string,
     maxWidth: number
@@ -177,7 +177,9 @@ export default class Canvas {
    * Resolve a stream to get in array
    * @param stream The stream to resolve
    */
-  static streamToArray(stream: Readable): Promise<Uint8Array[] | never[]> {
+  public static streamToArray(
+    stream: Readable
+  ): Promise<Uint8Array[] | never[]> {
     if (!stream.readable) return Promise.resolve([]);
     return new Promise((resolve, reject) => {
       const arr: Uint8Array[] = [];
@@ -205,4 +207,184 @@ export default class Canvas {
       stream.on('close', onClose);
     });
   }
+
+  /**
+   * Draws a rounded rectangle using the current state of the canvas.
+   * If you omit the last three params, it will draw a rectangle
+   * outline with a 5 pixel border radius.
+   * @param ctx The context of the canvas
+   * @param x The top left x coordinate
+   * @param y The top left y coordinate
+   * @param width The width of the rectangle
+   * @param height The height of the rectangle
+   * @param radius The corner radius; It can also be an object with the radius specified for each corner.
+   * @param fill Whether to fill the rectangle
+   * @param stroke Whether to stroke the rectangle
+   */
+  public static roundRectangle(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    radius: number | RadiusOptions = 5,
+    fill = false,
+    stroke = false
+  ) {
+    if (typeof radius === 'number') {
+      radius = { tl: radius, tr: radius, br: radius, bl: radius };
+    }
+    radius.tl ??= 0;
+    radius.tr ??= 0;
+    radius.br ??= 0;
+    radius.bl ??= 0;
+    ctx.beginPath();
+    ctx.moveTo(x + radius.tl, y);
+    ctx.lineTo(x + width - radius.tr, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+    ctx.lineTo(x + width, y + height - radius.br);
+    ctx.quadraticCurveTo(
+      x + width,
+      y + height,
+      x + width - radius.br,
+      y + height
+    );
+    ctx.lineTo(x + radius.bl, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+    ctx.lineTo(x, y + radius.tl);
+    ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+    ctx.closePath();
+    if (stroke) {
+      ctx.stroke();
+    }
+    if (fill) {
+      ctx.fill();
+    }
+  }
+
+  /**
+   * Round an image to a certain radius.
+   * @param ctx The context of the canvas
+   * @param x The x coordinate of the image
+   * @param y The y coordinate of the image
+   * @param width The width of the image
+   * @param height The height of the image
+   * @param radius The radius of the image
+   */
+  public static roundImage(
+    ctx: NodeCanvasRenderingContext2D,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    radius: number
+  ) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  }
+
+  /**
+   * Wrap a text to a certain width and add a new line if needed
+   * @param ctx The context of the canvas
+   * @param text The text to wrap
+   * @param x The x coordinate of the text
+   * @param y The y coordinate of the text
+   * @param lineHeight The line height of the text
+   * @param fitWidth The maximum width of the text
+   */
+  public static wordWrap(
+    ctx: NodeCanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number,
+    lineHeight: number,
+    fitWidth: number
+  ) {
+    fitWidth = fitWidth || 0;
+
+    if (fitWidth <= 0) {
+      ctx.fillText(text, x, y);
+      return;
+    }
+
+    let words = text.split(/(?:\s+)/g);
+    let currentLine = 0;
+    let idx = 1;
+    while (words.length > 0 && idx <= words.length) {
+      const str = words.slice(0, idx).join(' ');
+      const w = ctx.measureText(str).width;
+      if (w > fitWidth) {
+        if (idx === 1) {
+          idx = 2;
+        }
+        ctx.fillText(
+          words.slice(0, idx - 1).join(' '),
+          x,
+          y + lineHeight * currentLine
+        );
+        currentLine++;
+        words = words.splice(idx - 1);
+        idx = 1;
+      } else {
+        idx++;
+      }
+    }
+    if (idx > 0) ctx.fillText(words.join(' '), x, y + lineHeight * currentLine);
+  }
+
+  public static wrap(
+    ctx: NodeCanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number,
+    lineHeight: number,
+    fitWidth: number
+  ) {
+    fitWidth = fitWidth || 0;
+
+    if (fitWidth <= 0) {
+      ctx.fillText(text, x, y);
+      return;
+    }
+
+    for (let idx = 1; idx <= text.length; idx++) {
+      const str = text.substring(0, idx);
+      if (ctx.measureText(str).width > fitWidth) {
+        ctx.fillText(text.substring(0, idx - 1), x, y);
+        Canvas.wrap(
+          ctx,
+          text.substring(idx - 1),
+          x,
+          y + lineHeight,
+          lineHeight,
+          fitWidth
+        );
+        return;
+      }
+    }
+    ctx.fillText(text, x, y);
+  }
+}
+/**
+ * Different radius for corners of a rectangle. Can be used to draw rounded corners.
+ * Can be an object with the radius specified for each corner.
+ */
+interface RadiusOptions {
+  /** The top left */
+  tl?: number;
+  /** The top right */
+  tr?: number;
+  /** The bottom left */
+  br?: number;
+  /** The bottom right */
+  bl?: number;
 }
