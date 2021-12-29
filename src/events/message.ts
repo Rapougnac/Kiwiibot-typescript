@@ -166,7 +166,9 @@ export default class MessageEvent extends Event {
           // eslint-disable-next-line no-console
           console.error(error);
           message
-            .reply(`${message.guild?.i18n.__mf('ERROR_MESSAGE')} ${error.name}`)
+            .reply(
+              `${message.guild?.i18n.__mf('ERROR_MESSAGE.msg')} ${error.name}`
+            )
             .catch(() => []);
         }
       }
