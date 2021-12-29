@@ -5,6 +5,12 @@
   "ERROR_MESSAGE": {
     "msg": "There was an error trying to execute that command!"
   },
+  "COOLDOWN_MESSAGE": {
+    "msg": {
+      "one": "You can't use that command for another {time} second.",
+      "other": "You can't use that command for another {time} seconds."
+    }
+  },
   "PERMS_MESSAGE": {
     "guild_only": "**Command is unavailable on DM** - This command can only be used inside servers.",
     "dev_only": "**Limited to Devs** - This command can only be used by my developers.",

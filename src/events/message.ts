@@ -1,7 +1,7 @@
 import type KiwiiClient from '../struct/Client';
 import Event from '../struct/Event';
 import type { Message } from 'discord.js';
-import { MessageEmbed, GuildMemberManager } from 'discord.js';
+import { Collection, MessageEmbed, GuildMemberManager } from 'discord.js';
 import { I18n } from 'i18n';
 import * as path from 'path';
 import LocaleService from '../struct/LocaleService';
@@ -132,6 +132,33 @@ export default class MessageEvent extends Event {
           );
         return message.channel.send({ embeds: [embed] });
       } else {
+        if (!this.client.cooldowns.has(commandToExecute.help.name))
+          this.client.cooldowns.set(
+            commandToExecute.help.name,
+            new Collection()
+          );
+        const now = Date.now();
+        const timestamps = this.client.cooldowns.get(
+          commandToExecute.help.name
+        );
+        const cooldownAmount = commandToExecute.config.cooldown;
+        if (timestamps?.has(message.author.id)) {
+          const expirationTime =
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            timestamps.get(message.author.id)! + cooldownAmount;
+          if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            return message.reply(
+              message.guild?.i18n
+                .translatePlural('COOLDOWN_MESSAGE.msg', timeLeft)
+                .replace('{time}', timeLeft.toFixed(1)) ?? ''
+            );
+          }
+        }
+
+        timestamps?.set(message.author.id, now);
+
+        setTimeout(() => timestamps?.delete(message.author.id), cooldownAmount);
         try {
           void commandToExecute.execute(this.client, message, args);
           // eslint-disable-next-line @typescript-eslint/no-explicit-any

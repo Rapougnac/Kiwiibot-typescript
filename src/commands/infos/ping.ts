@@ -9,6 +9,7 @@ export default class PingCommand extends Command {
       name: 'ping',
       aliases: ['pouing'],
       description: "Send a round trip if you're bored.",
+      cooldown: 5,
       category: 'infos',
       utilisation: '{prefix}ping',
       img: 'https://cdn-icons-png.flaticon.com/512/3883/3883802.png',

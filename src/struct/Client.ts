@@ -39,7 +39,7 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
   /**
    * A collection of the cooldowns cached
    */
-  public cooldowns: Collection<string, number>;
+  public cooldowns: Collection<string, Collection<string, number>>;
   /**
    * A set of the command's categories
    */
