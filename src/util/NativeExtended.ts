@@ -22,11 +22,9 @@ Array.prototype.filterIndex = function <T>(
   return results;
 };
 
-// MongoDB don't like this :(
-// Object.prototype.isEmpty = function (): boolean {
-//     return (
-//         this &&
-//         Object.keys(this).length === 0 &&
-//         Object.getPrototypeOf(this) === Object.prototype
-//     );
-// };
+Object.prototype.isEmpty = function (): boolean {
+  return (
+    Object.keys(this).length === 0 &&
+    Object.getPrototypeOf(this) === Object.prototype
+  );
+};
