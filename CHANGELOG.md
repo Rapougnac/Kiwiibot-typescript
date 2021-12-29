@@ -1,6 +1,56 @@
 # [Kiwiibot](https://github.com/Rapougnac/Kiwiibot-typescript/tree/dev)
 
 
+<a name="2.4.0"></a>
+## [2.4.0](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.3.2...2.4.0)
+
+> 2021-12-29
+
+### Features
+
+* **Canvas:** Added wrap, wordWrap roundImage &roundRecangle ([0dfd5aa](https://github.com/Rapougnac/Kiwiibot-typescript/commit/0dfd5aa5aef279bf2b98afc3b34c3171b5c84ae0))
+* **Locales:** Added error message ([7b6b925](https://github.com/Rapougnac/Kiwiibot-typescript/commit/7b6b925cc8d315e1a87f88bc1c74680414710576))
+* **Profiles:** Added comand to set profile and view profile ([9b1e3e9](https://github.com/Rapougnac/Kiwiibot-typescript/commit/9b1e3e98166449b910964eb97db27743b689dcf8))
+
+### Types
+
+* **MalScraper:** Deleted typings as the v2.11.4 added typings. ([6e74db6](https://github.com/Rapougnac/Kiwiibot-typescript/commit/6e74db68d7872b84807da7fbeee7fb63974c2ee8))
+
+
+<a name="2.3.2"></a>
+## [2.3.2](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.3.1...2.3.2)
+
+> 2021-12-27
+
+### Bug Fixes
+
+* **CommandInteraction:** Moved non-nul assertion ignore ([0f55b89](https://github.com/Rapougnac/Kiwiibot-typescript/commit/0f55b890cfc1821c5fbd5f557baff50ee45d9638))
+* **HelpCommand:** Inverted nsfw message ([4ccfa86](https://github.com/Rapougnac/Kiwiibot-typescript/commit/4ccfa8631ca348103566ccd1a640f2537b2618f3))
+* **ReadyEvent:** Eslint error ([ac0b936](https://github.com/Rapougnac/Kiwiibot-typescript/commit/ac0b936a7edc820fe10a24623eb9cfbdec8ee83d))
+
+### Chore
+
+* Updated version ([a01f97b](https://github.com/Rapougnac/Kiwiibot-typescript/commit/a01f97b38ae1857db0d6fba372caaa44e326dec4))
+* **Deps:** Updated `mal-scraper` ([aadc6f8](https://github.com/Rapougnac/Kiwiibot-typescript/commit/aadc6f8dce303fdcbe95ee6b5a0524fcd8485033))
+
+### Code Refactoring
+
+* ***:** Applied prettier rules ([8c4c99d](https://github.com/Rapougnac/Kiwiibot-typescript/commit/8c4c99d193b987ccc7b7fda865f171697ba229e2))
+* **Command:** Better import + default in ConstructorCommand ([01c7d1c](https://github.com/Rapougnac/Kiwiibot-typescript/commit/01c7d1c4fd0e6b9b5842f60ff7ac5e6cdac1d4bc))
+* **Event:** Better import + default in EventConstructor ([3034262](https://github.com/Rapougnac/Kiwiibot-typescript/commit/30342627a9c5765f504a73929ea44c66816782b0))
+* **HelpCommand:** `__n` to `translatePlural` ([149a89b](https://github.com/Rapougnac/Kiwiibot-typescript/commit/149a89b9eca5eaf8a0a0dc1b43755fe3346badbe))
+* **KiwiiClient:** Prettier ignored ([7f1674b](https://github.com/Rapougnac/Kiwiibot-typescript/commit/7f1674bbb86360921377825207ac0c40153fcf7d))
+* **KiwiiClient:** Client is now generic ([7d1a6e0](https://github.com/Rapougnac/Kiwiibot-typescript/commit/7d1a6e0f26a4c50861d3214bce750ad09494e939))
+* **Locales:** Auto locales ([3870a12](https://github.com/Rapougnac/Kiwiibot-typescript/commit/3870a1292c13b49814be813fb6880f849a5d92e8))
+
+### Features
+
+* **Eslint:** Added prettier ([690948e](https://github.com/Rapougnac/Kiwiibot-typescript/commit/690948e2871cf094ccfdaba651018ab01f64e23f))
+* **Event:** Listener's types are only `on` or `once` ([8bb3a4d](https://github.com/Rapougnac/Kiwiibot-typescript/commit/8bb3a4d91861f44f8f19b3e2dc86910a1e7c67f8))
+* **LookWhatKarenHave:** Added category ([9509343](https://github.com/Rapougnac/Kiwiibot-typescript/commit/9509343e64c5259075fff358d22a6c16661fd953))
+* **string:** Added moderation to [@beautifyCategories](https://github.com/beautifyCategories) ([0411d75](https://github.com/Rapougnac/Kiwiibot-typescript/commit/0411d7589a8c4eb43f1547a7028858bf020c2514))
+
+
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.3.0...2.3.1)
 
