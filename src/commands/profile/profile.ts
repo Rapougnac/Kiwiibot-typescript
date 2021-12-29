@@ -54,10 +54,8 @@ export default class ProfileCommand extends Command {
     ctx.clip();
     ctx.drawImage(avatar, 617, 23, 200, 200);
     ctx.restore();
-    // ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillStyle = 'rgba(42, 51, 85, 0.8)';
     Canvas.roundRectangle(ctx, 50, 156, 450, 117, 10, true);
-    ctx.fillStyle = 'rgb(255, 255, 255)';
     ctx.font = '20px Poppins';
     ctx.fillStyle = '#A0DCEC';
     const bioArray = bioText.split(/\s+/g);
