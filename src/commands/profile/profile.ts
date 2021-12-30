@@ -6,6 +6,7 @@ import type { Message } from 'discord.js';
 import * as path from 'path';
 import Canvas from '../../struct/Canvas';
 import type { Canvas as NodeCanvas } from 'canvas';
+import { textTruncate } from '../../util/string';
 
 export default class ProfileCommand extends Command {
   constructor(client: KiwiiClient) {
@@ -25,11 +26,12 @@ export default class ProfileCommand extends Command {
 
   public override async execute(_: KiwiiClient, message: Message) {
     const [[bio]] = (await this.client.mySql.connection.query(
-      `SELECT bio FROM usersettings WHERE id = ${message.author.id}`
+      `SELECT bio, thanks FROM usersettings WHERE id = ${message.author.id}`
     )) as unknown as [
       [
         {
           bio?: string;
+          thanks?: number;
         }?
       ]
     ];
@@ -59,17 +61,25 @@ export default class ProfileCommand extends Command {
     ctx.font = '20px Poppins';
     ctx.fillStyle = '#A0DCEC';
     const bioArray = bioText.split(/\s+/g);
+    const username = textTruncate(message.author.username, 18);
     if (bioArray.some((word) => word.length > 33)) {
       Canvas.wrap(ctx, bioText, 60, 180, 25, 425);
     } else {
       Canvas.wordWrap(ctx, bioText, 60, 180, 25, 425);
     }
     ctx.fillStyle = 'rgba(42, 51, 85, 0.8)';
-    ctx.font = applyText(canvas, message.author.username);
-    const textWidth = ctx.measureText(message.author.username).width + 5;
+    ctx.font = applyText(canvas, username);
+    const textWidth = ctx.measureText(username).width + 5;
     Canvas.roundRectangle(ctx, 617, 229, Math.floor(textWidth), 47, 10, true);
     ctx.fillStyle = '#A0DCEC';
-    ctx.fillText(message.author.username, 617, 261);
+    ctx.fillText(username, 617, 261);
+    // You can remove this part, this is just a thing from a specific guild
+    if (message.guildId === '911736666551640075') {
+      ctx.fillStyle = '#00FF00';
+      ctx.font = '20px Poppins';
+      const thanks = bio?.thanks ?? 0;
+      ctx.fillText(thanks === 1 ? '1 thank' : `${thanks} thanks`, 180, 100);
+    }
     // #endregion
     const buffer = canvas.toBuffer('image/png');
     await message.channel.send({
