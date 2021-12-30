@@ -7,8 +7,8 @@
   },
   "COOLDOWN_MESSAGE": {
     "msg": {
-      "one": "You can't use that command for another {time} second.",
-      "other": "You can't use that command for another {time} seconds."
+      "one": "You can't use that command for another **{time}** second.",
+      "other": "You can't use that command for another **{time}** seconds."
     }
   },
   "PERMS_MESSAGE": {
@@ -267,7 +267,7 @@
     "user2": "User",
     "roles": "Roles [{role}]",
     "no_roles": "There's no roles to display",
-    "cant_find_member": "I'm sorry, but I could't find this member, could you try again?"
+    "c": "I'm sorry, but I could't find this member, could you try again?"
   },
   "baka": {
     "description": "Say baka to somebody",
@@ -791,5 +791,22 @@
   },
   "run": {
     "description": "run.description"
+  },
+  "top": {
+    "description": "Get the top 10 members that have been thanked the most",
+    "list": "**{count}**. {author} with \"{thanks}\" {thanksCount}",
+    "thanks_count": {
+      "one": "thank",
+      "other": "thanks"
+    },
+    "noThanks": "No thanks",
+    "topList": "Top 10 members that have been thanked the most"
+  },
+  "thanks": {
+    "description": "Thanks the top users for their help",
+    "noMember": "You must mention a user, give a username or an id",
+    "self": "You can't thank yourself",
+    "thanked": "{member} has been thanked by {author}",
+    "rateLimit": "You've already thanked someone, please wait tomorrow before thanking again"
   }
 }

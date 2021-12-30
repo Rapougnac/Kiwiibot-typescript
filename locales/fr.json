@@ -54,7 +54,8 @@
     "type": "Type d'utilisateur",
     "roles": "Rôles [{role}]",
     "no_roles": "Il n'y a pas de rôles à afficher",
-    "user2": "Utilisateur"
+    "user2": "Utilisateur",
+    "cant_find_member": "Je suis désolée, mais je n'ai pas pu trouver ce membre, pouvez-vous réessayer ?"
   },
   "help": {
     "title": "Commande d'aide",
@@ -298,5 +299,28 @@
   },
   "ERROR_MESSAGE": {
     "msg": "Il y a eu une erreur en essayant d'éxécuter cette commande !"
+  },
+  "top": {
+    "description": "Obtenez un top des membres les plus remerciés du serveur",
+    "list": "**{count}**. {author} avec \"{thanks}\" {thanksCount}",
+    "thanks_count": {
+      "one": "remerciement",
+      "other": "remerciements"
+    },
+    "noThanks": "Aucun remerciement",
+    "topList": "Top des membres les plus remerciés du serveur"
+  },
+  "thanks": {
+    "description": "Remerciez les meilleurs membres du serveur",
+    "noMember": "Vous devez mentionner un membre du serveur, me donner son ID ou son pseudo.",
+    "self": "Vous ne pouvez pas vous remercier vous-même.",
+    "thanked": "{member} a été remercié.e par {author}",
+    "rateLimit": "Vous avez déjà remercié quelqu'un aujourd'hui, veuillez réessayer demain !"
+  },
+  "COOLDOWN_MESSAGE": {
+    "msg": {
+      "one": "Vous ne pouvez pas utiliser cette commande avant encore **{time}** seconde.",
+      "other": "Vous ne pouvez pas utiliser cette commande avant encore **{time}** secondes."
+    }
   }
 }
