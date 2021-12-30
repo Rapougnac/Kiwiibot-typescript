@@ -66,7 +66,7 @@ export default class LocaleService {
    * @param args The arguments to pass to the translation.
    * @returns The translated string.
    */
-  translate(key: string, replacements: i18n.Replacements): string {
+  translate(key: string, replacements?: i18n.Replacements): string {
     if (key === this.i18nProvider.__mf(key, replacements)) {
       return this.i18nProvider.__mf(
         {
