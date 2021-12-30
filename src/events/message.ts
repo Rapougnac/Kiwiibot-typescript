@@ -7,7 +7,7 @@ import * as path from 'path';
 import LocaleService from '../struct/LocaleService';
 const _i18n = new I18n();
 _i18n.configure({
-  locales: ['en', 'fr', 'de'],
+  locales: ['en', 'fr'],
   directory: path.join(process.cwd(), 'locales'),
   defaultLocale: 'en',
   objectNotation: true,

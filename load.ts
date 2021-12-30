@@ -9,7 +9,7 @@ export const load = async (client: KiwiiClient): Promise<void> => {
     for (const [id, guild] of client.guilds.cache) {
       const _i18n = new I18n();
       _i18n.configure({
-        locales: ['en', 'fr', 'de'],
+        locales: ['en', 'fr'],
         directory: path.join(process.cwd(), 'locales'),
         defaultLocale: 'en',
         objectNotation: true,
