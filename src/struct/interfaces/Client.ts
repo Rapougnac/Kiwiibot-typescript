@@ -221,6 +221,11 @@ export interface KiwiiClientOptions {
    * The database
    */
   database?: DataBaseOptions;
+
+  /**
+   * Whether or not to enable typescript with ts-node
+   */
+  typescript?: boolean;
 }
 
 export interface ProcessEventOptions {

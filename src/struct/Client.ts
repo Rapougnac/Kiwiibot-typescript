@@ -104,6 +104,11 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
   public mySql: MYSql;
 
   /**
+   * Whether to enable typescript with ts-node
+   */
+  #typescript: boolean;
+
+  /**
    * The main client.
    * @param options The options of the client
    */
@@ -129,6 +134,7 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
     Guild.prototype.prefix = this.prefix;
     this.interactionManager = new InteractionManager(this);
     this.mySql = new MYSql(options.database);
+    this.#typescript = options.typescript ?? false;
   }
 
   /**
@@ -152,7 +158,7 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
    * Load all commands in the specified directory
    */
   public loadCommands(): this {
-    let files = glob.sync('./dist/src/commands/**/*.js');
+    let files = this.#typescript ? glob.sync('./src/commands/**/*.ts') : glob.sync('./dist/src/commands/**/*.js');
     const exclude = this.config.discord.dev.exclude_cmd;
     const include = this.config.discord.dev.include_cmd;
     if (this.config.discord.dev.active) {
@@ -213,7 +219,7 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
           }
         } catch (error) {
           // eslint-disable-next-line no-console
-          console.error(error);
+          console.error((error as { stack?: string }).stack);
         }
       })();
     });
@@ -229,16 +235,16 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
       name: string;
       state: string;
     }[] = [];
-    let files = readdirSync('./dist/src/events');
+    let files = this.#typescript ? readdirSync('./src/events') : readdirSync('./dist/src/events');
     if (this.disabledEvents.length) {
       for (const event of this.disabledEvents) {
         files = files.filter((file) => !file.startsWith(event));
       }
     }
-    files = files.filter((file) => file.endsWith('.js'));
+    files = files.filter((file) => this.#typescript ? file.endsWith('.ts') :file.endsWith('.js'));
     files.forEach((file) => {
       void (async () => {
-        const path = `${process.cwd()}${sep}dist${sep}src${sep}events${sep}${file}`;
+        const path = `${process.cwd()}${sep}${this.#typescript ? '' : `dist${sep}`}src${sep}events${sep}${file}`;
         const Event = await import(`${path}`).then((event: EventConstructor) => event.default);
         if (this.utils.isClass(Event)) {
           const event = new Event(this);
