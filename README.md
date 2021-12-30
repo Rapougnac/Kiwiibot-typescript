@@ -28,7 +28,12 @@ Set-ExecutionPolicy Restricted
 ```
 And you're ready to go!
 
-
+### Or use [`ts-node`](https://github.com/TypeStrong/ts-node) to run the bot.
+```ps1
+ts-node --files .\index.ts
+```
+<br />
+<br />
 
 - **On Linux**
 Go to the directory of the bot, and then, type
@@ -36,6 +41,11 @@ Go to the directory of the bot, and then, type
 ./setup.sh
 ```
 And you're ready to go!
+
+### Or use [`ts-node`](https://github.com/TypeStrong/ts-node) to run the bot.
+```bash
+ts-node --files ./index.ts
+```
 
 * ## Requirements
    - Have MySql installed on your computer.
