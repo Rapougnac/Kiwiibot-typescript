@@ -27,9 +27,9 @@ export default class SetProfileCommand extends Command {
   ) {
     const newBio = args.join(' ');
     if (!newBio) return message.channel.send('Please provide a bio.');
-    if (newBio.length > 200) {
+    if (newBio.length > 180) {
       return message.channel.send(
-        `Your bio is too long. It must be less than 200 characters.`
+        `Your bio is too long. It must be less than 180 characters.`
       );
     }
     const [[oldBio]] = (await this.client.mySql.connection.query(

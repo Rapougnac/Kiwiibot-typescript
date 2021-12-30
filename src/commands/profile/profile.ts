@@ -60,9 +60,9 @@ export default class ProfileCommand extends Command {
     ctx.fillStyle = '#A0DCEC';
     const bioArray = bioText.split(/\s+/g);
     if (bioArray.some((word) => word.length > 33)) {
-      Canvas.wrap(ctx, bioText, 55, 173, 25, 446);
+      Canvas.wrap(ctx, bioText, 60, 180, 25, 425);
     } else {
-      Canvas.wordWrap(ctx, bioText, 55, 173, 25, 446);
+      Canvas.wordWrap(ctx, bioText, 60, 180, 25, 425);
     }
     ctx.fillStyle = 'rgba(42, 51, 85, 0.8)';
     ctx.font = applyText(canvas, message.author.username);
