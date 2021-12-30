@@ -42,20 +42,6 @@ function textTruncate(str = '', length = 100, end = '...'): string {
 }
 
 /**
- * Appends ordinal suffixes to input numbers. Max input before failing is 10e307
- * @param n the Number to append ordinal suffix to
- * @example ordinalize(10) -> returns `10th`; ordinalize(22) -> returns `22nd`
- * @returns Ordinalized number
- * @note Does not support negative numbers!
- */
-function ordinalize(n = 0): string {
-  return (
-    `${Number(n)}${['st', 'nd', 'rd'][(n / 10) % 10 ^ 1 && n % 10] ?? 'th'}` ||
-    `${Number(n)}th`
-  );
-}
-
-/**
  * Joins array via oxford comma and append 'and' on last 2 items
  * @param array the array to join
  * @returns the joined array
@@ -100,6 +86,24 @@ function separateNumbers(
     .replace(/\B(?=(\d{3})+(?!\d))/g, sep);
 }
 
+/**
+ * Appends ordinal suffixes to input numbers. Max input before failing is 10e307
+ * @param n the Number to append ordinal suffix to
+ * @example ordinalize(10) -> returns `10th`; ordinalize(22) -> returns `22nd`
+ * @returns Ordinalized number
+ * @note Does not support negative numbers!
+ */
+function ordinalize(n = 0, locale: 'en' | 'fr' = 'en'): string {
+  if (locale === 'en') {
+    const s = ['th', 'st', 'nd', 'rd'];
+    const v = n % 100;
+    return `${n}${s[(v - 20) % 10] || s[v] || s[0]}`;
+  } else {
+    const s = ['ième', 'er', 'ème', 'ème'];
+    const v = n % 100;
+    return `${n}${s[(v - 20) % 10] || s[v] || s[0]}`;
+  }
+}
 /**
  * Join array and add a limiter.
  * @param array the array to join
@@ -168,9 +172,9 @@ type TrimArrayOptions = {
 
 /**
  * Trim an array
- * @param {*[]} array The array to pass in.
- * @param {TrimArrayOptions} options
- * @returns {*[]} The trimmed array.
+ * @param array The array to pass in.
+ * @param options
+ * @returns The trimmed array.
  */
 function trimArray(
   array: string[],
