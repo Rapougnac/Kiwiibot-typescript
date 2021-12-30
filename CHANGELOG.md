@@ -1,6 +1,36 @@
 # [Kiwiibot](https://github.com/Rapougnac/Kiwiibot-typescript/tree/dev)
 
 
+<a name="2.4.1"></a>
+## [2.4.1](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.4.0...2.4.1)
+
+> 2021-12-30
+
+### Bug Fixes
+
+* **MessageEvent:** Send properly error message ([08fb5ae](https://github.com/Rapougnac/Kiwiibot-typescript/commit/08fb5aec9c1d3a9dca274c39598c6bdb148ab1b7))
+
+### Chore
+
+* Updated `CHANGELOG.md` and version ([28bc0b1](https://github.com/Rapougnac/Kiwiibot-typescript/commit/28bc0b1f27b3ebaffb4335c6a40756662561265b))
+* **Launch:** Removed gitignore from .vscode, + added ts-node launch ([3b5e312](https://github.com/Rapougnac/Kiwiibot-typescript/commit/3b5e3122ec1f68a9ace1a6c999dcb2284ba8290f))
+* **deps:** Added ts-node as dev dep ([f55706b](https://github.com/Rapougnac/Kiwiibot-typescript/commit/f55706b2ae3a44396a2deaa732472e7636ee8066))
+* **tsconfig:** Added ts-node property ([6ff2777](https://github.com/Rapougnac/Kiwiibot-typescript/commit/6ff277772b14a7bf3a96f8b5c5698495040a52ae))
+
+### Code Refactoring
+
+* **ProfileCommand:** Deleted null code ([f43e771](https://github.com/Rapougnac/Kiwiibot-typescript/commit/f43e771b823fa44f01e5de77b1bb1cd4fbab2ff1))
+
+### Docs
+
+* **Readme:** Added ts-node ([2e5f9e5](https://github.com/Rapougnac/Kiwiibot-typescript/commit/2e5f9e5271ba8197de7d40d702453eb46c7efd74))
+
+### Features
+
+* Add SECURITY.md ([91d6ddc](https://github.com/Rapougnac/Kiwiibot-typescript/commit/91d6ddcc0a6658b101cb47ae3bdb1728d0fcb21a))
+* **Object:** Added Object#isEmpty() 'cause mongo is not here. ([1cbf59c](https://github.com/Rapougnac/Kiwiibot-typescript/commit/1cbf59c8f581138a6d88da441d9bf2ae79ad1b63))
+
+
 <a name="2.4.0"></a>
 ## [2.4.0](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.3.2...2.4.0)
 
