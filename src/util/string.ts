@@ -80,12 +80,14 @@ function clean(text: string): string {
 
 /**
  * Separate a number by a delimiter
- * @default ','
  * @param number The number to separte
+ * @param locale The locale to use
+ * @default 'en'
  * @param sep The separator of the numbers
- * @example separateNumbers(123456); // will return `123'456`;
- * separateNumbers(1234.567); // will return `1'234.567`;
- * @returns The numbers with quotation marks
+ * @default ','
+ * @example separateNumbers(123456); // will return `123,456`;
+ * separateNumbers(1234.567); // will return `1,234.567`;
+ * @returns The numbers with a separator
  */
 function separateNumbers(
   number: number | string,
