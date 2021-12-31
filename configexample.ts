@@ -113,3 +113,5 @@ export const mysql = {
   password: '',
   database: '',
 };
+
+export const privateGuilds = [];

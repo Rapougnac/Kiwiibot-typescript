@@ -53,6 +53,8 @@ export default abstract class Command {
       ownerOnly: options.ownerOnly || false,
       nsfw: options.nsfw || false,
       hidden: options.hidden || false,
+      private: options.private || false,
+      fileName: options.fileName || this.help.name,
     };
     this.cooldown = new Collection();
     this.message = null;
@@ -60,10 +62,13 @@ export default abstract class Command {
   /**
    * Trace the command
    */
-  private trace({ command = this.help.name, dir = false }: TraceOptions = {}):
-    | string
-    | undefined {
-    let files = glob.sync('./dist/src/commands/**/*.js');
+  private trace({
+    command = this.config.fileName,
+    dir = false,
+  }: TraceOptions): string | undefined {
+    let files = (this.client as unknown as { typescript: boolean }).typescript
+      ? glob.sync('./src/commands/**/*.ts')
+      : glob.sync('./dist/src/commands/**/*.js');
     let Path: string | undefined;
     const exclude = this.client.config.discord.dev.exclude_cmd;
     const include = this.client.config.discord.dev.include_cmd;

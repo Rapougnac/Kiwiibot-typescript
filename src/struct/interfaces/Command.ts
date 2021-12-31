@@ -8,6 +8,11 @@ export interface CommandOptions {
   readonly name: string;
 
   /**
+   * The file name of the command
+   */
+  fileName?: string;
+
+  /**
    * The description of the command
    */
   description?: string;
@@ -66,6 +71,12 @@ export interface CommandOptions {
    * Whether the command should be hidden from the help menu
    */
   hidden?: boolean;
+
+  /**
+   * Whether the command should be private or not. (For specials guilds)
+   */
+  private?: boolean;
+
   /**
    * The image to place in the setFooter
    */
@@ -152,6 +163,16 @@ export interface ConfigOptions {
    * If the command should be hidden from the help menu
    */
   hidden: boolean;
+
+  /**
+   * If the command should be private or not. (For specials guilds)
+   */
+  private: boolean;
+
+  /**
+   * The file name of the command
+   */
+  fileName: string;
 }
 
 export interface TraceOptions {

@@ -192,6 +192,11 @@ export interface Config {
   };
 
   mysql: DataBaseOptions;
+
+  /**
+   * Private guilds to use the private commands. (By theirs id)
+   */
+  privateGuilds?: string[];
 }
 
 export interface KiwiiClientOptions {
