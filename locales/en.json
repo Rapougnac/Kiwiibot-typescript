@@ -797,7 +797,7 @@
   },
   "top": {
     "description": "Get the top 10 members that have been thanked the most",
-    "list": "**{count}**. {author} with \"{thanks}\" {thanksCount}",
+    "list": "**{count}**. ・ {author} with \"{thanks}\" {thanksCount}",
     "thanks_count": {
       "one": "thank",
       "other": "thanks"

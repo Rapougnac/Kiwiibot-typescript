@@ -133,6 +133,15 @@ export default class MessageEvent extends Event {
           );
         return message.channel.send({ embeds: [embed] });
       } else {
+        if (commandToExecute.config.private) {
+          for (const guild of this.client.config.privateGuilds) {
+            if (message.guild?.id === guild) {
+              return void commandToExecute.execute(this.client, message, args);
+            }
+          }
+          return;
+        }
+
         if (!this.client.cooldowns.has(commandToExecute.help.name))
           this.client.cooldowns.set(
             commandToExecute.help.name,

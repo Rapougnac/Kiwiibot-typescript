@@ -25,6 +25,7 @@ export default class ProfileCommand extends Command {
   }
 
   public override async execute(_: KiwiiClient, message: Message) {
+    if (!message.guild) return;
     const [[bio]] = (await this.client.mySql.connection.query(
       `SELECT bio, thanks FROM usersettings WHERE id = ${message.author.id}`
     )) as unknown as [
@@ -74,11 +75,20 @@ export default class ProfileCommand extends Command {
     ctx.fillStyle = '#A0DCEC';
     ctx.fillText(username, 617, 261);
     // You can remove this part, this is just a thing from a specific guild
-    if (message.guildId === '911736666551640075') {
-      ctx.fillStyle = '#00FF00';
-      ctx.font = '20px Poppins';
-      const thanks = bio?.thanks ?? 0;
-      ctx.fillText(thanks === 1 ? '1 thank' : `${thanks} thanks`, 180, 100);
+    for (const guild of this.client.config.privateGuilds) {
+      if (message.guildId === guild) {
+        ctx.fillStyle = '#000000';
+        ctx.font = '25px Poppins';
+        const thanks = bio?.thanks ?? 0;
+        ctx.fillText(
+          `${thanks.toString()} ${message.guild.i18n.translatePlural(
+            'top.thanks_count',
+            thanks
+          )}`,
+          50,
+          145
+        );
+      }
     }
     // #endregion
     const buffer = canvas.toBuffer('image/png');

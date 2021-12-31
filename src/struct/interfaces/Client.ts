@@ -196,7 +196,7 @@ export interface Config {
   /**
    * Private guilds to use the private commands. (By theirs id)
    */
-  privateGuilds?: string[];
+  privateGuilds: string[];
 }
 
 export interface KiwiiClientOptions {

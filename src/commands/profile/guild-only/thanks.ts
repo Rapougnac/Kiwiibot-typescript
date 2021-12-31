@@ -15,6 +15,7 @@ export default class ThanksCommand extends Command {
       category: 'profile',
       utilisation: '{prefix}thanks [user]',
       guildOnly: true,
+      private: true,
     });
   }
 

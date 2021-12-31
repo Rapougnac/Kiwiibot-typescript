@@ -12,6 +12,7 @@ export default class TopCommand extends Command {
       category: 'profile',
       utilisation: '{prefix}top',
       guildOnly: true,
+      private: true,
     });
   }
 
@@ -49,8 +50,9 @@ export default class TopCommand extends Command {
     }
     if (!str) return msg.channel.send(msg.guild.i18n.translate('top.noThanks'));
     const embed = new MessageEmbed()
-      .setTitle(msg.guild.i18n.translate('top.topList'))
-      .setDescription(str);
+      .setTitle(`🔝 ${msg.guild.i18n.translate('top.topList')}`)
+      .setDescription(str)
+      .setColor([255, 0, 0]);
     await msg.channel.send({ embeds: [embed] });
   }
 }
