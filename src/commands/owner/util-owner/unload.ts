@@ -25,7 +25,7 @@ export default class UnloadCommand extends Command {
       client.commands.get(commandName) || client.aliases.get(commandName);
     if (!command) return message.reply('That command does not exist');
     commandName = command.help.name;
-    void super.unload(commandName);
+    await super.unload(commandName);
     return message.reply(`Successfully unloaded the ${commandName} command`);
   }
 }

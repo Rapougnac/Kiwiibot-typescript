@@ -6,6 +6,7 @@ import type {
   HelpOptions,
   ConfigOptions,
   TraceOptions,
+  ConstructorCommand,
 } from './interfaces/Command';
 import glob from 'glob';
 import * as path from 'path';
@@ -94,7 +95,9 @@ export default abstract class Command {
    * Reload a command
    * @param commandName The command to reload
    */
-  public reload(commandName: string = this.help.name): Promise<Message> | void {
+  public async reload(
+    commandName: string = this.help.name
+  ): Promise<Message | void> {
     if (
       !(
         this.client.commands.has(commandName) ||
@@ -103,14 +106,15 @@ export default abstract class Command {
     )
       return this.message?.channel.send("This command doesn't exist.");
     const cmdPath = this.trace({ command: commandName });
+    if (!cmdPath)
+      return this.message?.channel.send("This command doesn't exist.");
     // Dunno how to do this without require
-    delete require.cache[require.resolve(cmdPath as string)];
+    delete require.cache[require.resolve(cmdPath)];
     this.client.commands.delete(commandName);
-    // Cannot use import :<
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const command: Command = new (require(cmdPath as string).default)(
-      this.client
+    const Command: ConstructorCommand = await import(`${cmdPath}`).then(
+      (command: ConstructorCommand) => command.default
     );
+    const command = new Command(this.client);
     if (this.client.commands.has(command.help.name)) {
       // eslint-disable-next-line no-console
       console.error(
@@ -124,9 +128,9 @@ export default abstract class Command {
    * Unload a command
    * @param commandName The command to unload
    */
-  public unload(
+  public async unload(
     commandName: string = this.help.name
-  ): Promise<Message<boolean>> | void {
+  ): Promise<Message<boolean> | void> {
     if (
       !(
         this.client.aliases.has(commandName) ||
@@ -135,11 +139,13 @@ export default abstract class Command {
     )
       return this.message?.channel.send("This command doesn't exist.");
     const cmdPath = this.trace({ command: commandName });
-    delete require.cache[require.resolve(cmdPath as string)];
+    if (!cmdPath)
+      return this.message?.channel.send("This command doesn't exist.");
+    delete require.cache[require.resolve(cmdPath)];
     this.client.commands.delete(commandName);
   }
 
-  public load(commandName: string): Promise<Message<boolean>> | void {
+  public async load(commandName: string): Promise<Message<boolean> | void> {
     if (
       !(
         this.client.aliases.has(commandName) ||
@@ -147,9 +153,13 @@ export default abstract class Command {
       )
     )
       return this.message?.channel.send("This command doesn't exist.");
-    const cmdPath = this.trace({ command: commandName }) as string;
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const command: Command = new (require(cmdPath).default)(this.client);
+    const cmdPath = this.trace({ command: commandName });
+    if (!cmdPath)
+      return this.message?.channel.send("This command doesn't exist.");
+    const Command: ConstructorCommand = await import(`${cmdPath}`).then(
+      (command: ConstructorCommand) => command.default
+    );
+    const command = new Command(this.client);
     this.client.commands.set(commandName, command);
   }
 

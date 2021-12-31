@@ -19,7 +19,7 @@ export default class ReloadCommand extends Command {
   ) {
     if (!commandName)
       return message.reply('Please specify a command to reload');
-    void (await super.reload(commandName));
+    await super.reload(commandName);
     return message.reply(`Successfully reloaded the ${commandName} command`);
   }
 }

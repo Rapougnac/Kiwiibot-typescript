@@ -20,7 +20,7 @@ export default class LoadCommand extends Command {
   ) {
     if (!commandName)
       return message.reply('Please provide a command name to load');
-    void super.load(commandName);
+    await super.load(commandName);
     return message.reply(`Command \`${commandName}\` has been loaded`);
   }
 }
