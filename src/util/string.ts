@@ -716,27 +716,6 @@ function displayAvatarURL(
   return user.displayAvatarURL(options);
 }
 
-function safeEval(code: string): string {
-  // All the ts-ignore, because first I don't know how to type this properly, and second, "this" is typed as any.
-  // eslint-disable-next-line @typescript-eslint/no-implied-eval
-  const fn = new Function('global', 'process', `return ${code}`);
-  (function () {
-    // @ts-ignore
-    if (!this) return void 0;
-    //@ts-ignore
-    const keys = Object.getOwnPropertyNames(this).concat(['constructor']);
-    keys.forEach((key) => {
-      //@ts-ignore
-      const item = this[key];
-      if (!item || typeof item !== 'function') return;
-      //@ts-ignore
-      this[key].constructor = undefined;
-    });
-  })();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  return fn.bind(Function)(code);
-}
-
 export {
   textTruncate,
   ordinalize,
@@ -756,5 +735,4 @@ export {
   countWords,
   isEmpty,
   displayAvatarURL,
-  safeEval,
 };

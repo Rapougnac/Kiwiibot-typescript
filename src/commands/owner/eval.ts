@@ -1,4 +1,4 @@
-import { clean, safeEval } from '../../util/string';
+import { clean } from '../../util/string';
 import { inspect } from 'util';
 import type { Message } from 'discord.js';
 import { Formatters, Util } from 'discord.js';
@@ -12,8 +12,9 @@ export default class EvalCommand extends Command {
       aliases: ['evl'],
       description: 'Execute some javascript code',
       category: 'owner',
+      ownerOnly: true,
       cooldown: 5,
-      utilisation: '{prefix}eval [code] <--disable-secure=[true/false]>',
+      utilisation: '{prefix}eval [code]',
       img: 'https://cdn-icons-png.flaticon.com/512/993/993855.png',
     });
   }
@@ -22,18 +23,9 @@ export default class EvalCommand extends Command {
     message: Message,
     args: string[]
   ) {
-    let _disableSecure;
-    if (this.client.isOwner(message.author)) {
-      _disableSecure = args.find((a) => a.startsWith('--disable-secure='));
-    }
-    if (!_disableSecure) _disableSecure = 'false';
-    let disableSecure = _disableSecure.split('=')[1];
-    if (disableSecure === 'true') disableSecure = 'true';
-    else disableSecure = 'false';
     try {
-      const code =
-        args.join(' ').split(`--disable-secure=${disableSecure}`)[0] ?? '';
-      let result = disableSecure === 'true' ? eval(code) : safeEval(code);
+      const code = args.join(' ');
+      let result = eval(code);
       if (typeof result !== 'string') result = inspect(result);
       result = clean(result);
       if (result.length >= 2000) result = Util.splitMessage(result);
