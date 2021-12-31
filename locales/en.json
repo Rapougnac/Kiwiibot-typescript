@@ -21,7 +21,10 @@
     "missing_permissions_i": "**⚠️[Error] I don't have enough permissions** -",
     "missing_permissions1_i": "I need the following permission(s):\n  -",
     "blocked_cmd": "Command execution blocked!",
-    "reason": "Reason(s)"
+    "reason": {
+      "one": "Reason",
+      "other": "Reasons"
+    }
   },
   "anime": {
     "description": "Get informations about the specified anime",

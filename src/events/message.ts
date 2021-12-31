@@ -126,8 +126,9 @@ export default class MessageEvent extends Event {
             `\`\`\`diff\n-${message.guild?.i18n.__mf(
               'PERMS_MESSAGE.blocked_cmd'
             )}\n\`\`\`\n\n` +
-              `\`${message.guild?.i18n.__mf(
-                'PERMS_MESSAGE.reason'
+              `\`${message.guild?.i18n.translatePlural(
+                'PERMS_MESSAGE.reason',
+                reasons.length
               )}:\`\n\n${reasons.map((reason) => `• ${reason}`).join('\n')}`
           );
         return message.channel.send({ embeds: [embed] });

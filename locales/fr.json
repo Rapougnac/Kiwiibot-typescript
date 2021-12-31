@@ -93,7 +93,10 @@
     "missing_permissions_i": "**⚠[Erreur] Je n'ai pas les permissions requises** -",
     "missing_permissions1_i": "J'ai besoin des permissions suivantes:\n",
     "blocked_cmd": "Execution de commande bloquée !",
-    "reason": "Raison(s)"
+    "reason": {
+      "one": "Raison",
+      "other": "Raisons"
+    }
   },
   "baka": {
     "description": "Dites \"baka\" à quelqu'un",
