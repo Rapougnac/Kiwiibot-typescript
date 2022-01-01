@@ -42,20 +42,17 @@ export default class ThanksCommand extends Command {
       return message.reply(message.guild.i18n.translate('thanks.noMember'));
     if (member.id === message.author.id)
       return message.reply(message.guild.i18n.translate('thanks.self'));
-    const [[{ thanks }]] = (await this.client.mySql.connection.query(
+    const [[thanks]] = (await this.client.mySql.connection.query(
       'SELECT thanks FROM usersettings WHERE id = ?',
       [member.id]
-    )) as unknown as [
-      [{ thanks: number | null; rateLimitedUpdatedAt: string | null }]
-    ];
-    const [[{ rateLimitedUpdatedAt }]] =
-      (await this.client.mySql.connection.query(
-        'SELECT rateLimitedUpdatedAt FROM usersettings WHERE id = ?',
-        [message.author.id]
-      )) as unknown as [[{ rateLimitedUpdatedAt: Date | null }]];
+    )) as unknown as [[{ thanks: number | null }?]];
+    const [[rateLimit]] = (await this.client.mySql.connection.query(
+      'SELECT rateLimitedUpdatedAt FROM usersettings WHERE id = ?',
+      [message.author.id]
+    )) as unknown as [[{ rateLimitedUpdatedAt: Date | null }?]];
     if (!thanks) {
-      if (rateLimitedUpdatedAt) {
-        const then = rateLimitedUpdatedAt.getTime();
+      if (rateLimit?.rateLimitedUpdatedAt) {
+        const then = rateLimit.rateLimitedUpdatedAt.getTime();
         const now = new Date().getTime();
 
         const difference = Math.abs(now - then);
@@ -69,18 +66,21 @@ export default class ThanksCommand extends Command {
           );
         }
       }
-
-      await this.client.mySql.connection.query(
-        'UPDATE usersettings SET rateLimitedUpdatedAt = ? WHERE id = ?',
-        [jsDateToMySql(new Date(Date.now())), message.author.id]
-      );
       await this.client.mySql.connection.query(
         'INSERT INTO usersettings (id, thanks) VALUES (?, ?) ON DUPLICATE KEY UPDATE thanks = ?',
         [member.id, 1, 1]
       );
+      await this.client.mySql.connection.query(
+        'INSERT INTO usersettings (id, rateLimitedUpdatedAt) VALUES(?, ?) ON DUPLICATE KEY UPDATE rateLimitedUpdatedAt = ?',
+        [
+          message.author.id,
+          jsDateToMySql(new Date(Date.now())),
+          jsDateToMySql(new Date(Date.now())),
+        ]
+      );
     } else {
-      if (rateLimitedUpdatedAt) {
-        const then = rateLimitedUpdatedAt.getTime();
+      if (rateLimit?.rateLimitedUpdatedAt) {
+        const then = rateLimit.rateLimitedUpdatedAt.getTime();
         const now = new Date().getTime();
 
         const difference = Math.abs(now - then);
@@ -96,11 +96,15 @@ export default class ThanksCommand extends Command {
       }
       await this.client.mySql.connection.query(
         'UPDATE usersettings SET thanks = ? WHERE id = ?',
-        [thanks + 1, member.id]
+        [Number(thanks.thanks) + 1, member.id]
       );
       await this.client.mySql.connection.query(
-        'UPDATE usersettings SET rateLimitedUpdatedAt = ? WHERE id = ?',
-        [jsDateToMySql(new Date(Date.now())), message.author.id]
+        'INSERT INTO usersettings (id, rateLimitedUpdatedAt) VALUES(?, ?) ON DUPLICATE KEY UPDATE rateLimitedUpdatedAt = ?',
+        [
+          message.author.id,
+          jsDateToMySql(new Date(Date.now())),
+          jsDateToMySql(new Date(Date.now())),
+        ]
       );
     }
     cache.push(message.author.id);
