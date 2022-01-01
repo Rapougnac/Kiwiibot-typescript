@@ -581,19 +581,7 @@ function parseDate(date: string, reverse?: boolean): string {
   if (date.length === 0) throw 'Not A valid datelike';
   const [month, day, year] = date.replace(/,/g, '').split(' ').slice(0, 3);
 
-  type Months =
-    | 'Jan'
-    | 'Feb'
-    | 'Mar'
-    | 'Apr'
-    | 'May'
-    | 'Jun'
-    | 'Jul'
-    | 'Aug'
-    | 'Sep'
-    | 'Oct'
-    | 'Nov'
-    | 'Dec';
+  type Months = keyof typeof months;
 
   const months = {
     Jan: 1,
