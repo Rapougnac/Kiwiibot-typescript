@@ -38,7 +38,7 @@ export default class CustomPrefixRef extends Command {
       );
 
     const prefixes = (await client.mySql.connection.query(
-      'SELECT * FROM guildSettings'
+      'SELECT * FROM guildsettings'
     )) as unknown as {
       prefix: string;
       guildId: string;
