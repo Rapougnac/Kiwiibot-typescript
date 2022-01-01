@@ -53,7 +53,7 @@ export default class ProfileCommand extends Command {
     ctx.antialias = 'subpixel';
     ctx.drawImage(img, 0, 0, img.width, img.height);
     ctx.save();
-    Canvas.roundImage(ctx, 617, 23, 200, 200, 50);
+    Canvas.roundRectangle(ctx, 617, 23, 200, 200, 50);
     ctx.clip();
     ctx.drawImage(avatar, 617, 23, 200, 200);
     ctx.restore();

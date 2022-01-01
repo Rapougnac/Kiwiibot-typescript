@@ -263,36 +263,6 @@ export default class Canvas {
   }
 
   /**
-   * Round an image to a certain radius.
-   * @param ctx The context of the canvas
-   * @param x The x coordinate of the image
-   * @param y The y coordinate of the image
-   * @param width The width of the image
-   * @param height The height of the image
-   * @param radius The radius of the image
-   */
-  public static roundImage(
-    ctx: NodeCanvasRenderingContext2D,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    radius: number
-  ) {
-    ctx.beginPath();
-    ctx.moveTo(x + radius, y);
-    ctx.lineTo(x + width - radius, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-    ctx.lineTo(x + width, y + height - radius);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-    ctx.lineTo(x + radius, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-    ctx.lineTo(x, y + radius);
-    ctx.quadraticCurveTo(x, y, x + radius, y);
-    ctx.closePath();
-  }
-
-  /**
    * Wrap a text to a certain width and add a new line if needed
    * @param ctx The context of the canvas
    * @param text The text to wrap
