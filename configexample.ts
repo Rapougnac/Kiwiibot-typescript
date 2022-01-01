@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
 import type { Config } from './src/struct/interfaces/Client';
+import type { ConnectionOptions } from 'mysql2/typings/mysql';
 
 export const domain = 'DOMAIN_HERE';
 export const port = 0; // PORT_HERE
@@ -107,7 +108,7 @@ export const chatbot = {
   key: '',
 };
 
-export const mysql = {
+export const mysql: ConnectionOptions = {
   host: '',
   user: '',
   password: '',

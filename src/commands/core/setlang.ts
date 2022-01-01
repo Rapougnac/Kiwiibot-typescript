@@ -41,7 +41,7 @@ export default class SetLangCommand extends Command {
 
       await this.client.mySql.connection
         .execute(
-          'INSERT INTO `guildSettings` (`guildId`, `language`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `language` = ?',
+          'INSERT INTO `guildsettings` (`guildId`, `language`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `language` = ?',
           [message.guild.id, targetedlanguage, targetedlanguage]
         )
         .then(

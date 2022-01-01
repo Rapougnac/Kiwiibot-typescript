@@ -1,23 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import mysql from 'mysql2/promise';
-import type { Connection } from 'mysql2/promise';
-import type { MySqlOptions } from './interfaces/MySql';
+import type { Connection, ConnectionOptions } from 'mysql2/promise';
 import { error, success } from '../util/console';
 
 export default class MYSql {
   private _connection!: Connection;
-  private _options: MySqlOptions;
+  private _options: ConnectionOptions;
   public etablishedConnection: boolean | null;
   public connected: boolean;
   constructor(
-    { host, password, user, database }: MySqlOptions = {
+    { host, password, user, database, port }: ConnectionOptions = {
       host: 'localhost',
       password: '',
       user: '',
     }
   ) {
     this.connected = false;
-    this._options = { host, password, user, database };
+    this._options = { host, password, user, database, port };
     this.etablishedConnection = null;
     (async () => {
       this._connection = await this.createConnection();

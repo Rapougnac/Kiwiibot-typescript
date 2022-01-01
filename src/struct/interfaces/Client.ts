@@ -5,6 +5,7 @@ import type {
 } from 'discord.js';
 import _ServerInfoCommand from '../../commands/infos/serverinfo';
 import type { ClientEvents } from './Event';
+import type { ConnectionOptions } from 'mysql2/typings/mysql';
 
 export interface Config {
   /**
@@ -191,7 +192,7 @@ export interface Config {
     apiKey: string;
   };
 
-  mysql: DataBaseOptions;
+  mysql: ConnectionOptions;
 
   /**
    * Private guilds to use the private commands. (By theirs id)
@@ -225,7 +226,7 @@ export interface KiwiiClientOptions {
   /**
    * The database
    */
-  database?: DataBaseOptions;
+  database?: ConnectionOptions;
 
   /**
    * Whether or not to enable typescript with ts-node
@@ -248,33 +249,4 @@ export interface ProcessEventOptions {
    * Logs the error on the console & the channel
    */
   logsonboth: boolean;
-}
-
-/**
- * The database options
- */
-export interface DataBaseOptions {
-  /**
-   * The host of the database
-   * @default 'localhost'
-   */
-  host?: string;
-
-  /**
-   * The password of the database
-   * @default ''
-   */
-  password?: string;
-
-  /**
-   * The database name
-   * @default 'test'
-   */
-  database?: string;
-
-  /**
-   * The username of the database
-   * @default ''
-   */
-  user?: string;
 }
