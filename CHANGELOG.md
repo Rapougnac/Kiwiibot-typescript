@@ -1,6 +1,53 @@
 # [Kiwiibot](https://github.com/Rapougnac/Kiwiibot-typescript/tree/dev)
 
 
+<a name="2.4.2"></a>
+## [2.4.2](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.4.1...2.4.2)
+
+> 2022-01-03
+
+### Bug Fixes
+
+* **SetPrefix:** Table name ([df3a979](https://github.com/Rapougnac/Kiwiibot-typescript/commit/df3a979b9cc59a88290f92c1b82da126f6c55ae7))
+* **ThanksCommand:** Fixed database related problems ([7249dac](https://github.com/Rapougnac/Kiwiibot-typescript/commit/7249dac1be002e4716b5cae7fc1adff2b83c3455))
+
+### Chore
+
+* Update version ([e1968aa](https://github.com/Rapougnac/Kiwiibot-typescript/commit/e1968aa8f7c710247f072a334d6c3ee85cfa9070))
+
+### Code Refactoring
+
+* **Canvas:** Removed roundImage as this was the same as roundRectange ಠ_ಠ ([98dde74](https://github.com/Rapougnac/Kiwiibot-typescript/commit/98dde749695ea5c34babd1786a0b4692b55858d2))
+* **Command:** Removed `require()` ([7a8ee61](https://github.com/Rapougnac/Kiwiibot-typescript/commit/7a8ee616522b251c0ff985b16c8a8ecc29dc8e05))
+* **KiwiiClient:** Moved from private field to private keyword ([cd32f58](https://github.com/Rapougnac/Kiwiibot-typescript/commit/cd32f583eb27d4fe43c64312a7bb3daf9ab8bafe))
+* **Locales:** Removed German locale ([c3fe2f6](https://github.com/Rapougnac/Kiwiibot-typescript/commit/c3fe2f6210cbda482ab0630da284e54c4b4cfe82))
+* **MySql:** Edited types, added port, + fixed setlang.ts ([499bdc6](https://github.com/Rapougnac/Kiwiibot-typescript/commit/499bdc6aaa7b5bfc29a43e77acecfdcfd2f08c81))
+* **string:** Changed ordinalize function ([ed2262f](https://github.com/Rapougnac/Kiwiibot-typescript/commit/ed2262f39a13fd852a0600fc2a578069b5e99351))
+
+### Docs
+
+* **Readme:** Added Mysql tables ([44b4173](https://github.com/Rapougnac/Kiwiibot-typescript/commit/44b4173ed8d7a785b8f7fb52c769c4d129b65713))
+
+### Features
+
+* **Command:** Added private and fileName prop ([f705904](https://github.com/Rapougnac/Kiwiibot-typescript/commit/f70590497eb691626b722a56bdc7ad3e9bebbd9a))
+* **Locales:** Added new locales ([33510cd](https://github.com/Rapougnac/Kiwiibot-typescript/commit/33510cd4dd5c656e7a771252ef7696d0bf6c6014))
+* **MessageEvent:** Added react emoji mention is bot is mentionned ([8fe5a3e](https://github.com/Rapougnac/Kiwiibot-typescript/commit/8fe5a3e05788c26252a8a73274dead7d5f270187))
+* **MessageEvent:** Added reg instead of startsWith() ([27c13c9](https://github.com/Rapougnac/Kiwiibot-typescript/commit/27c13c9b6da53a5411a88b3030bd24a0767d49af))
+* **MessageEvent:** Translated plural reasons ([315cda6](https://github.com/Rapougnac/Kiwiibot-typescript/commit/315cda623aa5d958a101315053e49495e7081190))
+* **ProfileCommad:** Resized text in textbox + added thanks (personal use) ([23502b6](https://github.com/Rapougnac/Kiwiibot-typescript/commit/23502b686974b7df72524619a37df82143a62fd0))
+* **ProfileCommands:** Updated guild-specific things ([8f0b218](https://github.com/Rapougnac/Kiwiibot-typescript/commit/8f0b2181e82cb03af22a4bce2366a7781f2cf967))
+* **Profiles:** Edited bio zone ([59e61ec](https://github.com/Rapougnac/Kiwiibot-typescript/commit/59e61ecbd6600ce0a81353dec14aab184372302e))
+* **ThanksCommand:** Added thanks command (personal use)) ([bc4c2d4](https://github.com/Rapougnac/Kiwiibot-typescript/commit/bc4c2d443d0f621d0ee0eaf88ed4e1572714b96b))
+* **TopCommand:** Added top command (personal use too) ([3a74bff](https://github.com/Rapougnac/Kiwiibot-typescript/commit/3a74bff5fc79bc6975b1ceafcd5d37af7e5d95a5))
+* **setup:** Added typescript option to run with ts-node ([a5b8af1](https://github.com/Rapougnac/Kiwiibot-typescript/commit/a5b8af18699988a75021452b5a8a2460e7946e88))
+
+### Types
+
+* **LocaleService:** Forgot to make optional the 2nd argument ([0b32986](https://github.com/Rapougnac/Kiwiibot-typescript/commit/0b32986dc7a9abdc17f696f8ca08180d8c8b8475))
+* **string:** `keyof typeof` instead writing all (so lazy damn) ([a024245](https://github.com/Rapougnac/Kiwiibot-typescript/commit/a02424545c820536cb6a2911be69ee1c0c24a5ca))
+
+
 <a name="2.4.1"></a>
 ## [2.4.1](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.4.0...2.4.1)
 
