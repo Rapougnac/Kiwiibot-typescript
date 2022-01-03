@@ -44,6 +44,9 @@ export default class MessageEvent extends Event {
         },
       });
     }
+    const reg = new RegExp(
+      `^<@!?${escapeRegExp(`${this.client.user?.id}`)}>\\s*$`
+    );
     const prefix = [this.client.prefix];
     if (message.guild?.prefix) prefix.push(message.guild.prefix);
     if ((bot || message.webhookId) && !this.client.config.discord.dev.debug)
@@ -58,7 +61,7 @@ export default class MessageEvent extends Event {
     let index;
     // Find which prefix are used
     for (let i = 0; i < prefix.length; i++) {
-      if (message.content.toLowerCase().startsWith(prefix[i] ?? '')) {
+      if (message.content.toLowerCase().startsWith(prefix[i] ?? 'm?')) {
         index = i;
         break;
       } else {
@@ -66,17 +69,21 @@ export default class MessageEvent extends Event {
         continue;
       }
     }
+
     if (
       message.content.startsWith(`<@!${this.client.user?.id}>`) &&
       message.content.endsWith(`<@!${this.client.user?.id}>`) &&
+    if (
+      reg.test(message.content) &&
       message.guild &&
       message.channel.type !== 'DM'
-    )
+    ) {
       return message.reply(
         message.guild.i18n.__mf('MESSAGE_PREFIX.msg', {
           prefix: message.guild.prefix || this.client.prefix,
         })
       );
+    }
     if (!prefix[index ?? 0]) return;
     const args = message.content
       .slice(prefix[index ?? 0]?.length)
@@ -185,3 +192,5 @@ export default class MessageEvent extends Event {
     }
   }
 }
+const escapeRegExp = (string: string): string =>
+  string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
