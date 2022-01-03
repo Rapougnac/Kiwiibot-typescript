@@ -71,8 +71,12 @@ export default class MessageEvent extends Event {
     }
 
     if (
-      message.content.startsWith(`<@!${this.client.user?.id}>`) &&
-      message.content.endsWith(`<@!${this.client.user?.id}>`) &&
+      message.mentions.users
+        .filter((u) => u.id === this.client.user?.id)
+        .first()
+    ) {
+      void message.react('927577188394471494');
+    }
     if (
       reg.test(message.content) &&
       message.guild &&
