@@ -46,10 +46,12 @@ export default class RunCommand extends Command {
       content.substring(language.length).endsWith('```')
     ) {
       const runtimeName =
-        runtimes.find((r) => r.language === language.replace(/\n/, '')) ||
-        runtimes.find((r) => r.aliases.includes(language.replace(/\n/, '')));
+        runtimes.find((r) => r.language === language.replace(/ *\n */, '')) ||
+        runtimes.find((r) =>
+          r.aliases.includes(language.replace(/ *\n */, ''))
+        );
       const res = await runtime.execute(
-        runtimeName?.language ?? language.replace(/\n/g, ''),
+        runtimeName?.language ?? language.replace(/ *\n */g, ''),
         args.join(' ')
       );
       if (res.message) {
@@ -65,7 +67,7 @@ export default class RunCommand extends Command {
             res.run.stdout
               ? res.run.stdout
               : res.run.stderr
-              ? `[ERROR]\n${res.run.stderr}`
+              ? `[ERROR]\n${res.run.stderr.substring(0, 1800)}`
               : 'Your code ran without an output'
           }\n\`\`\``,
 
