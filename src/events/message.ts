@@ -52,10 +52,10 @@ export default class MessageEvent extends Event {
     if ((bot || message.webhookId) && !this.client.config.discord.dev.debug)
       return;
 
-    if (message.content.match(/n+o+\s+u+/gi))
+    if (message.content.match(/n+o+\s+u+/gi) && !message.author.bot)
       return message.channel.send('no u');
     // eslint-disable-next-line no-useless-escape
-    if (message.content.match(/\(╯°□°\）╯︵ ┻━┻/g))
+    if (message.content.match(/\(╯°□°\）╯︵ ┻━┻/g) && !message.author.bot)
       return message.channel.send('┻━┻       (゜-゜)');
     // Check prefix
     let index;
