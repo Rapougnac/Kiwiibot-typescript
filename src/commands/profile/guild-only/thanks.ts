@@ -32,7 +32,10 @@ export default class ThanksCommand extends Command {
         r.user.username.toLowerCase().startsWith(args.join(' ').toLowerCase())
       ) ||
       message.guild.members.cache.find((r) =>
-        r.displayName.toLowerCase().startsWith(args.join(' ').toLowerCase())
+        r.displayName.toLowerCase().endsWith(args.join(' ').toLowerCase())
+      ) ||
+      message.guild.members.cache.find((m) =>
+        m.displayName.includes(args.join(' '))
       ) ||
       message.member;
     if (cache.includes(message.author.id)) {
