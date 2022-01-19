@@ -34,7 +34,8 @@ jobs:
             # Install dependencies
             - name: Install dependencies
               run: pnpm i
-
+            
+              # Here, we don't need a config file completed with token, port etc..., this is just a little "hack" for typescript to lint and build
             - name: Rename config
               run: mv configexample.ts config.ts
 
