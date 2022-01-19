@@ -1,16 +1,12 @@
 {
   "ts-node": {
-    "files": true,
+    "files": true
   },
   "compilerOptions": {
     "target": "es6",
-    "lib": [
-      "ES2019"
-    ],
+    "lib": ["ES2019"],
     "module": "commonjs",
-    "typeRoots": [
-      "types/index.d.ts"
-    ],
+    "typeRoots": ["types/index.d.ts"],
     "resolveJsonModule": true,
     "sourceMap": true,
     "outDir": "./dist",
@@ -30,10 +26,9 @@
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
     "skipDefaultLibCheck": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
-  "exclude": [
-    "./node_modules/**/*",
-    "./dist/**/*"
-  ]
+  "exclude": ["./node_modules/**/*", "./dist/**/*"]
 }
