@@ -2,7 +2,7 @@ import { Console } from 'console';
 import * as fs from 'fs';
 import * as path from 'path';
 import type KiwiiClient from './Client';
-import type { LoggerProps } from './interfaces/Console';
+import type { LoggerProps } from './interfaces/Logger';
 const stdout = fs.createWriteStream(
   path.join(process.cwd(), 'src', 'logs', 'stdout.log')
 );
