@@ -9,7 +9,7 @@ declare module 'amethyste-api' {
         private readonly token: string;
         public options: AmeClientOptions;
         /**
-         * Return an image from the enpoint and the data sent.
+         * Return an image from the endpoint and the data sent.
          * @param endpoint Name of the endpoint
          * @param data Object to send data (url, blur, etc..)
          */
