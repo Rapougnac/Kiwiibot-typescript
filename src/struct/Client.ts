@@ -22,6 +22,7 @@ import '../util/NativeExtended';
 import { sep } from 'path';
 import InteractionManager from './InteractionManager';
 import MYSql from './MySql';
+import Logger from './Logger';
 /**
  * Represents a discord client
  * @extends Client
@@ -109,6 +110,11 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
   private typescript: boolean;
 
   /**
+   * The logger.
+   */
+  public logger: Logger;
+
+  /**
    * The main client.
    * @param options The options of the client
    */
@@ -135,6 +141,7 @@ export default class KiwiiClient<Ready extends boolean = boolean> extends Client
     this.interactionManager = new InteractionManager(this);
     this.mySql = new MYSql(options.database);
     this.typescript = options.typescript ?? false;
+    this.logger = new Logger(this);
   }
 
   /**
