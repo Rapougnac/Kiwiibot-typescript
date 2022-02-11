@@ -1,6 +1,51 @@
 # [Kiwiibot](https://github.com/Rapougnac/Kiwiibot-typescript/tree/dev)
 
 
+<a name="2.4.3"></a>
+## [2.4.3](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.4.2...2.4.3)
+
+> 2022-02-11
+
+### Bug Fixes
+
+* **MessageEvent:** Ignore bots ([7399e6e](https://github.com/Rapougnac/Kiwiibot-typescript/commit/7399e6eb335ab68c6b60d9b7f254cffe41991633))
+* **MessageEvent:** Ignore bots ([c3f1182](https://github.com/Rapougnac/Kiwiibot-typescript/commit/c3f11822ff0abc157f47eb3fe01d7df4ca9241e7))
+* **RunCommand:** Trim too long messages ([471f052](https://github.com/Rapougnac/Kiwiibot-typescript/commit/471f052b7dccf8bcde20c02710e391f76aeb9afc))
+* **RunCommand:** Trim too long messages ([7160009](https://github.com/Rapougnac/Kiwiibot-typescript/commit/716000977d312057551b2d4a1995bb50ab2f534b))
+* **ThankComand:** Should give proper user now ([7d454e7](https://github.com/Rapougnac/Kiwiibot-typescript/commit/7d454e798e2b81add9219e34f6d63d6f2a055d70))
+* **ThankComand:** Should give proper user now ([19c0901](https://github.com/Rapougnac/Kiwiibot-typescript/commit/19c09012d0db8d018be72a13bf410ec86d16512f))
+
+### Chore
+
+* Added typeorm and start script ([590192e](https://github.com/Rapougnac/Kiwiibot-typescript/commit/590192e519dd67ad0b1505dfa43f43d8bcb95683))
+* Ignored logs ([e07e3a1](https://github.com/Rapougnac/Kiwiibot-typescript/commit/e07e3a1bb37d3125ffc8e1631c291c310e63ac72))
+* Disabled ts ([ad918f8](https://github.com/Rapougnac/Kiwiibot-typescript/commit/ad918f862a99566bf27e91c2e0cb2a0ecdb4cf42))
+* Add lf newline ([507be6a](https://github.com/Rapougnac/Kiwiibot-typescript/commit/507be6ad84c92989a73ce0b02055a87bbe4099ea))
+* Format ([6511000](https://github.com/Rapougnac/Kiwiibot-typescript/commit/6511000cf5bb2ceafaa0efcb0e07088fecfa79d9))
+* Add lf newline ([e826c78](https://github.com/Rapougnac/Kiwiibot-typescript/commit/e826c78b565e76fb7643a7d48fca15e2034504dc))
+* New version ([9531e29](https://github.com/Rapougnac/Kiwiibot-typescript/commit/9531e2975bc46adc9791de17177b4059df279f3a))
+* Updated version ([a74d7be](https://github.com/Rapougnac/Kiwiibot-typescript/commit/a74d7be9f085abb0c05f6b09414e28420fce89b2))
+* **Events:** Deleted `messageDelete`event ([ed5e605](https://github.com/Rapougnac/Kiwiibot-typescript/commit/ed5e605be18b0059edcfa4f09c3b8858b707bf5e))
+* **Events:** Deleted `messageDelete`event ([109ab52](https://github.com/Rapougnac/Kiwiibot-typescript/commit/109ab522ad89b1564255ff8d563584834f821b12))
+* **License:** Updated date ([33a8af5](https://github.com/Rapougnac/Kiwiibot-typescript/commit/33a8af5be556cf4e769b83f634be062d270f7b49))
+* **docker:** Add Dockerfile and dockerignore ([49f8217](https://github.com/Rapougnac/Kiwiibot-typescript/commit/49f821759e071b71ab8ec3d317b6cf2e121507a7))
+* **tsconfig:** Added `emitDecoratorMetadata` & `experimentalDecorators` ([8fda964](https://github.com/Rapougnac/Kiwiibot-typescript/commit/8fda964cc79071d6c7f385e41095d19f70680c30))
+* **workflows:** Add comment for config part ([b4c3dcf](https://github.com/Rapougnac/Kiwiibot-typescript/commit/b4c3dcf1d5adffe4693ec1e6141eed2a1d2aa93a))
+
+### Features
+
+* **Client:** implement Logger ([b2828b6](https://github.com/Rapougnac/Kiwiibot-typescript/commit/b2828b6c8c9066ae95ef1a912fde8dc5461834bf))
+* **Logger:** Add LoggerProps ([3d0eee2](https://github.com/Rapougnac/Kiwiibot-typescript/commit/3d0eee20b969e807ed0a97c276b98f88e0cd44cd))
+* **Logger:** Add logger ([dadfe94](https://github.com/Rapougnac/Kiwiibot-typescript/commit/dadfe948e508c33bc29b052831879dbd496302ba))
+* **Util:** public keyword + add `[@isUserOrMember](https://github.com/isUserOrMember)` ([47770e6](https://github.com/Rapougnac/Kiwiibot-typescript/commit/47770e6c815e016a4f1ae3982213019fa1a8e92b))
+
+### Types
+
+* Typo ([0fc5946](https://github.com/Rapougnac/Kiwiibot-typescript/commit/0fc5946c7c1f31874a127b8896b50056b3b9763e))
+* Formatted Intl.ts ([675ff4f](https://github.com/Rapougnac/Kiwiibot-typescript/commit/675ff4f198118e46dbf0bd40fecbce802fc40688))
+* Added comments for `Intl.ListFormat` ([80de445](https://github.com/Rapougnac/Kiwiibot-typescript/commit/80de445a57c24ad7be3fe2cf7a76f8da36695ea1))
+
+
 <a name="2.4.2"></a>
 ## [2.4.2](https://github.com/Rapougnac/Kiwiibot-typescript/compare/2.4.1...2.4.2)
 
