@@ -1,4 +1,5 @@
 import type { PermissionString, Message, Guild } from 'discord.js';
+import { User, GuildMember } from 'discord.js';
 import type Client from './Client';
 import Loader from './LoadingBar';
 import type { TimeData } from './interfaces/main';
@@ -8,10 +9,6 @@ import AmeClient from 'amethyste-api';
 import { officialApi } from 'mal-scraper';
 import akaneko from 'akaneko';
 export default class Util {
-  /**
-   * The client passed in
-   */
-  public readonly client: Client;
   /**
    * The loader class
    */
@@ -38,8 +35,7 @@ export default class Util {
    * This is a class where the client can acces easily
    * @param client The client that instancied this manager
    */
-  constructor(client: Client) {
-    this.client = client;
+  public constructor(public readonly client: Client) {
     this.loader = new Loader();
     this.neko = new NekoClient();
     this.AmeAPI = new AmeClient(this.client.config.amethyste.client);
@@ -47,7 +43,7 @@ export default class Util {
     this.akaneko = akaneko;
   }
 
-  formatPerms(perms: PermissionString) {
+  public formatPerms(perms: PermissionString) {
     return perms
       .toLowerCase()
       .replace(/(^|"|_)(\S)/g, (s) => s.toUpperCase())
@@ -59,7 +55,7 @@ export default class Util {
    * Parses ms time
    * @param milliseconds Time to parse
    */
-  parseMs(milliseconds: number): TimeData {
+  public parseMs(milliseconds: number): TimeData {
     const roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
 
     return {
@@ -73,7 +69,7 @@ export default class Util {
    * Format time
    * @param time Time
    */
-  format(time: number): string {
+  public format(time: number): string {
     const hrs = ~~(time / 3600);
     const mins = ~~((time % 3600) / 60);
     const secs = ~~time % 60;
@@ -90,7 +86,7 @@ export default class Util {
    * Check if the passed input is a class or not.
    * @param input The input to check
    */
-  isClass(input: unknown): boolean {
+  public isClass(input: unknown): boolean {
     return (
       typeof input === 'function' &&
       typeof input.prototype === 'object' &&
@@ -101,11 +97,11 @@ export default class Util {
    * Remove duplicated values in an array.
    * @param array The array to pass in.
    */
-  removeDuplicates(array: unknown[]): unknown[] {
+  public removeDuplicates(array: unknown[]): unknown[] {
     return [...new Set(array)];
   }
 
-  checkPermissions(message: Message, command: Command) {
+  public checkPermissions(message: Message, command: Command) {
     const reasons = [];
     if (message.channel.type === 'DM') {
       if (command.config.guildOnly) {
@@ -203,4 +199,7 @@ export default class Util {
     }
     return reasons;
   }
+
+  public isUserOrMember = (arg: unknown): arg is User | GuildMember =>
+    arg instanceof User || arg instanceof GuildMember;
 }
