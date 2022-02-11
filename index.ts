@@ -9,7 +9,7 @@ const client = new KiwiiClient({
   config: config,
   owners: '253554702858452992',
   prefix: 'm?',
-  typescript: true,
+  typescript: false,
   clientOptions: {
     intents: Intents.ALL,
     allowedMentions: {
