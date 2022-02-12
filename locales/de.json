@@ -1,54 +1,64 @@
 {
-	"userinfo": {
-		"description": "Zeigt Informationen zu Sie oder einen Benutzer an",
-		"dnd": "Bitte Nicht Stören <:dnd:838001604098654229>",
-		"online": "Online <:online:838001438972968990>",
-		"offline": "Offline <:offline:850733725704126474>",
-		"idle": "Abwesend <:idle:838003208588230706>",
-		"desktop": "Desktop {x}",
-		"user": "Benutzer {tag}",
-		"member": "Mitglied",
-		"name": "Name und Diskriminator",
-		"nickname": "Spitzname",
-		"not_set": "[---](https://rebrand.ly/r1ckr0l13r)",
-		"account_creation_date": "Konto Erstellungsdatum",
-		"on": "Am",
-		"at": "um",
-		"not_boosting": "Nicht Boosten",
-		"arrival_date": "Ankunftsdatum",
-		"boost_start_date": "Startdatum des Boost",
-		"device": "Gerät",
-		"type": "Typ",
-		"user2": "Benutzer",
-		"roles": "Rollen [{role}]",
-		"no_roles": "Keine Rollen zu zeigen",
-		"cant_find_member": "Es tut mir leid, aber ich konnte dieses Mitglied nicht finden, könnten Sie es noch einmal versuchen?"
-	},
-	"setlanguage": {
-		"set_language": "setlanguage.set_language"
-	},
-	"PERMS_MESSAGE": {
-		"guild_only": "PERMS_MESSAGE.guild_only"
-	},
-	"common": {
-		"creation_date": "common.creation_date",
-		"on": "common.on",
-		"at": "common.at",
-		"yes": "common.yes",
-		"no": "common.no"
-	},
-	"help": {
-		"title": "help.title",
-		"name": "help.name",
-		"category": "help.category",
-		"alias": "help.alias",
-		"usage": "help.usage",
-		"seconds": "help.seconds",
-		"guild_only": "help.guild_only",
-		"admin_only": "help.admin_only",
-		"owner_only": "help.owner_only",
-		"user_permissions": "help.user_permissions",
-		"bot_permissions": "help.bot_permissions",
-		"information": "help.information"
-	}
+  "userinfo": {
+    "description": "Zeigt Informationen zu Sie oder einen Benutzer an",
+    "dnd": "Bitte Nicht Stören <:dnd:838001604098654229>",
+    "online": "Online <:online:838001438972968990>",
+    "offline": "Offline <:offline:850733725704126474>",
+    "idle": "Abwesend <:idle:838003208588230706>",
+    "desktop": "Desktop {x}",
+    "user": "Benutzer {tag}",
+    "member": "Mitglied",
+    "name": "Name und Diskriminator",
+    "nickname": "Spitzname",
+    "not_set": "[---](https://rebrand.ly/r1ckr0l13r)",
+    "account_creation_date": "Konto Erstellungsdatum",
+    "on": "Am",
+    "at": "um",
+    "not_boosting": "Nicht Boosten",
+    "arrival_date": "Ankunftsdatum",
+    "boost_start_date": "Startdatum des Boost",
+    "device": "Gerät",
+    "type": "Typ",
+    "user2": "Benutzer",
+    "roles": "Rollen [{role}]",
+    "no_roles": "Keine Rollen zu zeigen",
+    "cant_find_member": "Es tut mir leid, aber ich konnte dieses Mitglied nicht finden, könnten Sie es noch einmal versuchen?"
+  },
+  "setlanguage": {
+    "set_language": "setlanguage.set_language"
+  },
+  "PERMS_MESSAGE": {
+    "guild_only": "PERMS_MESSAGE.guild_only"
+  },
+  "common": {
+    "creation_date": "common.creation_date",
+    "on": "common.on",
+    "at": "common.at",
+    "yes": "common.yes",
+    "no": "common.no"
+  },
+  "help": {
+    "title": "help.title",
+    "name": "help.name",
+    "category": "help.category",
+    "alias": "help.alias",
+    "usage": "help.usage",
+    "seconds": "help.seconds",
+    "guild_only": "help.guild_only",
+    "admin_only": "help.admin_only",
+    "owner_only": "help.owner_only",
+    "user_permissions": "help.user_permissions",
+    "bot_permissions": "help.bot_permissions",
+    "information": "help.information",
+    "cmd_usage": "help.cmd_usage",
+    "nsfw_message": "help.nsfw_message",
+    "description": "help.description",
+    "none_alias": "help.none_alias"
+  },
+  "ping": {
+    "msg": "ping.msg"
+  },
+  "mdn": {
+    "description": "mdn.description"
+  }
 }

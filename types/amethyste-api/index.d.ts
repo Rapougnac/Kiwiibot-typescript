@@ -9,11 +9,11 @@ declare module 'amethyste-api' {
         private readonly token: string;
         public options: AmeClientOptions;
         /**
-         * Return an image from the enpoint and the data sent.
+         * Return an image from the endpoint and the data sent.
          * @param endpoint Name of the endpoint
          * @param data Object to send data (url, blur, etc..)
          */
-        public generate(endpoint: BaseEndpoints, data: dataOptions ): Promise<Buffer>;
+        public generate(endpoint: BaseEndpoints, data: dataOptions): Promise<Buffer>;
         public generate(endpoint: EndpointsWithAvatarProp, data: dataOptionsAvatar): Promise<Buffer>;
         public generate(endpoint: 'badge', data: dataOptionsBadge): Promise<Buffer>;
         public generate(endpoint: 'facebook', data: dataOptionsText): Promise<Buffer>;

@@ -1,92 +1,97 @@
 import type KiwiiClient from '../Client';
 import type SlashCommand from '../SlashCommand';
-import type { ApplicationCommandOptionChoice, ApplicationCommandOptionType, ApplicationCommandType, ApplicationCommandOptionData } from 'discord.js';
+import type {
+  ApplicationCommandOptionChoice,
+  ApplicationCommandOptionType,
+  ApplicationCommandType,
+  ApplicationCommandOptionData,
+} from 'discord.js';
 
 export interface SlashCommandOptions {
-    /**
-     * The name of the command
-     */
-    name: string;
-    /**
-     * The description of the command
-     */
-    description: string;
-    /**
-     * If the command should be global
-     */
-    global?: boolean;
-    /**
-     * Command options
-     */
-    commandOptions?: ApplicationCommandOptionData[];
+  /**
+   * The name of the command
+   */
+  name: string;
+  /**
+   * The description of the command
+   */
+  description: string;
+  /**
+   * If the command should be global
+   */
+  global?: boolean;
+  /**
+   * Command options
+   */
+  commandOptions?: ApplicationCommandOptionData[];
 
-    /**
-     * The type of the command, defaults `1` if not set
-     *
-     * `1` = CHAT_INPUT (default) - Slash commands; a text-based command that shows up when a user types / in chat.
-     *
-     * `2` = USER A UI-based command that shows up when you right click or tap on a user.
-     *
-     * `3` = MESSAGE A UI-based command that shows up when you right click or tap on a message.
-     */
-    type?: ApplicationCommandType;
+  /**
+   * The type of the command, defaults `1` if not set
+   *
+   * `1` = CHAT_INPUT (default) - Slash commands; a text-based command that shows up when a user types / in chat.
+   *
+   * `2` = USER A UI-based command that shows up when you right click or tap on a user.
+   *
+   * `3` = MESSAGE A UI-based command that shows up when you right click or tap on a message.
+   */
+  type?: ApplicationCommandType;
 
-    /**
-     * If the command is enabled by default when the app is added to guild
-     */
-    defaultPermission?: boolean;
+  /**
+   * If the command is enabled by default when the app is added to guild
+   */
+  defaultPermission?: boolean;
 }
 
 export interface CommandOptions {
-    /**
-     * The name of the command
-     */
-    name: string;
+  /**
+   * The name of the command
+   */
+  name: string;
 
-    /**
-     * The description of the command
-     */
-    description: string;
+  /**
+   * The description of the command
+   */
+  description: string;
 
-    /**
-     * One of `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8` and `9`
-     *
-     * `1` = SUB_COMMAND
-     *
-     * `2` = SUB_COMMAND_GROUP
-     *
-     * `3` = STRING
-     *
-     * `4` = INTEGER
-     *
-     * `5` = BOOLEAN
-     *
-     * `6` = USER
-     *
-     * `7` = CHANNEL
-     *
-     * `8` = ROLE
-     *
-     * `9` = MENTIONABLE
-     */
-    type: ApplicationCommandOptionType;
-    /**
-     * If the option is required
-     */
-    required?: boolean;
-    /**
-     * The choices to add, if provided
-     */
-    choices?: ApplicationCommandOptionChoice[];
-    /**
-     * The command options
-     */
-    options?: CommandOptions[];
+  /**
+   * One of `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8` and `9`
+   *
+   * `1` = SUB_COMMAND
+   *
+   * `2` = SUB_COMMAND_GROUP
+   *
+   * `3` = STRING
+   *
+   * `4` = INTEGER
+   *
+   * `5` = BOOLEAN
+   *
+   * `6` = USER
+   *
+   * `7` = CHANNEL
+   *
+   * `8` = ROLE
+   *
+   * `9` = MENTIONABLE
+   */
+  type: ApplicationCommandOptionType;
+  /**
+   * If the option is required
+   */
+  required?: boolean;
+  /**
+   * The choices to add, if provided
+   */
+  choices?: ApplicationCommandOptionChoice[];
+  /**
+   * The command options
+   */
+  options?: CommandOptions[];
 
-    /**
-     * If the command should be auto-completed
-     */
-    autocomplete?: boolean;
+  /**
+   * If the command should be auto-completed
+   */
+  autocomplete?: boolean;
 }
 
 /**
@@ -127,7 +132,7 @@ export type AllowedTypes = 1 | 2 | 3;
  * The constructor of the slash command
  */
 export interface SlashCommandConstructor {
-    // eslint-disable-next-line no-unused-vars
-    new(client: KiwiiClient, options?: CommandOptions): SlashCommand;
-    readonly prototype: SlashCommand;
+  // eslint-disable-next-line no-unused-vars
+  new (client: KiwiiClient, options?: CommandOptions): SlashCommand;
+  readonly prototype: SlashCommand;
 }
